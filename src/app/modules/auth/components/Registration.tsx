@@ -83,23 +83,19 @@ export function Registration() {
 
   return (
     <form
-      className="card p-8 form overflow-y-scroll"
+      className="card p-8 form overflow-y-scroll w-md-400px w-lg-500px"
       style={{ height: "600px" }}
       noValidate
       id="kt_login_signup_form"
       onSubmit={formik.handleSubmit}
     >
       <div className="">
-        {/* begin::Heading */}
         <div className="text-center">
-          {/* begin::Title */}
           <h1 className="text-gray-900 fw-bolder">Daftar</h1>
-          {/* end::Title */}
         </div>
-        {/* end::Heading */}
 
         <div className="separator separator-content my-10">
-          <span className="w-400px text-gray-500 fw-semibold fs-7">
+          <span className="w-lg-400px text-gray-500 fw-semibold fs-7">
             Selamat Datang di PKJ TIM!
           </span>
         </div>
@@ -346,11 +342,11 @@ export function Registration() {
         {/* end::Form group */}
 
         {/* begin::Form group */}
-        <div className="text-center">
+        <div className="text-center d-grid">
           <button
             type="submit"
             id="kt_sign_up_submit"
-            className="btn btn-lg btn-primary w-100 mb-5"
+            className="btn btn-lg btn-primary mb-5"
             disabled={
               formik.isSubmitting ||
               !formik.isValid ||

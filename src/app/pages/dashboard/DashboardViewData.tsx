@@ -1,35 +1,67 @@
-import React from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
-import { useParams } from "react-router-dom";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import HeadPage from "../../modules/widgets/components/HeadPage";
+import axios from "axios";
+import { arrData, convertRouteToTitle } from "./helper";
 
-const DashboardViewData = () => {
+const DashboardViewData: FC = () => {
+  const navigate = useNavigate();
+
   const params = useParams();
-  console.log(params);
-  let title = "";
-  switch (params.viewData) {
-    case "seni":
-      title = "Koleksi Seni UP PKJ TIM";
-      break;
-    case "pementasan":
-      title = "Daftar Pementasan";
-      break;
-    case "seniman":
-      title = "Daftar Seniman";
-      break;
+  const [list, setList] = useState([]);
 
-    default:
-      title = "Sekilas Info";
-      break;
-      break;
+  const getAllData = async () => {
+    // const res = await axios.get("/url");
+    // setList(res.data.data);
+  };
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+
+  function ListViewData(data: any) {
+    console.log(params.list);
+
+    return (
+      <div className="my-12">
+        <div className="row row-cols-2 row-cols-lg-4">
+          {arrData.map((item: any, index: number) => (
+            <div
+              role="button"
+              onClick={() => navigate(`${index}`)}
+              className="col"
+            >
+              <img
+                src={item.image}
+                className="rounded mb-3"
+                style={{ width: "100%", objectFit: "cover" }}
+              />
+              <h4>{item.title}</h4>
+              {/* <p>{item.description}</p> */}
+              <p className="text-truncate">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
+                temporibus officia sint? Pariatur facilis possimus ipsa adipisci
+                hic, voluptatem quaerat suscipit at!
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
+
   return (
     <Content>
       <HeadPage
-        pages={`Dashboard > Home > ${title}`}
-        title={title}
+        pages={`Dashboard > Home > ${convertRouteToTitle(
+          params.list as string
+        )}`}
+        title={convertRouteToTitle(params.list as string) as string}
         icon={"home"}
       />
+      <ListViewData data={list} />
     </Content>
   );
 };

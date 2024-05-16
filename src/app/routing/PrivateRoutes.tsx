@@ -9,6 +9,7 @@ import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
 import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
 import DashboardViewData from "../pages/dashboard/DashboardViewData";
+import DashboardViewDataDetail from "../pages/dashboard/DashboardViewDataDetail";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -28,9 +29,10 @@ const PrivateRoutes = () => {
         {/* Pages */}
         <Route path="dashboard" element={<DashboardWrapper />} />
         <Route path="dashboard/home" element={<DashboardWrapper />} />
+        <Route path="dashboard/home/:list" element={<DashboardViewData />} />
         <Route
-          path="dashboard/home/:viewData"
-          element={<DashboardViewData />}
+          path="dashboard/home/:list/:id"
+          element={<DashboardViewDataDetail />}
         />
         <Route path="dashboard/kalender" element={<DashboardKalender />} />
         <Route path="builder" element={<BuilderPageWrapper />} />

@@ -5,9 +5,7 @@ import { Content } from "../../../_metronic/layout/components/content";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import HeadPage from "../../modules/widgets/components/HeadPage";
-
-const dummyImage =
-  "https://images.squarespace-cdn.com/content/v1/60f1a490a90ed8713c41c36c/1629223610791-LCBJG5451DRKX4WOB4SP/37-design-powers-url-structure.jpeg";
+import { arrData, dummyImage } from "./helper";
 
 type Props = {
   title: string;
@@ -24,9 +22,9 @@ const ListViewItem: FC<Props> = ({ title, link, data = [] }) => {
           <Link to={`${link}`}>Lihat lebih banyak</Link>
         </div>
         <hr />
-        <div className="d-flex flex-wrap justify-content-center justify-content-lg-between ">
+        <div className="row row-cols-2 row-cols-lg-3">
           {data.map((item: any) => (
-            <div style={{ width: "300px", margin: "10px" }}>
+            <div className="col">
               <img
                 src={item.image}
                 className="rounded mb-3"
@@ -108,24 +106,7 @@ const ContentSekilasInfo: FC = () => {
   );
 };
 
-const DashboardPage: FC = (dataDashboard: any) => {
-  const arrData: any = [
-    {
-      image: dummyImage,
-      title: "Judul",
-      description: "Description",
-    },
-    {
-      image: dummyImage,
-      title: "Judul",
-      description: "Description",
-    },
-    {
-      image: dummyImage,
-      title: "Judul",
-      description: "Description",
-    },
-  ];
+const DashboardPage: FC = () => {
   return (
     <Content>
       <HeadPage icon="home" title="Home" pages="Dashboard > Home" />

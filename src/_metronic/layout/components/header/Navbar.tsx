@@ -1,11 +1,6 @@
 import clsx from "clsx";
 import { KTIcon, toAbsoluteUrl } from "../../../helpers";
-import {
-  HeaderNotificationsMenu,
-  HeaderUserMenu,
-  Search,
-  ThemeModeSwitcher,
-} from "../../../partials";
+import { HeaderUserMenu, ThemeModeSwitcher } from "../../../partials";
 import { useLayout } from "../../core";
 
 const itemClass = "ms-1 ms-md-4";
@@ -31,24 +26,14 @@ const Navbar = () => {
           data-kt-menu-attach="parent"
           data-kt-menu-placement="bottom-end"
         >
-          <img src={toAbsoluteUrl("media/avatars/300-3.jpg")} alt="" />
+          <img
+            src={toAbsoluteUrl("media/avatars/blank.png")}
+            alt=""
+            className="rounded-circle"
+          />
         </div>
         <HeaderUserMenu />
       </div>
-
-      {config.app?.header?.default?.menu?.display && (
-        <div
-          className="app-navbar-item d-lg-none ms-2 me-n3"
-          title="Show header menu"
-        >
-          <div
-            className="btn btn-icon btn-active-color-primary w-35px h-35px"
-            id="kt_app_header_menu_toggle"
-          >
-            <KTIcon iconName="text-align-left" className={btnIconClass} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

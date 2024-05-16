@@ -56,7 +56,7 @@ export function Login() {
 
   return (
     <form
-      className="form w-lg-600 card shadow-sm p-10"
+      className="form card shadow-sm p-10 w-md-400px w-lg-500px"
       onSubmit={formik.handleSubmit}
       noValidate
       id="kt_login_signin_form"
@@ -69,7 +69,7 @@ export function Login() {
 
       {/* begin::Separator */}
       <div className="separator separator-content my-10">
-        <span className="w-400px text-gray-500 fw-semibold fs-7">
+        <span className="w-lg-400px text-gray-500 fw-semibold fs-7">
           Selamat Datang di PKJ TIM!
         </span>
       </div>
@@ -138,7 +138,7 @@ export function Login() {
           className="btn btn-primary"
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className="indicator-label">Login</span>}
+          {!loading && <span className="indicator-label">Masuk</span>}
           {loading && (
             <span className="indicator-progress" style={{ display: "block" }}>
               Loading...
