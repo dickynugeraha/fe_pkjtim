@@ -1,9 +1,11 @@
 import { useIntl } from "react-intl";
-import { KTIcon } from "../../../../helpers";
 import { SidebarMenuItemWithSub } from "./SidebarMenuItemWithSub";
 import { SidebarMenuItem } from "./SidebarMenuItem";
-
+import SidebarModalKontak from "./SidebarModalKontak";
+import { useState } from "react";
 const SidebarMenuMain = () => {
+  const [isShow, setIsShow] = useState(false);
+
   const intl = useIntl();
 
   return (
@@ -34,11 +36,18 @@ const SidebarMenuMain = () => {
         title="FAQ"
         fontIcon="bi-layers"
       />
-      <SidebarMenuItem
-        to="#"
-        icon="user-square"
-        title="Kontak"
-        fontIcon="bi-layers"
+      <div className="fw-bold" onClick={() => setIsShow(true)}>
+        <SidebarMenuItem
+          to="#"
+          icon="user-square"
+          title="Kontak"
+          fontIcon="bi-layers"
+        />
+      </div>
+
+      <SidebarModalKontak
+        isShow={isShow}
+        handleClose={() => setIsShow(false)}
       />
     </>
   );

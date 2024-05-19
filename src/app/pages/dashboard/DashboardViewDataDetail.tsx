@@ -8,6 +8,7 @@ const DashboardViewDataDetail = () => {
   const params = useParams();
   const list = params.list;
   const detailId = params.id;
+  const title = convertRouteToTitle(params.list as string);
 
   // const detailData = arrayList.find(item => item.id === detailId); // hasilnya object
   // const dataExcept = arrayList.filter(item => item.id !== detailId); // hasilnya array
@@ -18,10 +19,8 @@ const DashboardViewDataDetail = () => {
     <Content>
       <HeadPage
         icon="home"
-        title={`Detail ${convertRouteToTitle(params.list as string)}`}
-        pages={`Dashboard > Home > ${convertRouteToTitle(
-          params.list as string
-        )} > Detail`}
+        title={`Detail ${title}`}
+        pages={`Dashboard > Home > ${title} > Detail`}
       />
       <div className="card p-8">
         <div className="row g-10">
@@ -52,7 +51,7 @@ const DashboardViewDataDetail = () => {
             </div>
           </div>
           <div className="col-4">
-            <h6 className="mb-8">Sekilas info terbaru</h6>
+            <h6 className="mb-8">{title} terbaru</h6>
             <div>
               <div className="row g-2 mb-4">
                 <div className="col">

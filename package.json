@@ -36,6 +36,7 @@
     "react-flatpickr": "^3.10.13",
     "react-inlinesvg": "4.1.0",
     "react-intl": "^6.4.4",
+    "react-modal": "^3.16.1",
     "react-query": "3.38.0",
     "react-router-dom": "6.3.0",
     "react-select": "^5.8.0",
