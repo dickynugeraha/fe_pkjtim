@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import { getUserByToken, login } from "../core/_requests";
 import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import { useAuth } from "../core/Auth";
+import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,6 +33,7 @@ const initialValues = {
 
 export function Login() {
   const [loading, setLoading] = useState(false);
+  const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
 
   const formik = useFormik({
@@ -56,7 +58,7 @@ export function Login() {
 
   return (
     <form
-      className="form card shadow-sm p-10 w-md-400px w-lg-500px"
+      className="form card p-10 w-md-400px w-lg-500px"
       onSubmit={formik.handleSubmit}
       noValidate
       id="kt_login_signin_form"
@@ -130,6 +132,13 @@ export function Login() {
       </div>
       {/* end::Form group */}
 
+      <div
+        className="link-primary ms-auto"
+        onClick={() => setShowModalLupaPassword(true)}
+      >
+        Lupa password?
+      </div>
+
       {/* begin::Action */}
       <div className="d-grid my-8">
         <button
@@ -148,6 +157,15 @@ export function Login() {
         </button>
       </div>
       {/* end::Action */}
+      <ModalInformasi
+        handleClose={() => setShowModalLupaPassword(false)}
+        isShow={showModalLupaPassword}
+        title="Lupa Password"
+        message="Silahkan menghubungi nomor ini wa.me"
+        type="info"
+        handleShow={() => setShowModalLupaPassword(true)}
+        icon=""
+      />
 
       <div className="text-gray-500 text-center fw-semibold fs-6">
         Tidak memiliki akun?{" "}

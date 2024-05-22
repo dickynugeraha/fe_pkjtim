@@ -1,0 +1,52 @@
+import React, { Component, FC } from "react";
+import { Modal, Button } from "react-bootstrap";
+import { KTIcon } from "../../../helpers";
+
+const ModalInformasi: FC<{
+  isShow: boolean;
+  title: string;
+  message: string;
+  icon: string;
+  type: string;
+  handleShow: () => {};
+  handleClose: () => {};
+}> = ({ isShow, title, message, icon, type, handleClose }) => {
+  let iconComponent;
+  switch (type) {
+    case "success":
+      iconComponent = (
+        <i className="bi bi-check-circle-fill text-success fs-1"></i>
+      );
+      break;
+    case "failed":
+      iconComponent = <i className="bi bi-x-circle-fill text-danger fs-1"></i>;
+      break;
+    case "info":
+      iconComponent = <i className="bi bi-info-circle-fill text-info fs-1"></i>;
+      break;
+    default:
+      break;
+  }
+
+  return (
+    <>
+      <Modal show={isShow} onHide={handleClose}>
+        <Modal.Body>
+          <div className="d-flex justify-content-center align-items-center mb-4">
+            {iconComponent}
+          </div>
+          <div className="text-center mb-4">
+            <h6>{message}</h6>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+
+export default ModalInformasi;

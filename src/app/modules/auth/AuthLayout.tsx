@@ -17,11 +17,16 @@ const AuthLayout = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-lg-row flex-column-fluid bgi-size-auto bgi-position-center order-1 order-lg-2 h-lg-100"
+      className="d-flex flex-column flex-lg-row flex-column-fluid bgi-size-auto bgi-position-center img-responsive"
       style={{
         backgroundImage: `url(${toAbsoluteUrl(
           "media/misc/auth-bg-pkjtim.png"
         )})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        "-webkit-background-size": "cover",
+        "-moz-background-size": "cover",
+        "-o-background-size": "cover",
       }}
     >
       {/* begin::Aside */}

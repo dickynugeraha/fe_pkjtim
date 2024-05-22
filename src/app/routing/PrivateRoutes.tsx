@@ -10,6 +10,8 @@ import { WithChildren } from "../../_metronic/helpers";
 import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
 import DashboardViewData from "../pages/dashboard/DashboardViewData";
 import DashboardViewDataDetail from "../pages/dashboard/DashboardViewDataDetail";
+import PesanTempat from "../pages/pesan-tempat/PesanTempat";
+import FormPesanTempat from "../pages/pesan-tempat/FormPesanTempat";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -35,6 +37,11 @@ const PrivateRoutes = () => {
           element={<DashboardViewDataDetail />}
         />
         <Route path="dashboard/kalender" element={<DashboardKalender />} />
+        <Route path="pesan-tempat" element={<PesanTempat />} />
+        <Route
+          path="pesan-tempat/:jenis_tempat"
+          element={<FormPesanTempat />}
+        />
         <Route path="builder" element={<BuilderPageWrapper />} />
         <Route path="menu-test" element={<MenuTestPage />} />
         {/* Lazy Modules */}

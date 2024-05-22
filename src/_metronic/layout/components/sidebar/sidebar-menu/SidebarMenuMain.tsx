@@ -26,7 +26,7 @@ const SidebarMenuMain = () => {
 
       <SidebarMenuItem
         to="pesan-tempat"
-        icon="home"
+        icon="geolocation"
         title="Pesan Tempat"
         fontIcon="bi-layers"
       />
@@ -36,7 +36,7 @@ const SidebarMenuMain = () => {
         title="FAQ"
         fontIcon="bi-layers"
       />
-      <div className="fw-bold" onClick={() => setIsShow(true)}>
+      <div className="fw-bold fs-5" onClick={() => setIsShow(true)}>
         <SidebarMenuItem
           to="#"
           icon="user-square"

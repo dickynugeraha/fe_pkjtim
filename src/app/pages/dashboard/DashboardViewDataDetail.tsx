@@ -24,7 +24,7 @@ const DashboardViewDataDetail = () => {
       />
       <div className="card p-8">
         <div className="row g-10">
-          <div className="col-8">
+          <div className="col-12 col-lg-8">
             <div className="d-flex justify-content-between">
               <h6>Terkenalnya outfit skena</h6>
               <h6>19-19-2023</h6>
@@ -50,7 +50,7 @@ const DashboardViewDataDetail = () => {
               </p>
             </div>
           </div>
-          <div className="col-4">
+          <div className="col-12 col-lg-4">
             <h6 className="mb-8">{title} terbaru</h6>
             <div>
               <div className="row g-2 mb-4">
@@ -61,7 +61,7 @@ const DashboardViewDataDetail = () => {
                   />
                 </div>
                 <div
-                  className="ms-4 col overflow-scroll"
+                  className="ms-4 col overflow-y-scroll"
                   style={{ height: "100px" }}
                 >
                   <h6>Judul judul</h6>
@@ -81,7 +81,7 @@ const DashboardViewDataDetail = () => {
                   />
                 </div>
                 <div
-                  className="ms-4 col overflow-scroll"
+                  className="ms-4 col overflow-y-scroll"
                   style={{ height: "100px" }}
                 >
                   <h6>Judul judul</h6>
@@ -101,7 +101,7 @@ const DashboardViewDataDetail = () => {
                   />
                 </div>
                 <div
-                  className="ms-4 col overflow-scroll"
+                  className="ms-4 col overflow-y-scroll"
                   style={{ height: "100px" }}
                 >
                   <h6>Judul judul</h6>
