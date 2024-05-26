@@ -12,13 +12,7 @@ const Footer = () => {
         <span className="text-muted fw-semibold me-1">
           {new Date().getFullYear().toString()}&copy;
         </span>
-        <a
-          href="https://keenthemes.com/"
-          target="_blank"
-          className="text-gray-800 text-hover-primary"
-        >
-          PKJTIM
-        </a>
+        <span className="text-gray-800">PKJTIM</span>
       </div>
 
       <ul className="menu menu-gray-600 menu-hover-primary fw-semibold order-1">

@@ -31,7 +31,7 @@ const SidebarMenuMain = () => {
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
-        to="#"
+        to="faq"
         icon="question-2"
         title="FAQ"
         fontIcon="bi-layers"
