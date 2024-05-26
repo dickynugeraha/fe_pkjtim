@@ -10,14 +10,14 @@ import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalI
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Wrong email format")
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Email is required"),
+    .email("Format email tidak benar")
+    .min(3, "Minimal 3 karakter")
+    .max(50, "Maksimal 50 karakter")
+    .required("Email harus diisi"),
   password: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Password is required"),
+    .min(3, "Minimal 3 karakter")
+    .max(50, "Maksimal 50 karakter")
+    .required("Password harus diisi"),
 });
 
 const initialValues = {

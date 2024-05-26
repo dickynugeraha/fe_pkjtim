@@ -15,14 +15,27 @@ const ModalInformasi: FC<{
   switch (type) {
     case "success":
       iconComponent = (
-        <i className="bi bi-check-circle-fill text-success fs-1"></i>
+        <i
+          className="bi bi-check-circle-fill text-success"
+          style={{ fontSize: "3rem" }}
+        ></i>
       );
       break;
     case "failed":
-      iconComponent = <i className="bi bi-x-circle-fill text-danger fs-1"></i>;
+      iconComponent = (
+        <i
+          className="bi bi-x-circle-fill text-danger"
+          style={{ fontSize: "3rem" }}
+        ></i>
+      );
       break;
     case "info":
-      iconComponent = <i className="bi bi-info-circle-fill text-info fs-1"></i>;
+      iconComponent = (
+        <i
+          className="bi bi-info-circle-fill text-info"
+          style={{ fontSize: "3rem" }}
+        ></i>
+      );
       break;
     default:
       break;

@@ -7,7 +7,7 @@ const PesanTempat: FC = () => {
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [pesanTempatval, setPesanTempatval] = useState("teater_jakarta");
   const [tanggalPesanVal, setTanggalPesanVal] = useState("");
-  const [hargaTempat, setHargaTempat] = useState("");
+  const [hargaTempat, setHargaTempat] = useState("50 jt");
 
   const navigate = useNavigate();
 
@@ -216,6 +216,7 @@ const PesanTempat: FC = () => {
                   type="date"
                   className="form-control"
                   onChange={(e) => setTanggalPesanVal(e.target.value)}
+                  style={{ width: "200px" }}
                 />
               </div>
               <button

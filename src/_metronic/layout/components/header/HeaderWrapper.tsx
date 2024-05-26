@@ -52,7 +52,7 @@ export function HeaderWrapper() {
                   <Link to="/dashboard" className="d-lg-none">
                     <img
                       alt="Logo"
-                      src={toAbsoluteUrl("media/logos/pkjtim.svg")}
+                      src={toAbsoluteUrl("media/logos/login-pkjtim-2.png")}
                       className="h-30px"
                     />
                   </Link>
