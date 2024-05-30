@@ -12,7 +12,9 @@ import DashboardViewData from "../pages/dashboard/DashboardViewData";
 import DashboardViewDataDetail from "../pages/dashboard/DashboardViewDataDetail";
 import PesanTempat from "../pages/pesan-tempat/PesanTempat";
 import FormPesanTempat from "../pages/pesan-tempat/FormPesanTempat";
-import Faq from "../pages/faq/faq";
+import Faq from "../pages/faq/Faq";
+import ProfilSaya from "../pages/Profil/ProfilSaya";
+import PesananSaya from "../pages/Profil/PesananSaya";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -46,15 +48,8 @@ const PrivateRoutes = () => {
         <Route path="faq" element={<Faq />} />
         <Route path="builder" element={<BuilderPageWrapper />} />
         <Route path="menu-test" element={<MenuTestPage />} />
-        {/* Lazy Modules */}
-        <Route
-          path="crafted/pages/profile/*"
-          element={
-            <SuspensedView>
-              <ProfilePage />
-            </SuspensedView>
-          }
-        />
+        <Route path="profil-saya" element={<ProfilSaya />} />
+        <Route path="pesanan-saya" element={<PesananSaya />} />
         <Route
           path="crafted/pages/wizards/*"
           element={

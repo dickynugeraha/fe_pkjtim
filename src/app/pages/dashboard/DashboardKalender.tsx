@@ -6,7 +6,7 @@ const DashboardKalender: FC = () => {
   return (
     <Content>
       <HeadPage
-        icon="calendar-2  "
+        icon="calendar-2"
         title="Kalender"
         pages="Dashboard > Kalender"
       />

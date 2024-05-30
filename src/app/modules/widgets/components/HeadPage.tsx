@@ -7,7 +7,7 @@ const HeadPage: FC<{ title: string; icon: string; pages: string }> = ({
   pages,
 }) => {
   return (
-    <div className="mb-5">
+    <div className="my-5">
       <div className="d-flex align-items-center mb-2">
         <KTIcon iconName={icon} className="fs-1 me-3" />
         <h3 className="m-0">{title}</h3>

@@ -53,9 +53,9 @@ const ModalInformasi: FC<{
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <div className="btn btn-sm btn-secondary" onClick={handleClose}>
             Close
-          </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

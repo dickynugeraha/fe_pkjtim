@@ -30,15 +30,15 @@ const HeaderUserMenu: FC = () => {
       <div className="separator my-2"></div>
 
       <div className="menu-item px-5">
-        <Link to={"/crafted/pages/profile"} className="menu-link px-5">
+        <Link to={"/profil-saya"} className="menu-link px-5">
           Profil Saya
         </Link>
       </div>
 
       <div className="menu-item px-5">
-        <a href="#" className="menu-link px-5">
+        <Link to="/pesanan-saya" className="menu-link px-5">
           Pesanan Saya
-        </a>
+        </Link>
       </div>
 
       <div className="separator my-2"></div>

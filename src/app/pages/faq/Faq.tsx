@@ -199,7 +199,7 @@ const Faq = () => {
             <a
               target="_blank"
               href="https://dkj.or.id/wp-content/uploads/2022/06/Panduan-Kurasi-PKJ-TIM-DKJ-JUNI-2022.pdf"
-              className="btn btn-primary"
+              className="btn btn-sm btn-primary"
             >
               Lihat panduang kurasi
             </a>
