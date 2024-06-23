@@ -55,7 +55,7 @@ const DashboardViewData: FC = () => {
   return (
     <Content>
       <HeadPage
-        pages={`Dashboard > Home > ${convertRouteToTitle(
+        pages={`Dashboard - Home - ${convertRouteToTitle(
           params.list as string
         )}`}
         title={convertRouteToTitle(params.list as string) as string}

@@ -8,7 +8,7 @@ const DashboardKalender: FC = () => {
       <HeadPage
         icon="calendar-2"
         title="Kalender"
-        pages="Dashboard > Kalender"
+        pages="Dashboard - Kalender"
       />
     </Content>
   );

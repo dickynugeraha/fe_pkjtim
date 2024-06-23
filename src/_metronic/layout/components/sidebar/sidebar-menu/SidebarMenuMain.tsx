@@ -23,11 +23,16 @@ const SidebarMenuMain = () => {
           hasBullet={true}
         />
       </SidebarMenuItemWithSub>
-
       <SidebarMenuItem
         to="pesan-tempat"
         icon="geolocation"
         title="Pesan Tempat"
+        fontIcon="bi-layers"
+      />
+      <SidebarMenuItem
+        to="planetarium"
+        icon="moon"
+        title="Planetarium"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
@@ -36,19 +41,25 @@ const SidebarMenuMain = () => {
         title="FAQ"
         fontIcon="bi-layers"
       />
-      <div className="fw-bold fs-5" onClick={() => setIsShow(true)}>
+      <SidebarMenuItem
+        to="tentang-kami"
+        icon="profile-user"
+        title="Tentang Kami"
+        fontIcon="bi-layers"
+      />
+      {/* <div className="fw-bold fs-5" onClick={() => setIsShow(true)}>
         <SidebarMenuItem
           to="#"
           icon="user-square"
           title="Kontak"
           fontIcon="bi-layers"
         />
-      </div>
-
+      </div> */}
+      {/* 
       <SidebarModalKontak
         isShow={isShow}
         handleClose={() => setIsShow(false)}
-      />
+      /> */}
     </>
   );
 };

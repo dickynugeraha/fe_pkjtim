@@ -72,7 +72,7 @@ const FormPesanTempat: FC = () => {
       <HeadPage
         icon="geolocation"
         title="Form Pesan Tempat"
-        pages="Pesan Tempat > Form Pesan Tempat"
+        pages="Pesan Tempat - Form Pesan Tempat"
       />
       <div className="card p-8">
         <div className="d-flex">
@@ -351,9 +351,11 @@ const FormPesanTempat: FC = () => {
 
           <div className="d-flex justify-content-end">
             <div className="btn btn-light" onClick={() => navigate(-1)}>
-              Cancel
+              Kembali
             </div>
-            <div className="btn btn-primary ms-5">Pesan</div>
+            <button type="submit" className="btn btn-primary ms-5">
+              Pesan
+            </button>
           </div>
         </form>
       </div>

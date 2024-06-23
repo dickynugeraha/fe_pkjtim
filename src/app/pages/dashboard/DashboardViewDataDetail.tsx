@@ -20,7 +20,7 @@ const DashboardViewDataDetail = () => {
       <HeadPage
         icon="home"
         title={`Detail ${title}`}
-        pages={`Dashboard > Home > ${title} > Detail`}
+        pages={`Dashboard - Home - ${title} - Detail`}
       />
       <div className="card p-8">
         <div className="row g-10">

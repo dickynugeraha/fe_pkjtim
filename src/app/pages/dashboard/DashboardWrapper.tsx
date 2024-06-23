@@ -109,7 +109,7 @@ const ContentSekilasInfo: FC = () => {
 const DashboardPage: FC = () => {
   return (
     <Content>
-      <HeadPage icon="home" title="Home" pages="Dashboard > Home" />
+      <HeadPage icon="home" title="Home" pages="Dashboard - Home" />
       <div className="card p-8">
         <ContentSekilasInfo />
         <ListViewItem

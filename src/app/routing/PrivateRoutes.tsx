@@ -13,8 +13,11 @@ import DashboardViewDataDetail from "../pages/dashboard/DashboardViewDataDetail"
 import PesanTempat from "../pages/pesan-tempat/PesanTempat";
 import FormPesanTempat from "../pages/pesan-tempat/FormPesanTempat";
 import Faq from "../pages/faq/Faq";
-import ProfilSaya from "../pages/Profil/ProfilSaya";
-import PesananSaya from "../pages/Profil/PesananSaya";
+import ProfilSaya from "../pages/profil/ProfilSaya";
+import PesananSaya from "../pages/profil/PesananSaya";
+import TentangKami from "../pages/tentang-kami/TentangKami";
+import Planetarium from "../pages/planetarium/Planetarium";
+import FormPlanetarium from "../pages/planetarium/FormPlanetarium";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -50,6 +53,9 @@ const PrivateRoutes = () => {
         <Route path="menu-test" element={<MenuTestPage />} />
         <Route path="profil-saya" element={<ProfilSaya />} />
         <Route path="pesanan-saya" element={<PesananSaya />} />
+        <Route path="tentang-kami" element={<TentangKami />} />
+        <Route path="planetarium" element={<Planetarium />} />
+        <Route path="form-planetarium" element={<FormPlanetarium />} />
         <Route
           path="crafted/pages/wizards/*"
           element={

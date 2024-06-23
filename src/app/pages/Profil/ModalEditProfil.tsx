@@ -1,8 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import { Modal } from "react-bootstrap";
 import { KTIcon } from "../../../_metronic/helpers";
 
-const ModalEditProfil = ({ show, hideModal }) => {
+type Props = {
+  show: boolean;
+  hideModal: () => {};
+};
+
+const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
   return (
     <Modal show={show} onHide={hideModal}>
       <Modal.Header>

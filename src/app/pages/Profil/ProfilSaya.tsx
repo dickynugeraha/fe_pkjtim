@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import ModalEditProfil from "./ModalEditProfil";
+import { ToolbarWrapper } from "../../../_metronic/layout/components/toolbar";
 
 const ProfilSaya = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <Content>
       <HeadPage icon="user" title="Profil Saya" pages="Profil Saya" />
+      <ToolbarWrapper />
       <div className="card p-8">
         <div className="d-flex justify-content-between align-items-center mb-8">
           <h4 className="m-0">Detail profil saya</h4>
@@ -28,7 +30,7 @@ const ProfilSaya = () => {
           </div>
           <div className="d-flex mb-1">
             <p className="fw-bold" style={{ width: "180px" }}>
-              USername
+              Username
             </p>
             <p>kale_pramono</p>
           </div>
