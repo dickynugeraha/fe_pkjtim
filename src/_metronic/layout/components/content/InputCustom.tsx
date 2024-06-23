@@ -1,7 +1,17 @@
+import { FC } from "react";
 import Gap from "./Gap";
 import clsx from "clsx";
 
-const InputCustom = ({
+type Props = {
+  label: string;
+  formikIdName: string;
+  error: any;
+  formikProps: any;
+  touched: any;
+  typed: string;
+};
+
+const InputCustom: FC<Props> = ({
   label,
   formikIdName,
   error,

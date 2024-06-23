@@ -38,7 +38,7 @@ const FormPesanTempat: FC = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const { state } = useLocation();
+  const { state }: any = useLocation();
   let title;
   switch (params.jenis_tempat) {
     case "teater_jakarta":

@@ -1,12 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
+import InputCustom from "../../../_metronic/layout/components/content/InputCustom";
 import { useFormik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
-import InputCustom from "../../../_metronic/layout/components/content/InputCustom";
 import Gap from "../../../_metronic/layout/components/content/Gap";
-import clsx from "clsx";
 
 const formPesanScheme = Yup.object().shape({
   namaSekolah: Yup.string().required("Nama sekolah harus diisi"),
@@ -66,6 +65,7 @@ const FormPlanetarium = () => {
                   touched={formik.touched.namaSekolah}
                   error={formik.errors.namaSekolah}
                   formikProps={formik.getFieldProps("namaSekolah")}
+                  typed={"text"}
                 />
               </div>
               <div className="col">
@@ -75,6 +75,7 @@ const FormPlanetarium = () => {
                   touched={formik.touched.alamatSekolah}
                   error={formik.errors.alamatSekolah}
                   formikProps={formik.getFieldProps("alamatSekolah")}
+                  typed={"text"}
                 />
               </div>
             </div>
