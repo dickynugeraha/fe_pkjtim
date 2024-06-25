@@ -14,7 +14,7 @@ import PesanTempat from "../pages/pesan-tempat/PesanTempat";
 import FormPesanTempat from "../pages/pesan-tempat/FormPesanTempat";
 import Faq from "../pages/faq/Faq";
 import ProfilSaya from "../pages/profil/ProfilSaya";
-import PesananSaya from "../pages/profil/PesananSaya";
+import PesananSaya from "../pages/pesanan-saya/PesananSaya";
 import TentangKami from "../pages/tentang-kami/TentangKami";
 import Planetarium from "../pages/planetarium/Planetarium";
 import FormPlanetarium from "../pages/planetarium/FormPlanetarium";
