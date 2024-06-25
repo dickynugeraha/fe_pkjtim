@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#di ignore khusus yang pake npm dia auto generate
+package-lock.json

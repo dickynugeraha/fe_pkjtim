@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import PelayananImage from "../../../../public/media/images/tentang_kami_pelayanan.png";
@@ -9,43 +10,65 @@ import Youtube from "../../../../public/media/images/tentang_kami_youtube.png";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../_metronic/helpers";
 import ImageAssets from "../../utils/image_assets";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+
+const tentangKamiBreadCrumbs: Array<PageLink> = [
+  {
+    title: "Profile",
+    path: "/crafted/pages/profile/overview",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+];
 
 const TentangKami = () => {
   return (
-    <Content>
-      <HeadPage title="Tentang Kami" icon="profile-user" pages="Tentang Kami" />
-      <div className="card p-8">
-        <h4 className="m-0">Profil PKJ TIM</h4>
-        <hr />
-        <Gap height={16} />
-        <SejarahPkjtim />
-      </div>
-      <Gap height={24} />
-      <div className="card p-8">
-        <h4 className="m-0">Kontak</h4>
-        <hr />
-        <Gap height={16} />
-        <div className="row row-cols-1 row-cols-lg-2">
-          <div className="col">
-            <JamPelayanan />
-          </div>
-          <div className="col">
-            <SosialMedia />
-          </div>
+    <>
+      <Content>
+        {/* <HeadPage
+          title='Tentang Kami'
+          icon='profile-user'
+          pages='Tentang Kami'
+        /> */}
+        <div className="card p-8">
+          <h4 className="m-0">Profil PKJ TIM</h4>
+          <hr />
+          <Gap height={16} />
+          <SejarahPkjtim />
         </div>
-        <Gap height={30} />
-        <div className="row row-cols-1 row-cols-lg-2">
-          <div className="col">
-            <LokasiTerkini />
+        <Gap height={24} />
+        <div className="card p-8">
+          <h4 className="m-0">Kontak</h4>
+          <hr />
+          <Gap height={16} />
+          <div className="row">
+            <div className="col-5">
+              <JamPelayanan />
+            </div>
+            <div className="col">
+              <SosialMedia />
+            </div>
           </div>
-          <div className="col">
-            <div className="card p-2">
-              <KontakPerson />
+          <Gap height={30} />
+          <div className="row">
+            <div className="col-5">
+              <LokasiTerkini />
+            </div>
+            <div className="col">
+              <div className="card p-2">
+                <KontakPerson />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Content>
+      </Content>
+    </>
   );
 
   function SejarahPkjtim() {
