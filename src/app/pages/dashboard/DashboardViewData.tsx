@@ -25,26 +25,28 @@ const DashboardViewData: FC = () => {
 
     return (
       <div className="my-12">
-        <div className="row row-cols-2 row-cols-lg-4">
+        <div className="row row-cols-2 row-cols-lg-3 g-3">
           {arrData.map((item: any, index: number) => (
             <div
               role="button"
               onClick={() => navigate(`${index}`)}
               className="col"
             >
-              <img
-                src={item.image}
-                className="rounded mb-3"
-                style={{ width: "100%", objectFit: "cover" }}
-              />
-              <h4>{item.title}</h4>
-              {/* <p>{item.description}</p> */}
-              <p className="text-truncate">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
-                temporibus officia sint? Pariatur facilis possimus ipsa adipisci
-                hic, voluptatem quaerat suscipit at!
-              </p>
+              <div className="card p-4">
+                <img
+                  src={item.image}
+                  className="rounded mb-3"
+                  style={{ width: "100%", objectFit: "cover" }}
+                />
+                <h4>{item.title}</h4>
+                {/* <p>{item.description}</p> */}
+                <p className="text-truncate">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
+                  temporibus officia sint? Pariatur facilis possimus ipsa
+                  adipisci hic, voluptatem quaerat suscipit at!
+                </p>
+              </div>
             </div>
           ))}
         </div>

@@ -25,8 +25,8 @@ const TentangKami = () => {
         <h4 className="m-0">Kontak</h4>
         <hr />
         <Gap height={16} />
-        <div className="row">
-          <div className="col-5">
+        <div className="row row-cols-1 row-cols-lg-2">
+          <div className="col">
             <JamPelayanan />
           </div>
           <div className="col">
@@ -34,8 +34,8 @@ const TentangKami = () => {
           </div>
         </div>
         <Gap height={30} />
-        <div className="row">
-          <div className="col-5">
+        <div className="row row-cols-1 row-cols-lg-2">
+          <div className="col">
             <LokasiTerkini />
           </div>
           <div className="col">

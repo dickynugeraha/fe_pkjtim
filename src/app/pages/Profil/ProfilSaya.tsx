@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import ModalEditProfil from "./ModalEditProfil";
-import { ToolbarWrapper } from "../../../_metronic/layout/components/toolbar";
 
 const ProfilSaya = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <Content>
       <HeadPage icon="user" title="Profil Saya" pages="Profil Saya" />
-      <ToolbarWrapper />
       <div className="card p-8">
         <div className="d-flex justify-content-between align-items-center mb-8">
           <h4 className="m-0">Detail profil saya</h4>
@@ -50,12 +48,7 @@ const ProfilSaya = () => {
         <div className="row row-cols-1 row-cols-lg-2">
           <div className="col">
             <div className="card p-4">
-              <p
-                className="fw-bold mb-5"
-                style={{ borderBottomWidth: 1, borderBlockColor: "grey" }}
-              >
-                Ubah kata sandi
-              </p>
+              <h4 className="mb-5">Ubah kata sandi</h4>
               <div className="d-flex mb-3">
                 <p className="fw-bold" style={{ width: "300px" }}>
                   Kata sandi saat ini

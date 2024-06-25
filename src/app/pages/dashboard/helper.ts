@@ -37,14 +37,4 @@ export const arrData: any = [
     title: "Judul",
     description: "Description",
   },
-  {
-    image: dummyImage,
-    title: "Judul",
-    description: "Description",
-  },
-  {
-    image: dummyImage,
-    title: "Judul",
-    description: "Description",
-  },
 ];

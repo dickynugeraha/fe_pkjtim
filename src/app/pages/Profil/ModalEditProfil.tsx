@@ -4,7 +4,7 @@ import { KTIcon } from "../../../_metronic/helpers";
 
 type Props = {
   show: boolean;
-  hideModal: () => {};
+  hideModal: () => void;
 };
 
 const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
