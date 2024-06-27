@@ -233,7 +233,7 @@ export function Registration() {
         <div className="fv-row mb-5">
           <input
             type="password"
-            placeholder="Konfirmasi password"
+            placeholder="Konfirmasi password  "
             autoComplete="off"
             {...formik.getFieldProps("passwordConfirm")}
             className={clsx(

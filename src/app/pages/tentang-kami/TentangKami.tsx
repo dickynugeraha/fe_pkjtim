@@ -31,38 +31,41 @@ const TentangKami = () => {
   return (
     <>
       <Content>
-        {/* <HeadPage
-          title='Tentang Kami'
-          icon='profile-user'
-          pages='Tentang Kami'
-        /> */}
-        <div className="card p-8">
-          <h4 className="m-0">Profil PKJ TIM</h4>
-          <hr />
+        <HeadPage
+          title="Tentang Kami"
+          icon="profile-user"
+          pages="Tentang Kami"
+        />
+        <div className="card">
+          <div className="card-header d-flex align-items-center">
+            <h4 className="m-0">Profil PKJ TIM</h4>
+          </div>
           <Gap height={16} />
           <SejarahPkjtim />
         </div>
         <Gap height={24} />
-        <div className="card p-8">
-          <h4 className="m-0">Kontak</h4>
-          <hr />
-          <Gap height={16} />
-          <div className="row">
-            <div className="col-5">
-              <JamPelayanan />
-            </div>
-            <div className="col">
-              <SosialMedia />
-            </div>
+        <div className="card">
+          <div className="card-header d-flex align-items-center">
+            <h4 className="m-0">Kontak</h4>
           </div>
-          <Gap height={30} />
-          <div className="row">
-            <div className="col-5">
-              <LokasiTerkini />
+          <div className="p-8">
+            <div className="row">
+              <div className="col-5">
+                <JamPelayanan />
+              </div>
+              <div className="col">
+                <SosialMedia />
+              </div>
             </div>
-            <div className="col">
-              <div className="card p-2">
-                <KontakPerson />
+            <Gap height={30} />
+            <div className="row">
+              <div className="col-5">
+                <LokasiTerkini />
+              </div>
+              <div className="col">
+                <div className="card p-2">
+                  <KontakPerson />
+                </div>
               </div>
             </div>
           </div>
@@ -73,8 +76,12 @@ const TentangKami = () => {
 
   function SejarahPkjtim() {
     return (
-      <>
-        <img src={ImageAssets.GedungPkjtim} className="rounded-xl" />
+      <div className="p-8">
+        <img
+          src={ImageAssets.GedungPkjtim}
+          className="rounded-xl"
+          style={{ width: "100%" }}
+        />
         <Gap height={24} />
         <div className="text-justify">
           <p>
@@ -129,7 +136,7 @@ const TentangKami = () => {
             kreatif di jantung kota Jakarta.
           </p>
         </div>
-      </>
+      </div>
     );
   }
 

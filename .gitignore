@@ -25,3 +25,4 @@ dist-ssr
 
 #di ignore khusus yang pake npm dia auto generate
 package-lock.json
+yarn.lock

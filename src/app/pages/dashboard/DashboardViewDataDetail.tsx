@@ -22,14 +22,14 @@ const DashboardViewDataDetail = () => {
         title={`Detail ${title}`}
         pages={`Dashboard - Home - ${title} - Detail`}
       />
-      <div className="card p-8">
+      <div className="card">
         <div className="row g-10">
           <div className="col-12 col-lg-8">
-            <div className="d-flex justify-content-between">
-              <h6>Terkenalnya outfit skena</h6>
-              <h6>19-19-2023</h6>
+            <div className="card-header d-flex justify-content-between align-items-center">
+              <h4 className="m-0">Terkenalnya outfit skena</h4>
+              <p className="m-0">19-19-2023</p>
             </div>
-            <div className="my-6">
+            <div className="p-8 pe-lg-0">
               <img
                 src={dummyImage}
                 style={{ width: "100%", borderRadius: "6px" }}
@@ -51,8 +51,11 @@ const DashboardViewDataDetail = () => {
             </div>
           </div>
           <div className="col-12 col-lg-4">
-            <h6 className="mb-8">{title} terbaru</h6>
-            <div>
+            <div className="card-header d-flex align-items-center p-lg-0">
+              <h4 className="m-0">{title} terbaru</h4>
+            </div>
+
+            <div className="p-8 ps-lg-0">
               <div className="row g-2 mb-4">
                 <div className="col">
                   <img

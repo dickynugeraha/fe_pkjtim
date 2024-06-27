@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import { arrData, dummyImage } from "./helper";
+import Gap from "../../../_metronic/layout/components/content/Gap";
 
 type Props = {
   title: string;
@@ -16,30 +17,32 @@ type Props = {
 const ListViewItem: FC<Props> = ({ title, link, data = [] }) => {
   return (
     <>
-      <div className="my-4">
-        <div className="d-flex mt-3 justify-content-between align-items-center">
+      <div>
+        <div className="card-header d-flex mt-3 justify-content-between align-items-center">
           <h4 className="m-0">{title}</h4>
           <Link to={`${link}`}>Lihat lebih banyak</Link>
         </div>
-        <hr />
-        <div className="row row-cols-2 row-cols-lg-3">
-          {data.map((item: any) => (
-            <div className="col">
-              <img
-                src={item.image}
-                className="rounded mb-3"
-                style={{ width: "100%", objectFit: "cover" }}
-              />
-              <h4>{item.title}</h4>
-              {/* <p>{item.description}</p> */}
-              <p className="text-truncate">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
-                temporibus officia sint? Pariatur facilis possimus ipsa adipisci
-                hic, voluptatem quaerat suscipit at!
-              </p>
-            </div>
-          ))}
+        <Gap height={18} />
+        <div className="p-8">
+          <div className="row row-cols-2 row-cols-lg-3">
+            {data.map((item: any) => (
+              <div className="col">
+                <img
+                  src={item.image}
+                  className="rounded mb-3"
+                  style={{ width: "100%", objectFit: "cover" }}
+                />
+                <h4>{item.title}</h4>
+                {/* <p>{item.description}</p> */}
+                <p className="text-truncate">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
+                  temporibus officia sint? Pariatur facilis possimus ipsa
+                  adipisci hic, voluptatem quaerat suscipit at!
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
@@ -49,28 +52,18 @@ const ListViewItem: FC<Props> = ({ title, link, data = [] }) => {
 const ContentSekilasInfo: FC = () => {
   return (
     <div>
-      <div className="d-flex mt-3 justify-content-between align-items-center">
+      <div className="card-header d-flex mt-3 justify-content-between align-items-center">
         <h4 className="m-0">Sekilas Info</h4>
         <Link to={"/dashboard/home/info"}>Lihat lebih banyak</Link>
       </div>
-      <hr />
-      <div className="row row-cols-1 row-cols-lg-2 g-2 g-lg-10">
-        <div className="col">
-          <img
-            src={dummyImage}
-            style={{ width: "100%" }}
-            className="rounded mb-6"
-          />
-          <h4>Judul</h4>
-          <p className="text-truncate">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde odio
-            labore aut veniam voluptas ratione eaque expedita illum. Optio eum
-            eveniet laboriosam tenetur minima itaque fugiat deleniti error
-            nesciunt labore!
-          </p>
-        </div>
-        <div className="col">
-          <div className="mb-3">
+      <div className="p-8">
+        <div className="row row-cols-1 row-cols-lg-2 g-2 g-lg-10">
+          <div className="col">
+            <img
+              src={dummyImage}
+              style={{ width: "100%" }}
+              className="rounded mb-6"
+            />
             <h4>Judul</h4>
             <p className="text-truncate">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde odio
@@ -79,27 +72,38 @@ const ContentSekilasInfo: FC = () => {
               nesciunt labore!
             </p>
           </div>
-          <hr />
-          <div className="mb-3">
-            <h4>Judul</h4>
-            <p className="text-truncate">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde odio
-              labore aut veniam voluptas ratione eaque expedita illum. Optio eum
-              eveniet laboriosam tenetur minima itaque fugiat deleniti error
-              nesciunt labore!
-            </p>
+          <div className="col">
+            <div className="mb-3">
+              <h4>Judul</h4>
+              <p className="text-truncate">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+                odio labore aut veniam voluptas ratione eaque expedita illum.
+                Optio eum eveniet laboriosam tenetur minima itaque fugiat
+                deleniti error nesciunt labore!
+              </p>
+            </div>
+            <hr />
+            <div className="mb-3">
+              <h4>Judul</h4>
+              <p className="text-truncate">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+                odio labore aut veniam voluptas ratione eaque expedita illum.
+                Optio eum eveniet laboriosam tenetur minima itaque fugiat
+                deleniti error nesciunt labore!
+              </p>
+            </div>
+            <hr />
+            <div className="mb-3">
+              <h4>Judul</h4>
+              <p className="text-truncate">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+                odio labore aut veniam voluptas ratione eaque expedita illum.
+                Optio eum eveniet laboriosam tenetur minima itaque fugiat
+                deleniti error nesciunt labore!
+              </p>
+            </div>
+            <hr />
           </div>
-          <hr />
-          <div className="mb-3">
-            <h4>Judul</h4>
-            <p className="text-truncate">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde odio
-              labore aut veniam voluptas ratione eaque expedita illum. Optio eum
-              eveniet laboriosam tenetur minima itaque fugiat deleniti error
-              nesciunt labore!
-            </p>
-          </div>
-          <hr />
         </div>
       </div>
     </div>
@@ -110,7 +114,7 @@ const DashboardPage: FC = () => {
   return (
     <Content>
       <HeadPage icon="home" title="Home" pages="Dashboard - Home" />
-      <div className="card p-8">
+      <div className="card">
         <ContentSekilasInfo />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"
