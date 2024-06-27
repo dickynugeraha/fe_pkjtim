@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
-import styled from "styled-components";
 import Gap from "./Gap";
+
 const TableCustom = () => {
   const data = useMemo(
     () => [
@@ -94,6 +94,27 @@ const TableCustom = () => {
 
   return (
     <div className="card p-8">
+      <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center">
+          <p className="m-0">
+            Show <em>by</em>
+          </p>
+          <Gap width={10} />
+          <select
+            className="custom-select rounded p-1"
+            style={{ width: "50px" }}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+            <option value={20}>20</option>
+          </select>
+        </div>
+        <div>
+          <input type="text" className="form-control" placeholder="Search" />
+        </div>
+      </div>
+      <Gap height={25} />
       <div className="table-responsive">
         <table {...getTableProps()} className="table table-hover table-striped">
           <thead>
@@ -133,6 +154,16 @@ const TableCustom = () => {
             })}
           </tbody>
         </table>
+      </div>
+      <Gap height={12} />
+      <div>
+        <div>
+          Page{" "}
+          <em>
+            {pageIndex + 1} of {pageOptions.length}
+          </em>
+        </div>
+        <Gap height={12} />
         <div className="d-flex">
           <button
             className="btn btn-secondary btn-sm"
@@ -149,13 +180,6 @@ const TableCustom = () => {
           >
             Next Page
           </button>
-        </div>
-        <Gap height={12} />
-        <div>
-          Page{" "}
-          <em>
-            {pageIndex + 1} of {pageOptions.length}
-          </em>
         </div>
       </div>
     </div>

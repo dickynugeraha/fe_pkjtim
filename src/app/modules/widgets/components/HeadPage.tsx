@@ -12,7 +12,7 @@ const HeadPage: FC<{ title: string; icon: string; pages: string }> = ({
         <KTIcon iconName={icon} className="fs-1 me-3" />
         <h3 className="m-0">{title}</h3>
       </div>
-      <h6 className="text-muted">{pages}</h6>
+      <p className="text-muted">{pages}</p>
     </div>
   );
 };
