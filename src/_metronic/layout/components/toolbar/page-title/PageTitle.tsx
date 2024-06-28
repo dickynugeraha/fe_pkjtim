@@ -1,12 +1,14 @@
-import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {useLayout} from '../../../core'
-import {usePageData} from '../../../core/PageData'
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { useLayout } from '../../../core';
+import { usePageData } from '../../../core/PageData';
+import { KTIcon } from '../../../../helpers';
+import { Row } from 'react-bootstrap';
 
 const PageTitle = () => {
-  const {pageTitle, pageDescription, pageBreadcrumbs} = usePageData()
-  const {config, classes} = useLayout()
-  const appPageTitleDirection = config.app?.pageTitle?.direction
+  const { pageTitle, pageDescription, pageBreadcrumbs, pageTitleIcon } = usePageData();
+  const { config, classes } = useLayout();
+  const appPageTitleDirection = config.app?.pageTitle?.direction;
 
   return (
     <div
@@ -19,33 +21,42 @@ const PageTitle = () => {
         classes.pageTitle.join(' '),
         config.app?.pageTitle?.class,
         {
-          'flex-column justify-content-center': appPageTitleDirection === 'column',
+          'flex-column justify-content-center':
+            appPageTitleDirection === 'column',
           'align-items-center': appPageTitleDirection !== 'column',
         }
       )}
     >
       {/* begin::Title */}
       {config.app?.pageTitle?.display && pageTitle && (
-        <h1
-          className={clsx('page-heading d-flex text-gray-900 fw-bold fs-3 my-0', {
-            'flex-column justify-content-center': appPageTitleDirection,
-            'align-items-center': !appPageTitleDirection,
-          })}
-        >
-          {pageTitle}
-          {pageDescription && config.app?.pageTitle && config.app?.pageTitle?.description && (
-            <span
-              className={clsx('page-desc text-muted fs-7 fw-semibold', {
-                'pt-2': appPageTitleDirection === 'column',
-              })}
-            >
-              {config.app?.pageTitle?.direction === 'row' && (
-                <span className='h-20px border-1 border-gray-300 border-start ms-3 mx-2'></span>
+        <div style={{ display:"flex" }}>
+          <KTIcon iconName={pageTitleIcon} className='fs-1 me-3' iconType='solid'/>
+          <h1
+            className={clsx(
+              'page-heading d-flex text-gray-900 fw-bold fs-3 my-0',
+              {
+                'flex-column justify-content-center': appPageTitleDirection,
+                'align-items-center': !appPageTitleDirection,
+              }
+            )}
+          >
+            {pageTitle}
+            {pageDescription &&
+              config.app?.pageTitle &&
+              config.app?.pageTitle?.description && (
+                <span
+                  className={clsx('page-desc text-muted fs-7 fw-semibold', {
+                    'pt-2': appPageTitleDirection === 'column',
+                  })}
+                >
+                  {config.app?.pageTitle?.direction === 'row' && (
+                    <span className='h-20px border-1 border-gray-300 border-start ms-3 mx-2'></span>
+                  )}
+                  {pageDescription}{' '}
+                </span>
               )}
-              {pageDescription}{' '}
-            </span>
-          )}
-        </h1>
+          </h1>
+        </div>
       )}
       {/* end::Title */}
 
@@ -67,7 +78,10 @@ const PageTitle = () => {
                   key={`${item.path}${index}`}
                 >
                   {!item.isSeparator ? (
-                    <Link className='text-muted text-hover-primary' to={item.path}>
+                    <Link
+                      className='text-muted text-hover-primary'
+                      to={item.path}
+                    >
                       {item.title}
                     </Link>
                   ) : (
@@ -80,7 +94,7 @@ const PageTitle = () => {
           </>
         )}
     </div>
-  )
-}
+  );
+};
 
-export {PageTitle}
+export { PageTitle };
