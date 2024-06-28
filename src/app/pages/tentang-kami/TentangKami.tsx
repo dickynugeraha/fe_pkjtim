@@ -49,8 +49,8 @@ const TentangKami = () => {
             <h4 className="m-0">Kontak</h4>
           </div>
           <div className="p-8">
-            <div className="row">
-              <div className="col-5">
+            <div className="row rows-1 rows-lg-2">
+              <div className="col">
                 <JamPelayanan />
               </div>
               <div className="col">
@@ -58,8 +58,8 @@ const TentangKami = () => {
               </div>
             </div>
             <Gap height={30} />
-            <div className="row">
-              <div className="col-5">
+            <div className="row rows-1 rows-lg-2">
+              <div className="col">
                 <LokasiTerkini />
               </div>
               <div className="col">
@@ -82,7 +82,6 @@ const TentangKami = () => {
           className="rounded-xl"
           style={{ width: "100%" }}
         />
-        <Gap height={24} />
         <div className="text-justify">
           <p>
             <strong> Taman Ismail Marzuki (TIM)</strong>, terletak di jantung
@@ -192,28 +191,43 @@ const TentangKami = () => {
         <div>
           <h5>Kontak Person</h5>
           <Gap height={10} />
-          <div className="d-flex">
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="whatsapp" className="text-success fs-1 me-4" />
-              <div>
-                <p className="m-0">Bapak Didin</p>
-                <p className="m-0">wa.me/..</p>
+          <div className="row rows-1 rows-lg-3">
+            <div className="col">
+              <div className="d-flex align-items-center">
+                <KTIcon
+                  iconName="whatsapp"
+                  className="text-success fs-1 me-4"
+                />
+                <div>
+                  <p className="m-0">Bapak Didin</p>
+                  <p className="m-0">wa.me/..</p>
+                </div>
               </div>
             </div>
             <Gap width={10} />
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="whatsapp" className="text-success fs-1 me-4" />
-              <div>
-                <p className="m-0">Bapak Sularto</p>
-                <p className="m-0">wa.me/..</p>
+            <div className="col">
+              <div className="d-flex align-items-center">
+                <KTIcon
+                  iconName="whatsapp"
+                  className="text-success fs-1 me-4"
+                />
+                <div>
+                  <p className="m-0">Bapak Sularto</p>
+                  <p className="m-0">wa.me/..</p>
+                </div>
               </div>
             </div>
             <Gap width={20} />
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="whatsapp" className="text-success fs-1 me-4" />
-              <div>
-                <p className="m-0">Kantor UP PKJ TIM</p>
-                <p className="m-0">wa.me/..</p>
+            <div className="col">
+              <div className="d-flex align-items-center">
+                <KTIcon
+                  iconName="whatsapp"
+                  className="text-success fs-1 me-4"
+                />
+                <div>
+                  <p className="m-0">Kantor UP PKJ TIM</p>
+                  <p className="m-0">wa.me/..</p>
+                </div>
               </div>
             </div>
           </div>

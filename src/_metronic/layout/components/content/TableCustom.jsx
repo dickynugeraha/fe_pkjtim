@@ -209,12 +209,6 @@ const TableCustom = () => {
       </div>
       <Gap height={12} />
       <div className="ms-auto">
-        {/* <div>
-          Page{" "}
-          <em>
-            {pageIndex + 1} of {pageOptions.length}
-          </em>
-        </div> */}
         <Gap height={12} />
         <div className="d-flex">
           <button
@@ -222,7 +216,7 @@ const TableCustom = () => {
             onClick={() => previousPage()}
             disabled={!canPreviousPage}
           >
-            Previous Page
+            Previous
           </button>
           <Gap width={12} />
           <button
@@ -230,7 +224,7 @@ const TableCustom = () => {
             onClick={() => nextPage()}
             disabled={!canNextPage}
           >
-            Next Page
+            Next
           </button>
         </div>
       </div>
