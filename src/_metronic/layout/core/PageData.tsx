@@ -19,18 +19,23 @@ export interface PageDataContextModel {
   setPageDescription: (_description: string) => void
   pageBreadcrumbs?: Array<PageLink>
   setPageBreadcrumbs: (_breadcrumbs: Array<PageLink>) => void
+  pageTitleIcon: string
+  setPageTitleIcon: (_icon: string) => void
 }
 
 const PageDataContext = createContext<PageDataContextModel>({
   setPageTitle: (_title: string) => {},
   setPageBreadcrumbs: (_breadcrumbs: Array<PageLink>) => {},
   setPageDescription: (_description: string) => {},
+  setPageTitleIcon: (_icon: string) => {},
+  pageTitleIcon: 'default-icon',
 })
 
 const PageDataProvider: FC<WithChildren> = ({children}) => {
   const [pageTitle, setPageTitle] = useState<string>('')
   const [pageDescription, setPageDescription] = useState<string>('')
   const [pageBreadcrumbs, setPageBreadcrumbs] = useState<Array<PageLink>>([])
+  const [pageTitleIcon, setPageTitleIcon] = useState<string>('')
   const value: PageDataContextModel = {
     pageTitle,
     setPageTitle,
@@ -38,6 +43,8 @@ const PageDataProvider: FC<WithChildren> = ({children}) => {
     setPageDescription,
     pageBreadcrumbs,
     setPageBreadcrumbs,
+    pageTitleIcon,
+    setPageTitleIcon,
   }
   return <PageDataContext.Provider value={value}>{children}</PageDataContext.Provider>
 }
@@ -49,10 +56,11 @@ function usePageData() {
 type Props = {
   description?: string
   breadcrumbs?: Array<PageLink>
+  icon: string
 }
 
-const PageTitle: FC<Props & WithChildren> = ({children, description, breadcrumbs}) => {
-  const {setPageTitle, setPageDescription, setPageBreadcrumbs} = usePageData()
+const PageTitle: FC<Props & WithChildren> = ({children, description, breadcrumbs, icon}) => {
+  const {setPageTitle, setPageDescription, setPageBreadcrumbs, setPageTitleIcon} = usePageData()
   useEffect(() => {
     if (children) {
       setPageTitle(children.toString())
@@ -79,6 +87,15 @@ const PageTitle: FC<Props & WithChildren> = ({children, description, breadcrumbs
       setPageBreadcrumbs([])
     }
   }, [breadcrumbs])
+
+  useEffect(() => {
+    if (icon) {
+      setPageTitleIcon(icon)
+    }
+    return () => {
+      setPageTitleIcon('')
+    }
+  }, [icon])
 
   return <></>
 }
