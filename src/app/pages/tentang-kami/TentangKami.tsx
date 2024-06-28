@@ -12,10 +12,10 @@ import { KTIcon } from "../../../_metronic/helpers";
 import ImageAssets from "../../utils/image_assets";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 
-const tentangKamiBreadCrumbs: Array<PageLink> = [
+const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Profile",
-    path: "/crafted/pages/profile/overview",
+    title: "Tentang Kami",
+    path: "/tentang-kami",
     isSeparator: false,
     isActive: false,
   },
@@ -30,12 +30,19 @@ const tentangKamiBreadCrumbs: Array<PageLink> = [
 const TentangKami = () => {
   return (
     <>
+      <PageTitle
+        icon="profile-user"
+        breadcrumbs={Breadcrumbs}
+        description="Tentang Kami"
+      >
+        Tentang Kami
+      </PageTitle>
       <Content>
-        <HeadPage
+        {/* <HeadPage
           title="Tentang Kami"
           icon="profile-user"
           pages="Tentang Kami"
-        />
+        /> */}
         <div className="card">
           <div className="card-header d-flex align-items-center">
             <h4 className="m-0">Profil PKJ TIM</h4>

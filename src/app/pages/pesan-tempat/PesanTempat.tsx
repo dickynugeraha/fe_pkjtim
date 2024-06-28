@@ -4,7 +4,22 @@ import HeadPage from "../../modules/widgets/components/HeadPage";
 import { Link, useNavigate } from "react-router-dom";
 import Peraturan from "./components/Peraturan";
 import TarifSewa from "./components/TarifSewa";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 
+const Breadcrumbs: Array<PageLink> = [
+  {
+    title: "Pesan Tempat",
+    path: "/pesan-tempat",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+];
 const PesanTempat: FC = () => {
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [pesanTempatval, setPesanTempatval] = useState("teater_jakarta");
@@ -165,17 +180,30 @@ const PesanTempat: FC = () => {
     );
   };
   return (
-    <Content>
-      <HeadPage icon="geolocation" title="Pesan Tempat" pages="Pesan Tempat" />
-      <div className="row g-8 mb-5">
-        <Peraturan />
-        <TarifSewa />
-      </div>
-      <div className="d-flex mb-5">
-        <Persetujuan />
-      </div>
-      {termIsCheck && <FormPlace />}
-    </Content>
+    <>
+      <PageTitle
+        icon="geolocation"
+        breadcrumbs={Breadcrumbs}
+        description="Pesan Tempat"
+      >
+        Pesan Tempat
+      </PageTitle>
+      <Content>
+        {/* <HeadPage
+          icon="geolocation"
+          title="Pesan Tempat"
+          pages="Pesan Tempat"
+        /> */}
+        <div className="row g-8 mb-5">
+          <Peraturan />
+          <TarifSewa />
+        </div>
+        <div className="d-flex mb-5">
+          <Persetujuan />
+        </div>
+        {termIsCheck && <FormPlace />}
+      </Content>
+    </>
   );
 };
 

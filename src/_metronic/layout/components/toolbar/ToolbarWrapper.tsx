@@ -37,7 +37,7 @@ const ToolbarWrapper = () => {
         )}
       >
         {isPageTitleVisible && <PageTitleWrapper />}
-        <Toolbar />
+        {/* <Toolbar /> */}
       </div>
     </div>
   );

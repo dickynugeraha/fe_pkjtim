@@ -4,6 +4,34 @@ import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import axios from "axios";
 import { arrData, convertRouteToTitle } from "./helper";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+
+const Breadcrumbs: Array<PageLink> = [
+  {
+    title: "Dashboard",
+    path: "/dashboard",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+  {
+    title: "Home",
+    path: "/dashboard",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+];
 
 const DashboardViewData: FC = () => {
   const navigate = useNavigate();
@@ -24,7 +52,7 @@ const DashboardViewData: FC = () => {
     console.log(params.list);
 
     return (
-      <div className="my-12">
+      <div>
         <div className="row row-cols-2 row-cols-lg-3 g-3">
           {arrData.map((item: any, index: number) => (
             <div
@@ -55,16 +83,23 @@ const DashboardViewData: FC = () => {
   }
 
   return (
-    <Content>
-      <HeadPage
-        pages={`Dashboard - Home - ${convertRouteToTitle(
-          params.list as string
-        )}`}
-        title={convertRouteToTitle(params.list as string) as string}
-        icon={"home"}
-      />
-      <ListViewData data={list} />
-    </Content>
+    <>
+      <PageTitle
+        icon="home"
+        breadcrumbs={Breadcrumbs}
+        description={`${convertRouteToTitle(params.list as string)}`}
+      >{`${convertRouteToTitle(params.list as string)}`}</PageTitle>
+      <Content>
+        {/* <HeadPage
+          pages={`Dashboard - Home - ${convertRouteToTitle(
+            params.list as string
+          )}`}
+          title={convertRouteToTitle(params.list as string) as string}
+          icon={"home"}
+        /> */}
+        <ListViewData data={list} />
+      </Content>
+    </>
   );
 };
 

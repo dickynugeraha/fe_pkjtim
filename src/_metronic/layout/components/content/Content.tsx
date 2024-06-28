@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router';
-import clsx from 'clsx';
-import { useLayout } from '../../core';
-import { DrawerComponent } from '../../../assets/ts/components';
-import { WithChildren } from '../../../helpers';
-import { ToolbarWrapper } from '../toolbar';
+import { useEffect } from "react";
+import { useLocation } from "react-router";
+import clsx from "clsx";
+import { useLayout } from "../../core";
+import { DrawerComponent } from "../../../assets/ts/components";
+import { WithChildren } from "../../../helpers";
+import { ToolbarWrapper } from "../toolbar";
 
 const Content = ({ children }: WithChildren) => {
   const { config, classes } = useLayout();
@@ -18,22 +18,22 @@ const Content = ({ children }: WithChildren) => {
     <>
       <ToolbarWrapper />
       <div
-        id='kt_app_content'
+        id="kt_app_content"
         className={clsx(
-          'app-content flex-column-fluid',
-          classes.content.join(' '),
+          "app-content flex-column-fluid",
+          classes.content.join(" "),
           config?.app?.content?.class
         )}
       >
         {appContentContainer ? (
           <div
-            id='kt_app_content_container'
+            id="kt_app_content_container"
             className={clsx(
-              'app-container',
-              classes.contentContainer.join(' '),
+              "app-container",
+              classes.contentContainer.join(" "),
               {
-                'container-xxl': appContentContainer === 'fixed',
-                'container-fluid': appContentContainer === 'fluid',
+                "container-xxl": appContentContainer === "fixed",
+                "container-fluid": appContentContainer === "fluid",
               }
             )}
           >

@@ -3,6 +3,8 @@ import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import { useParams } from "react-router-dom";
 import { convertRouteToTitle, dummyImage } from "./helper";
+import HeadCard from "../../../_metronic/layout/components/content/HeadCard";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 
 const DashboardViewDataDetail = () => {
   const params = useParams();
@@ -10,26 +12,66 @@ const DashboardViewDataDetail = () => {
   const detailId = params.id;
   const title = convertRouteToTitle(params.list as string);
 
-  // const detailData = arrayList.find(item => item.id === detailId); // hasilnya object
-  // const dataExcept = arrayList.filter(item => item.id !== detailId); // hasilnya array
+  const Breadcrumbs: Array<PageLink> = [
+    {
+      title: "Dashboard",
+      path: "/dashboard",
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: "",
+      path: "",
+      isSeparator: true,
+      isActive: false,
+    },
+    {
+      title: "Home",
+      path: "/dashboard",
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: "",
+      path: "",
+      isSeparator: true,
+      isActive: false,
+    },
+    {
+      title: title,
+      path: `/dashboard/home/${list}`,
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: "",
+      path: "",
+      isSeparator: true,
+      isActive: false,
+    },
+  ];
 
   console.log(list, detailId);
 
   return (
     <Content>
-      <HeadPage
+      <PageTitle
         icon="home"
-        title={`Detail ${title}`}
-        pages={`Dashboard - Home - ${title} - Detail`}
-      />
+        breadcrumbs={Breadcrumbs}
+        description="Daftar pesanan saya"
+      >
+        Daftar Pesanan Saya
+      </PageTitle>
+
       <div className="card">
+        <HeadCard title="Detail Info" />
         <div className="row g-10">
           <div className="col-12 col-lg-8">
-            <div className="card-header d-flex justify-content-between align-items-center">
+            <div className="p-8 d-flex justify-content-between align-items-center">
               <h4 className="m-0">Terkenalnya outfit skena</h4>
               <p className="m-0">19-19-2023</p>
             </div>
-            <div className="p-8 pe-lg-0">
+            <div className="p-8 pt-0 pe-lg-0">
               <img
                 src={dummyImage}
                 style={{ width: "100%", borderRadius: "6px" }}
@@ -51,7 +93,7 @@ const DashboardViewDataDetail = () => {
             </div>
           </div>
           <div className="col-12 col-lg-4">
-            <div className="card-header d-flex align-items-center p-lg-0">
+            <div className="d-flex align-items-center px-8 p-lg-0 pt-lg-8">
               <h4 className="m-0">{title} terbaru</h4>
             </div>
 

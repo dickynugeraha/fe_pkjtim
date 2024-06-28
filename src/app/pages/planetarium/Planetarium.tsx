@@ -5,6 +5,22 @@ import Peraturan from "./components/Peraturan";
 import { useNavigate } from "react-router-dom";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+
+const Breadcrumbs: Array<PageLink> = [
+  {
+    title: "Planetarium",
+    path: "/planetarium",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+];
 
 const Planetarium = () => {
   const navigate = useNavigate();
@@ -35,26 +51,35 @@ const Planetarium = () => {
   };
 
   return (
-    <Content>
-      <HeadPage icon="moon" pages="Planetarium" title="Planetarium" />
-      <ModalInformationCustom
-        title={showFailedNext.title}
-        desc={showFailedNext.desc}
-        show={showFailedNext.isShow}
-        onHide={() => {
-          setShowFailedNext((prevState) => ({
-            ...prevState,
-            isShow: false,
-          }));
-        }}
-        variant={showFailedNext.variant}
-      />
-      <Peraturan />
-      <Gap height={18} />
-      <Persetujuan />
-      <Gap height={18} />
-      {termIsCheck && <FormPlace />}
-    </Content>
+    <>
+      <PageTitle
+        icon="moon"
+        breadcrumbs={Breadcrumbs}
+        description="Planetarium"
+      >
+        Planetarium
+      </PageTitle>
+      <Content>
+        {/* <HeadPage icon="moon" pages="Planetarium" title="Planetarium" /> */}
+        <ModalInformationCustom
+          title={showFailedNext.title}
+          desc={showFailedNext.desc}
+          show={showFailedNext.isShow}
+          onHide={() => {
+            setShowFailedNext((prevState) => ({
+              ...prevState,
+              isShow: false,
+            }));
+          }}
+          variant={showFailedNext.variant}
+        />
+        <Peraturan />
+        <Gap height={18} />
+        <Persetujuan />
+        <Gap height={18} />
+        {termIsCheck && <FormPlace />}
+      </Content>
+    </>
   );
 
   function Persetujuan() {
