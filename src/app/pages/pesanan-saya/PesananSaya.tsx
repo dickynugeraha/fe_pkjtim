@@ -1,13 +1,8 @@
-import HeadPage from "../../modules/widgets/components/HeadPage";
 import { Content } from "../../../_metronic/layout/components/content";
-import GenerateQR from "../../../_metronic/layout/components/content/GenerateQR";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core/PageData";
 import Table from "../../../_metronic/layout/components/table/Table";
-import { useIntl } from "react-intl";
 import { FC } from "react";
-import { ToolbarWrapper } from "../../../_metronic/layout/components/toolbar/ToolbarWrapper";
-import { KTIcon } from "../../../_metronic/helpers";
-import { Breadcrumb } from "react-bootstrap";
+import { ToolbarWrapper } from "../../../_metronic/layout/components/toolbar";
 
 const Breadcrumbs: Array<PageLink> = [
   {

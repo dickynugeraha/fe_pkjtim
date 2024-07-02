@@ -89,7 +89,7 @@ const TentangKami = () => {
           className="rounded-xl"
           style={{ width: "100%" }}
         />
-        <div className="text-justify">
+        <div className="text-justify m-2 p-2">
           <p>
             <strong> Taman Ismail Marzuki (TIM)</strong>, terletak di jantung
             kota Jakarta, merupakan pusat kesenian dan budaya terkemuka di

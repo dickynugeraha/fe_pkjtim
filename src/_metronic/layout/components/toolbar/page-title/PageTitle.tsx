@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useLayout } from '../../../core';
 import { usePageData } from '../../../core/PageData';
 import { KTIcon } from '../../../../helpers';
-import { Row } from 'react-bootstrap';
 
 const PageTitle = () => {
   const { pageTitle, pageDescription, pageBreadcrumbs, pageTitleIcon } = usePageData();

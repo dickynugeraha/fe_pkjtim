@@ -1,7 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { QRCode } from "react-qrcode-logo";
 
-const GenerateQR = ({ data }) => {
+interface Props{
+  data:string;
+}
+
+const GenerateQR: FC<Props> = ({ data }) => {
   console.log(data);
 
   return (
@@ -17,7 +21,7 @@ const GenerateQR = ({ data }) => {
         logoWidth={75}
         logoHeight={75}
         logoOpacity={1}
-        logoBackgroundColor="transparent"
+        // logoBackgroundColor="transparent"
         logoPadding={2}
         qrStyle="squares"
       />

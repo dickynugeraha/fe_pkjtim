@@ -38,3 +38,27 @@ export const arrData: any = [
     description: "Description",
   },
 ];
+
+export const arrDataTempat: any = [
+  {
+    image: dummyImage,
+    title: "Judul",
+    description: "Description",
+  },
+  {
+    image: dummyImage,
+    title: "Judul",
+    description: "Description",
+  },
+  {
+    image: dummyImage,
+    title: "Judul",
+    description: "Description",
+  },
+  {
+    image: dummyImage,
+    title: "Judul",
+    description: "Description",
+  },
+];
+

@@ -16,6 +16,7 @@ const Toolbar = () => {
     document.body.setAttribute('data-kt-app-toolbar-enabled', 'true')
   }, [config])
 
+  console.log(config.app?.toolbar?.layout);
   switch (config.app?.toolbar?.layout) {
     case 'classic':
       return <ToolbarClassic />
@@ -31,6 +32,7 @@ const Toolbar = () => {
       return <ToolbarClassic />
   }
 }
+
 
 const updateDOM = (config: ILayout) => {
   let appToolbarSwapAttributes: {[attrName: string]: string} = {}
