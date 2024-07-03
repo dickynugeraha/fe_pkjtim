@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
 import { Link, useNavigate } from "react-router-dom";
 import Peraturan from "./components/Peraturan";
 import TarifSewa from "./components/TarifSewa";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import globalVar from "../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -25,6 +25,26 @@ const PesanTempat: FC = () => {
   const [pesanTempatval, setPesanTempatval] = useState("teater_jakarta");
   const [tanggalPesanVal, setTanggalPesanVal] = useState("");
   const [hargaTempat, setHargaTempat] = useState("50 jt");
+
+  const [selectedDate, setSelectedDate] = useState("");
+
+  // Array of disabled dates in 'YYYY-MM-DD' format
+  const disabledDates = ["2024-10-2", "2024-10-3", "2024-10-4"];
+
+  const handleDateChange = (event: { target: { value: any } }) => {
+    const newDate = event.target.value;
+    if (disabledDates.includes(newDate)) {
+      alert("This date is disabled. Please choose another date.");
+      setSelectedDate("");
+    } else {
+      setSelectedDate(newDate);
+    }
+  };
+
+  // Disable specific dates
+  const isDisabledDate = (date: string) => {
+    return disabledDates.includes(date);
+  };
 
   const navigate = useNavigate();
 
@@ -158,10 +178,26 @@ const PesanTempat: FC = () => {
               <input
                 type="date"
                 className="form-control"
-                onChange={(e) => setTanggalPesanVal(e.target.value)}
-                style={{ width: "200px" }}
+                value={selectedDate}
+                onChange={handleDateChange}
+                // value={tanggalPesanVal}
+                // onChange={(e) => setTanggalPesanVal(e.target.value)}
+                style={
+                  disabledDates.includes(selectedDate)
+                    ? { filter: "grayscale(100%)" }
+                    : {}
+                }
+                min={globalVar.getThreeMonthsFromToday()}
+                onKeyDown={(e) => e.preventDefault()}
               />
             </div>
+            <style jsx>{`
+              input[type="date"]::-webkit-calendar-picker-indicator {
+                filter: ${disabledDates.includes(selectedDate)
+                  ? "grayscale(100%)"
+                  : "none"};
+              }
+            `}</style>
             <button
               type="button"
               className="btn btn-primary"

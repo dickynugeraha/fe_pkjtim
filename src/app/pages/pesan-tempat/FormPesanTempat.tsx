@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import clsx from "clsx";
 import * as Yup from "yup";
 import Gap from "../../../_metronic/layout/components/content/Gap";
+import globalVar from "../../helper/globalVar";
 
 const formPesanScheme = Yup.object().shape({
   namaSanggar: Yup.string().required("Nama sanggar harus diisi"),
@@ -220,6 +221,7 @@ const FormPesanTempat: FC = () => {
                         }
                       )}
                       type="date"
+                      min={globalVar.getThreeMonthsFromToday()}
                       name="tanggalMulaiPentas"
                       autoComplete="off"
                     />
@@ -333,15 +335,15 @@ const FormPesanTempat: FC = () => {
               <div className="d-flex flex-wrap">
                 <div className="mb-5 me-5">
                   <p className="fw-bold mb-1">Surat permohonan</p>
-                  <input type="date" className="form-control bg-transparant" />
+                  <input type="file" className="form-control bg-transparant" />
                 </div>
                 <div className="mb-5 me-5">
                   <p className="fw-bold mb-1">Tanda pengenal</p>
-                  <input type="date" className="form-control bg-transparant" />
+                  <input type="file" className="form-control bg-transparant" />
                 </div>
                 <div className="mb-5">
                   <p className="fw-bold mb-1">Proposal</p>
-                  <input type="date" className="form-control bg-transparant" />
+                  <input type="file" className="form-control bg-transparant" />
                 </div>
               </div>
             </div>
