@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
-import Peraturan from "./components/Peraturan";
 import { useNavigate } from "react-router-dom";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import Indoor from "./components/Indoor";
+import Outdor from "./components/Outdoor";
+import Peraturan from "./components/Peraturan";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -55,12 +56,11 @@ const Planetarium = () => {
       <PageTitle
         icon="moon"
         breadcrumbs={Breadcrumbs}
-        description="Planetarium"
+        description="Planetarium Goes To School"
       >
-        Planetarium
+        Planetarium Goes To School
       </PageTitle>
       <Content>
-        {/* <HeadPage icon="moon" pages="Planetarium" title="Planetarium" /> */}
         <ModalInformationCustom
           title={showFailedNext.title}
           desc={showFailedNext.desc}
@@ -73,10 +73,11 @@ const Planetarium = () => {
           }}
           variant={showFailedNext.variant}
         />
+        <Gap height={18} />
         <Peraturan />
-        <Gap height={18} />
+        <Gap height={24} />
         <Persetujuan />
-        <Gap height={18} />
+        <Gap height={24} />
         {termIsCheck && <FormPlace />}
       </Content>
     </>
@@ -84,7 +85,7 @@ const Planetarium = () => {
 
   function Persetujuan() {
     return (
-      <>
+      <div className="d-flex align-items-center">
         <input
           type="checkbox"
           id="agree-terms"
@@ -94,7 +95,7 @@ const Planetarium = () => {
         <label className="ms-3" htmlFor="agree-terms">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
-      </>
+      </div>
     );
   }
   function FormPlace() {

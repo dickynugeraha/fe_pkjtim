@@ -1,12 +1,12 @@
-import { FC, useState } from 'react';
-import { Modal } from 'react-bootstrap';
-import { KTSVG } from '../../../_metronic/helpers';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { FC, useState } from "react";
+import { Modal } from "react-bootstrap";
+import { KTSVG } from "../../../_metronic/helpers";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import {
   IProfileDetails,
   profileDetailsInitValues as initialValues,
-} from '../../modules/accounts/components/settings/SettingsModel';
+} from "../../modules/accounts/components/settings/SettingsModel";
 
 type Props = {
   show: boolean;
@@ -14,15 +14,15 @@ type Props = {
 };
 
 const profileDetailsSchema = Yup.object().shape({
-  fName: Yup.string().required('First name is required'),
-  lName: Yup.string().required('Last name is required'),
-  company: Yup.string().required('Company name is required'),
-  contactPhone: Yup.string().required('Contact phone is required'),
-  companySite: Yup.string().required('Company site is required'),
-  country: Yup.string().required('Country is required'),
-  language: Yup.string().required('Language is required'),
-  timeZone: Yup.string().required('Time zone is required'),
-  currency: Yup.string().required('Currency is required'),
+  fName: Yup.string().required("First name is required"),
+  lName: Yup.string().required("Last name is required"),
+  company: Yup.string().required("Company name is required"),
+  contactPhone: Yup.string().required("Contact phone is required"),
+  companySite: Yup.string().required("Company site is required"),
+  country: Yup.string().required("Country is required"),
+  language: Yup.string().required("Language is required"),
+  timeZone: Yup.string().required("Time zone is required"),
+  currency: Yup.string().required("Currency is required"),
 });
 
 const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
@@ -52,63 +52,68 @@ const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
   return (
     <Modal show={show} onHide={hideModal} centered={true}>
       <Modal.Header>
-        <h4 className='m-0 p-0'>Ubah data diri</h4>
         <div
-          className='btn btn-icon btn-sm btn-active-light-primary ms-2'
-          onClick={hideModal}
-          aria-label='Close'
+          className="d-flex justify-content-between align-items-center"
+          style={{ width: "100%" }}
         >
-          <KTSVG
-            path='media/icons/duotune/arrows/arr061.svg'
-            className='svg-icon svg-icon-2x'
-          />
+          <h4 className="m-0 p-0">Ubah data diri</h4>
+          <div
+            className="btn btn-icon btn-sm btn-active-light-primary ms-2"
+            onClick={hideModal}
+            aria-label="Close"
+          >
+            <KTSVG
+              path="media/icons/duotune/arrows/arr061.svg"
+              className="svg-icon svg-icon-2x"
+            />
+          </div>
         </div>
       </Modal.Header>
       <Modal.Body>
-        <div className='row mb-6'>
-          <label className='col-lg-5 col-form-label required fw-bold fs-6'>
+        <div className="row mb-6">
+          <label className="col-lg-5 col-form-label required fw-bold fs-6">
             Nama Lengkap
           </label>
 
-          <div className='col-lg-7'>
+          <div className="col-lg-7">
             <input
-              type='text'
-              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-              placeholder='First name'
-              {...formik.getFieldProps('fName')}
+              type="text"
+              className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="First name"
+              {...formik.getFieldProps("fName")}
             />
             {formik.touched.fName && formik.errors.fName && (
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block'>{formik.errors.fName}</div>
+              <div className="fv-plugins-message-container">
+                <div className="fv-help-block">{formik.errors.fName}</div>
               </div>
             )}
           </div>
         </div>
-        <div className='row mb-6'>
-          <label className='col-lg-5 col-form-label required fw-bold fs-6'>
+        <div className="row mb-6">
+          <label className="col-lg-5 col-form-label required fw-bold fs-6">
             Nomor Handphone
           </label>
 
-          <div className='col-lg-7'>
+          <div className="col-lg-7">
             <input
-              type='text'
-              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-              placeholder='First name'
-              {...formik.getFieldProps('contactPhone')}
+              type="text"
+              className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+              placeholder="First name"
+              {...formik.getFieldProps("contactPhone")}
             />
             {formik.touched.fName && formik.errors.fName && (
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block'>{formik.errors.fName}</div>
+              <div className="fv-plugins-message-container">
+                <div className="fv-help-block">{formik.errors.fName}</div>
               </div>
             )}
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <div className='btn btn-sm btn-light' onClick={hideModal}>
+        <div className="btn btn-sm btn-light" onClick={hideModal}>
           Batal
         </div>
-        <div className='btn btn-sm btn-primary'>Ubah</div>
+        <div className="btn btn-sm btn-primary">Ubah</div>
       </Modal.Footer>
     </Modal>
   );

@@ -8,21 +8,84 @@ const SidebarMenuMain = () => {
 
   const intl = useIntl();
 
-  return (
-    <>
+  const DashboardSideBar = () => {
+    return (
+      <>
+        <SidebarMenuItemWithSub
+          to="/dashboard"
+          icon="element-11"
+          title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
+          fontIcon="bi-app-indicator"
+        >
+          <SidebarMenuItem to="/dashboard/home" title="Home" hasBullet={true} />
+          <SidebarMenuItem
+            to="/dashboard/kalender"
+            title="Kalender"
+            hasBullet={true}
+          />
+        </SidebarMenuItemWithSub>
+      </>
+    );
+  };
+
+  const MasterDataSidebar = () => {
+    return (
       <SidebarMenuItemWithSub
-        to="/dashboard"
-        icon="element-11"
-        title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
-        fontIcon="bi-app-indicator"
+        to="master-data"
+        icon="data"
+        title="Master Data"
+        fontIcon="bi-layers"
       >
-        <SidebarMenuItem to="/dashboard/home" title="Home" hasBullet={true} />
         <SidebarMenuItem
-          to="/dashboard/kalender"
-          title="Kalender"
+          to="master-data/sekilas-info"
+          title="Sekilas Info"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/pementasan"
+          title="Pementasan"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/seniman"
+          title="Seniman"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/koleksi-seni"
+          title="Koleksi Seni"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/tempat"
+          title="Tempat"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/tutup-tempat"
+          title="Tutup Tempat"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
+          to="master-data/users"
+          title="Pengguna"
           hasBullet={true}
         />
       </SidebarMenuItemWithSub>
+    );
+  };
+
+  return (
+    <>
+      <DashboardSideBar />
+      <MasterDataSidebar />
+
+      <SidebarMenuItem
+        to="pesanan-masuk"
+        icon="book-square"
+        title="Pesanan Masuk"
+        fontIcon="bi-layers"
+      />
       <SidebarMenuItem
         to="pesan-tempat"
         icon="geolocation"
@@ -32,7 +95,7 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to="planetarium"
         icon="moon"
-        title="Planetarium"
+        title="Planetarium G2S"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
@@ -47,19 +110,6 @@ const SidebarMenuMain = () => {
         title="Tentang Kami"
         fontIcon="bi-layers"
       />
-      {/* <div className="fw-bold fs-5" onClick={() => setIsShow(true)}>
-        <SidebarMenuItem
-          to="#"
-          icon="user-square"
-          title="Kontak"
-          fontIcon="bi-layers"
-        />
-      </div> */}
-      {/* 
-      <SidebarModalKontak
-        isShow={isShow}
-        handleClose={() => setIsShow(false)}
-      /> */}
     </>
   );
 };
