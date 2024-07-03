@@ -71,16 +71,16 @@ export interface IDeactivateAccount {
 }
 
 export const profileDetailsInitValues: IProfileDetails = {
-  avatar: "media/avatars/300-1.jpg",
-  fName: "Max",
-  lName: "Smith",
-  company: "Keenthemes",
-  contactPhone: "044 3276 454 935",
-  companySite: "keenthemes.com",
-  country: "",
-  language: "",
-  timeZone: "",
-  currency: "",
+  avatar: 'media/avatars/300-1.jpg',
+  fName: 'Kale',
+  lName: 'Pramono',
+  company: 'PKJTIM',
+  contactPhone: '044 3276 454 935',
+  companySite: 'pkjtim.com',
+  country: '',
+  language: '',
+  timeZone: '',
+  currency: '',
   communications: {
     email: false,
     phone: false,
@@ -89,14 +89,14 @@ export const profileDetailsInitValues: IProfileDetails = {
 };
 
 export const updateEmail: IUpdateEmail = {
-  newEmail: "support@keenthemes.com",
-  confirmPassword: "",
+  newEmail: 'support@keenthemes.com',
+  confirmPassword: '',
 };
 
 export const updatePassword: IUpdatePassword = {
-  currentPassword: "",
-  newPassword: "",
-  passwordConfirmation: "",
+  currentPassword: '',
+  newPassword: '',
+  passwordConfirmation: '',
 };
 
 export const connectedAccounts: IConnectedAccounts = {

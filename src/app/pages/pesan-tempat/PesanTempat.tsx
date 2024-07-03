@@ -50,17 +50,18 @@ const PesanTempat: FC = () => {
 
   const Persetujuan = () => {
     return (
-      <>
+      <div className="form-check">
         <input
           type="checkbox"
           id="agree-terms"
+          className="form-check-input"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="ms-3" htmlFor="agree-terms">
+        <label className="form-check-label" htmlFor="agree-terms">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
-      </>
+      </div>
     );
   };
   const FormPlace = () => {
@@ -191,13 +192,7 @@ const PesanTempat: FC = () => {
                 onKeyDown={(e) => e.preventDefault()}
               />
             </div>
-            <style jsx>{`
-              input[type="date"]::-webkit-calendar-picker-indicator {
-                filter: ${disabledDates.includes(selectedDate)
-                  ? "grayscale(100%)"
-                  : "none"};
-              }
-            `}</style>
+
             <button
               type="button"
               className="btn btn-primary"
