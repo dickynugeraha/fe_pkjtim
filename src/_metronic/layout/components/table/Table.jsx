@@ -3,92 +3,9 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import Gap from "../content/Gap";
 import { KTIcon } from "../../../helpers";
 
-const Table = () => {
+const Table = ({ data, columns }) => {
   const availableLimit = [5, 10, 15, 20, 25];
   const [limit, setLimit] = useState(5);
-
-  const data = useMemo(
-    () => [
-      {
-        tipe_tempat: "Kim Parrish",
-        tanggal_pesan: "4420 Valley Street, Garnerville, NY 10923",
-        tanggal_sewa: "07/11/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Success",
-      },
-      {
-        tipe_tempat: "Michele Castillo",
-        tanggal_pesan: "637 Kyle Street, Fullerton, NE 68638",
-        tanggal_sewa: "07/11/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Success",
-      },
-      {
-        tipe_tempat: "Eric Ferris",
-        tanggal_pesan: "906 Hart Country Lane, Toccoa, GA 30577",
-        tanggal_sewa: "07/10/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Success",
-      },
-      {
-        tipe_tempat: "Gloria Noble",
-        tanggal_pesan: "2403 Edgewood Avenue, Fresno, CA 93721",
-        tanggal_sewa: "07/09/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Success",
-      },
-      {
-        tipe_tempat: "Darren Daniels",
-        tanggal_pesan: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        tanggal_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Success",
-      },
-      {
-        tipe_tempat: "Ted McDonald",
-        tanggal_pesan: "796 Bryan Avenue, Minneapolis, MN 55406",
-        tanggal_sewa: "07/07/2020",
-        status: "Success",
-        total_pembayaran: "Rp. 1.000.000",
-      },
-    ],
-    []
-  );
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Tipe Tempat",
-        accessor: "tipe_tempat",
-        sortType: "alphanumeric",
-      },
-      {
-        Header: "Tanggal Pesan",
-        accessor: "tanggal_pesan",
-        sortType: "alphanumeric",
-      },
-      {
-        Header: "Tanggal Sewa",
-        accessor: "tanggal_sewa",
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        sortType: "alphanumeric",
-      },
-      {
-        Header: "Total Pembayaran",
-        accessor: "total_pembayaran",
-        sortType: "alphanumeric",
-      },
-      // {
-      //   Header: "Action",
-      //   accessor: "order",
-      //   sortType: "alphanumeric",
-      // },
-    ],
-    []
-  );
 
   const {
     getTableProps,
@@ -136,23 +53,6 @@ const Table = () => {
               placeholder="Cari"
             />
           </div>
-          <Gap width={18} />
-          <div className="d-flex align-items-center">
-            <p className="m-0  text-muted fw-bolder fs-7 text-uppercase">
-              Tampilkan
-            </p>
-            <Gap width={10} />
-            <select
-              value={limit}
-              className="custom-select rounded p-1"
-              style={{ width: "50px" }}
-              onChange={(e) => setLimit(e.target.value)}
-            >
-              {availableLimit.map((val) => (
-                <option value={val}>{val}</option>
-              ))}
-            </select>
-          </div>
         </div>
 
         <div>
@@ -174,9 +74,9 @@ const Table = () => {
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     <div className="d-flex align-items-center">
-                      <h5 className="m-0 me-4 text-muted fw-bolder fs-7 text-uppercase gs-">
+                      <h4 className="m-0 me-4 fs-6">
                         {column.render("Header")}
-                      </h5>
+                      </h4>
                       <span className="fs-7">
                         {column.isSorted
                           ? column.isSortedDesc
@@ -209,13 +109,21 @@ const Table = () => {
         </table>
       </div>
       <Gap height={12} />
-      <div className="ms-auto">
-        {/* <div>
-          Page{" "}
-          <em>
-            {pageIndex + 1} of {pageOptions.length}
-          </em>
-        </div> */}
+      <div className="d-flex justify-content-between">
+        <div className="d-flex align-items-center">
+          <h5 className="m-0 fs-6">Tampilkan</h5>
+          <Gap width={10} />
+          <select
+            value={limit}
+            className="custom-select rounded p-1"
+            style={{ width: "50px" }}
+            onChange={(e) => setLimit(e.target.value)}
+          >
+            {availableLimit.map((val) => (
+              <option value={val}>{val}</option>
+            ))}
+          </select>
+        </div>
         <Gap height={12} />
         <div className="d-flex">
           <button

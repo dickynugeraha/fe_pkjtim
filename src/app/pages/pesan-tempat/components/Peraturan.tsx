@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
 const Peraturan = () => {
   return (
-    <div className='col-12 col-lg-6'>
-      <div className='card'>
-        <div className='card-header d-flex align-items-center'>
-          <h4 className='m-0 p-0'>Peraturan</h4>
+    <div className="col-12 col-lg-6">
+      <div className="card">
+        <div className="card-header d-flex align-items-center">
+          <h4 className="m-0 p-0">Peraturan</h4>
         </div>
-        <div className='p-4'>
+        <div className="p-4">
           <ol>
-            <li className='mb-4'>
-              <p className='fw-bold m-0'>Kegiatan yang Dilarang</p>
+            <li className="mb-4">
+              <h6 className="fw-bold m-0">Kegiatan yang Dilarang</h6>
               <ul>
                 <li>Politik/Ormas/Sekolah/Kampus</li>
                 <li>Melanggar Hukum/ Norma -Melanggar Hak Cipta</li>
@@ -19,8 +19,8 @@ const Peraturan = () => {
                 <li>Kebencian -Keagamaan</li>
               </ul>
             </li>
-            <li className='mb-4'>
-              <p className='m-0 fw-bold'>Wajib mencantumkan</p>
+            <li className="mb-4">
+              <h6 className="m-0 fw-bold">Wajib mencantumkan</h6>
               <ul>
                 <li>Nama Kegiatan</li>
                 <li>Genre Seni</li>
@@ -30,7 +30,7 @@ const Peraturan = () => {
               </ul>
             </li>
             <li>
-              <p className='m-0 fw-bold'>Wajib menyampaikan</p>
+              <h6 className="m-0 fw-bold">Wajib menyampaikan</h6>
               <ul>
                 <li>Group Yang Akan Pentas</li>
                 <li>Rekam Jejak</li>

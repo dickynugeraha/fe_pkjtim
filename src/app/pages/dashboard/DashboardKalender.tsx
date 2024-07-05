@@ -1,17 +1,17 @@
-import { FC } from 'react';
-import { Content } from '../../../_metronic/layout/components/content';
-import { PageLink, PageTitle } from '../../../_metronic/layout/core';
+import { FC } from "react";
+import { Content } from "../../../_metronic/layout/components/content";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: 'Dashboard',
-    path: '/',
+    title: "Dashboard",
+    path: "/dashboard/kalender",
     isSeparator: false,
     isActive: true,
   },
   {
-    title: '',
-    path: '',
+    title: "",
+    path: "",
     isSeparator: true,
     isActive: true,
   },
@@ -21,11 +21,11 @@ const DashboardKalender: FC = () => {
   return (
     <>
       <PageTitle
-        icon='calendar'
+        icon="calendar"
         breadcrumbs={Breadcrumbs}
-        description='Daftar pesanan saya'
+        description="Kalender"
       >
-        Home
+        Kalender
       </PageTitle>
       <Content></Content>
     </>

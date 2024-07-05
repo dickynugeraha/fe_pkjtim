@@ -14,7 +14,7 @@ const SidebarMenuMain = () => {
         <SidebarMenuItemWithSub
           to="/dashboard"
           icon="element-11"
-          title={intl.formatMessage({ id: "MENU.DASHBOARD" })}
+          title="Home"
           fontIcon="bi-app-indicator"
         >
           <SidebarMenuItem to="/dashboard/home" title="Home" hasBullet={true} />

@@ -20,7 +20,7 @@ const AuthLayout = () => {
       className="d-flex flex-column flex-lg-row flex-column-fluid bgi-size-auto bgi-position-center img-responsive"
       style={{
         backgroundImage: `url(${toAbsoluteUrl(
-          "media/misc/auth-bg-pkjtim.png"
+          "media/misc/auth-bg-pkjtim-2.png"
         )})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

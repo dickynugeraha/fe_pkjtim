@@ -7,7 +7,7 @@ const TarifSewa = () => {
         <div className="card-header d-flex align-items-center">
           <h4 className="m-0">Tarif Sewa</h4>
         </div>
-        <div className="p-8">
+        <div className="p-6">
           <table style={{ width: "65%", marginBottom: "8px" }}>
             <tr>
               <td>Teater Jakarta</td>

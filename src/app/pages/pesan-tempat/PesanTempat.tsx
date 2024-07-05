@@ -53,12 +53,12 @@ const PesanTempat: FC = () => {
       <div className="form-check">
         <input
           type="checkbox"
-          id="agree-terms"
+          id="agree-terms-place"
           className="form-check-input"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="form-check-label" htmlFor="agree-terms">
+        <label className="form-check-label" htmlFor="agree-terms-place">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
       </div>

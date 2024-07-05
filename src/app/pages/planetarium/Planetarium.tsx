@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
-import Indoor from "./components/Indoor";
-import Outdor from "./components/Outdoor";
 import Peraturan from "./components/Peraturan";
 
 const Breadcrumbs: Array<PageLink> = [
@@ -85,14 +83,15 @@ const Planetarium = () => {
 
   function Persetujuan() {
     return (
-      <div className="d-flex align-items-center">
+      <div className="form-check">
         <input
           type="checkbox"
-          id="agree-terms"
+          id="agree-terms-planetarium"
+          className="form-check-input"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="ms-3" htmlFor="agree-terms">
+        <label className="form-check-label" htmlFor="agree-terms-planetarium">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
       </div>
@@ -111,7 +110,6 @@ const Planetarium = () => {
                   className="form-control"
                   value={startBook}
                   onChange={(e) => setStartBook(e.target.value)}
-                  style={{ width: "200px" }}
                 />
                 <p className="m-0 mx-5">Sampai</p>
                 <input
@@ -119,7 +117,6 @@ const Planetarium = () => {
                   value={endBook}
                   className="form-control"
                   onChange={(e) => setEndBook(e.target.value)}
-                  style={{ width: "200px" }}
                 />
               </div>
             </div>

@@ -29,8 +29,8 @@ const registrationSchema = Yup.object().shape({
     .required("Email harus diisi"),
 
   phone: Yup.number()
-    .min(11, "Minimal 11 karakter")
-    .max(13, "Maksimal 13 karakter")
+    .min(11, "Minimal 11 nomor")
+    .max(13, "Maksimal 13 nomor")
     .required("Nomor handphone garus diisi"),
   password: Yup.string()
     .min(3, "Minimal 3 karakter")
@@ -40,7 +40,10 @@ const registrationSchema = Yup.object().shape({
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Konfirmasi password harus diisi")
-    .oneOf([Yup.ref("password")], "Password and Confirm Password didn't match"),
+    .oneOf(
+      [Yup.ref("password")],
+      "Password dan Konfirmasi Password Tidak Sama"
+    ),
   acceptTerms: Yup.bool().required("You must accept the terms and conditions"),
 });
 
@@ -306,11 +309,16 @@ export function Registration() {
               !formik.values.acceptTerms
             }
           >
-            {!loading && <span className="indicator-label">Daftar</span>}
+            {!loading && (
+              <span className="indicator-label text-white">Daftar</span>
+            )}
             {loading && (
-              <span className="indicator-progress" style={{ display: "block" }}>
-                Please wait...{" "}
-                <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+              <span
+                className="indicator-progress text-white"
+                style={{ display: "block" }}
+              >
+                Please wait...
+                <span className="spinner-border text-white spinner-border-sm align-middle ms-2"></span>
               </span>
             )}
           </button>

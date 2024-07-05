@@ -1,20 +1,22 @@
-import clsx from 'clsx'
-import {useLayout} from '../../core'
-import {Footer} from './Footer'
+import clsx from "clsx";
+import { useLayout } from "../../core";
+import { Footer } from "./Footer";
 
 const FooterWrapper = () => {
-  const {config} = useLayout()
+  const { config } = useLayout();
   if (!config.app?.footer?.display) {
-    return null
+    return null;
   }
 
   return (
-    <div className='app-footer bg-white mt-5' id='kt_app_footer'>
+    <div className="app-footer mt-5" id="kt_app_footer">
       {config.app.footer.containerClass ? (
         <div
           className={clsx(
-            'app-container',
-            config.app.footer.container === 'fixed' ? 'container-xxl' : 'container-fluid',
+            "app-container",
+            config.app.footer.container === "fixed"
+              ? "container-xxl"
+              : "container-fluid",
             config.app.footer.containerClass
           )}
         >
@@ -24,7 +26,7 @@ const FooterWrapper = () => {
         <Footer />
       )}
     </div>
-  )
-}
+  );
+};
 
-export {FooterWrapper}
+export { FooterWrapper };

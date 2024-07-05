@@ -79,7 +79,7 @@ const Peraturan = () => {
         <h5 className="m-0">Indoor</h5>
         <p className="text-muted">Pilih salah satu</p>
         <div>
-          <div className="card p-8">
+          <div className="card p-5">
             <div className="d-flex align-items-center justify-content-between">
               <div className="form-check d-flex align-items-center me-8">
                 <input
@@ -90,12 +90,12 @@ const Peraturan = () => {
                   className="form-check-input me-8"
                 />
                 <div>
-                  <p className="fw-bold m-0">Pertunjukan Planetarium Mini</p>
-                  <p>
+                  <h6 className="fw-bold m-0">Pertunjukan Planetarium Mini</h6>
+                  <p className="m-0">
                     Kegiatan berupa pemutaran simulasi langit di dalam kubah
                     planetarium mini selama 15 s.d. 20 menit. Peserta
-                    mendapatkan penjelasan dari penceramah astronomi mengenai
-                    benda-benda langit apa saja yang terlihat serta
+                    mendapatkan penvm njelasan dari penceramah astronomi
+                    mengenai benda-benda langit apa saja yang terlihat serta
                     pergerakannya di langit.
                   </p>
                 </div>
@@ -119,7 +119,7 @@ const Peraturan = () => {
             </div>
           </div>
           <Gap height={12} />
-          <div className="card p-8">
+          <div className="card p-5">
             <div className="d-flex align-items-center justify-content-between">
               <div className="form-check d-flex align-items-center me-8">
                 <input
@@ -130,8 +130,8 @@ const Peraturan = () => {
                   className="form-check-input me-8"
                 />
                 <div>
-                  <p className="fw-bold m-0">Diskusi Astronomi</p>
-                  <p>
+                  <h6 className="fw-bold m-0">Diskusi Astronomi</h6>
+                  <p className="m-0">
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
                     astronomi di dalam kelas menggunakan power point.
                   </p>
@@ -166,7 +166,7 @@ const Peraturan = () => {
         <h5 className="m-0">Outdoor</h5>
         <p className="text-muted">Dapat memilih keduanya</p>
         <div>
-          <div className="card p-8">
+          <div className="card p-5">
             <div className="d-flex align-items-center justify-content-between">
               <div className="form-check d-flex align-items-center me-8">
                 <input
@@ -177,8 +177,8 @@ const Peraturan = () => {
                   className="form-check-input me-8"
                 />
                 <div>
-                  <p className="fw-bold m-0">Peneropongan Matahari</p>
-                  <p>
+                  <h6 className="fw-bold m-0">Peneropongan Matahari</h6>
+                  <p className="m-0">
                     Kegiatan berupa pengamatan Matahari menggunakan teleskop
                     yang telah dilengkapi oleh filter matahari.
                   </p>
@@ -203,7 +203,7 @@ const Peraturan = () => {
             </div>
           </div>
           <Gap height={12} />
-          <div className="card p-8">
+          <div className="card p-5">
             <div className="d-flex align-items-center justify-content-between">
               <div className="form-check d-flex align-items-center me-8">
                 <input
@@ -214,8 +214,8 @@ const Peraturan = () => {
                   className="form-check-input me-8"
                 />
                 <div>
-                  <p className="fw-bold m-0">Percobaan Roket Air</p>
-                  <p>
+                  <h6 className="fw-bold m-0">Percobaan Roket Air</h6>
+                  <p className="m-0">
                     Kegiatan berupa penjelasan dari narasumber mengenai konsep
                     peluncuran roket serta mendemonstrasikan peluncuran roket
                     menggunakan model Roket Air
