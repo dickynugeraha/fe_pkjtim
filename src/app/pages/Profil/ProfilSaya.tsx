@@ -390,9 +390,9 @@ const ProfilSaya = () => {
                     onClick={() => {
                       setShowEmailForm(true);
                     }}
-                    className="btn btn-light btn-active-light-primary"
+                    className="btn btn-light-primary"
                   >
-                    Change Email
+                    Ganti Email
                   </button>
                 </div>
               </div>
@@ -540,9 +540,9 @@ const ProfilSaya = () => {
                     onClick={() => {
                       setPasswordForm(true);
                     }}
-                    className="btn btn-light btn-active-light-primary"
+                    className="btn btn-light-primary"
                   >
-                    Reset Password
+                    Ganti Password
                   </button>
                 </div>
               </div>

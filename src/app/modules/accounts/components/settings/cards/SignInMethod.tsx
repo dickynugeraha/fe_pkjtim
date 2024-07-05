@@ -207,7 +207,7 @@ const SignInMethod: FC = () => {
                 }}
                 className="btn btn-light btn-active-light-primary"
               >
-                Change Email
+                Ubah Email
               </button>
             </div>
           </div>
@@ -240,7 +240,7 @@ const SignInMethod: FC = () => {
                         htmlFor="currentpassword"
                         className="form-label fs-6 fw-bolder mb-3"
                       >
-                        Current Password
+                        Ganti Password
                       </label>
                       <input
                         type="password"
