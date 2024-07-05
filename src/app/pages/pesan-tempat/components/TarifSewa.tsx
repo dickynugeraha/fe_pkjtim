@@ -1,40 +1,37 @@
-import React from "react";
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
 
 const TarifSewa = () => {
   return (
-    <div className="col-12 col-lg-6">
-      <div className=" card">
-        <div className="card-header d-flex align-items-center">
-          <h4 className="m-0">Tarif Sewa</h4>
+    <div className='col-12 col-lg-6'>
+      <div className='card shadow-sm'>
+        <div className='card-header d-flex align-items-center'>
+          <h4 className='m-0 fw-bolder'>Tarif Sewa</h4>
         </div>
-        <div className="p-8">
-          <table style={{ width: "65%", marginBottom: "8px" }}>
-            <tr>
-              <td>Teater Jakarta</td>
-              <td>Rp. 50 jt/ hari</td>
-            </tr>
-            <tr>
-              <td>Teater kecil</td>
-              <td>Rp. 12 jt/ hari</td>
-            </tr>
-            <tr>
-              <td>Plaza teater Jakarta</td>
-              <td>Rp. 1.5 jt/ hari</td>
-            </tr>
-            <tr>
-              <td>Ruang latihan</td>
-              <td>Rp. 1 jt/ hari</td>
-            </tr>
-            <tr>
-              <td>Shooting/ Photo profesional</td>
-              <td>Rp. 2.7 jt/ hari</td>
-            </tr>
-            <tr>
-              <td>Persiapan/gladi</td>
-              <td>50% dari tarif</td>
-            </tr>
-          </table>
-          <p className="text-danger">
+        <div className='card-body'>
+          <Row>
+            <Col>
+              <ul>
+                <li>Teater Jakarta</li>
+                <li>Teater kecil</li>
+                <li>Plaza teater besar</li>
+                <li>Plaza teater kecil</li>
+                <li>Ruang latihan</li>
+                <li>Persiapan/gladi</li>
+              </ul>
+            </Col>
+            <Col>
+              <ol>
+                <ul>Rp. 50 jt/hari</ul>
+                <ul>Rp. 12 jt/hari</ul>
+                <ul>Rp. 1.5 jt/hari</ul>
+                <ul>Rp. 1.3 jt/hari</ul>
+                <ul>Rp. 1 jt/hari</ul>
+                <ul>50% dari tarif</ul>
+              </ol>
+            </Col>
+          </Row>
+          <p className='text-danger fs-6 fw-bold'>
             *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
           </p>
         </div>

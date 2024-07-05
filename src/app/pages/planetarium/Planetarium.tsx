@@ -6,8 +6,7 @@ import ModalInformationCustom from '../../../_metronic/layout/components/content
 import { PageLink, PageTitle } from '../../../_metronic/layout/core';
 import Kegiatan from './components/Kegiatan';
 import { KTIcon } from '../../../_metronic/helpers';
-const today = new Date();
-today.setMonth(today.getMonth() + 3);
+import { Button, Col, Row } from 'react-bootstrap';
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -119,38 +118,40 @@ const Planetarium = () => {
   }
   function FormPlace() {
     return (
-      <div className='row'>
-        <div className='col-12 col-lg-6'>
+      <Row>
+        <Col lg={6}>
           <div className='card shadow-sm'>
             <div className='card-header d-flex justify-content-between align-items-center'>
               <h4 className='m-0 fw-bolder'>Pilih Tanggal Kunjungan</h4>
             </div>
-            <div className='p-8'>
-              <div className='d-flex align-items-center'>
-                <div className='form-group'>
-                  <label className='form-label'>Pilih Tanggal</label>
-                  <input
-                    type='date'
-                    className='form-control'
-                    value={bookingDate}
-                    min={today.toJSON().slice(0, 10)}
-                    onChange={(e) => setBookingDate(e.target.value)}
-                    style={{ width: '200px' }}
-                  />
-                </div>
+            <div className='card-body'>
+              <div className='align-items-center mb-4'>
+                <Row>
+                  <Col lg={6}>
+                    <div className='form-group'>
+                      <label className='form-label fs-6 fw-bold'>Pilih Tanggal</label>
+                      <input
+                        type='date'
+                        className='form-control form-control-solid'
+                        value={bookingDate}
+                        onChange={(e) => setBookingDate(e.target.value)}
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </div>
-              <button
+              <Button
+                variant='primary'
                 type='button'
-                className='btn btn-primary mt-6'
                 onClick={nextButtonSubmit}
               >
-                Isi form planetarium{' '}
+                Isi Form Planetarium{' '}
                 <KTIcon iconName='entrance-left' className='fs-2x'></KTIcon>
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   }
 };

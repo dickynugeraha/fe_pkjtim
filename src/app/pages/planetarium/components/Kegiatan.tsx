@@ -116,7 +116,7 @@ const Kegiatan = () => {
                   </div>
                 </div>
               </Col>
-              <Col lg={2}>
+              <Col className='text-center' lg={2}>
                 <div>
                   <div
                     className='btn btn-light-primary'
@@ -157,7 +157,7 @@ const Kegiatan = () => {
                     setRadioValue(e.target.value);
                   }}
                 />
-                <div className='form-check-label'>
+                <div>
                   <h5 className='fw-bolder'>Diskusi Astronomi</h5>
                   <p>
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
@@ -166,7 +166,7 @@ const Kegiatan = () => {
                 </div>
               </div>
             </Col>
-            <Col lg={2}>
+            <Col className='text-center' lg={2}>
               <div>
                 <div
                   className='btn btn-light-primary'
@@ -196,9 +196,11 @@ const Kegiatan = () => {
         <h5 className='m-0'>Outdoor</h5>
         <p className='text-muted'>Dapat memilih keduanya</p>
         <div>
-          <div className={`card p-8 ${
-            checkedBoxes.peneropongan_matahari ? 'bg-light' : ''
-          }`}>
+          <div
+            className={`card p-8 ${
+              checkedBoxes.peneropongan_matahari ? 'bg-light' : ''
+            }`}
+          >
             <Row className='align-items-center'>
               <Col>
                 <div className='form-check d-flex align-items-center me-8'>
@@ -227,7 +229,7 @@ const Kegiatan = () => {
                   </div>
                 </div>
               </Col>
-              <Col lg={2}>
+              <Col className='text-center' lg={2}>
                 <div>
                   <div
                     className='btn btn-light-primary'
@@ -282,7 +284,7 @@ const Kegiatan = () => {
                 </div>
               </div>
             </Col>
-            <Col lg={2}>
+            <Col className='text-center' lg={2}>
               <div>
                 <div
                   className='btn btn-light-primary'

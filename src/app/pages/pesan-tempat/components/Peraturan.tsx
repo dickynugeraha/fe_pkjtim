@@ -3,9 +3,9 @@ import React from 'react';
 const Peraturan = () => {
   return (
     <div className='col-12 col-lg-6'>
-      <div className='card'>
+      <div className='card shadow-sm'>
         <div className='card-header d-flex align-items-center'>
-          <h4 className='m-0 p-0'>Peraturan</h4>
+          <h4 className='m-0 p-0 fw-bolder'>Peraturan</h4>
         </div>
         <div className='p-4'>
           <ol>
