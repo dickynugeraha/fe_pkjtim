@@ -158,12 +158,12 @@ export function Login() {
       </div>
       {/* end::Action */}
       <ModalInformasi
-        handleClose={() => setShowModalLupaPassword(false)}
+        handleClose={async () => setShowModalLupaPassword(false)}
         isShow={showModalLupaPassword}
         title="Lupa Password"
         message="Silahkan menghubungi nomor ini wa.me"
         type="info"
-        handleShow={() => setShowModalLupaPassword(true)}
+        handleShow={async () => setShowModalLupaPassword(true)}
         icon=""
       />
 

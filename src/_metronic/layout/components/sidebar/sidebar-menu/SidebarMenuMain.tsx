@@ -19,8 +19,8 @@ const SidebarMenuMain = () => {
         >
           <SidebarMenuItem to="/dashboard/home" title="Home" hasBullet={true} />
           <SidebarMenuItem
-            to="/dashboard/kalender"
-            title="Kalender"
+            to="/dashboard/informasi"
+            title="Informasi"
             hasBullet={true}
           />
         </SidebarMenuItemWithSub>

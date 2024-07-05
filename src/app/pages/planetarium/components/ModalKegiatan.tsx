@@ -11,7 +11,7 @@ type Props = {
   hideModal: () => void;
 };
 
-const ModalPeraturan: FC<Props> = ({
+const ModalKegiatan: FC<Props> = ({
   show,
   hideModal,
   title,
@@ -65,4 +65,4 @@ const ModalPeraturan: FC<Props> = ({
   );
 };
 
-export default ModalPeraturan;
+export default ModalKegiatan;

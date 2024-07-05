@@ -1,23 +1,24 @@
-import { useState } from "react";
-import { Content } from "../../../_metronic/layout/components/content";
-import { useNavigate } from "react-router-dom";
-import Gap from "../../../_metronic/layout/components/content/Gap";
-import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
-import { PageLink, PageTitle } from "../../../_metronic/layout/core";
-import Indoor from "./components/Indoor";
-import Outdor from "./components/Outdoor";
-import Peraturan from "./components/Peraturan";
+import { useState } from 'react';
+import { Content } from '../../../_metronic/layout/components/content';
+import { useNavigate } from 'react-router-dom';
+import Gap from '../../../_metronic/layout/components/content/Gap';
+import ModalInformationCustom from '../../../_metronic/layout/components/content/ModalInformationCustom';
+import { PageLink, PageTitle } from '../../../_metronic/layout/core';
+import Kegiatan from './components/Kegiatan';
+import { KTIcon } from '../../../_metronic/helpers';
+const today = new Date();
+today.setMonth(today.getMonth() + 3);
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Planetarium",
-    path: "/planetarium",
+    title: 'Planetarium Goes to School',
+    path: '/planetarium',
     isSeparator: false,
     isActive: false,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: false,
   },
@@ -25,38 +26,37 @@ const Breadcrumbs: Array<PageLink> = [
 
 const Planetarium = () => {
   const navigate = useNavigate();
-  const [startBook, setStartBook] = useState("");
-  const [endBook, setEndBook] = useState("");
+  const [bookingDate, setBookingDate] = useState('');
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [showFailedNext, setShowFailedNext] = useState({
     isShow: false,
-    title: "",
-    desc: "",
-    variant: "failed",
+    title: '',
+    desc: '',
+    variant: 'failed',
   });
 
   const nextButtonSubmit = () => {
-    if (!startBook || !endBook) {
+    if (!bookingDate) {
       setShowFailedNext({
         isShow: true,
-        title: "Gagal Melakukan Pesanan",
-        desc: "Silahkan isi form booking",
-        variant: "failed",
+        title: 'Gagal Melakukan Pesanan',
+        desc: 'Silahkan isi form booking',
+        variant: 'failed',
       });
       return;
     }
 
     navigate(`/form-planetarium`, {
-      state: { startBook: startBook, endBook: endBook },
+      state: { bookingDate: bookingDate },
     });
   };
 
   return (
     <>
       <PageTitle
-        icon="moon"
+        icon='moon'
         breadcrumbs={Breadcrumbs}
-        description="Planetarium Goes To School"
+        description='Planetarium Goes To School'
       >
         Planetarium Goes To School
       </PageTitle>
@@ -74,7 +74,14 @@ const Planetarium = () => {
           variant={showFailedNext.variant}
         />
         <Gap height={18} />
-        <Peraturan />
+        <div className='card shadow-sm'>
+          <div className='card-header d-flex justify-content-between align-items-center'>
+            <h4 className='m-0 fw-bolder'>Pilih Kegiatan</h4>
+          </div>
+          <div className='card-body'>
+            <Kegiatan />
+          </div>
+        </div>
         <Gap height={24} />
         <Persetujuan />
         <Gap height={24} />
@@ -85,52 +92,62 @@ const Planetarium = () => {
 
   function Persetujuan() {
     return (
-      <div className="d-flex align-items-center">
+      <div className='form-check'>
         <input
-          type="checkbox"
-          id="agree-terms"
+          type='checkbox'
+          id='agree-terms'
+          className='form-check-input'
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="ms-3" htmlFor="agree-terms">
-          Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
+        <label
+          className='form-check-label text-black theme-light-show'
+          htmlFor='agree-terms'
+        >
+          Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
+          Planetarium Goes to School diatas
+        </label>
+        <label
+          className='form-check-label text-white theme-dark-show'
+          htmlFor='agree-terms'
+        >
+          Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
+          Planetarium Goes to School diatas
         </label>
       </div>
     );
   }
   function FormPlace() {
     return (
-      <div className="row">
-        <div className="col-12 col-lg-6">
-          <div className="card p-8">
-            <div className="mb-4">
-              <p className="mb-1 fw-bold">Pilih tanggal</p>
-              <div className="d-flex align-items-center">
-                <input
-                  type="date"
-                  className="form-control"
-                  value={startBook}
-                  onChange={(e) => setStartBook(e.target.value)}
-                  style={{ width: "200px" }}
-                />
-                <p className="m-0 mx-5">Sampai</p>
-                <input
-                  type="date"
-                  value={endBook}
-                  className="form-control"
-                  onChange={(e) => setEndBook(e.target.value)}
-                  style={{ width: "200px" }}
-                />
-              </div>
+      <div className='row'>
+        <div className='col-12 col-lg-6'>
+          <div className='card shadow-sm'>
+            <div className='card-header d-flex justify-content-between align-items-center'>
+              <h4 className='m-0 fw-bolder'>Pilih Tanggal Kunjungan</h4>
             </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              style={{ width: "150px" }}
-              onClick={nextButtonSubmit}
-            >
-              Selanjutnya
-            </button>
+            <div className='p-8'>
+              <div className='d-flex align-items-center'>
+                <div className='form-group'>
+                  <label className='form-label'>Pilih Tanggal</label>
+                  <input
+                    type='date'
+                    className='form-control'
+                    value={bookingDate}
+                    min={today.toJSON().slice(0, 10)}
+                    onChange={(e) => setBookingDate(e.target.value)}
+                    style={{ width: '200px' }}
+                  />
+                </div>
+              </div>
+              <button
+                type='button'
+                className='btn btn-primary mt-6'
+                onClick={nextButtonSubmit}
+              >
+                Isi form planetarium{' '}
+                <KTIcon iconName='entrance-left' className='fs-2x'></KTIcon>
+              </button>
+            </div>
           </div>
         </div>
       </div>

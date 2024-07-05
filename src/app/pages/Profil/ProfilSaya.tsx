@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Content } from '../../../_metronic/layout/components/content';
 import ModalEditProfil from './ModalEditProfil';
 import * as Yup from 'yup';
@@ -110,24 +110,21 @@ const ProfilSaya = () => {
       </PageTitle>
       <Content>
         {/* alert jika email belum terverifikasi */}
-        <div className='alert alert-dismissible bg-light-warning border border-warning d-flex flex-column flex-sm-row p-5'>
-          <span className='svg-icon svg-icon-2hx svg-icon-primary me-4 mb-5 mb-sm-0'>
+        <div className='alert bg-light-warning border border-warning d-flex align-items-center p-5 mb-10'>
+          <span className='svg-icon svg-icon-2hx svg-icon-primary me-3'>
             <KTIcon
               iconName='information-2'
               className='fs-2x text-warning justify-content-center'
             ></KTIcon>
           </span>
-          <div className='d-flex flex-column text-warning pe-0 pe-sm-10'>
-            <h5 className='mb-1'>Email anda belum terverifikasi!</h5>
-            <span>
+          <div className='d-flex flex-column'>
+            <h5 className='fw-bolder mb-1'>Email anda belum terverifikasi!</h5>
+            <span className='text-warning'>
               Silahkan melakukan verifikasi email untuk dapat melakukan
               pemesanan tempat
             </span>
           </div>
-          <button
-            type='button'
-            className='btn btn-sm btn-warning position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 ms-sm-auto'
-          >
+          <button type='button' className='btn btn-sm btn-warning ms-sm-auto'>
             Kirim email verifikasi
           </button>
         </div>
