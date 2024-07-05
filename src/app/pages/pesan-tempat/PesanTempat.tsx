@@ -5,6 +5,8 @@ import Peraturan from "./components/Peraturan";
 import TarifSewa from "./components/TarifSewa";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import globalVar from "../../helper/globalVar";
+import Gap from "../../../_metronic/layout/components/content/Gap";
+import { Col, Row } from "react-bootstrap";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -53,12 +55,12 @@ const PesanTempat: FC = () => {
       <div className="form-check">
         <input
           type="checkbox"
-          id="agree-terms-place"
+          id="agree-terms"
           className="form-check-input"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="form-check-label" htmlFor="agree-terms-place">
+        <label className="form-check-label text-gray-600" htmlFor="agree-terms">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
       </div>
@@ -70,7 +72,7 @@ const PesanTempat: FC = () => {
         <div className="col-12 col-lg-6">
           <div className="card p-8">
             <div className="mb-4">
-              <p className="fw-bold mb-1">Pilih tempat</p>
+              <h6>Pilih tempat</h6>
               <div className="d-flex align-items-center">
                 <input
                   type="radio"
@@ -174,24 +176,25 @@ const PesanTempat: FC = () => {
                 </label>
               </div>
             </div>
-            <div className="mb-4">
-              <p className="mb-1 fw-bold">Pilih tanggal</p>
-              <input
-                type="date"
-                className="form-control"
-                value={selectedDate}
-                onChange={handleDateChange}
-                // value={tanggalPesanVal}
-                // onChange={(e) => setTanggalPesanVal(e.target.value)}
-                style={
-                  disabledDates.includes(selectedDate)
-                    ? { filter: "grayscale(100%)" }
-                    : {}
-                }
-                min={globalVar.getThreeMonthsFromToday()}
-                onKeyDown={(e) => e.preventDefault()}
-              />
-            </div>
+            <Gap height={12} />
+            <Row>
+              <Col sm={8}>
+                <div className="mb-4">
+                  <h6>Pilih tanggal</h6>
+                  <input
+                    type="date"
+                    className="form-control form-control-solid"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    // value={tanggalPesanVal}
+                    // onChange={(e) => setTanggalPesanVal(e.target.value)}
+
+                    min={globalVar.getThreeMonthsFromToday()}
+                    onKeyDown={(e) => e.preventDefault()}
+                  />
+                </div>
+              </Col>
+            </Row>
 
             <button
               type="button"

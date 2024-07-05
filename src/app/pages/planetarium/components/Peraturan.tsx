@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
-import ModalPeraturan from "./ModalPeraturan";
+import ModalKegiatan from "./ModalKegiatan";
 
 const dataPeraturan = [
   {
@@ -247,7 +247,7 @@ const Peraturan = () => {
 
   return (
     <div>
-      <ModalPeraturan
+      <ModalKegiatan
         show={showModal}
         hideModal={() => setshowModal(false)}
         desc={dataModalChoose.desc}

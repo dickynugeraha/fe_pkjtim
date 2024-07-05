@@ -83,7 +83,11 @@ const FormPesanTempat: FC = () => {
           </div>
           <div className="ms-5">
             <p className="fw-bold">Tanggal Pemesanan</p>
-            <input type="date" disabled className="p-2 rounded" />
+            <input
+              type="date"
+              disabled
+              className="p-2 rounded form-control form-control-solid"
+            />
           </div>
         </div>
         <Gap height={30} />
@@ -208,7 +212,7 @@ const FormPesanTempat: FC = () => {
                       id="tanggalMulaiPentas"
                       {...formik.getFieldProps("tanggalMulaiPentas")}
                       className={clsx(
-                        "form-control bg-transparent",
+                        "form-control bg-transparent form-control-solid",
                         {
                           "is-invalid":
                             formik.touched.tanggalMulaiPentas &&
@@ -236,14 +240,14 @@ const FormPesanTempat: FC = () => {
                   </div>
                   <div className="col">
                     <div className="d-md-flex">
-                      <p className="mt-3">Sampai</p>
+                      <p className="mt-3">s/d</p>
                       <Gap width={25} />
                       <div style={{ width: "100%" }}>
                         <input
                           id="tanggalSelesaiPentas"
                           {...formik.getFieldProps("tanggalSelesaiPentas")}
                           className={clsx(
-                            "form-control bg-transparent",
+                            "form-control bg-transparent form-control-solid",
                             {
                               "is-invalid":
                                 formik.touched.tanggalSelesaiPentas &&

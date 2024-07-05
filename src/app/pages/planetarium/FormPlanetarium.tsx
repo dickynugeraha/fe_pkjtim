@@ -53,7 +53,11 @@ const FormPlanetarium = () => {
         <div className="p-8">
           <div>
             <p className="fw-bold">Tanggal Pemesanan</p>
-            <input type="date" disabled className="p-2 rounded" />
+            <input
+              type="date"
+              disabled
+              className="p-2 rounded form-control form-control-solid"
+            />
           </div>
           <Gap height={24} />
           <form onSubmit={formik.handleSubmit} noValidate>
@@ -101,7 +105,7 @@ const FormPlanetarium = () => {
                       value={formik.values.tanggalMulaiKunjungan}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      className="form-control"
+                      className="form-control form-control-solid"
                       style={{ width: "200px" }}
                     />
                     <p className="m-0 mx-5">s/d</p>
@@ -112,7 +116,7 @@ const FormPlanetarium = () => {
                       value={formik.values.tanggalSelesaiKunjungan}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      className="form-control"
+                      className="form-control form-control-solid"
                       style={{ width: "200px" }}
                     />
                   </div>
