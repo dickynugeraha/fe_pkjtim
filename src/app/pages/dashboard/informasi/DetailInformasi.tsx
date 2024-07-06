@@ -1,12 +1,12 @@
 import React from "react";
-import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
+import { Content } from "../../../../_metronic/layout/components/content";
+import HeadPage from "../../../modules/widgets/components/HeadPage";
 import { useParams } from "react-router-dom";
-import { convertRouteToTitle, dummyImage } from "./helper";
-import HeadCard from "../../../_metronic/layout/components/content/HeadCard";
-import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import { convertRouteToTitle, dummyImage } from "../helper";
+import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 
-const DashboardViewDataDetail = () => {
+const DetailInformasi = () => {
   const params = useParams();
   const list = params.list;
   const detailId = params.id;
@@ -26,8 +26,8 @@ const DashboardViewDataDetail = () => {
       isActive: false,
     },
     {
-      title: "Home",
-      path: "/dashboard",
+      title: "Informasi",
+      path: "/dashboard/informasi",
       isSeparator: false,
       isActive: false,
     },
@@ -39,7 +39,7 @@ const DashboardViewDataDetail = () => {
     },
     {
       title: title,
-      path: `/dashboard/home/${list}`,
+      path: `/dashboard/informasi/${list}`,
       isSeparator: false,
       isActive: false,
     },
@@ -56,7 +56,7 @@ const DashboardViewDataDetail = () => {
   return (
     <Content>
       <PageTitle
-        icon="home"
+        icon="information"
         breadcrumbs={Breadcrumbs}
         description="Daftar pesanan saya"
       >
@@ -166,4 +166,4 @@ const DashboardViewDataDetail = () => {
   );
 };
 
-export default DashboardViewDataDetail;
+export default DetailInformasi;

@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Content } from "../../../_metronic/layout/components/content";
-import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import { Content } from "../../../../_metronic/layout/components/content";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 
 const Breadcrumbs: Array<PageLink> = [
   {
     title: "Dashboard",
-    path: "/dashboard/kalender",
+    path: "/dashboard/home",
     isSeparator: false,
     isActive: true,
   },
@@ -20,12 +20,8 @@ const Breadcrumbs: Array<PageLink> = [
 const DashboardKalender: FC = () => {
   return (
     <>
-      <PageTitle
-        icon="calendar"
-        breadcrumbs={Breadcrumbs}
-        description="Kalender"
-      >
-        Kalender
+      <PageTitle icon="home" breadcrumbs={Breadcrumbs} description="Home">
+        Home
       </PageTitle>
       <Content></Content>
     </>

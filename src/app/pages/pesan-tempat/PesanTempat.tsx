@@ -194,6 +194,7 @@ const PesanTempat: FC = () => {
                 </div>
               </Col>
             </Row>
+            <Gap height={10} />
             <button
               type="button"
               className="btn btn-primary"

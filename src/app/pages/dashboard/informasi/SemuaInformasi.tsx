@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { Content } from "../../../_metronic/layout/components/content";
+import { Content } from "../../../../_metronic/layout/components/content";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
-import HeadPage from "../../modules/widgets/components/HeadPage";
+import HeadPage from "../../../modules/widgets/components/HeadPage";
 import axios from "axios";
-import { arrData, convertRouteToTitle } from "./helper";
-import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import { arrData, convertRouteToTitle } from "../helper";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -20,8 +20,8 @@ const Breadcrumbs: Array<PageLink> = [
     isActive: false,
   },
   {
-    title: "Home",
-    path: "/dashboard",
+    title: "Informasi",
+    path: "/dashboard/informasi",
     isSeparator: false,
     isActive: false,
   },
@@ -33,7 +33,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const DashboardViewData: FC = () => {
+const SemuaInformasi: FC = () => {
   const navigate = useNavigate();
 
   const params = useParams();
@@ -85,7 +85,7 @@ const DashboardViewData: FC = () => {
   return (
     <>
       <PageTitle
-        icon="home"
+        icon="information"
         breadcrumbs={Breadcrumbs}
         description={`${convertRouteToTitle(params.list as string)}`}
       >{`${convertRouteToTitle(params.list as string)}`}</PageTitle>
@@ -103,4 +103,4 @@ const DashboardViewData: FC = () => {
   );
 };
 
-export default DashboardViewData;
+export default SemuaInformasi;

@@ -12,14 +12,14 @@ const SidebarMenuMain = () => {
     return (
       <>
         <SidebarMenuItemWithSub
-          to="/dashboard"
+          to="dashboard"
           icon="element-11"
-          title="Home"
+          title="Dashboard"
           fontIcon="bi-app-indicator"
         >
-          <SidebarMenuItem to="/dashboard/home" title="Home" hasBullet={true} />
+          <SidebarMenuItem to="dashboard/home" title="Home" hasBullet={true} />
           <SidebarMenuItem
-            to="/dashboard/informasi"
+            to="dashboard/informasi"
             title="Informasi"
             hasBullet={true}
           />

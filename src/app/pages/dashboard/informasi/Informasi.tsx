@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { KTIcon, toAbsoluteUrl } from "../../../_metronic/helpers";
-import { Content } from "../../../_metronic/layout/components/content";
+import { KTIcon, toAbsoluteUrl } from "../../../../_metronic/helpers";
+import { Content } from "../../../../_metronic/layout/components/content";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import HeadPage from "../../modules/widgets/components/HeadPage";
-import { arrData, arrDataTempat, dummyImage } from "./helper";
-import Gap from "../../../_metronic/layout/components/content/Gap";
-import { PageLink, PageTitle } from "../../../_metronic/layout/core";
-import HeadCard from "../../../_metronic/layout/components/content/HeadCard";
+import HeadPage from "../../../modules/widgets/components/HeadPage";
+import { arrData, arrDataTempat, dummyImage } from "../helper";
+import Gap from "../../../../_metronic/layout/components/content/Gap";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
+import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
 
 type Props = {
   title: string;
@@ -58,7 +58,7 @@ const ContentSekilasInfo: FC = () => {
       <div className="p-8">
         <div className="d-flex justify-content-between align-items-center pb-4">
           <h4 className="m-0">Sekilas Info</h4>
-          <Link to={"/dashboard/home/info"}>Lihat lebih banyak</Link>
+          <Link to={"/dashboard/informasi/info"}>Lihat lebih banyak</Link>
         </div>
         <div className="separator mb-2"></div>
         <Gap height={18} />
@@ -154,17 +154,17 @@ const DashboardPage: FC = () => {
         <ContentSekilasInfo />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"
-          link="/dashboard/home/seni"
+          link="/dashboard/informasi/seni"
           data={arrData}
         />
         <ListViewItem
           title="Daftar Pementasan"
-          link="/dashboard/home/pementasan"
+          link="/dashboard/informasi/pementasan"
           data={arrData}
         />
         <ListViewItem
           title="Daftar Seniman"
-          link="/dashboard/home/seniman"
+          link="/dashboard/informasi/seniman"
           data={arrData}
         />
       </div>
@@ -176,7 +176,7 @@ const DashboardPage: FC = () => {
   );
 };
 
-const DashboardWrapper: FC = () => {
+const Informasi: FC = () => {
   const intl = useIntl();
 
   const Breadcrumbs: Array<PageLink> = [
@@ -230,4 +230,4 @@ const DashboardWrapper: FC = () => {
   );
 };
 
-export { DashboardWrapper };
+export { Informasi };
