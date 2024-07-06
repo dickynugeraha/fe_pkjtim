@@ -151,14 +151,16 @@ export function Login() {
               className="btn btn-primary"
               disabled={formik.isSubmitting || !formik.isValid}
             >
-              {!loading && <span className="indicator-label">Masuk</span>}
+              {!loading && (
+                <span className="indicator-label text-white">Masuk</span>
+              )}
               {loading && (
                 <span
-                  className="indicator-progress"
+                  className="indicator-progress text-white"
                   style={{ display: "block" }}
                 >
                   Loading...
-                  <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+                  <span className="spinner-border spinner-border-sm align-middle ms-2 text-white"></span>
                 </span>
               )}
             </button>
