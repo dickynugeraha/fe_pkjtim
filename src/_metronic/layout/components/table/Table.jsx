@@ -109,14 +109,13 @@ const Table = ({ data, columns }) => {
         </table>
       </div>
       <Gap height={12} />
-      <div className="d-flex justify-content-between">
-        <div className="d-flex align-items-center">
+      <div className="d-flex justify-content-between flex-wrap">
+        <div className="d-flex align-items-center mb-6">
           <h5 className="m-0 fs-6">Tampilkan</h5>
           <Gap width={10} />
           <select
             value={limit}
             className="custom-select rounded p-1"
-            style={{ width: "50px" }}
             onChange={(e) => setLimit(e.target.value)}
           >
             {availableLimit.map((val) => (
@@ -124,10 +123,9 @@ const Table = ({ data, columns }) => {
             ))}
           </select>
         </div>
-        <Gap height={12} />
         <div className="d-flex">
           <button
-            className="btn btn-sm"
+            className="btn btn-sm p-0 m-0"
             onClick={() => previousPage()}
             disabled={!canPreviousPage}
           >
@@ -141,7 +139,7 @@ const Table = ({ data, columns }) => {
                 onClick={() => gotoPage(pageOption)}
                 className={
                   pageOption === pageIndex
-                    ? "btn btn-sm btn-primary"
+                    ? "btn btn-sm btn-primary px-5 py-1"
                     : "btn btn-sm btn-outline-primary"
                 }
               >
@@ -152,7 +150,7 @@ const Table = ({ data, columns }) => {
           ))}
           <Gap width={8} />
           <button
-            className="btn btn-sm"
+            className="btn btn-sm p-0 m-0"
             onClick={() => nextPage()}
             disabled={!canNextPage}
           >

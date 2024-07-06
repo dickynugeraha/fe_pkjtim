@@ -1,12 +1,27 @@
 import React, { FC } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
 import { useFormik } from "formik";
 import clsx from "clsx";
 import * as Yup from "yup";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import globalVar from "../../helper/globalVar";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+
+const Breadcrumbs: Array<PageLink> = [
+  {
+    title: "Pesan Tempat",
+    path: "/pesan-tempat",
+    isSeparator: false,
+    isActive: false,
+  },
+  {
+    title: "",
+    path: "",
+    isSeparator: true,
+    isActive: false,
+  },
+];
 
 const formPesanScheme = Yup.object().shape({
   namaSanggar: Yup.string().required("Nama sanggar harus diisi"),
@@ -25,6 +40,7 @@ const initialValues = {
   namaSanggar: "",
   judulPentas: "",
   kodeBooking: "",
+  tarif: "",
   alamatSanggar: "",
   tanggalMulaiPentas: "",
   tanggalSelesaiPentas: "",
@@ -70,25 +86,19 @@ const FormPesanTempat: FC = () => {
 
   return (
     <Content>
-      <HeadPage
-        icon="geolocation"
-        title="Form Pesan Tempat"
-        pages="Pesan Tempat - Form Pesan Tempat"
-      />
+      <PageTitle icon="geolocation" breadcrumbs={Breadcrumbs}>
+        {`Form ${title}`}
+      </PageTitle>
       <div className="card p-8">
-        <div className="d-flex">
-          <div>
-            <p className="fw-bold">Tarif {title} </p>
-            <p>{state.hargaTempat} / hari</p>
-          </div>
-          <div className="ms-5">
-            <p className="fw-bold">Tanggal Pemesanan</p>
-            <input
-              type="date"
-              disabled
-              className="p-2 rounded form-control form-control-solid"
-            />
-          </div>
+        <div>
+          <p className="fw-bold">Tanggal Pemesanan</p>
+          <input
+            type="date"
+            disabled
+            value={state.tanggalPesan}
+            className="p-2 rounded form-control form-control-solid"
+            style={{ width: "200px" }}
+          />
         </div>
         <Gap height={30} />
         <form onSubmit={formik.handleSubmit} noValidate>
@@ -104,7 +114,7 @@ const FormPesanTempat: FC = () => {
                   id="namaSanggar"
                   {...formik.getFieldProps("namaSanggar")}
                   className={clsx(
-                    "form-control bg-transparent",
+                    "form-control form-control-solid",
                     {
                       "is-invalid":
                         formik.touched.namaSanggar && formik.errors.namaSanggar,
@@ -137,7 +147,7 @@ const FormPesanTempat: FC = () => {
                 id="alamatSanggar"
                 {...formik.getFieldProps("alamatSanggar")}
                 className={clsx(
-                  "form-control bg-transparent",
+                  "form-control form-control-solid",
                   {
                     "is-invalid":
                       formik.touched.alamatSanggar &&
@@ -175,7 +185,7 @@ const FormPesanTempat: FC = () => {
                   id="judulPentas"
                   {...formik.getFieldProps("judulPentas")}
                   className={clsx(
-                    "form-control bg-transparent",
+                    "form-control form-control-solid",
                     {
                       "is-invalid":
                         formik.touched.judulPentas && formik.errors.judulPentas,
@@ -202,7 +212,7 @@ const FormPesanTempat: FC = () => {
             <div className="col">
               <div className="fv-row mb-5">
                 <label htmlFor="tanggalMulaiPentas" className="fw-bold">
-                  Tanggal mulai pentas
+                  Tanggal Sewa
                 </label>
                 <Gap height={10} />
                 {/* mulai pentas dan selesai pentas */}
@@ -212,7 +222,7 @@ const FormPesanTempat: FC = () => {
                       id="tanggalMulaiPentas"
                       {...formik.getFieldProps("tanggalMulaiPentas")}
                       className={clsx(
-                        "form-control bg-transparent form-control-solid",
+                        "form-control form-control-solid form-control-solid",
                         {
                           "is-invalid":
                             formik.touched.tanggalMulaiPentas &&
@@ -247,7 +257,7 @@ const FormPesanTempat: FC = () => {
                           id="tanggalSelesaiPentas"
                           {...formik.getFieldProps("tanggalSelesaiPentas")}
                           className={clsx(
-                            "form-control bg-transparent form-control-solid",
+                            "form-control form-control-solid form-control-solid",
                             {
                               "is-invalid":
                                 formik.touched.tanggalSelesaiPentas &&
@@ -283,16 +293,19 @@ const FormPesanTempat: FC = () => {
           <div className="row cols-2">
             <div className="col">
               <div className="fv-row mb-5">
-                <label htmlFor="judulPentas" className="fw-bold">
-                  Kode booking
-                </label>
+                <div className="d-flex justify-content-between align-items-end">
+                  <label htmlFor="judulPentas" className="fw-bold">
+                    Kode booking
+                  </label>
+                  <div className="btn btn-light-primary btn-sm">Buat kode</div>
+                </div>
                 <Gap height={10} />
                 <input
                   readOnly
                   id="kodeBooking"
                   {...formik.getFieldProps("kodeBooking")}
                   className={clsx(
-                    "form-control bg-transparent",
+                    "form-control form-control-solid",
                     {
                       "is-invalid":
                         formik.touched.kodeBooking && formik.errors.kodeBooking,
@@ -317,12 +330,38 @@ const FormPesanTempat: FC = () => {
               </div>
             </div>
             <div className="col">
-              <div className="fv-row mb-5">
-                <label htmlFor="judulPentas" className="fw-bold"></label>
-                <Gap height={10} />
-                <div className="btn btn-primary" style={{ width: "160px" }}>
-                  Buat kode
+              <div className="fv-row">
+                <div className="d-flex justify-content-between align-items-end">
+                  <label htmlFor="tarif" className="fw-bold">
+                    Tarif
+                  </label>
+                  <div
+                    className="btn btn-light-primary btn-sm"
+                    style={{ visibility: "hidden" }}
+                  >
+                    Buat kode
+                  </div>
                 </div>
+
+                <Gap height={10} />
+                <input
+                  readOnly
+                  disabled
+                  id="tarif"
+                  {...formik.getFieldProps("tarif")}
+                  className={clsx(
+                    "form-control form-control-solid",
+                    {
+                      "is-invalid": formik.touched.tarif && formik.errors.tarif,
+                    },
+                    {
+                      "is-valid": formik.touched.tarif && !formik.errors.tarif,
+                    }
+                  )}
+                  type="text"
+                  name="tarif"
+                  autoComplete="off"
+                />
               </div>
             </div>
           </div>
@@ -356,10 +395,10 @@ const FormPesanTempat: FC = () => {
           <Gap height={30} />
 
           <div className="d-flex justify-content-end">
-            <div className="btn btn-light" onClick={() => navigate(-1)}>
+            <div className="btn btn-light btn-sm" onClick={() => navigate(-1)}>
               Kembali
             </div>
-            <button type="submit" className="btn btn-primary ms-5">
+            <button type="submit" className="btn btn-light-primary ms-5 btn-sm">
               Pesan
             </button>
           </div>

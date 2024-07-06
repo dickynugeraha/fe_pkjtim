@@ -147,7 +147,7 @@ const PesananSaya: FC = () => {
       <Content>
         <Table data={data} columns={columns} />
         <ModalDetailPesanan
-          tipeTempat={modalDetail.data.tipe_tempat}
+          data={modalDetail.data}
           show={modalDetail.show}
           hideModal={() => {
             setModalDetail({ ...modalDetail, show: false });

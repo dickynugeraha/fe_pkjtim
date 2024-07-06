@@ -100,7 +100,7 @@ const Planetarium = () => {
           checked={termIsCheck}
         />
         <label
-          className="form-check-label text-gray-600 theme-light-show"
+          className="form-check-label text-gray-700 theme-light-show"
           htmlFor="agree-terms-planet"
         >
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus

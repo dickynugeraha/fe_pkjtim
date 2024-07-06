@@ -60,7 +60,7 @@ const PesanTempat: FC = () => {
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="form-check-label text-gray-600" htmlFor="agree-terms">
+        <label className="form-check-label text-gray-700" htmlFor="agree-terms">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
       </div>
@@ -73,12 +73,12 @@ const PesanTempat: FC = () => {
           <div className="card p-8">
             <div className="mb-4">
               <h6>Pilih tempat</h6>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="teater-jakarta"
                   name="pesan_tempat"
-                  className="ms-3"
+                  className="form-check-input mx-3"
                   value={pesanTempatval}
                   onClick={() => {
                     setPesanTempatval("teater_jakarta");
@@ -90,7 +90,7 @@ const PesanTempat: FC = () => {
                   Teater Jakarta
                 </label>
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="teater-kecil"
@@ -101,13 +101,13 @@ const PesanTempat: FC = () => {
                     setHargaTempat("12 jt");
                   }}
                   checked={pesanTempatval === "teater_kecil"}
-                  className="ms-3"
+                  className="form-check-input mx-3"
                 />
                 <label htmlFor="teater-kecil" className="ms-1">
                   Teater kecil
                 </label>
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="plaza-jakarta"
@@ -118,13 +118,13 @@ const PesanTempat: FC = () => {
                     setHargaTempat("1.5 jt");
                   }}
                   checked={pesanTempatval === "plaza_jakarta"}
-                  className="ms-3"
+                  className="form-check-input mx-3"
                 />
                 <label htmlFor="plaza-jakarta" className="ms-1">
                   Plaza Teater jakarta
                 </label>
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="ruang-latihan"
@@ -135,13 +135,13 @@ const PesanTempat: FC = () => {
                     setHargaTempat("1 jt");
                   }}
                   checked={pesanTempatval === "ruang_latihan"}
-                  className="ms-3"
+                  className="form-check-input mx-3"
                 />
                 <label htmlFor="ruang-latihan" className="ms-1">
                   Ruang latihan
                 </label>
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="shooting"
@@ -152,13 +152,13 @@ const PesanTempat: FC = () => {
                     setHargaTempat("2.7 jt");
                   }}
                   checked={pesanTempatval === "shooting"}
-                  className="ms-3"
+                  className="form-check-input mx-3"
                 />
                 <label htmlFor="shooting" className="ms-1">
                   Shooting/ Photo profesional
                 </label>
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center mb-2">
                 <input
                   type="radio"
                   id="gladi"
@@ -169,7 +169,7 @@ const PesanTempat: FC = () => {
                     setHargaTempat("50% dari tarif");
                   }}
                   checked={pesanTempatval === "gladi"}
-                  className="ms-3"
+                  className="form-check-input mx-3"
                 />
                 <label htmlFor="gladi" className="ms-1">
                   Persiapan/gladi
@@ -184,27 +184,31 @@ const PesanTempat: FC = () => {
                   <input
                     type="date"
                     className="form-control form-control-solid"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    // value={tanggalPesanVal}
-                    // onChange={(e) => setTanggalPesanVal(e.target.value)}
-
+                    // value={selectedDate}
+                    // onChange={handleDateChange}
+                    value={tanggalPesanVal}
+                    onChange={(e) => setTanggalPesanVal(e.target.value)}
                     min={globalVar.getThreeMonthsFromToday()}
                     onKeyDown={(e) => e.preventDefault()}
                   />
                 </div>
               </Col>
             </Row>
-
             <button
               type="button"
               className="btn btn-primary"
               style={{ width: "150px" }}
-              onClick={() =>
+              onClick={() => {
+                if (!hargaTempat || !tanggalPesanVal) {
+                  return;
+                }
                 navigate(`/pesan-tempat/${pesanTempatval}`, {
-                  state: { hargaTempat: hargaTempat },
-                })
-              }
+                  state: {
+                    hargaTempat: hargaTempat,
+                    tanggalPesan: tanggalPesanVal,
+                  },
+                });
+              }}
             >
               Selanjutnya
             </button>
