@@ -111,10 +111,13 @@ const PesananSaya: FC = () => {
         Header: "Aksi",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-
+          let classes =
+            singleData.status !== "Pending"
+              ? "btn btn-sm btn-light-success"
+              : "btn btn-sm btn-light-warning";
           return (
             <button
-              className="btn btn-sm btn-light"
+              className={classes}
               style={{ minWidth: "120px" }}
               onClick={() => {
                 if (singleData.status !== "Pending") {

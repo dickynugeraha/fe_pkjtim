@@ -135,7 +135,7 @@ const ProfilSaya = () => {
           <div className="card-header d-flex justify-content-between align-items-center">
             <h4 className="m-0">Detail Profil Saya</h4>
             <a
-              className="btn btn-light-primary"
+              className="btn btn-light-primary btn-sm"
               onClick={() => setShowModal(true)}
               role="button"
             >
@@ -268,12 +268,7 @@ const ProfilSaya = () => {
           </div>
         </div> */}
         <div className="card shadow-sm mb-5 mb-xl-10">
-          <div
-            className="card-header border-0 cursor-pointer"
-            role="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#kt_account_signin_method"
-          >
+          <div className="card-header border-0">
             <div className="card-title m-0">
               <h3 className="m-0">Detail Login</h3>
             </div>
@@ -390,7 +385,7 @@ const ProfilSaya = () => {
                     onClick={() => {
                       setShowEmailForm(true);
                     }}
-                    className="btn btn-light-primary"
+                    className="btn btn-light-primary btn-sm"
                   >
                     Ganti Email
                   </button>
@@ -540,7 +535,7 @@ const ProfilSaya = () => {
                     onClick={() => {
                       setPasswordForm(true);
                     }}
-                    className="btn btn-light-primary"
+                    className="btn btn-light-primary btn-sm"
                   >
                     Ganti Password
                   </button>

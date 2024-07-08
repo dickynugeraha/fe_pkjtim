@@ -25,7 +25,8 @@ const Breadcrumbs: Array<PageLink> = [
 const PesanTempat: FC = () => {
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [pesanTempatval, setPesanTempatval] = useState("teater_jakarta");
-  const [tanggalPesanVal, setTanggalPesanVal] = useState("");
+  const [startBook, setStartBook] = useState("");
+  const [endBook, setEndBook] = useState("");
   const [hargaTempat, setHargaTempat] = useState("50 jt");
 
   const [selectedDate, setSelectedDate] = useState("");
@@ -56,157 +57,129 @@ const PesanTempat: FC = () => {
         <input
           type="checkbox"
           id="agree-terms"
-          className="form-check-input"
+          className="form-check-input me-4"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label className="form-check-label text-gray-700" htmlFor="agree-terms">
+        <label htmlFor="agree-terms">
           Saya sudah membaca dan menyetujui peraturan pemesanan tempat diatas
         </label>
       </div>
     );
   };
   const FormPlace = () => {
+    type InputRadioProps = {
+      title: string;
+      id: string;
+      hargaTempat: string;
+    };
+    const InputRadio: React.FC<InputRadioProps> = ({
+      title,
+      id,
+      hargaTempat,
+    }) => {
+      return (
+        <div className="d-flex align-items-center mb-2">
+          <input
+            type="radio"
+            id={id}
+            name="pesan_tempat"
+            className="form-check-input mx-3"
+            value={pesanTempatval}
+            onClick={() => {
+              setPesanTempatval(id);
+              setHargaTempat(hargaTempat);
+            }}
+            checked={pesanTempatval === id}
+          />
+          <label htmlFor={id} className="ms-1">
+            {title}
+          </label>
+        </div>
+      );
+    };
+
     return (
       <div className="row">
         <div className="col-12 col-lg-6">
           <div className="card p-8">
             <div className="mb-4">
               <h6>Pilih tempat</h6>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="teater-jakarta"
-                  name="pesan_tempat"
-                  className="form-check-input mx-3"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("teater_jakarta");
-                    setHargaTempat("50 jt");
-                  }}
-                  checked={pesanTempatval === "teater_jakarta"}
-                />
-                <label htmlFor="teater-jakarta" className="ms-1">
-                  Teater Jakarta
-                </label>
-              </div>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="teater-kecil"
-                  name="pesan_tempat"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("teater_kecil");
-                    setHargaTempat("12 jt");
-                  }}
-                  checked={pesanTempatval === "teater_kecil"}
-                  className="form-check-input mx-3"
-                />
-                <label htmlFor="teater-kecil" className="ms-1">
-                  Teater kecil
-                </label>
-              </div>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="plaza-jakarta"
-                  name="pesan_tempat"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("plaza_jakarta");
-                    setHargaTempat("1.5 jt");
-                  }}
-                  checked={pesanTempatval === "plaza_jakarta"}
-                  className="form-check-input mx-3"
-                />
-                <label htmlFor="plaza-jakarta" className="ms-1">
-                  Plaza Teater jakarta
-                </label>
-              </div>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="ruang-latihan"
-                  name="pesan_tempat"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("ruang_latihan");
-                    setHargaTempat("1 jt");
-                  }}
-                  checked={pesanTempatval === "ruang_latihan"}
-                  className="form-check-input mx-3"
-                />
-                <label htmlFor="ruang-latihan" className="ms-1">
-                  Ruang latihan
-                </label>
-              </div>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="shooting"
-                  name="pesan_tempat"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("shooting");
-                    setHargaTempat("2.7 jt");
-                  }}
-                  checked={pesanTempatval === "shooting"}
-                  className="form-check-input mx-3"
-                />
-                <label htmlFor="shooting" className="ms-1">
-                  Shooting/ Photo profesional
-                </label>
-              </div>
-              <div className="d-flex align-items-center mb-2">
-                <input
-                  type="radio"
-                  id="gladi"
-                  name="pesan_tempat"
-                  value={pesanTempatval}
-                  onClick={() => {
-                    setPesanTempatval("gladi");
-                    setHargaTempat("50% dari tarif");
-                  }}
-                  checked={pesanTempatval === "gladi"}
-                  className="form-check-input mx-3"
-                />
-                <label htmlFor="gladi" className="ms-1">
-                  Persiapan/gladi
-                </label>
-              </div>
+              <InputRadio
+                title={"Teater Jakarta"}
+                id={"teater_jakarta"}
+                hargaTempat="50 jt"
+              />
+              <InputRadio
+                title={"Teater Kecil"}
+                id={"teater_kecil"}
+                hargaTempat="12 jt"
+              />
+              <InputRadio
+                title={"Plaza Jakarta"}
+                id={"plaza_jakarta"}
+                hargaTempat="1.5 jt"
+              />
+              <InputRadio
+                title={"Ruang Latihan"}
+                id={"ruang_latihan"}
+                hargaTempat="1 jt"
+              />
+              <InputRadio
+                title={"Shooting/ Photo profesional"}
+                id={"shooting"}
+                hargaTempat="2.7 jt"
+              />
+              <InputRadio
+                title={"Persiapan Gladi"}
+                id={"gladi"}
+                hargaTempat="50% dari gaji"
+              />
             </div>
             <Gap height={12} />
-            <Row>
-              <Col sm={8}>
-                <div className="mb-4">
-                  <h6>Pilih tanggal</h6>
-                  <input
-                    type="date"
-                    className="form-control form-control-solid"
-                    // value={selectedDate}
-                    // onChange={handleDateChange}
-                    value={tanggalPesanVal}
-                    onChange={(e) => setTanggalPesanVal(e.target.value)}
-                    min={globalVar.getThreeMonthsFromToday()}
-                    onKeyDown={(e) => e.preventDefault()}
-                  />
-                </div>
-              </Col>
-            </Row>
+            <h6>Pilih tanggal</h6>
+            <div className="d-flex align-items-center">
+              <div>
+                <input
+                  type="date"
+                  className="form-control form-control-solid"
+                  // value={selectedDate}
+                  // onChange={handleDateChange}
+                  value={startBook}
+                  onChange={(e) => setStartBook(e.target.value)}
+                  min={globalVar.getThreeMonthsFromToday()}
+                  onKeyDown={(e) => e.preventDefault()}
+                />
+              </div>
+              <div>
+                <p className="m-0 mx-3">s/d</p>
+              </div>
+              <div>
+                <input
+                  type="date"
+                  className="form-control form-control-solid"
+                  // value={selectedDate}
+                  // onChange={handleDateChange}
+                  value={endBook}
+                  onChange={(e) => setEndBook(e.target.value)}
+                  min={globalVar.getThreeMonthsFromToday()}
+                  onKeyDown={(e) => e.preventDefault()}
+                />
+              </div>
+            </div>
             <Gap height={10} />
             <button
               type="button"
               className="btn btn-primary"
               style={{ width: "150px" }}
               onClick={() => {
-                if (!hargaTempat || !tanggalPesanVal) {
+                if (!hargaTempat || !startBook) {
                   return;
                 }
                 navigate(`/pesan-tempat/${pesanTempatval}`, {
                   state: {
                     hargaTempat: hargaTempat,
-                    tanggalPesan: tanggalPesanVal,
+                    tanggalPesan: startBook,
                   },
                 });
               }}

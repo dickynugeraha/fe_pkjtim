@@ -19,7 +19,7 @@ export function HeaderWrapper() {
   return (
     <div
       id="kt_app_header"
-      className="app-header"
+      className="app-header align-items-center"
       data-kt-sticky="true"
       data-kt-sticky-activate="{default: true, lg: true}"
       data-kt-sticky-name="app-header-minimize"
@@ -61,7 +61,11 @@ export function HeaderWrapper() {
             ) : null}
           </>
         )}
-
+        <div className="d-flex align-items-center">
+          <p className="fs-lg-3 m-0 fst-italic fw-bold">
+            Pusat Kesenian Jakarta Taman Ismail Marzuki
+          </p>
+        </div>
         {!(
           config.layoutType === "dark-sidebar" ||
           config.layoutType === "light-sidebar"

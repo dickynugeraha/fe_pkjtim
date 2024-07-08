@@ -49,16 +49,16 @@ const Table = ({ data, columns }) => {
             <input
               type="text"
               data-kt-user-table-filter="search"
-              className="form-control form-control-solid w-250px ps-14"
+              className="form-control form-control-solid w-200px ps-14"
               placeholder="Cari"
             />
           </div>
         </div>
-
+        <Gap width={20} />
         <div>
           <button className="btn btn-sm btn-primary d-flex align-items-center">
-            <KTIcon iconName="plus" className="fs-2" />
-            Tambah pesanan
+            <KTIcon iconName="plus" className="fs-lg-2" />
+            <p className="m-0">Tambah pesanan</p>
           </button>
         </div>
       </div>

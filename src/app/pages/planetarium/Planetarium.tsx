@@ -95,14 +95,11 @@ const Planetarium = () => {
         <input
           type="checkbox"
           id="agree-terms-planet"
-          className="form-check-input"
+          className="form-check-input me-4"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label
-          className="form-check-label text-gray-700 theme-light-show"
-          htmlFor="agree-terms-planet"
-        >
+        <label htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
           Planetarium Goes to School diatas
         </label>
