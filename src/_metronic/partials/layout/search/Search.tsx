@@ -559,7 +559,7 @@ const Search: FC = () => {
                 <div className="d-flex align-items-center mb-5">
                   <div className="symbol symbol-40px me-4">
                     <span className="symbol-label bg-light">
-                      <KT iconName="sms" className="fs-2 text-primary" />
+                      <KTIcon iconName="sms" className="fs-2 text-primary" />
                     </span>
                   </div>
 

@@ -24,9 +24,9 @@ const AuthLayout = () => {
         )})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        "-webkit-background-size": "cover",
-        "-moz-background-size": "cover",
-        "-o-background-size": "cover",
+        WebkitBackgroundSize: "cover",
+        MozBackgroundSize: "cover",
+        OBackgroundSize: "cover",
       }}
     >
       {/* begin::Aside */}
