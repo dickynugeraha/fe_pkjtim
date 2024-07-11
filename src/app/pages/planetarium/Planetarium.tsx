@@ -7,6 +7,7 @@ import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import Kegiatan from "./components/Kegiatan";
 import { KTIcon } from "../../../_metronic/helpers";
 import { Button, Col, Row } from "react-bootstrap";
+import globalVar from "../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -123,6 +124,7 @@ const Planetarium = () => {
                         className="form-control form-control-solid"
                         value={bookingDate}
                         onChange={(e) => setBookingDate(e.target.value)}
+                        min={globalVar.getThreeMonthsFromToday()}
                       />
                       <Gap height={10} />
                     </div>

@@ -11,6 +11,7 @@ const formPesanScheme = Yup.object().shape({
   namaSekolah: Yup.string().required("Nama sekolah harus diisi"),
   alamatSekolah: Yup.string().required("alamat sekolah harus diisi"),
   jumlahPeserta: Yup.string().required("Jumlah peserta harus diisi"),
+  daerah: Yup.string().required("Daerah harus dipilih"),
   kodeBooking: Yup.string().required(
     "Kode booking harus diisi dengan menekan tombol buat kode"
   ),
@@ -27,6 +28,7 @@ const initialValues = {
   namaSekolah: "",
   alamatSekolah: "",
   jumlahPeserta: "",
+  daerah: "",
   tanggalMulaiKunjungan: "",
   tanggalSelesaiKunjungan: "",
   keperluan: "",
@@ -39,7 +41,8 @@ const FormPlanetarium = () => {
     onSubmit: async (values, { setStatus, setSubmitting }) => {},
   });
 
-  const { state } = useLocation();
+  const { state }: any = useLocation();
+
   const navigate = useNavigate();
 
   return (
@@ -57,6 +60,8 @@ const FormPlanetarium = () => {
               type="date"
               disabled
               className="p-2 rounded form-control form-control-solid"
+              style={{ width: "200px" }}
+              value={state.bookingDate}
             />
           </div>
           <Gap height={24} />
@@ -83,6 +88,29 @@ const FormPlanetarium = () => {
                 />
               </div>
             </div>
+            <div className="row row-cols-2">
+              <div className="col">
+                <InputCustom
+                  formikIdName="daerah"
+                  label="Daerah"
+                  touched={formik.touched.daerah}
+                  error={formik.errors.daerah}
+                  formikProps={formik.getFieldProps("daerah")}
+                  typed="number"
+                />
+              </div>
+              <div className="col">
+                <label htmlFor="kontakNarahubung" className="fw-bold">
+                  Nomor Kontak Narahubung
+                </label>
+                <Gap height={10} />
+                <input
+                  className="form-control form-control-solid"
+                  disabled
+                  value={"0896785146914651"}
+                />
+              </div>
+            </div>
             <div className="row cols-2">
               <div className="col">
                 <InputCustom
@@ -96,7 +124,8 @@ const FormPlanetarium = () => {
               </div>
               <div className="col">
                 <div>
-                  <p className="fw-bold">Tanggal Kunjungan</p>
+                  <p className="fw-bold m-0">Tanggal Kunjungan</p>
+                  <Gap height={10} />
                   <div className="d-flex align-items-center">
                     <input
                       id="tanggalMulaiKunjungan"
@@ -131,7 +160,7 @@ const FormPlanetarium = () => {
                 )}
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col">
                 <div>
                   <p className="fw-bold">Keperluan</p>
@@ -175,14 +204,50 @@ const FormPlanetarium = () => {
                   </div>
                 )}
               </div>
+            </div> */}
+            <Gap height={24} />
+            <div className="row">
+              <label htmlFor="" className="fw-bold">
+                Unggah berkas
+              </label>
+              <p className="text-danger">
+                *) Ekstensi yang diperbolehkan pdf/png/jpg/jpeg, dengan ukuran
+                maks 1MB
+              </p>
+              <div className="d-flex">
+                <div className="me-4">
+                  <label className="fw-bold">Surat undangan resmi</label>
+                  <Gap height={10} />
+                  <input type="file" className="form-control" />
+                  <p className="text-muted m-0">
+                    *) Surat Undangan Resmi WAJIB ditandatangani Kepala Sekolah
+                  </p>
+                </div>
+                <div>
+                  <label className="fw-bold">
+                    Lembar Pernyataan Persetujuan Peserta
+                  </label>
+                  <Gap height={10} />
+                  <input type="file" className="form-control" />
+                  <p className="text-muted m-0">
+                    *) Formulir dapat diunduh di bit.ly/pernyataanPGS
+                  </p>
+                </div>
+              </div>
             </div>
             <Gap height={30} />
 
             <div className="d-flex justify-content-end">
-              <div className="btn btn-light" onClick={() => navigate(-1)}>
+              <div
+                className="btn btn-light btn-sm"
+                onClick={() => navigate(-1)}
+              >
                 Kembali
               </div>
-              <button type="submit" className="btn btn-primary ms-5">
+              <button
+                type="submit"
+                className="btn btn-light-primary btn-sm ms-5"
+              >
                 Pesan
               </button>
             </div>

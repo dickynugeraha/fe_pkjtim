@@ -31,7 +31,7 @@ const InputCustom: FC<Props> = ({
         id={formikIdName}
         {...formikProps}
         className={clsx(
-          "form-control bg-transparent",
+          "form-control form-control-solid",
           {
             "is-invalid": touched && error,
           },
