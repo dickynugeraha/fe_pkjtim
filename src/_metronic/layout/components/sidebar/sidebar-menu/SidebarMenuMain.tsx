@@ -82,7 +82,7 @@ const SidebarMenuMain = () => {
 
       <SidebarMenuItem
         to="pesanan-masuk"
-        icon="book-square"
+        icon="entrance-left"
         title="Pesanan Masuk"
         fontIcon="bi-layers"
       />

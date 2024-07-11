@@ -190,62 +190,66 @@ const TentangKami = () => {
       <Card>
         <Card.Body className="float-start">
           <div>
-            <Row className="align-items-center">
-              <Col className="text-center">
-                <img
-                  src={KontakPersonImage}
-                  style={{ height: "150px", width: "150px" }}
-                  alt=""
-                />
-              </Col>
-              <Col>
-                <Gap width={30} />
-                <div>
-                  <h5 className="mb-0 fw-bolder">Contact Person</h5>
-                  <Gap height={10} />
-                  <div className="row">
-                    <div className="col">
-                      <div className="d-flex align-items-center">
-                        <KTIcon
-                          iconName="whatsapp"
-                          className="text-success fs-1 me-4"
-                        />
-                        <div>
-                          <p className="fw-bolder m-0">Bapak Didin</p>
-                          <p className="m-0">wa.me/..</p>
+            <div className="row">
+              <div className="col">
+                <div className="d-flex align-items-center justify-content-center">
+                  <img
+                    src={KontakPersonImage}
+                    style={{ height: "150px", width: "150px" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <Gap width={28} />
+              <div className="col mt-8 mt-lg-0">
+                <div className="d-flex align-items-center justify-content-center">
+                  <div>
+                    <h5 className="mb-0">Kontak person</h5>
+                    <Gap height={10} />
+                    <div>
+                      <div>
+                        <div className="d-flex align-items-center">
+                          <KTIcon
+                            iconName="whatsapp"
+                            className="text-success fs-1 me-4"
+                          />
+                          <div>
+                            <p className="fw-bolder m-0">Bapak Didin</p>
+                            <p className="m-0">wa.me/..</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <Gap width={10} />
-                    <div className="col">
-                      <div className="d-flex align-items-center">
-                        <KTIcon
-                          iconName="whatsapp"
-                          className="text-success fs-1 me-4"
-                        />
-                        <div>
-                          <p className="fw-bolder m-0">Bapak Sularto</p>
-                          <p className="m-0">wa.me/..</p>
+                      <Gap width={10} />
+                      <div>
+                        <div className="d-flex align-items-center">
+                          <KTIcon
+                            iconName="whatsapp"
+                            className="text-success fs-1 me-4"
+                          />
+                          <div>
+                            <p className="fw-bolder m-0">Bapak Sularto</p>
+                            <p className="m-0">wa.me/..</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <Gap width={20} />
-                    <div className="col">
-                      <div className="d-flex align-items-center">
-                        <KTIcon
-                          iconName="whatsapp"
-                          className="text-success fs-1 me-4"
-                        />
-                        <div>
-                          <p className="fw-bolder m-0">Kantor UP PKJ TIM</p>
-                          <p className="m-0">wa.me/..</p>
+                      <Gap width={20} />
+                      <div>
+                        <div className="d-flex align-items-center">
+                          <KTIcon
+                            iconName="whatsapp"
+                            className="text-success fs-1 me-4"
+                          />
+                          <div>
+                            <p className="fw-bolder m-0">Kantor UP PKJ TIM</p>
+                            <p className="m-0">wa.me/..</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
         </Card.Body>
       </Card>

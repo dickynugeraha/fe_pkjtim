@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { Modal } from "react-bootstrap";
 import { KTIcon } from "../../../../_metronic/helpers";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
+import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 
 type Props = {
   show: boolean;
@@ -15,11 +15,15 @@ const ModalDetailPesanan: FC<Props> = ({ data, show, hideModal }) => {
   console.log("dataaaa", data);
 
   return (
-    <Modal show={show} onHide={hideModal} centered className="modal-lg">
-      <Modal.Header>
-        <h5 className="m-0">Detail Pesanan</h5>
-      </Modal.Header>
-      <Modal.Body>
+    <ModalWrapper
+      title="Detail pesanan"
+      show={show}
+      handleClose={hideModal}
+      attribute={{ centered: true }}
+      className="modal-lg"
+      footerCustom={<></>}
+    >
+      <>
         <div className="row row-cols-3">
           <DetailIten
             iconName={"home-2"}
@@ -88,17 +92,8 @@ const ModalDetailPesanan: FC<Props> = ({ data, show, hideModal }) => {
           <DetailItemFile title="Tanda pengenal" url="http" />
           <DetailItemFile title="Proposal" url="http" />
         </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <div
-          className="btn btn-sm btn-light ms-auto"
-          role="button"
-          onClick={hideModal}
-        >
-          Kembali
-        </div>
-      </Modal.Footer>
-    </Modal>
+      </>
+    </ModalWrapper>
   );
 
   type DetailItemProps = {
