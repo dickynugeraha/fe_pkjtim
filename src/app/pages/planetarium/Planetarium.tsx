@@ -73,7 +73,6 @@ const Planetarium = () => {
           }}
           variant={showFailedNext.variant}
         />
-        <Gap height={18} />
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
             <h4 className="m-0">Pilih Kegiatan</h4>
