@@ -53,7 +53,7 @@ const PesanTempat: FC = () => {
 
   const Persetujuan = () => {
     return (
-      <div className="form-check">
+      <div className="form-check d-flex align-items-center">
         <input
           type="checkbox"
           id="agree-terms"

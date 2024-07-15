@@ -3,7 +3,7 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import Gap from "../content/Gap";
 import { KTIcon } from "../../../helpers";
 
-const Table = ({ data, columns }) => {
+const Table = ({ data, columns, addData }) => {
   const availableLimit = [5, 10, 15, 20, 25];
   const [limit, setLimit] = useState(5);
 
@@ -39,8 +39,32 @@ const Table = ({ data, columns }) => {
 
   return (
     <div className="card p-8">
-      <div className="d-flex align-items-center justify-content-between">
-        <div className="d-flex align-items-center">
+      <div className="d-flex align-items-end justify-content-between">
+        <div className="d-flex align-items-end">
+          <div className="d-flex align-items-center mb-4">
+            <h5 className="m-0 fs-6">Tampilkan</h5>
+            <Gap width={10} />
+            <select
+              value={limit}
+              className="custom-select rounded p-1"
+              onChange={(e) => setLimit(e.target.value)}
+            >
+              {availableLimit.map((val) => (
+                <option value={val}>{val}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <Gap width={20} />
+        <div className="d-flex flex-column align-items-end justify-content-end">
+          <button
+            onClick={addData}
+            className="btn btn-sm btn-primary d-flex align-items-center w-50 justify-content-center"
+          >
+            <KTIcon iconName="plus" className="fs-lg-2" />
+            <p className="m-0">Tambah</p>
+          </button>
+          <Gap height={10} />
           <div className="d-flex align-items-center position-relative my-1">
             <KTIcon
               iconName="magnifier"
@@ -49,17 +73,10 @@ const Table = ({ data, columns }) => {
             <input
               type="text"
               data-kt-user-table-filter="search"
-              className="form-control form-control-solid w-200px ps-14"
+              className="form-control form-control-solid w-lg-200px ps-14"
               placeholder="Cari"
             />
           </div>
-        </div>
-        <Gap width={20} />
-        <div>
-          <button className="btn btn-sm btn-primary d-flex align-items-center">
-            <KTIcon iconName="plus" className="fs-lg-2" />
-            <p className="m-0">Tambah pesanan</p>
-          </button>
         </div>
       </div>
       <Gap height={25} />
@@ -109,20 +126,7 @@ const Table = ({ data, columns }) => {
         </table>
       </div>
       <Gap height={12} />
-      <div className="d-flex justify-content-between flex-wrap">
-        <div className="d-flex align-items-center mb-6">
-          <h5 className="m-0 fs-6">Tampilkan</h5>
-          <Gap width={10} />
-          <select
-            value={limit}
-            className="custom-select rounded p-1"
-            onChange={(e) => setLimit(e.target.value)}
-          >
-            {availableLimit.map((val) => (
-              <option value={val}>{val}</option>
-            ))}
-          </select>
-        </div>
+      <div className="ms-auto">
         <div className="d-flex">
           <button
             className="btn btn-sm p-0 m-0"

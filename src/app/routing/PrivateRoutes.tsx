@@ -19,6 +19,7 @@ import TentangKami from "../pages/tentang-kami/TentangKami";
 import Planetarium from "../pages/planetarium/Planetarium";
 import FormPlanetarium from "../pages/planetarium/FormPlanetarium";
 import PesananMasuk from "../pages/pesanan-masuk/PesananMasuk";
+import SekilasInfo from "../pages/master-data/sekilas-info/SekilasInfo";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -58,6 +59,8 @@ const PrivateRoutes = () => {
         <Route path="planetarium" element={<Planetarium />} />
         <Route path="form-planetarium" element={<FormPlanetarium />} />
         <Route path="pesanan-masuk" element={<PesananMasuk />} />
+        {/* Pengelola */}
+        <Route path="master-data/sekilas-info" element={<SekilasInfo />} />
 
         <Route
           path="crafted/pages/wizards/*"
