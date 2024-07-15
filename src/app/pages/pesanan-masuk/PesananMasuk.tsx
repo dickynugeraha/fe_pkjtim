@@ -140,7 +140,7 @@ const PesananMasuk = () => {
         Pesanan Masuk
       </PageTitle>
       <Content>
-        <Table data={data} columns={columns} />
+        <Table data={data} columns={columns} addData={() => {}} />
         <ModalDetailPesananMasuk
           show={modalDetail.show}
           data={modalDetail.data}

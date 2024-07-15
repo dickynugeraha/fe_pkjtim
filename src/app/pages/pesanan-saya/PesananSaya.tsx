@@ -148,7 +148,7 @@ const PesananSaya: FC = () => {
         Daftar Pesanan Saya
       </PageTitle>
       <Content>
-        <Table data={data} columns={columns} />
+        <Table data={data} columns={columns} addData={() => {}} />
         <ModalDetailPesanan
           data={modalDetail.data}
           show={modalDetail.show}
