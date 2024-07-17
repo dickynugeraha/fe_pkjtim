@@ -7,12 +7,13 @@ import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { dummyImage } from "../../dashboard/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
+import ModalAddEditTutupTempat from "./components/ModalAddEditTutupTempat";
+import globalVar from "../../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: "Tutup Tempat",
+    path: "/master-data/tutup-tempat",
     isSeparator: false,
     isActive: true,
   },
@@ -24,7 +25,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SekilasInfo = () => {
+const TutupTempat = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -35,45 +36,28 @@ const SekilasInfo = () => {
     () => [
       {
         id: "1",
-        gambar: { dummyImage },
-        judul_info: "Kim Parrish",
-        detail_info: "4420 Valley Street, Garnerville, NY 10923",
-        status: "Terbit",
+        tipe_tempat: "Teater Besar",
+        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
       },
       {
         id: "2",
-        gambar: { dummyImage },
-        judul_info: "Michele Castillo",
-        detail_info: "637 Kyle Street, Fullerton, NE 68638",
-        status: "Draft",
+        tipe_tempat: "Teater Besar",
+        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
       },
       {
         id: "3",
-        gambar: { dummyImage },
-        judul_info: "Eric Ferris",
-        detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
-        status: "Terbit",
+        tipe_tempat: "Teater Besar",
+        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
       },
       {
         id: "4",
-        gambar: { dummyImage },
-        judul_info: "Gloria Noble",
-        detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
-        status: "Terbit",
+        tipe_tempat: "Teater Besar",
+        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
       },
       {
         id: "5",
-        gambar: { dummyImage },
-        judul_info: "Darren Daniels",
-        detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        status: "Draft",
-      },
-      {
-        id: "6",
-        gambar: { dummyImage },
-        judul_info: "Ted McDonald",
-        detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
-        status: "Terbit",
+        tipe_tempat: "Teater Besar",
+        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
       },
     ],
     []
@@ -82,48 +66,15 @@ const SekilasInfo = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-          console.log("singleData", singleData);
-
-          return (
-            <div style={{ width: "150px" }}>
-              <img
-                src={singleData.gambar.dummyImage}
-                className="rounded"
-                style={{ width: "100%" }}
-              />
-            </div>
-          );
-        },
-      },
-      {
-        Header: "Judul Info",
-        accessor: "judul_info",
+        Header: "Tipe Tempat",
+        accessor: "tipe_tempat",
         sortType: "alphanumeric",
       },
       {
-        Header: "Detail Info",
-        accessor: "detail_info",
+        Header: "Tanggal Tutup",
+        accessor: "tanggal_kunjungan",
         sortType: "alphanumeric",
       },
-      {
-        Header: "Status",
-        accessor: "status",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-          const className =
-            singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded"
-              : "m-0 text-success bg-light-success text-center rounded";
-          return <p className={className}>{singleData.status}</p>;
-        },
-      },
-
       {
         Header: "Aksi",
         Cell: (props: any) => {
@@ -177,9 +128,9 @@ const SekilasInfo = () => {
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
+        description="Tutup Tempat"
       >
-        Sekilas Info
+        Tutup Tempat
       </PageTitle>
       <Content>
         <Table
@@ -193,7 +144,7 @@ const SekilasInfo = () => {
             })
           }
         />
-        <ModalAddEditSekilasInfo
+        <ModalAddEditTutupTempat
           show={modaAddlEdit.show}
           data={modaAddlEdit.data}
           fromAdd={modaAddlEdit.fromAdd}
@@ -211,4 +162,4 @@ const SekilasInfo = () => {
   );
 };
 
-export default SekilasInfo;
+export default TutupTempat;

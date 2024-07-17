@@ -5,14 +5,14 @@ import {
 } from "../../../../_metronic/layout/core/PageData";
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
-import { dummyImage } from "../../dashboard/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
+import { dummyImage } from "../../dashboard/helper";
+import ModalAddEditPementasan from "./components/ModalAddEditPementasan";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: "Pementasan",
+    path: "/master-data/pementasan",
     isSeparator: false,
     isActive: true,
   },
@@ -24,7 +24,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SekilasInfo = () => {
+const Pementasan = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -36,43 +36,64 @@ const SekilasInfo = () => {
       {
         id: "1",
         gambar: { dummyImage },
-        judul_info: "Kim Parrish",
         detail_info: "4420 Valley Street, Garnerville, NY 10923",
+        judul_sinopsis: "Kim Parrish",
+        nama_sanggar: "Kim Parrish",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
         status: "Terbit",
       },
       {
         id: "2",
         gambar: { dummyImage },
-        judul_info: "Michele Castillo",
         detail_info: "637 Kyle Street, Fullerton, NE 68638",
+        judul_sinopsis: "Michele Castillo",
+        nama_sanggar: "Michele Castillo",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
         status: "Draft",
       },
       {
         id: "3",
         gambar: { dummyImage },
-        judul_info: "Eric Ferris",
         detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
+        judul_sinopsis: "Eric Ferris",
+        nama_sanggar: "Eric Ferris",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
+
         status: "Terbit",
       },
       {
         id: "4",
         gambar: { dummyImage },
-        judul_info: "Gloria Noble",
         detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
+        judul_sinopsis: "Gloria Noble",
+        nama_sanggar: "Gloria Noble",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
+
         status: "Terbit",
       },
       {
         id: "5",
         gambar: { dummyImage },
-        judul_info: "Darren Daniels",
         detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
+        judul_sinopsis: "Darren Daniels",
+        nama_sanggar: "Darren Daniels",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
+
         status: "Draft",
       },
       {
         id: "6",
         gambar: { dummyImage },
-        judul_info: "Ted McDonald",
         detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
+        judul_sinopsis: "Ted McDonald",
+        nama_sanggar: "Ted McDonald",
+        sinopsis:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
         status: "Terbit",
       },
     ],
@@ -101,14 +122,19 @@ const SekilasInfo = () => {
         },
       },
       {
-        Header: "Judul Info",
-        accessor: "judul_info",
+        Header: "Nama Sanggar",
         sortType: "alphanumeric",
+        accessor: "nama_sanggar",
       },
       {
-        Header: "Detail Info",
-        accessor: "detail_info",
+        Header: "Judul",
         sortType: "alphanumeric",
+        accessor: "judul_sinopsis",
+      },
+      {
+        Header: "Sinopsis",
+        sortType: "alphanumeric",
+        accessor: "sinopsis",
       },
       {
         Header: "Status",
@@ -174,12 +200,8 @@ const SekilasInfo = () => {
 
   return (
     <>
-      <PageTitle
-        icon="data"
-        breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
-      >
-        Sekilas Info
+      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pementasan">
+        Pementasan
       </PageTitle>
       <Content>
         <Table
@@ -193,7 +215,7 @@ const SekilasInfo = () => {
             })
           }
         />
-        <ModalAddEditSekilasInfo
+        <ModalAddEditPementasan
           show={modaAddlEdit.show}
           data={modaAddlEdit.data}
           fromAdd={modaAddlEdit.fromAdd}
@@ -211,4 +233,4 @@ const SekilasInfo = () => {
   );
 };
 
-export default SekilasInfo;
+export default Pementasan;

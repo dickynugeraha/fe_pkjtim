@@ -5,7 +5,15 @@ function getThreeMonthsFromToday() {
   return threeMonthsLater.toISOString().split("T")[0];
 }
 
+function rupiahFormat(number: number) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(number);
+}
+
 export default {
   today,
   getThreeMonthsFromToday,
+  rupiahFormat,
 };

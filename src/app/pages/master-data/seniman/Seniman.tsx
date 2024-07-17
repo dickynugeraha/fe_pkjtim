@@ -5,14 +5,14 @@ import {
 } from "../../../../_metronic/layout/core/PageData";
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
-import { dummyImage } from "../../dashboard/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
+import { dummyImage } from "../../dashboard/helper";
+import ModalAddEditSeniman from "./components/ModalAddEditSeniman";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: "Seniman",
+    path: "/master-data/seniman",
     isSeparator: false,
     isActive: true,
   },
@@ -24,7 +24,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SekilasInfo = () => {
+const Seniman = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -36,44 +36,50 @@ const SekilasInfo = () => {
       {
         id: "1",
         gambar: { dummyImage },
-        judul_info: "Kim Parrish",
-        detail_info: "4420 Valley Street, Garnerville, NY 10923",
-        status: "Terbit",
+        biografi: "4420 Valley Street, Garnerville, NY 10923",
+        nama_seniman: "Kim Parrish",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
       {
         id: "2",
         gambar: { dummyImage },
-        judul_info: "Michele Castillo",
-        detail_info: "637 Kyle Street, Fullerton, NE 68638",
-        status: "Draft",
+        biografi: "637 Kyle Street, Fullerton, NE 68638",
+        nama_seniman: "Michele Castillo",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
       {
         id: "3",
         gambar: { dummyImage },
-        judul_info: "Eric Ferris",
-        detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
-        status: "Terbit",
+        biografi: "906 Hart Country Lane, Toccoa, GA 30577",
+        nama_seniman: "Eric Ferris",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
       {
         id: "4",
         gambar: { dummyImage },
-        judul_info: "Gloria Noble",
-        detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
-        status: "Terbit",
+        biografi: "2403 Edgewood Avenue, Fresno, CA 93721",
+        nama_seniman: "Gloria Noble",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
       {
         id: "5",
         gambar: { dummyImage },
-        judul_info: "Darren Daniels",
-        detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        status: "Draft",
+        biografi: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
+        nama_seniman: "Darren Daniels",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
       {
         id: "6",
         gambar: { dummyImage },
-        judul_info: "Ted McDonald",
-        detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
-        status: "Terbit",
+        biografi: "796 Bryan Avenue, Minneapolis, MN 55406",
+        nama_seniman: "Ted McDonald",
+        deskripsi:
+          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
       },
     ],
     []
@@ -101,29 +107,15 @@ const SekilasInfo = () => {
         },
       },
       {
-        Header: "Judul Info",
-        accessor: "judul_info",
+        Header: "Nama Seniman",
         sortType: "alphanumeric",
+        accessor: "nama_seniman",
       },
       {
-        Header: "Detail Info",
-        accessor: "detail_info",
+        Header: "Deskripsi",
         sortType: "alphanumeric",
+        accessor: "deskripsi",
       },
-      {
-        Header: "Status",
-        accessor: "status",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-          const className =
-            singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded"
-              : "m-0 text-success bg-light-success text-center rounded";
-          return <p className={className}>{singleData.status}</p>;
-        },
-      },
-
       {
         Header: "Aksi",
         Cell: (props: any) => {
@@ -174,12 +166,8 @@ const SekilasInfo = () => {
 
   return (
     <>
-      <PageTitle
-        icon="data"
-        breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
-      >
-        Sekilas Info
+      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Seniman">
+        Seniman
       </PageTitle>
       <Content>
         <Table
@@ -193,7 +181,7 @@ const SekilasInfo = () => {
             })
           }
         />
-        <ModalAddEditSekilasInfo
+        <ModalAddEditSeniman
           show={modaAddlEdit.show}
           data={modaAddlEdit.data}
           fromAdd={modaAddlEdit.fromAdd}
@@ -204,11 +192,11 @@ const SekilasInfo = () => {
               data: {},
             })
           }
-          handleSubmit={(data) => console.log(data)}
+          handleSubmit={(data: any) => console.log(data)}
         />
       </Content>
     </>
   );
 };
 
-export default SekilasInfo;
+export default Seniman;

@@ -7,6 +7,7 @@ import { DashboardKalender } from "../pages/dashboard/home/Home";
 import { MenuTestPage } from "../pages/MenuTestPage";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
+// PKJTIM
 import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
 import SemuaInformasi from "../pages/dashboard/informasi/SemuaInformasi";
 import DetailInformasi from "../pages/dashboard/informasi/DetailInformasi";
@@ -20,6 +21,11 @@ import Planetarium from "../pages/planetarium/Planetarium";
 import FormPlanetarium from "../pages/planetarium/FormPlanetarium";
 import PesananMasuk from "../pages/pesanan-masuk/PesananMasuk";
 import SekilasInfo from "../pages/master-data/sekilas-info/SekilasInfo";
+import Pementasan from "../pages/master-data/pementasan/Pementasan";
+import Seniman from "../pages/master-data/seniman/Seniman";
+import KoleksiSeni from "../pages/master-data/koleksi-seni/KoleksiSeni";
+import Tempat from "../pages/master-data/tempat/Tempat";
+import TutupTempat from "../pages/master-data/tutup-tempat/TutupTempat";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -61,6 +67,11 @@ const PrivateRoutes = () => {
         <Route path="pesanan-masuk" element={<PesananMasuk />} />
         {/* Pengelola */}
         <Route path="master-data/sekilas-info" element={<SekilasInfo />} />
+        <Route path="master-data/pementasan" element={<Pementasan />} />
+        <Route path="master-data/seniman" element={<Seniman />} />
+        <Route path="master-data/koleksi-seni" element={<KoleksiSeni />} />
+        <Route path="master-data/tempat" element={<Tempat />} />
+        <Route path="master-data/tutup-tempat" element={<TutupTempat />} />
 
         <Route
           path="crafted/pages/wizards/*"

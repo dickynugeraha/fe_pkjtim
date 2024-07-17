@@ -37,6 +37,11 @@ const SidebarMenuMain = () => {
         fontIcon="bi-layers"
       >
         <SidebarMenuItem
+          to="master-data/pengguna"
+          title="Pengguna"
+          hasBullet={true}
+        />
+        <SidebarMenuItem
           to="master-data/sekilas-info"
           title="Sekilas Info"
           hasBullet={true}
@@ -66,11 +71,6 @@ const SidebarMenuMain = () => {
           title="Tutup Tempat"
           hasBullet={true}
         />
-        <SidebarMenuItem
-          to="master-data/users"
-          title="Pengguna"
-          hasBullet={true}
-        />
       </SidebarMenuItemWithSub>
     );
   };
@@ -79,11 +79,16 @@ const SidebarMenuMain = () => {
     <>
       <DashboardSideBar />
       <MasterDataSidebar />
-
       <SidebarMenuItem
         to="pesanan-masuk"
         icon="entrance-left"
         title="Pesanan Masuk"
+        fontIcon="bi-layers"
+      />
+      <SidebarMenuItem
+        to="pesanan-masuk-planetarium"
+        icon="moon"
+        title="Pesan Planetarium G2S"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem

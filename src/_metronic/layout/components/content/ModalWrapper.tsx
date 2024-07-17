@@ -1,5 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import { Modal } from "react-bootstrap";
+import { KTSVG } from "../../../helpers";
 
 type Props = {
   show: boolean;
@@ -27,8 +28,18 @@ const ModalWrapper: React.FC<Props> = ({
       centered={attribute.centered}
       className={className}
     >
-      <Modal.Header>
-        <h4 className="m-0">{title}</h4>
+      <Modal.Header className="d-flex align-items-center justify-content-between">
+        <h4 className="m-0 p-0">{title}</h4>
+        <div
+          className="btn btn-icon btn-sm btn-active-light-primary ms-2"
+          onClick={handleClose}
+          aria-label="Close"
+        >
+          <KTSVG
+            path="media/icons/duotune/arrows/arr061.svg"
+            className="svg-icon svg-icon-2x"
+          />
+        </div>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer className="d-flex justify-content-between align-items-center">
