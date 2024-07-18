@@ -7,12 +7,13 @@ import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { dummyImage } from "../../dashboard/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
+import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
+import globalVar from "../../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: "Pengguna",
+    path: "/master-data/pengguna",
     isSeparator: false,
     isActive: true,
   },
@@ -24,56 +25,55 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SekilasInfo = () => {
-  const [modaAddlEdit, setModalAddEdit] = useState({
+const Pengguna = () => {
+  const [modalAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
     data: {},
+    role: "",
   });
 
   const data = useMemo(
     () => [
       {
         id: "1",
-        gambar: { dummyImage },
-        judul_info: "Kim Parrish",
-        detail_info: "4420 Valley Street, Garnerville, NY 10923",
-        status: "Terbit",
+        nama_lengkap: "Kale Pramono",
+        email: "kale@gmail.com",
+        nomor_telepon: "0896226849841",
+        role: "User",
+        status: "Not Active",
       },
       {
         id: "2",
-        gambar: { dummyImage },
-        judul_info: "Michele Castillo",
-        detail_info: "637 Kyle Street, Fullerton, NE 68638",
-        status: "Draft",
+        nama_lengkap: "Kale Pramono",
+        nomor_telepon: "0896226849841",
+        email: "kale@gmail.com",
+        role: "Kurator",
+        status: "Requested",
       },
       {
         id: "3",
-        gambar: { dummyImage },
-        judul_info: "Eric Ferris",
-        detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
-        status: "Terbit",
+        nama_lengkap: "Kale Pramono",
+        nomor_telepon: "0896226849841",
+        email: "kale@gmail.com",
+        role: "Pengelola",
+        status: "Active",
       },
       {
         id: "4",
-        gambar: { dummyImage },
-        judul_info: "Gloria Noble",
-        detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
-        status: "Terbit",
+        nama_lengkap: "Kale Pramono",
+        nomor_telepon: "0896226849841",
+        email: "kale@gmail.com",
+        role: "Kurator",
+        status: "Active",
       },
       {
         id: "5",
-        gambar: { dummyImage },
-        judul_info: "Darren Daniels",
-        detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        status: "Draft",
-      },
-      {
-        id: "6",
-        gambar: { dummyImage },
-        judul_info: "Ted McDonald",
-        detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
-        status: "Terbit",
+        nama_lengkap: "Kale Pramono",
+        nomor_telepon: "0896226849841",
+        email: "kale@gmail.com",
+        role: "User",
+        status: "Requested",
       },
     ],
     []
@@ -82,53 +82,35 @@ const SekilasInfo = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-
-          return (
-            <div style={{ width: "150px" }}>
-              <img
-                src={singleData.gambar.dummyImage}
-                className="rounded"
-                style={{ width: "100%" }}
-              />
-            </div>
-          );
-        },
-      },
-      {
-        Header: "Judul Info",
-        accessor: "judul_info",
+        Header: "Nama Lengkap",
+        accessor: "nama_lengkap",
         sortType: "alphanumeric",
       },
       {
-        Header: "Detail Info",
-        accessor: "detail_info",
+        Header: "Email",
+        accessor: "email",
+        sortType: "alphanumeric",
+      },
+      {
+        Header: "Nomor Telepom",
+        accessor: "nomor_telepon",
+        sortType: "alphanumeric",
+      },
+      {
+        Header: "Role",
+        accessor: "role",
         sortType: "alphanumeric",
       },
       {
         Header: "Status",
         accessor: "status",
         sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-          const className =
-            singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded"
-              : "m-0 text-success bg-light-success text-center rounded";
-          return <p className={className}>{singleData.status}</p>;
-        },
       },
-
       {
         Header: "Aksi",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-
-          return (
+          let actionButton = (
             <>
               <div className="input-group mb-3">
                 <button
@@ -148,6 +130,7 @@ const SekilasInfo = () => {
                           show: true,
                           data: singleData,
                           fromAdd: false,
+                          role: singleData.role,
                         })
                       }
                     >
@@ -165,6 +148,27 @@ const SekilasInfo = () => {
               </div>
             </>
           );
+
+          if (singleData.status === "Requested") {
+            actionButton = (
+              <div className="d-flex align-items-center">
+                <div role="button">
+                  <KTIcon
+                    iconName="check-square"
+                    className="fs-1 text-success me-3"
+                  />
+                </div>
+                <div role="button">
+                  <KTIcon
+                    iconName="delete-folder"
+                    className="fs-1 text-danger"
+                  />
+                </div>
+              </div>
+            );
+          }
+
+          return actionButton;
         },
       },
     ],
@@ -173,12 +177,8 @@ const SekilasInfo = () => {
 
   return (
     <>
-      <PageTitle
-        icon="data"
-        breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
-      >
-        Sekilas Info
+      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pengguna">
+        Pengguna
       </PageTitle>
       <Content>
         <Table
@@ -189,18 +189,21 @@ const SekilasInfo = () => {
               show: true,
               data: {},
               fromAdd: true,
+              role: "",
             })
           }
         />
-        <ModalAddEditSekilasInfo
-          show={modaAddlEdit.show}
-          data={modaAddlEdit.data}
-          fromAdd={modaAddlEdit.fromAdd}
+        <ModalAddEditPengguna
+          show={modalAddlEdit.show}
+          data={modalAddlEdit.data}
+          fromAdd={modalAddlEdit.fromAdd}
+          isRoleKurator={modalAddlEdit.role === "Kurator"}
           handleClose={() =>
             setModalAddEdit({
               fromAdd: false,
               show: false,
               data: {},
+              role: "",
             })
           }
           handleSubmit={(data) => console.log(data)}
@@ -210,4 +213,4 @@ const SekilasInfo = () => {
   );
 };
 
-export default SekilasInfo;
+export default Pengguna;

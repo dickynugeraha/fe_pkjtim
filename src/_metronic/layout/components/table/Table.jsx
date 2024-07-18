@@ -3,7 +3,7 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import Gap from "../content/Gap";
 import { KTIcon } from "../../../helpers";
 
-const Table = ({ data, columns, addData }) => {
+const Table = ({ data, columns, addData, showAddButton = true }) => {
   const availableLimit = [5, 10, 15, 20, 25];
   const [limit, setLimit] = useState(5);
 
@@ -57,13 +57,15 @@ const Table = ({ data, columns, addData }) => {
         </div>
         <Gap width={20} />
         <div className="d-flex flex-column align-items-end justify-content-end">
-          <button
-            onClick={addData}
-            className="btn btn-sm btn-primary d-flex align-items-center w-50 justify-content-center"
-          >
-            <KTIcon iconName="plus" className="fs-lg-2" />
-            <p className="m-0">Tambah</p>
-          </button>
+          {showAddButton && (
+            <button
+              onClick={addData}
+              className="btn btn-sm btn-primary d-flex align-items-center w-50 justify-content-center"
+            >
+              <KTIcon iconName="plus" className="fs-lg-2" />
+              <p className="m-0">Tambah</p>
+            </button>
+          )}
           <Gap height={10} />
           <div className="d-flex align-items-center position-relative my-1">
             <KTIcon

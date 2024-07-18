@@ -86,9 +86,9 @@ const SidebarMenuMain = () => {
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
-        to="pesanan-masuk-planetarium"
-        icon="moon"
-        title="Pesan Planetarium G2S"
+        to="pesanan-planet"
+        icon="entrance-left"
+        title="Pesanan Planetarium"
         fontIcon="bi-layers"
       />
       <SidebarMenuItem

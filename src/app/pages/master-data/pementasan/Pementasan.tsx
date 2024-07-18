@@ -108,7 +108,6 @@ const Pementasan = () => {
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          console.log("singleData", singleData);
 
           return (
             <div style={{ width: "150px" }}>

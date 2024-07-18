@@ -140,7 +140,12 @@ const PesananMasuk = () => {
         Pesanan Masuk
       </PageTitle>
       <Content>
-        <Table data={data} columns={columns} addData={() => {}} />
+        <Table
+          data={data}
+          columns={columns}
+          addData={() => {}}
+          showAddButton={false}
+        />
         <ModalDetailPesananMasuk
           show={modalDetail.show}
           data={modalDetail.data}

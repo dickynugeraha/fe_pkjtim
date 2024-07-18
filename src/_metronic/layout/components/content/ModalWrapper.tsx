@@ -46,6 +46,7 @@ const ModalWrapper: React.FC<Props> = ({
         <div
           className="btn btn-sm btn-light"
           role="button"
+          style={{ width: "120px" }}
           onClick={handleClose}
         >
           Tutup
