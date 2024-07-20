@@ -9,12 +9,13 @@ type Props = {
   handleClose: () => void;
 };
 
-const ModalDetailPesananPlanetarium: React.FC<Props> = ({
+const ModalDetailKurasiPentas: React.FC<Props> = ({
   show,
   data,
   handleClose,
 }) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShowRevisi, setModalShowRevisi] = useState(false);
+  const [modalShowTerima, setModalShowTerima] = useState(false);
 
   return (
     <ModalWrapper
@@ -28,9 +29,16 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <div
             role="button"
             className="btn btn-sm btn-danger mx-4"
-            onClick={() => setModalShow(true)}
+            onClick={() => setModalShowRevisi(true)}
           >
-            Tolak
+            Revisi
+          </div>
+          <div
+            role="button"
+            className="btn btn-sm btn-success"
+            onClick={() => setModalShowTerima(true)}
+          >
+            Terima
           </div>
         </>
       }
@@ -76,13 +84,34 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
         </div>
         <ModalWrapper
           title="Tulis alasan"
-          show={modalShow}
-          handleClose={() => setModalShow(false)}
+          show={modalShowRevisi}
+          handleClose={() => setModalShowRevisi(false)}
           attribute={{ centered: true }}
           className="modal-md"
           footerCustom={
             <div role="button" className="btn btn-sm btn-danger mx-4">
-              Tolak
+              Revisi
+            </div>
+          }
+        >
+          <>
+            <textarea
+              name="alasan"
+              id="alasan"
+              className="form-control"
+              rows={8}
+            ></textarea>
+          </>
+        </ModalWrapper>
+        <ModalWrapper
+          title="Tulis alasan"
+          show={modalShowTerima}
+          handleClose={() => setModalShowTerima(false)}
+          attribute={{ centered: true }}
+          className="modal-md"
+          footerCustom={
+            <div role="button" className="btn btn-sm btn-danger mx-4">
+              Terima
             </div>
           }
         >
@@ -98,6 +127,12 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
       </>
     </ModalWrapper>
   );
+
+  type ModalReasonRejectProps = {
+    onSubmit: (reason: string) => void;
+    show: boolean;
+    handleClose: () => void;
+  };
 
   type DetailItemProps = {
     iconName: string;
@@ -120,6 +155,41 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
       </div>
     );
   }
+
+  type DetailItemFileProps = {
+    title: string;
+    url: string;
+    withUpload: boolean;
+  };
+  function DetailItemFile({ title, url, withUpload }: DetailItemFileProps) {
+    return (
+      <div className="col mb-6">
+        <div className="d-flex align-items-center">
+          <div>
+            <div className="d-flex">
+              <KTIcon iconName={"file"} className="fs-3 me-3" />
+              <h6 className="m-0">{title}</h6>
+            </div>
+            <Gap height={12} />
+            {url ? (
+              <a className="btn btn-sm btn-light-primary" href={url}>
+                Lihat {title}
+              </a>
+            ) : (
+              <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
+            )}
+
+            {withUpload && (
+              <>
+                <Gap height={12} />
+                <input type="file" className="form-control" />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 };
 
-export default ModalDetailPesananPlanetarium;
+export default ModalDetailKurasiPentas;

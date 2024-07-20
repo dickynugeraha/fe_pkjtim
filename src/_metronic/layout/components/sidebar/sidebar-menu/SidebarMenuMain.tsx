@@ -92,6 +92,12 @@ const SidebarMenuMain = () => {
         fontIcon="bi-layers"
       />
       <SidebarMenuItem
+        to="kurasi-pentas"
+        icon="book"
+        title="Kurasi Pentas"
+        fontIcon="bi-layers"
+      />
+      <SidebarMenuItem
         to="pesan-tempat"
         icon="geolocation"
         title="Pesan Tempat"
