@@ -65,7 +65,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           />
           <DetailIten
             iconName={"book"}
-            title={"Keperluan"}
+            title={"Kegiatan"}
             desc={data.nama_sekolah}
             // desc={data.judul_pentas}
           />
@@ -110,7 +110,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           attribute={{ centered: true }}
           className="modal-md"
           footerCustom={
-            <div role="button" className="btn btn-sm btn-danger mx-4">
+            <div role="button" className="btn btn-sm btn-success mx-4">
               Terima
             </div>
           }

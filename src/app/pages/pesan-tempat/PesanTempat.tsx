@@ -139,33 +139,29 @@ const PesanTempat: FC = () => {
             <Gap height={12} />
             <h6>Pilih tanggal</h6>
             <div className="d-flex align-items-center">
-              <div>
-                <input
-                  type="date"
-                  className="form-control form-control-solid"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  value={startBook}
-                  onChange={(e) => setStartBook(e.target.value)}
-                  min={globalVar.getThreeMonthsFromToday()}
-                  onKeyDown={(e) => e.preventDefault()}
-                />
-              </div>
+              <input
+                type="date"
+                className="form-control form-control-solid w-lg-25"
+                // value={selectedDate}
+                // onChange={handleDateChange}
+                value={startBook}
+                onChange={(e) => setStartBook(e.target.value)}
+                min={globalVar.getThreeMonthsFromToday()}
+                onKeyDown={(e) => e.preventDefault()}
+              />
               <div>
                 <p className="m-0 mx-3">s/d</p>
               </div>
-              <div>
-                <input
-                  type="date"
-                  className="form-control form-control-solid"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  value={endBook}
-                  onChange={(e) => setEndBook(e.target.value)}
-                  min={globalVar.getThreeMonthsFromToday()}
-                  onKeyDown={(e) => e.preventDefault()}
-                />
-              </div>
+              <input
+                type="date"
+                className="form-control form-control-solid w-lg-25"
+                // value={selectedDate}
+                // onChange={handleDateChange}
+                value={endBook}
+                onChange={(e) => setEndBook(e.target.value)}
+                min={globalVar.getThreeMonthsFromToday()}
+                onKeyDown={(e) => e.preventDefault()}
+              />
             </div>
             <Gap height={10} />
             <button

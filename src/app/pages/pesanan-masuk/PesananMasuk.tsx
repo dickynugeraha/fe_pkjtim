@@ -31,48 +31,54 @@ const PesananMasuk = () => {
       {
         id: "1",
         tipe_tempat: "Kim Parrish",
-        tanggal_pesan: "4420 Valley Street, Garnerville, NY 10923",
-        tanggal_sewa: "07/11/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         total_pembayaran: "Rp. 1.000.000",
         status: "Proses",
       },
       {
         id: "2",
         tipe_tempat: "Michele Castillo",
-        tanggal_pesan: "637 Kyle Street, Fullerton, NE 68638",
-        tanggal_sewa: "07/11/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         total_pembayaran: "Rp. 1.000.000",
-        status: "Pending",
+        status: "Menunggu Surat Jawaban",
       },
       {
         id: "3",
         tipe_tempat: "Eric Ferris",
-        tanggal_pesan: "906 Hart Country Lane, Toccoa, GA 30577",
-        tanggal_sewa: "07/10/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         total_pembayaran: "Rp. 1.000.000",
         status: "Selesai",
       },
       {
         id: "4",
         tipe_tempat: "Gloria Noble",
-        tanggal_pesan: "2403 Edgewood Avenue, Fresno, CA 93721",
-        tanggal_sewa: "07/09/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         total_pembayaran: "Rp. 1.000.000",
         status: "Ditolak",
       },
       {
         id: "5",
         tipe_tempat: "Darren Daniels",
-        tanggal_pesan: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        tanggal_sewa: "07/07/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         total_pembayaran: "Rp. 1.000.000",
         status: "Revisi",
       },
       {
         id: "6",
         tipe_tempat: "Ted McDonald",
-        tanggal_pesan: "796 Bryan Avenue, Minneapolis, MN 55406",
-        tanggal_sewa: "07/07/2020",
+        tanggal_pesan: "07/11/2020",
+        tanggal_mulai_sewa: "07/07/2020",
+        tanggal_akhir_sewa: "07/07/2020",
         status: "Selesai",
         total_pembayaran: "Rp. 1.000.000",
       },
@@ -94,11 +100,49 @@ const PesananMasuk = () => {
       {
         Header: "Tanggal Sewa",
         accessor: "tanggal_sewa",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+
+          return (
+            <>
+              <span className="text-success bg-light-success">
+                {singleData.tanggal_mulai_sewa}
+              </span>
+              <span> - </span>
+              <span className="text-danger bg-light-danger">
+                {singleData.tanggal_akhir_sewa}
+              </span>
+            </>
+          );
+        },
       },
       {
         Header: "Status",
         accessor: "status",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          let statusClass = "";
+          switch (singleData.status) {
+            case "Selesai":
+              statusClass = "bg-light-success text-success";
+              break;
+            case "Proses":
+              statusClass = "bg-light-warning text-warning";
+              break;
+            case "Ditolak":
+              statusClass = "bg-light-danger text-danger";
+              break;
+            case "Revisi":
+              statusClass = "bg-light-danger text-danger";
+              break;
+            case "Menunggu Surat Jawaban":
+              statusClass = "bg-light-success text-success";
+              break;
+          }
+
+          return <span className={statusClass}>{singleData.status}</span>;
+        },
       },
       {
         Header: "Total Pembayaran",
@@ -111,7 +155,7 @@ const PesananMasuk = () => {
           let singleData = props.cell.row.original;
           return (
             <button
-              className={"btn btn-sm btn-light-primary"}
+              className={"btn btn-sm btn-primary"}
               style={{ minWidth: "120px" }}
               onClick={() => {
                 setModalDetail({

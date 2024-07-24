@@ -142,7 +142,7 @@ const KurasiPentas = () => {
           let singleData = props.cell.row.original;
           return (
             <button
-              className={"btn btn-sm btn-light-primary"}
+              className={"btn btn-sm btn-primary"}
               style={{ minWidth: "120px" }}
               onClick={() => {
                 setModalDetail({

@@ -3,7 +3,7 @@ import { Content } from "../../../../_metronic/layout/components/content";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import HeadPage from "../../../modules/widgets/components/HeadPage";
 import axios from "axios";
-import { arrData, convertRouteToTitle } from "../helper";
+import { arrData, convertRouteToTitle } from "../../../helper/helper";
 import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 
 const Breadcrumbs: Array<PageLink> = [

@@ -5,7 +5,7 @@ import { Content } from "../../../../_metronic/layout/components/content";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import HeadPage from "../../../modules/widgets/components/HeadPage";
-import { arrData, arrDataTempat, dummyImage } from "../helper";
+import { arrData, arrDataTempat, dummyImage } from "../../../helper/helper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
@@ -121,7 +121,7 @@ const ContentTempat: FC = () => {
     <div>
       <div className="p-8">
         <div>
-          <div className="row row-cols-lg-3">
+          <div className="row row-cols-lg-4">
             {arrDataTempat.map((item: any, index: number) => (
               <div className="col" key={index.toString()}>
                 <img

@@ -103,7 +103,7 @@ const FormPesanTempat: FC = () => {
         <Gap height={30} />
         <form onSubmit={formik.handleSubmit} noValidate>
           {/* nama sanggar dan alamat sanggar */}
-          <div className="row cols-2">
+          <div className="row row-cols-1 row-cols-lg-2">
             <div className="col">
               <div className="fv-row mb-5">
                 <label htmlFor="namaSanggar" className="fw-bold">
@@ -174,7 +174,7 @@ const FormPesanTempat: FC = () => {
           </div>
           <Gap height={10} />
           {/* judul pentas dan tanggal mulai pentas */}
-          <div className="row cols-2">
+          <div className="row row-cols-1 row-cols-lg-2">
             <div className="col">
               <div className="fv-row mb-5">
                 <label htmlFor="judulPentas" className="fw-bold">
@@ -217,7 +217,7 @@ const FormPesanTempat: FC = () => {
                   </label>
                   <Gap height={10} />
                   {/* mulai pentas dan selesai pentas */}
-                  <div className="row cols-1 cols-md-2">
+                  <div className="row row-cols-1 row-cols-md-2">
                     <div className="col">
                       <input
                         id="tanggalMulaiPentas"
@@ -293,7 +293,7 @@ const FormPesanTempat: FC = () => {
           </div>
           <Gap height={10} />
           {/* kode booking dan generate kode */}
-          <div className="row cols-2">
+          <div className="row row-cols-1 row-cols-lg-2">
             <div className="col">
               <div className="fv-row mb-5">
                 <label htmlFor="judulPentas" className="fw-bold">
@@ -332,7 +332,7 @@ const FormPesanTempat: FC = () => {
                         </div>
                       )}
                   </div>
-                  <div className="btn btn-light-primary btn-sm py-4">
+                  <div className="btn btn-light-primary btn-sm ms-3 py-md-4">
                     Buat kode
                   </div>
                 </div>
@@ -341,7 +341,7 @@ const FormPesanTempat: FC = () => {
             <div className="col">
               <div className="fv-row">
                 <div>
-                  <div className="row row-cols-lg-2">
+                  <div className="row row-cols-1 row-cols-lg-2">
                     <div className="col">
                       <label
                         htmlFor="start_main_event"
@@ -381,7 +381,7 @@ const FormPesanTempat: FC = () => {
                           )}
                       </div>
                     </div>
-                    <div className="col">
+                    <div className="col mt-4 mt-md-0">
                       <label
                         htmlFor="start_main_event"
                         className="fw-bold mb-3"
@@ -430,7 +430,7 @@ const FormPesanTempat: FC = () => {
             <div className="col"></div>
             <div className="col">
               <label htmlFor="tarif" className="fw-bold">
-                Tarif
+                Kalkulasi Tarif
               </label>
               <Gap height={10} />
               <input
@@ -457,7 +457,7 @@ const FormPesanTempat: FC = () => {
           {/* Upload berkas */}
           <div className="row">
             <div className="col">
-              <p className="fw-bold mb-1">Unggah berkas</p>
+              <p className="fw-bold mb-1 fs-3">Unggah berkas</p>
               <span className="text-danger">
                 *) Ekstensi yang diperbolehkan png/jpg/jpeg, dengan ukuran maks
                 1MB

@@ -5,7 +5,7 @@ import {
 } from "../../../../_metronic/layout/core/PageData";
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
-import { dummyImage } from "../../dashboard/helper";
+import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
 import globalVar from "../../../helper/globalVar";
@@ -114,7 +114,7 @@ const Pengguna = () => {
             <>
               <div className="input-group mb-3">
                 <button
-                  className="btn btn-sm btn-light-primary dropdown-toggle"
+                  className="btn btn-sm btn-primary dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"

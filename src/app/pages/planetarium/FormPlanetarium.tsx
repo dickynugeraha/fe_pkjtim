@@ -66,7 +66,7 @@ const FormPlanetarium = () => {
           </div>
           <Gap height={24} />
           <form onSubmit={formik.handleSubmit} noValidate>
-            <div className="row cols-2">
+            <div className="row row-cols-1 row-cols-lg-2">
               <div className="col">
                 <InputCustom
                   formikIdName="namaSekolah"
@@ -88,7 +88,7 @@ const FormPlanetarium = () => {
                 />
               </div>
             </div>
-            <div className="row row-cols-2">
+            <div className="row row-cols-1 row-cols-lg-2">
               <div className="col">
                 <InputCustom
                   formikIdName="daerah"
@@ -214,8 +214,10 @@ const FormPlanetarium = () => {
                 *) Ekstensi yang diperbolehkan pdf/png/jpg/jpeg, dengan ukuran
                 maks 1MB
               </p>
-              <div className="d-flex">
-                <div className="me-4">
+              <Gap height={10} />
+
+              <div className="d-flex flex-column flex-lg-row">
+                <div className="me-lg-4">
                   <label className="fw-bold">Surat undangan resmi</label>
                   <Gap height={10} />
                   <input type="file" className="form-control" />
@@ -223,7 +225,7 @@ const FormPlanetarium = () => {
                     *) Surat Undangan Resmi WAJIB ditandatangani Kepala Sekolah
                   </p>
                 </div>
-                <div>
+                <div className="mt-4 mt-lg-0">
                   <label className="fw-bold">
                     Lembar Pernyataan Persetujuan Peserta
                   </label>

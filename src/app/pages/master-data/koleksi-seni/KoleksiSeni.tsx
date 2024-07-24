@@ -6,7 +6,7 @@ import {
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
-import { dummyImage } from "../../dashboard/helper";
+import { dummyImage } from "../../../helper/helper";
 import ModalAddEditKoleksiSeni from "./components/ModalAddEditKoleksiSeni";
 
 const Breadcrumbs: Array<PageLink> = [
@@ -118,7 +118,7 @@ const KoleksiSeni = () => {
             <>
               <div className="input-group mb-3">
                 <button
-                  className="btn btn-sm btn-light-primary dropdown-toggle"
+                  className="btn btn-sm btn-primary dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"

@@ -2,9 +2,10 @@ import React from "react";
 import { Content } from "../../../../_metronic/layout/components/content";
 import HeadPage from "../../../modules/widgets/components/HeadPage";
 import { useParams } from "react-router-dom";
-import { convertRouteToTitle, dummyImage } from "../helper";
+import { convertRouteToTitle, dummyImage } from "../../../helper/helper";
 import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
 import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
+import { KTIcon } from "../../../../_metronic/helpers";
 
 const DetailInformasi = () => {
   const params = useParams();
@@ -64,12 +65,14 @@ const DetailInformasi = () => {
       </PageTitle>
 
       <div className="card">
-        <HeadCard title="Detail Info" />
         <div className="row g-10">
           <div className="col-12 col-lg-8">
-            <div className="p-8 d-flex justify-content-between align-items-center">
-              <h4 className="m-0">Terkenalnya outfit skena</h4>
-              <p className="m-0">19-19-2023</p>
+            <div className="p-8">
+              <h4 className="m-0 fs-2">Terkenalnya outfit skena</h4>
+              <div className="d-flex align-items-center mt-2">
+                <KTIcon className="fs-1 text-primary" iconName="calendar" />
+                <p className="m-0 ms-2 text-muted fw-bold">19-19-2023</p>
+              </div>
             </div>
             <div className="p-8 pt-0 pe-lg-0">
               <img

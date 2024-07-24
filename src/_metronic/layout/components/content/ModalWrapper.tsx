@@ -31,7 +31,7 @@ const ModalWrapper: React.FC<Props> = ({
       <Modal.Header className="d-flex align-items-center justify-content-between">
         <h4 className="m-0 p-0">{title}</h4>
         <div
-          className="btn btn-icon btn-sm btn-active-light-primary ms-2"
+          className="btn btn-icon btn-sm"
           onClick={handleClose}
           aria-label="Close"
         >
@@ -46,7 +46,7 @@ const ModalWrapper: React.FC<Props> = ({
         <div
           className="btn btn-sm btn-light"
           role="button"
-          style={{ width: "120px" }}
+          style={{ width: "80px" }}
           onClick={handleClose}
         >
           Tutup

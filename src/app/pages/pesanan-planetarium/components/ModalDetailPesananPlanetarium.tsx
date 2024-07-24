@@ -57,7 +57,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           />
           <DetailIten
             iconName={"book"}
-            title={"Keperluan"}
+            title={"Kegiatan"}
             desc={data.nama_sekolah}
             // desc={data.judul_pentas}
           />
