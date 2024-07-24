@@ -74,6 +74,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             // desc={data.tanggal_akhir_pentas}
           />
         </div>
+        {modalShow && <div className="overlay" />}
         <ModalWrapper
           title="Tulis alasan"
           show={modalShow}

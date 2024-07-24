@@ -40,10 +40,20 @@ const FormPlanetarium = () => {
     validationSchema: formPesanScheme,
     onSubmit: async (values, { setStatus, setSubmitting }) => {},
   });
-
   const { state }: any = useLocation();
-
   const navigate = useNavigate();
+
+  const optionRegion = [
+    { name: "Jakarta Pusat", value: "jakarta_pusat" },
+    { name: "Jakarta Timur", value: "jakarta_timur" },
+    { name: "Jakarta Selatan", value: "jakarta_selatan" },
+    { name: "Jakarta Barat", value: "jakarta_barat" },
+    { name: "Jakarta Utara", value: "jakarta_utara" },
+    { name: "Bogor", value: "bogor" },
+    { name: "Depok", value: "depok" },
+    { name: "Tangerang", value: "tangerang" },
+    { name: "Bekasi", value: "bekasi" },
+  ];
 
   return (
     <Content>
@@ -90,16 +100,19 @@ const FormPlanetarium = () => {
             </div>
             <div className="row row-cols-1 row-cols-lg-2">
               <div className="col">
-                <InputCustom
-                  formikIdName="daerah"
-                  label="Daerah"
-                  touched={formik.touched.daerah}
-                  error={formik.errors.daerah}
-                  formikProps={formik.getFieldProps("daerah")}
-                  typed="number"
-                />
+                <div className="w-md-50">
+                  <label htmlFor="daerah" className="fw-bold">
+                    Daerah
+                  </label>
+                  <Gap height={10} />
+                  <select className="form-select" name="daerah" id="daerah">
+                    {optionRegion.map((region) => (
+                      <option value={region.value}>{region.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <div className="col">
+              <div className="col mt-4 mt-lg-0">
                 <label htmlFor="kontakNarahubung" className="fw-bold">
                   Nomor Kontak Narahubung
                 </label>
@@ -111,6 +124,8 @@ const FormPlanetarium = () => {
                 />
               </div>
             </div>
+            <Gap height={15} />
+
             <div className="row cols-2">
               <div className="col">
                 <InputCustom
@@ -207,7 +222,7 @@ const FormPlanetarium = () => {
             </div> */}
             <Gap height={24} />
             <div className="row">
-              <label htmlFor="" className="fw-bold">
+              <label htmlFor="" className="fw-bold   fs-3">
                 Unggah berkas
               </label>
               <p className="text-danger">

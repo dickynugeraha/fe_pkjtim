@@ -82,6 +82,8 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             // desc={data.tanggal_akhir_pentas}
           />
         </div>
+        {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
+
         <ModalWrapper
           title="Tulis alasan"
           show={modalShowRevisi}

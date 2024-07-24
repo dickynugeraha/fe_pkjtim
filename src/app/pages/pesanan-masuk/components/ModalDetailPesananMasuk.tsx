@@ -174,7 +174,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             // desc={data.total_pembayaran}
           />
         </div>
-        <h6>Berkas</h6>
+        <h4>Berkas</h4>
         <Gap height={8} />
         <div className="row row-cols-3">
           <DetailItemFile
@@ -186,7 +186,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailItemFile title="Proposal" url="http" withUpload={true} />
         </div>
         <Gap height={6} />
-        <h6>Lainnya</h6>
+        <h4>Lainnya</h4>
         <Gap height={6} />
         <div className="row row-cols-3">
           <div
@@ -201,6 +201,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           </div>
           {HandlerShowComponent().OthersContent}
         </div>
+        {modalDetailPesananMasuk.show && <div className="overlay" />}
         <ModalDetailPemesananUser
           data={{}}
           show={modalDetailPesananMasuk.show}
