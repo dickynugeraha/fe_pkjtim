@@ -10,6 +10,7 @@ import ModalWrapper from "../../../../_metronic/layout/components/content/ModalW
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import polygonImage from "../../../../../public/media/images/polygon.png";
 import { KTIcon } from "../../../../_metronic/helpers";
+import ModalDetailAcara from "./components/ModalDetailAcara";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -29,7 +30,7 @@ const Breadcrumbs: Array<PageLink> = [
 const Home: FC = () => {
   const [modalDetailEvent, setModalDetailEvent] = useState({
     show: false,
-    data: null,
+    data: {},
   });
   const [typeCalendar, setTypeCalendar] = useState(0);
   const events = [
@@ -51,13 +52,6 @@ const Home: FC = () => {
       data: arg,
     });
   };
-
-  function convertDate(str: any) {
-    var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
-  }
 
   return (
     <>
@@ -83,65 +77,15 @@ const Home: FC = () => {
               eventClick={handleEventClick}
             />
           </div>
-          <ModalWrapper
-            title="Detail Acara"
-            show={modalDetailEvent.show}
-            handleClose={() => setModalDetailEvent({ show: false, data: null })}
-            attribute={{ centered: true }}
-            className="modal-md"
-            footerCustom={<></>}
-          >
-            <>
-              <img
-                src={modalDetailEvent.data?.event?.extendedProps?.image}
-                style={{ width: "100%" }}
-                className="rounded"
-              />
-              <Gap height={24} />
-              <div>
-                <div className="d-flex align-items-center">
-                  <KTIcon
-                    iconName="calendar"
-                    className="text-primary fs-1 me-3"
-                  />
-                  <p className="m-0 fs-3 fw-bold">
-                    {modalDetailEvent.data?.event?.title}
-                  </p>
-                </div>
-                <Gap height={18} />
-                <div className="d-flex align-items-center">
-                  <KTIcon
-                    iconName={"toggle-on-circle"}
-                    className="fs-1 text-success me-3"
-                  />
-                  <p className="fs-4 m-0 fw-bold me-3">Mulai</p>
-                  <p className="m-0 fs-4">
-                    {convertDate(modalDetailEvent.data?.view?.activeStart)}
-                  </p>
-                </div>
-                <Gap height={8} />
-                <div className="d-flex align-items-center">
-                  <KTIcon
-                    iconName={"toggle-off-circle"}
-                    className="fs-1 text-danger me-3"
-                  />
-                  <p className="fs-4 m-0 fw-bold me-3">Selesai</p>
-                  <p className="m-0 fs-4">
-                    {convertDate(modalDetailEvent.data?.view?.activeEnd)}
-                  </p>
-                </div>
-                <Gap height={18} />
-                <div className="d-flex align-items-center">
-                  <KTIcon iconName={"geolocation"} className="fs-1 me-3" />
-                  <p className="fs-4 m-0 fw-bold">
-                    {modalDetailEvent.data?.event?.extendedProps?.tempat}
-                  </p>
-                </div>
-              </div>
-            </>
-          </ModalWrapper>
         </div>
         <Gap height={25} />
+        <ModalDetailAcara
+          show={modalDetailEvent.show}
+          data={modalDetailEvent.data}
+          handleClose={() => {
+            setModalDetailEvent({ show: false, data: {} });
+          }}
+        />
         <DetailCalendarPesanan />
       </Content>
     </>
