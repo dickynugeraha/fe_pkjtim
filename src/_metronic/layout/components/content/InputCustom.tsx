@@ -19,8 +19,6 @@ const InputCustom: FC<Props> = ({
   touched,
   typed = "text",
 }) => {
-  console.log("formikProps", formikProps);
-
   return (
     <div className="fv-row mb-5">
       <label htmlFor={formikIdName} className="fw-bold">

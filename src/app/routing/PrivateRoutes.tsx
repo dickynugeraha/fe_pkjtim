@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { Informasi } from "../pages/dashboard/informasi/Informasi";
-import { DashboardKalender } from "../pages/dashboard/home/Home";
+import Home from "../pages/dashboard/home/Home";
 import { MenuTestPage } from "../pages/MenuTestPage";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
@@ -53,7 +53,7 @@ const PrivateRoutes = () => {
           path="dashboard/informasi/:list/:id"
           element={<DetailInformasi />}
         />
-        <Route path="dashboard/home" element={<DashboardKalender />} />
+        <Route path="dashboard/home" element={<Home />} />
         <Route path="pesan-tempat" element={<PesanTempat />} />
         <Route
           path="pesan-tempat/:jenis_tempat"

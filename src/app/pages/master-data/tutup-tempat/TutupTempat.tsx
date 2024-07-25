@@ -37,27 +37,32 @@ const TutupTempat = () => {
       {
         id: "1",
         tipe_tempat: "Teater Besar",
-        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
+        tanggal_mulai_kunjungan: "11-10-2024",
+        tanggal_akhir_kunjungan: "11-10-2024",
       },
       {
         id: "2",
         tipe_tempat: "Teater Besar",
-        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
+        tanggal_mulai_kunjungan: "11-10-2024",
+        tanggal_akhir_kunjungan: "11-10-2024",
       },
       {
         id: "3",
         tipe_tempat: "Teater Besar",
-        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
+        tanggal_mulai_kunjungan: "11-10-2024",
+        tanggal_akhir_kunjungan: "11-10-2024",
       },
       {
         id: "4",
         tipe_tempat: "Teater Besar",
-        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
+        tanggal_mulai_kunjungan: "11-10-2024",
+        tanggal_akhir_kunjungan: "11-10-2024",
       },
       {
         id: "5",
         tipe_tempat: "Teater Besar",
-        tanggal_kunjungan: "11-10-2024 - 12-10-2024",
+        tanggal_mulai_kunjungan: "11-10-2024",
+        tanggal_akhir_kunjungan: "11-10-2024",
       },
     ],
     []
@@ -74,6 +79,20 @@ const TutupTempat = () => {
         Header: "Tanggal Tutup",
         accessor: "tanggal_kunjungan",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return (
+            <div>
+              <span className="bg-light-success text-success rounded p-2">
+                {singleData.tanggal_mulai_kunjungan}
+              </span>
+              <span className="mx-3">-</span>
+              <span className="bg-light-danger text-danger rounded p-2">
+                {singleData.tanggal_akhir_kunjungan}
+              </span>
+            </div>
+          );
+        },
       },
       {
         Header: "Aksi",

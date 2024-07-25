@@ -12,8 +12,6 @@ type Props = {
 const ModalDetailPesanan: FC<Props> = ({ data, show, hideModal }) => {
   const iconNames = ["home-2", "mask", "home-2", "geolocation-home"];
 
-  console.log("dataaaa", data);
-
   return (
     <ModalWrapper
       title="Detail pesanan"

@@ -105,11 +105,11 @@ const PesananMasuk = () => {
 
           return (
             <>
-              <span className="text-success bg-light-success">
+              <span className="text-success bg-light-success rounded p-2">
                 {singleData.tanggal_mulai_sewa}
               </span>
               <span> - </span>
-              <span className="text-danger bg-light-danger">
+              <span className="text-danger bg-light-danger rounded p-2">
                 {singleData.tanggal_akhir_sewa}
               </span>
             </>
@@ -125,19 +125,19 @@ const PesananMasuk = () => {
           let statusClass = "";
           switch (singleData.status) {
             case "Selesai":
-              statusClass = "bg-light-success text-success";
+              statusClass = "bg-light-success text-success rounded p-2";
               break;
             case "Proses":
-              statusClass = "bg-light-warning text-warning";
+              statusClass = "bg-light-warning text-warning rounded p-2";
               break;
             case "Ditolak":
-              statusClass = "bg-light-danger text-danger";
+              statusClass = "bg-light-danger text-danger rounded p-2";
               break;
             case "Revisi":
-              statusClass = "bg-light-danger text-danger";
+              statusClass = "bg-light-danger text-danger rounded p-2";
               break;
             case "Menunggu Surat Jawaban":
-              statusClass = "bg-light-success text-success";
+              statusClass = "bg-light-success text-success rounded p-2";
               break;
           }
 
@@ -162,7 +162,6 @@ const PesananMasuk = () => {
                   show: true,
                   data: singleData,
                 });
-                console.log("props", singleData);
               }}
             >
               Detail

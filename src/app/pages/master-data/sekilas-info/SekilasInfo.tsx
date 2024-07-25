@@ -117,9 +117,9 @@ const SekilasInfo = () => {
           let singleData = props.cell.row.original;
           const className =
             singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded"
-              : "m-0 text-success bg-light-success text-center rounded";
-          return <p className={className}>{singleData.status}</p>;
+              ? "m-0 text-danger bg-light-danger text-center rounded p-2"
+              : "m-0 text-success bg-light-success text-center rounded p-2";
+          return <span className={className}>{singleData.status}</span>;
         },
       },
 

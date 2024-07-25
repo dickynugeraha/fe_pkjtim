@@ -168,7 +168,6 @@ const PesananSaya: FC = () => {
                     data: singleData,
                   });
                 }
-                console.log("props", singleData);
               }}
             >
               {singleData.status !== "Pending" ? "Detail" : "Lanjut Pesan"}

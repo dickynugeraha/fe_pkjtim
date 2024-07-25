@@ -17,8 +17,6 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
   handleSubmit,
   data,
 }) => {
-  console.log("dataaaaaaaaaa", data);
-
   const [placeIsClose, setPlaceIsClose] = useState(false);
   const [choosenLocation, setChoosenLocation] = useState("teater_besar");
   let gambarVal = "",

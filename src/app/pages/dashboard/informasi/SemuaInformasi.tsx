@@ -9,7 +9,7 @@ import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 const Breadcrumbs: Array<PageLink> = [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/informasi",
     isSeparator: false,
     isActive: false,
   },

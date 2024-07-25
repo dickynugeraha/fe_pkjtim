@@ -90,11 +90,11 @@ const PesananPlanetarium = () => {
           let singleData = props.cell.row.original;
           return (
             <div>
-              <span className="bg-light-success text-success">
+              <span className="bg-light-success text-success rounded p-2">
                 {singleData.tanggal_mulai_kunjungan}
               </span>
               <span className="mx-3">-</span>
-              <span className="bg-light-danger text-danger">
+              <span className="bg-light-danger text-danger rounded p-2">
                 {singleData.tanggal_akhir_kunjungan}
               </span>
             </div>
@@ -119,7 +119,6 @@ const PesananPlanetarium = () => {
                   show: true,
                   data: singleData,
                 });
-                console.log("props", singleData);
               }}
             >
               Detail

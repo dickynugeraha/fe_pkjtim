@@ -150,7 +150,6 @@ const DashboardPage: FC = () => {
   return (
     <Content>
       <div className="card mb-9">
-        {/* <HeadCard title='Informasi' /> */}
         <ContentSekilasInfo />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"
@@ -182,7 +181,7 @@ const Informasi: FC = () => {
   const Breadcrumbs: Array<PageLink> = [
     {
       title: "Dashboard",
-      path: "/dashboard/home",
+      path: "/dashboard/informasi",
       isSeparator: false,
       isActive: true,
     },

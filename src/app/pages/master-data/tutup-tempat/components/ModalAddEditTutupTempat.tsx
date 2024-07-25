@@ -17,8 +17,6 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditSekilasInfo> = ({
   handleSubmit,
   data,
 }) => {
-  console.log("dataaaaaaaaaa", data);
-
   const [isPreEvent, setIsPreEvent] = useState(false);
   let gambarVal = "",
     judulInfoVal = "",
