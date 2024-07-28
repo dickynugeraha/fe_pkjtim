@@ -104,7 +104,7 @@ const PesananMasuk = () => {
           let singleData = props.cell.row.original;
 
           return (
-            <>
+            <div style={{ width: "230px" }}>
               <span className="text-success bg-light-success rounded p-2">
                 {singleData.tanggal_mulai_sewa}
               </span>
@@ -112,7 +112,7 @@ const PesananMasuk = () => {
               <span className="text-danger bg-light-danger rounded p-2">
                 {singleData.tanggal_akhir_sewa}
               </span>
-            </>
+            </div>
           );
         },
       },

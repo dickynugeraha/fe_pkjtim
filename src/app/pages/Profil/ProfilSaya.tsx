@@ -110,28 +110,32 @@ const ProfilSaya = () => {
       </PageTitle>
       <Content>
         {/* alert jika email belum terverifikasi */}
-        <div className="alert alert-dismissible bg-light-warning border border-warning d-flex flex-column flex-sm-row p-5">
-          <span className="svg-icon svg-icon-2hx svg-icon-primary me-4 mb-5 mb-sm-0">
-            <KTIcon
-              iconName="information-2"
-              className="fs-2x text-warning justify-content-center"
-            ></KTIcon>
-          </span>
-          <div className="d-flex flex-column text-warning pe-0 pe-sm-10">
-            <h5 className="mb-1">Email anda belum terverifikasi!</h5>
-            <span>
-              Silahkan melakukan verifikasi email untuk dapat melakukan
-              pemesanan tempat
-            </span>
+        <div className="alert alert-dismissible bg-light-warning border border-warning p-5">
+          <div className="d-flex flex-column flex-md-row justify-content-between ">
+            <div className="d-flex align-items-center">
+              <KTIcon
+                iconName="information-2"
+                className="fs-2x text-warning justify-content-center me-4"
+              />
+              <div>
+                <h5 className="mb-1">Email anda belum terverifikasi!</h5>
+                <span className="text-warning">
+                  Silahkan melakukan verifikasi email untuk dapat melakukan
+                  pemesanan tempat
+                </span>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-warning m-2"
+              // style={{ width: "180px" }}
+            >
+              Kirim email verifikasi
+            </button>
           </div>
-          <button
-            type="button"
-            className="btn btn-sm btn-warning position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 ms-sm-auto"
-          >
-            Kirim email verifikasi
-          </button>
         </div>
-        <div className="card shadow-sm">
+
+        <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
             <h4 className="m-0">Detail Profil Saya</h4>
             <a
@@ -173,101 +177,8 @@ const ProfilSaya = () => {
           </div>
         </div>
         <Gap height={15} />
-        {/* <div className='card'>
-          <div className='card-header d-flex justify-content-between align-items-center'>
-            <h4 className='m-0'>Detail Login</h4>
-          </div>
-          <div className='p-8'>
-            <div className='row row-cols-1 row-cols-md-2'>
-              <div className='col'>
-                <div className='mb-3'>
-                  <p className='fw-bold'>Email</p>
-                  <input
-                    type='email'
-                    className='form-control transparant'
-                    required
-                  />
-                </div>
-              </div>
-              <div className='col'>
-                <div className='mb-3'>
-                  <p className='fw-bold'>Konfirmasi kata sandi</p>
-                  <input
-                    type='password'
-                    className='form-control transparant'
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-            <Gap height={10} />
-            <div className='d-flex'>
-              <div
-                className='btn btn-sm btn-primary'
-                style={{ width: '180px' }}
-              >
-                Perbaharui email
-              </div>
-              <Gap width={12} />
-              <div
-                className='btn btn-sm btn-secondary'
-                style={{ width: '100px' }}
-              >
-                Cancel
-              </div>
-            </div>
-            <Gap height={42} />
-            <div className='row row-cols-1 row-cols-md-3'>
-              <div className='col'>
-                <div className='mb-3'>
-                  <p className='fw-bold'>Kata sandi saat ini</p>
-                  <input
-                    type='password'
-                    className='form-control transparant'
-                    required
-                  />
-                </div>
-              </div>
-              <div className='col'>
-                <div className='mb-3'>
-                  <p className='fw-bold'>Kata sandi baru</p>
-                  <input
-                    type='password'
-                    className='form-control transparant'
-                    required
-                  />
-                </div>
-              </div>
-              <div className='col'>
-                <div className='mb-3'>
-                  <p className='fw-bold'>Konfirmasi kata sandi baru</p>
-                  <input
-                    type='password'
-                    className='form-control transparant'
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-            <Gap height={10} />
-            <div className='d-flex'>
-              <div
-                className='btn btn-sm btn-primary'
-                style={{ width: '180px' }}
-              >
-                Perbaharui kata sandi
-              </div>
-              <Gap width={12} />
-              <div
-                className='btn btn-sm btn-secondary'
-                style={{ width: '100px' }}
-              >
-                Cancel
-              </div>
-            </div>
-          </div>
-        </div> */}
-        <div className="card shadow-sm mb-5 mb-xl-10">
+
+        <div className="card mb-5 mb-xl-10">
           <div className="card-header border-0">
             <div className="card-title m-0">
               <h3 className="m-0">Detail Login</h3>
@@ -350,7 +261,7 @@ const ProfilSaya = () => {
                       <button
                         id="kt_signin_submit"
                         type="submit"
-                        className="btn btn-primary  me-2 px-6"
+                        className="btn btn-sm btn-primary  me-2 px-6"
                       >
                         {!loading1 && "Update Email"}
                         {loading1 && (
@@ -369,7 +280,7 @@ const ProfilSaya = () => {
                         onClick={() => {
                           setShowEmailForm(false);
                         }}
-                        className="btn btn-color-gray-500 btn-active-light-primary px-6"
+                        className="btn btn-sm btn-color-gray-500 btn-light px-6"
                       >
                         Cancel
                       </button>
@@ -500,7 +411,7 @@ const ProfilSaya = () => {
                       <button
                         id="kt_password_submit"
                         type="submit"
-                        className="btn btn-primary me-2 px-6"
+                        className="btn btn-sm btn-primary me-2 px-6"
                       >
                         {!loading2 && "Update Password"}
                         {loading2 && (
@@ -519,7 +430,7 @@ const ProfilSaya = () => {
                         }}
                         id="kt_password_cancel"
                         type="button"
-                        className="btn btn-color-gray-500 btn-active-light-primary px-6"
+                        className="btn btn-sm btn-color-gray-500 btn-light px-6"
                       >
                         Cancel
                       </button>

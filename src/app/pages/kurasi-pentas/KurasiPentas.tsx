@@ -111,7 +111,7 @@ const KurasiPentas = () => {
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           return (
-            <div>
+            <div style={{ width: "230px" }}>
               <span className="bg-light-success text-success rounded p-2">
                 {singleData.tanggal_mulai_kunjungan}
               </span>

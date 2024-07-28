@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
+import ModalDetailPemesananUser from "./ModalDetailPemesananUser";
+import ModalReasonReject from "./ModalReasonReject";
 
 type Props = {
   show: boolean;
@@ -22,7 +24,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     revisi: { show: false },
     tolak: { show: false },
   });
-  const [modalDetailPesananMasuk, setModalDetailPesananMasuk] = useState({
+  const [modalDetailPesananUser, setModalDetailPesananUser] = useState({
     show: false,
     data: {},
   });
@@ -44,7 +46,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <div role="button" className="btn btn-sm btn-success">
           Selesai
         </div>
-        <div role="button" className="btn btn-sm btn-danger mx-4">
+        <div
+          role="button"
+          className="btn btn-sm btn-danger mx-4"
+          onClick={() => setModalTolak(true)}
+        >
           Tolak
         </div>
         <div role="button" className="btn btn-sm btn-primary">
@@ -62,7 +68,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <div role="button" className="btn btn-sm btn-success">
             Selesai
           </div>
-          <div role="button" className="btn btn-sm btn-danger mx-4">
+          <div
+            role="button"
+            className="btn btn-sm btn-danger mx-4"
+            onClick={() => setModalTolak(true)}
+          >
             Tolak
           </div>
           <div role="button" className="btn btn-sm btn-primary">
@@ -77,7 +87,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <div role="button" className="btn btn-sm btn-success">
             Selesai
           </div>
-          <div role="button" className="btn btn-sm btn-danger mx-4">
+          <div
+            role="button"
+            className="btn btn-sm btn-danger mx-4"
+            onClick={() => setModalTolak(true)}
+          >
             Tolak
           </div>
         </>
@@ -191,7 +205,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <div className="row row-cols-3">
           <div
             role="button"
-            onClick={() => setModalDetailPesananMasuk({ show: true, data: {} })}
+            onClick={() => setModalDetailPesananUser({ show: true, data: {} })}
           >
             <DetailItemFile
               title="Detail pemesanan"
@@ -201,124 +215,27 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           </div>
           {HandlerShowComponent().OthersContent}
         </div>
-        {modalDetailPesananMasuk.show && <div className="overlay" />}
+        {(modalTolak || modalDetailPesananUser.show) && (
+          <div className="overlay" />
+        )}
+
         <ModalDetailPemesananUser
-          data={{}}
-          show={modalDetailPesananMasuk.show}
+          data={modalDetailPesananUser.data}
+          show={modalDetailPesananUser.show}
           handleClose={() =>
-            setModalDetailPesananMasuk({ show: false, data: {} })
+            setModalDetailPesananUser({ show: false, data: {} })
           }
         />
-        {/* <ModalReasonReject
+        <ModalReasonReject
           show={modalTolak}
           handleClose={() => setModalTolak(false)}
           onSubmit={(reason) => {
             console.log("reason tolak", reason);
           }}
-        /> */}
+        />
       </>
     </ModalWrapper>
   );
-
-  type ModalReasonRejectProps = {
-    onSubmit: (reason: string) => void;
-    show: boolean;
-    handleClose: () => void;
-  };
-  function ModalReasonReject({ onSubmit }: ModalReasonRejectProps) {
-    const [textReason, setTextReason] = useState("");
-
-    return (
-      <ModalWrapper
-        title="Tulis alasan"
-        attribute={{ centered: true }}
-        className="modal-md z-3"
-        footerCustom={
-          <div
-            className="btn btn-sm btn-success"
-            role="button"
-            onClick={() => onSubmit(textReason)}
-          >
-            Selesai
-          </div>
-        }
-        handleClose={handleClose}
-        show={show}
-      >
-        <>
-          <textarea
-            className="form-control"
-            style={{ minHeight: "200px" }}
-            onChange={(e) => setTextReason(e.target.value)}
-          >
-            {textReason}
-          </textarea>
-        </>
-      </ModalWrapper>
-    );
-  }
-
-  type ModalDetailPemesananUserProps = {
-    data: any;
-    show: boolean;
-    handleClose: () => void;
-  };
-  function ModalDetailPemesananUser({
-    data,
-    show,
-    handleClose,
-  }: ModalDetailPemesananUserProps) {
-    return (
-      <ModalWrapper
-        attribute={{ centered: true }}
-        className="modal-md z-2"
-        footerCustom={<></>}
-        handleClose={handleClose}
-        show={show}
-        title="Detail Pemesanan User"
-      >
-        <>
-          <div className="row row-cols-3">
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="user" className="fs-3 me-3" />
-              <div>
-                <h6 className="m-0">Nama lengkap</h6>
-                <p className="m-0">Kale Pramono</p>
-              </div>
-            </div>
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="message-notif" className="fs-3 me-3" />
-              <div>
-                <h6 className="m-0">Email</h6>
-                <p className="m-0">kale@gmail.com</p>
-              </div>
-            </div>
-            <div className="d-flex align-items-center">
-              <KTIcon iconName="user" className="fs-3 me-3" />
-              <div>
-                <h6 className="m-0">Nomor hp</h6>
-                <p className="m-0">08962125148616</p>
-              </div>
-            </div>
-          </div>
-          <Gap height={32} />
-          <div>
-            <h6>Tanda pengenal</h6>
-            <Gap height={6} />
-            <div className="row row-cols-lg-2 ">
-              <div className="col">
-                <div
-                  className="bg-gray-200 rounded"
-                  style={{ height: "100px" }}
-                ></div>
-              </div>
-              <div className="col"></div>
-            </div>
-          </div>
-        </>
-      </ModalWrapper>
-    );
-  }
 
   type DetailItemProps = {
     iconName: string;

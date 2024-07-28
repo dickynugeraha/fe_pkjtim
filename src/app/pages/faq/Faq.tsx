@@ -47,7 +47,7 @@ const Faq = () => {
           </div>
           {/* pemesanan tempat dan masuk */}
           <div className="p-8">
-            <div className="row cols-2">
+            <div className="row row-cols-1 row-cols-md-2">
               <div className="col">
                 <h4>Pemesanan tempat</h4>
                 {/* section 1 */}
@@ -80,7 +80,7 @@ const Faq = () => {
                 />
               </div>
               {/* masuk */}
-              <div className="col">
+              <div className="col mt-5 mt-md-0">
                 <h4>Masuk</h4>
                 <Accordion
                   show={true}
@@ -129,20 +129,6 @@ const Faq = () => {
             <h4>Video Tutorial</h4>
           </div>
           <div className="row row-cols-2 row-cols-lg-3 ps-8 pb-8">
-            <div className="col">
-              <div className="card py-5 px-10 py-lg-20 px-lg-40 mb-5">
-                Video
-              </div>
-              <p className="mb-1 fw-bold">Judul Video</p>
-              <p>Deskripsi</p>
-            </div>
-            <div className="col">
-              <div className="card py-5 px-10 py-lg-20 px-lg-40 mb-5">
-                Video
-              </div>
-              <p className="mb-1 fw-bold">Judul Video</p>
-              <p>Deskripsi</p>
-            </div>
             <div className="col">
               <div className="card py-5 px-10 py-lg-20 px-lg-40 mb-5">
                 Video

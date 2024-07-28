@@ -43,7 +43,7 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditSekilasInfo> = ({
       footerCustom={
         <button
           type="submit"
-          className="btn btn-sm btn-light-primary"
+          className="btn btn-sm btn-primary"
           onClick={() => handleSubmit("data")}
         >
           Simpan

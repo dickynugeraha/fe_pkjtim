@@ -1,7 +1,4 @@
-import React from "react";
-import { useIntl } from "react-intl";
 import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
 import PelayananImage from "../../../../public/media/images/tentang_kami_pelayanan.png";
 import LokasiImage from "../../../../public/media/images/tentang_kami_lokasi.png";
 import KontakPersonImage from "../../../../public/media/images/tentang_kami_kontak_person.png";
@@ -11,7 +8,7 @@ import Gap from "../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../_metronic/helpers";
 import ImageAssets from "../../utils/image_assets";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
-import { Card, CardBody, Col, Row } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -39,11 +36,6 @@ const TentangKami = () => {
         Tentang Kami
       </PageTitle>
       <Content>
-        {/* <HeadPage
-          title="Tentang Kami"
-          icon="profile-user"
-          pages="Tentang Kami"
-        /> */}
         <div className="card">
           <div className="card-header d-flex align-items-center">
             <h4 className="m-0">Profil PKJ TIM</h4>
@@ -61,14 +53,14 @@ const TentangKami = () => {
               <div className="col">
                 <JamPelayanan />
               </div>
-              <div className="col">
-                <SosialMedia />
+              <div className="col mt-4 mt-md-0">
+                <LokasiTerkini />
               </div>
             </div>
             <Gap height={30} />
             <div className="row rows-1 rows-lg-2 align-items-center">
               <div className="col">
-                <LokasiTerkini />
+                <SosialMedia />
               </div>
               <div className="col">
                 <KontakPerson />
@@ -151,10 +143,25 @@ const TentangKami = () => {
         <img src={PelayananImage} />
         <div className="ms-8">
           <h5>Jam Pelayanan</h5>
-          <p className="m-0">Aktif - Pukul 08.00</p>
-          <p className="m-0 mb-3">Sampai - Pukul 23.00</p>
-          <h5>layanan Survei Lokasi</h5>
-          <p className="m-0">Pukul 08.00 - 16.00</p>
+          <div className="d-flex">
+            <KTIcon
+              iconName="toggle-on-circle"
+              className="fs-1 me-3 text-success"
+            />
+            <p className="m-0">Aktif - Pukul 08.00</p>
+          </div>
+          <div className="d-flex">
+            <KTIcon
+              iconName="toggle-off-circle"
+              className="fs-1 me-3 text-danger"
+            />
+            <p className="m-0 mb-3">Sampai - Pukul 23.00</p>
+          </div>
+          <h5>Layanan Survei Lokasi</h5>
+          <div className="d-flex">
+            <KTIcon iconName="time" className="fs-1 me-3" />
+            <p className="m-0">Pukul 08.00 - 16.00</p>
+          </div>
         </div>
       </div>
     );
@@ -258,7 +265,7 @@ const TentangKami = () => {
 
   function SosialMedia() {
     return (
-      <div>
+      <div className="d-flex flex-column align-items-center align-items-lg-start">
         <h5>Sosial Media</h5>
         <Gap height={10} />
         <div className="d-flex">

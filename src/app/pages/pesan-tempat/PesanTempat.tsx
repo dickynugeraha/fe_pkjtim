@@ -141,7 +141,7 @@ const PesanTempat: FC = () => {
             <div className="d-flex align-items-center">
               <input
                 type="date"
-                className="form-control form-control-solid w-lg-25"
+                className="form-control form-control-solid"
                 // value={selectedDate}
                 // onChange={handleDateChange}
                 value={startBook}
@@ -154,7 +154,7 @@ const PesanTempat: FC = () => {
               </div>
               <input
                 type="date"
-                className="form-control form-control-solid w-lg-25"
+                className="form-control form-control-solid"
                 // value={selectedDate}
                 // onChange={handleDateChange}
                 value={endBook}

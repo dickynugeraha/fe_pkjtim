@@ -60,8 +60,23 @@ const Home: FC = () => {
       </PageTitle>
       <Content>
         <div className="card">
-          <SwitchTypeCalendar />
-          <Gap height={25} />
+          {/* <SwitchTypeCalendar /> */}
+          <div className="p-8 w-lg-25">
+            <label htmlFor="switchCalendar" className="fw-bold mb-3 fs-3">
+              Filter agenda
+            </label>
+            <select
+              name="switchCalendar"
+              id="switchCalendar"
+              className="form-select"
+            >
+              <option value=""> Kalender Acara Ruang Latihan TJ</option>
+              <option value=""> Kalender Acara Ruang Latihan TJ</option>
+              <option value=""> Kalender Acara Teater Kecil</option>
+              <option value=""> Kalender Acara Teater Besar</option>
+              <option value=""> Kalender Acara PKJ TIM</option>
+            </select>
+          </div>
           <div className="p-8">
             <FullCalendar
               height={800}
@@ -199,8 +214,8 @@ const Home: FC = () => {
               className="d-flex align-items-center justify-content-center flex-column"
             >
               <KTIcon iconName="user" className="fs-1 text-primary" />
-              <p className="m-0 fs-2 fw-bold mt-2">100</p>
-              <p className="m-0 fs-3 text-muted">Pengguna</p>
+              <p className="m-0 fs-1 fw-bold mt-2">100</p>
+              <p className="m-0 fs-6 text-muted">Pengguna</p>
             </div>
             <Gap width={80} />
             <div
@@ -215,9 +230,9 @@ const Home: FC = () => {
               className="d-flex align-items-center justify-content-center flex-column"
             >
               <KTIcon iconName="book" className="fs-1 text-success" />
-              <p className="m-0 fs-2 fw-bold mt-2">50</p>
-              <p className="m-0 fs-3 text-muted">Pesanan</p>
-              <p className="m-0 fs-3 text-muted">Masuk</p>
+              <p className="m-0 fs-1 fw-bold mt-2">50</p>
+              <p className="m-0 fs-6 text-muted">Pesanan</p>
+              <p className="m-0 fs-6 text-muted">Masuk</p>
             </div>
           </div>
         </div>

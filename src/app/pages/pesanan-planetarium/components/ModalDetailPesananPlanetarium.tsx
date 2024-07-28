@@ -14,7 +14,8 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalTolak, setModalTolak] = useState(false);
+  const [modalTerima, setModalTerima] = useState(false);
 
   return (
     <ModalWrapper
@@ -27,10 +28,17 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
         <>
           <div
             role="button"
-            className="btn btn-sm btn-danger mx-4"
-            onClick={() => setModalShow(true)}
+            className="btn btn-sm btn-danger me-4"
+            onClick={() => setModalTolak(true)}
           >
             Tolak
+          </div>
+          <div
+            role="button"
+            className="btn btn-sm btn-primary"
+            onClick={() => setModalTerima(true)}
+          >
+            Terima
           </div>
         </>
       }
@@ -74,17 +82,42 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             // desc={data.tanggal_akhir_pentas}
           />
         </div>
-        {modalShow && <div className="overlay" />}
+        {(modalTolak || modalTerima) && <div className="overlay" />}
         <ModalWrapper
           title="Tulis alasan"
-          show={modalShow}
-          handleClose={() => setModalShow(false)}
+          show={modalTolak}
+          handleClose={() => setModalTolak(false)}
           attribute={{ centered: true }}
           className="modal-md"
           footerCustom={
-            <div role="button" className="btn btn-sm btn-danger mx-4">
-              Tolak
-            </div>
+            <>
+              <div role="button" className="btn btn-sm btn-danger mx-4">
+                Tolak
+              </div>
+            </>
+          }
+        >
+          <>
+            <textarea
+              name="alasan"
+              id="alasan"
+              className="form-control"
+              rows={8}
+            ></textarea>
+          </>
+        </ModalWrapper>
+        <ModalWrapper
+          title="Tulis alasan"
+          show={modalTerima}
+          handleClose={() => setModalTerima(false)}
+          attribute={{ centered: true }}
+          className="modal-md"
+          footerCustom={
+            <>
+              <div role="button" className="btn btn-sm btn-primary">
+                Terima
+              </div>
+            </>
           }
         >
           <>
