@@ -6,20 +6,26 @@ export const ENDPOINTS = {
   },
   SENIMAN: {
     LIST_UPDATE_ADD_DELETE_SENIMAN: "v1/Seniman",
+    SENIMAN_IMAGE: API_URL + "/v1/Seniman/",
   },
   NEWS: {
     LIST_UPDATE_ADD_DELETE_NEWS: "v1/News",
+    NEWS_IMAGE: API_URL + "/v1/News",
   },
   PENTAS: {
     LIST_UPDATE_ADD_DELETE_PENTAS: "v1/Pentas",
+    PENTAS_IMAGE: API_URL + "/v1/Pentas",
   },
   SENI: {
     LIST_UPDATE_ADD_DELETE_SENI: "v1/Seni",
+    SENI_IMAGE: API_URL + "/v1/Seni",
   },
   TEMPAT: {
     LIST_UPDATE_ADD_DELETE_TEMPAT: "v1/Tempat",
+    TEMPAT_IMAGE: API_URL + "/v1/Tempat",
   },
   TEMPAT_TUTUTP: {
     LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP: "v1/TempatTutup",
+    TEMPAT_TUTUTP_IMAGE: API_URL + "/v1/TempatTutup",
   },
 };

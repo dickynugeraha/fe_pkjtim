@@ -7,10 +7,10 @@ import {
   update,
 } from "../../../requests/master-data/seniman";
 import Swal from "sweetalert2";
-import { streamToImageUrl } from "../../../../helper/globalVar";
+import { ENDPOINTS } from "../../../../constants/API";
 
 export default function useSeniman() {
-  const [seniman, setSeniman] = useState([]);
+  const [seniman, setSeniman] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchAllSeniman = async () => {
@@ -18,29 +18,16 @@ export default function useSeniman() {
 
     try {
       const res = await getAll(1, 1000);
-      // const data: any[] = [];
-      // for (let index = 0; index < res.data.data.length; index++) {
-      //   const ell = res.data.data[index];
-      //   let streamImage = "";
-      //   getSinglePhoto(ell.id)
-      //     .then((res) => {
-      //       streamImage = res.data.data.fileContents;
-      //       streamToImageUrl(streamImage)
-      //         .then((res) => {
-      //           streamImage = res;
-      //         })
-      //         .catch((err) => console.log(err));
-      //       const dataWithStream = {
-      //         ...ell,
-      //         file: streamToImageUrl(streamImage),
-      //       };
-
-      //       data.push(dataWithStream);
-      //     })
-      //     .catch((err) => console.log(err));
-      // }
-
-      setSeniman(res.data.data);
+      const data: any[] = [];
+      for (let index = 0; index < res.data.data.length; index++) {
+        const ell = res.data.data[index];
+        const dataWithStream = {
+          ...ell,
+          file: `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}${ell.id}/Image?isStream=true`,
+        };
+        data.push(dataWithStream);
+      }
+      setSeniman(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",

@@ -3,9 +3,8 @@ import { Spinner } from "react-bootstrap";
 export default function Loading() {
   return (
     <div style={styles.page}>
-      <Spinner animation="border text-light" size="lg">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      <Spinner animation="border text-light" size="lg" />
+      <p className="text-light fs-3">Loading...</p>
     </div>
   );
 }

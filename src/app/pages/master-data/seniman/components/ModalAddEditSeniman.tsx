@@ -10,21 +10,32 @@ type PropsModalAddEditSeniman = {
   handleClose: () => void;
   handleSubmit: (data: any) => void;
   onChangeFile: (e: any) => void;
+  fileValue: any;
 };
 
 const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
   fromAdd,
   show,
+  fileValue,
   handleClose,
   handleSubmit,
   data,
   onchangeVal,
   onChangeFile,
 }) => {
-  let gambarVal = "";
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-  }
+  const [imagePreview, setImagePreview] = useState();
+
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  handleImageChange(fileValue);
 
   return (
     <ModalWrapper
@@ -50,11 +61,18 @@ const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
-              {!fromAdd && (
+              {!fromAdd && !fileValue && (
                 <img
                   className="rounded"
-                  style={{ height: "150px" }}
-                  src={gambarVal}
+                  style={{ height: "150px", width: "100%" }}
+                  src={data.file}
+                />
+              )}
+              {fileValue && (
+                <img
+                  className="rounded"
+                  style={{ height: "150px", width: "100%" }}
+                  src={imagePreview}
                 />
               )}
               <Gap height={12} />

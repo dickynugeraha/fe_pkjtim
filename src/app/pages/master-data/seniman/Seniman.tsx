@@ -10,8 +10,6 @@ import { dummyImage } from "../../../helper/helper";
 import ModalAddEditSeniman from "./components/ModalAddEditSeniman";
 import useSeniman from "../../../modules/hooks/master-data/seniman";
 import Loading from "../../../../_metronic/layout/components/content/Loading";
-import ModalAddSeniman from "./components/ModalAddSeniman";
-import ModalEditSeniman from "./components/ModalEditSeniman";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -30,30 +28,35 @@ const Breadcrumbs: Array<PageLink> = [
 
 export const Seniman = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formFile, setFormFile] = useState();
+  const [formFile, setFormFile] = useState(null);
   const [formData, setFormData] = useState({
     id: null,
+    file: null,
     name: "",
     biografi: "",
     performanceDesc: "",
   });
-
   const [isEdit, setIsEdit] = useState(false);
-
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
       setIsEdit(true);
     } else {
-      setFormData({ id: null, name: "", biografi: "", performanceDesc: "" });
+      setFormData({
+        id: null,
+        name: "",
+        biografi: "",
+        performanceDesc: "",
+        file: null,
+      });
       setIsEdit(false);
     }
     setIsModalOpen(true);
   };
   const closeModal = () => {
     setIsModalOpen(false);
+    setFormFile(null);
   };
-
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -65,7 +68,6 @@ export const Seniman = () => {
     () => seniman,
     [loading, updateSeniman, addSeniman, deleteSeniman]
   );
-
   const columns = useMemo(
     () => [
       {
@@ -78,7 +80,7 @@ export const Seniman = () => {
           return (
             <div style={{ width: "150px" }}>
               <img
-                src={dummyImage}
+                src={singleData.file}
                 className="rounded"
                 style={{ width: "100%" }}
               />
@@ -153,6 +155,7 @@ export const Seniman = () => {
         <Table columns={columns} data={data} addData={() => openModal()} />
         <ModalAddEditSeniman
           fromAdd={!isEdit}
+          fileValue={formFile}
           data={formData}
           onchangeVal={(e: any) => handleChange(e)}
           onChangeFile={(e) => setFormFile(e)}
@@ -160,8 +163,6 @@ export const Seniman = () => {
           handleClose={closeModal}
           handleSubmit={() => {
             const formWithFile = { ...formData, file: formFile };
-            console.log("formData", formWithFile);
-
             if (isEdit) {
               updateSeniman(formWithFile);
             } else {
