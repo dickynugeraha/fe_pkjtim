@@ -35,6 +35,14 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
     startServiceVal = data?.start_service;
     endServiceVal = data?.end_service;
   }
+  const [formValue, setFormValue] = useState({
+    file: "",
+    title: "",
+    content: "",
+    status: "",
+    publishedAt: "",
+    tempatId: "",
+  });
 
   return (
     <ModalWrapper
@@ -47,7 +55,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
         <button
           type="submit"
           className="btn btn-sm btn-primary"
-          onClick={() => handleSubmit("data")}
+          onClick={() => handleSubmit({})}
         >
           Simpan
         </button>

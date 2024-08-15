@@ -56,7 +56,7 @@ const passwordFormValidationSchema = Yup.object().shape({
     .oneOf([Yup.ref("newPassword")], "Passwords must match"),
 });
 
-const ProfilSaya = () => {
+export const ProfilSaya = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [emailUpdateData, setEmailUpdateData] =
     useState<IUpdateEmail>(updateEmail);
@@ -463,5 +463,3 @@ const ProfilSaya = () => {
     </>
   );
 };
-
-export default ProfilSaya;

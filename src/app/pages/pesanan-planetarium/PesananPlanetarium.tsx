@@ -20,7 +20,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const PesananPlanetarium = () => {
+export const PesananPlanetarium = () => {
   const [modalDetail, setModalDetail] = useState({
     show: false,
     data: {},
@@ -155,5 +155,3 @@ const PesananPlanetarium = () => {
     </>
   );
 };
-
-export default PesananPlanetarium;

@@ -28,6 +28,15 @@
     "paths": {
       "@media/*": ["media/*"]
     }
+    // "baseUrl": "src",
+    // "paths": {
+    //   "@components/*": ["app/modules/*"],
+    //   "@pages/*": ["app/pages/*"],
+    //   "@hooks/*": ["app/modules/hooks*"],
+    //   "@request/*": ["app/modules/request*"],
+    //   "@api/*": ["api/*"],
+    //   "@utils/*": ["utils/*"]
+    // }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

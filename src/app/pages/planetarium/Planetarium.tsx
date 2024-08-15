@@ -24,7 +24,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Planetarium = () => {
+export const Planetarium = () => {
   const navigate = useNavigate();
   const [bookingDate, setBookingDate] = useState("");
   const [termIsCheck, setTermIsCheck] = useState(false);
@@ -144,5 +144,3 @@ const Planetarium = () => {
     );
   }
 };
-
-export default Planetarium;

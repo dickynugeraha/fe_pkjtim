@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"
     />
     <title>PKJTIM</title>
-    <link rel="shortcut icon" href="media/images/dki.png" />
+    <link rel="shortcut icon" href="/public/media/images/dki.png" />
     <link
       rel="stylesheet"
       id="layout-styles-anchor"
@@ -37,20 +37,20 @@
       document.documentElement.setAttribute("data-bs-theme", themeMode);
     </script>
     <!--end::Theme mode setup on page load-->
-
+    <div id="root-modals"></div>
     <div id="root"></div>
 
     <!--begin::Loading markup-->
     <div id="splash-screen" class="splash-screen">
       <img
-        src="media/images/login-pkjtim.png"
+        src="./public/media/logos/login-pkjtim.png"
         class="dark-logo"
         height="200px"
         width="300px"
         alt="Keenthemes dark logo"
       />
       <img
-        src="media/images/login-pkjtim-2.png"
+        src="./public/media/logos/login-pkjtim-2.png"
         class="light-logo"
         height="200px"
         width="300px"
@@ -63,7 +63,6 @@
     </div>
     <!--end::Loading markup-->
 
-    <div id="root-modals"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

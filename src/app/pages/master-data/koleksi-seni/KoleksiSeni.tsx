@@ -24,7 +24,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const KoleksiSeni = () => {
+export const KoleksiSeni = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -195,5 +195,3 @@ const KoleksiSeni = () => {
     </>
   );
 };
-
-export default KoleksiSeni;

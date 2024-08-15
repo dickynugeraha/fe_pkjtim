@@ -2,35 +2,40 @@ import { lazy, FC, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import TopBarProgress from "react-topbar-progress-indicator";
-import { Informasi } from "../pages/dashboard/informasi/Informasi";
-import Home from "../pages/dashboard/home/Home";
 import { MenuTestPage } from "../pages/MenuTestPage";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
 // PKJTIM
-import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
-import SemuaInformasi from "../pages/dashboard/informasi/SemuaInformasi";
-import DetailInformasi from "../pages/dashboard/informasi/DetailInformasi";
-import PesanTempat from "../pages/pesan-tempat/PesanTempat";
-import FormPesanTempat from "../pages/pesan-tempat/FormPesanTempat";
-import Faq from "../pages/faq/Faq";
-import ProfilSaya from "../pages/profil/ProfilSaya";
-import PesananSaya from "../pages/pesanan-saya/PesananSaya";
-import TentangKami from "../pages/tentang-kami/TentangKami";
-import Planetarium from "../pages/planetarium/Planetarium";
-import FormPlanetarium from "../pages/planetarium/FormPlanetarium";
-import PesananMasuk from "../pages/pesanan-masuk/PesananMasuk";
-import SekilasInfo from "../pages/master-data/sekilas-info/SekilasInfo";
-import Pementasan from "../pages/master-data/pementasan/Pementasan";
-import Seniman from "../pages/master-data/seniman/Seniman";
-import KoleksiSeni from "../pages/master-data/koleksi-seni/KoleksiSeni";
-import Tempat from "../pages/master-data/tempat/Tempat";
-import TutupTempat from "../pages/master-data/tutup-tempat/TutupTempat";
-import Pengguna from "../pages/master-data/pengguna/Pengguna";
-import PesananPlanetarium from "../pages/pesanan-planetarium/PesananPlanetarium";
-import KurasiPentas from "../pages/kurasi-pentas/KurasiPentas";
+import {
+  Home,
+  DetailInformasi,
+  Faq,
+  FormPesanTempat,
+  FormPlanetarium,
+  Informasi,
+  KurasiPentas,
+  PesanTempat,
+  PesananMasuk,
+  PesananPlanetarium,
+  PesananSaya,
+  Planetarium,
+  ProfilSaya,
+  SemuaInformasi,
+  TentangKami,
+} from "../pages";
 
-const PrivateRoutes = () => {
+import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
+import {
+  SekilasInfo,
+  Pementasan,
+  KoleksiSeni,
+  Pengguna,
+  Seniman,
+  Tempat,
+  TutupTempat,
+} from "../pages/master-data";
+
+const PenggunaRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
   const WizardsPage = lazy(() => import("../modules/wizards/WizardsPage"));
   const AccountPage = lazy(() => import("../modules/accounts/AccountPage"));
@@ -138,4 +143,4 @@ const SuspensedView: FC<WithChildren> = ({ children }) => {
   return <Suspense fallback={<TopBarProgress />}>{children}</Suspense>;
 };
 
-export { PrivateRoutes };
+export { PenggunaRoutes };

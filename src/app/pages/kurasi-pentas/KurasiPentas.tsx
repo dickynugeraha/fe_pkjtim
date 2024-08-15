@@ -22,7 +22,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const KurasiPentas = () => {
+export const KurasiPentas = () => {
   const [modalDetail, setModalDetail] = useState({
     show: false,
     data: {},
@@ -186,5 +186,3 @@ const KurasiPentas = () => {
     </>
   );
 };
-
-export default KurasiPentas;

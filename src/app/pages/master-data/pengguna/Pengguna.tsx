@@ -25,7 +25,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Pengguna = () => {
+export const Pengguna = () => {
   const [modalAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -212,5 +212,3 @@ const Pengguna = () => {
     </>
   );
 };
-
-export default Pengguna;

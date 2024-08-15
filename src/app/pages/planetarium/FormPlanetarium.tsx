@@ -50,7 +50,7 @@ const initialValues = {
   keperluan: "",
 };
 
-const FormPlanetarium = () => {
+export const FormPlanetarium = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: formPesanScheme,
@@ -292,5 +292,3 @@ const FormPlanetarium = () => {
     </>
   );
 };
-
-export default FormPlanetarium;

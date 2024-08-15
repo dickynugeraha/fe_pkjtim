@@ -20,7 +20,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const PesananMasuk = () => {
+export const PesananMasuk = () => {
   const [modalDetail, setModalDetail] = useState({
     show: false,
     data: {},
@@ -198,5 +198,3 @@ const PesananMasuk = () => {
     </>
   );
 };
-
-export default PesananMasuk;

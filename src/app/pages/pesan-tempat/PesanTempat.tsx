@@ -22,7 +22,7 @@ const Breadcrumbs: Array<PageLink> = [
     isActive: false,
   },
 ];
-const PesanTempat: FC = () => {
+export const PesanTempat: FC = () => {
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [pesanTempatval, setPesanTempatval] = useState("teater_jakarta");
   const [startBook, setStartBook] = useState("");
@@ -214,5 +214,3 @@ const PesanTempat: FC = () => {
     </>
   );
 };
-
-export default PesanTempat;

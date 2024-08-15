@@ -25,7 +25,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Tempat = () => {
+export const Tempat = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -187,5 +187,3 @@ const Tempat = () => {
     </>
   );
 };
-
-export default Tempat;

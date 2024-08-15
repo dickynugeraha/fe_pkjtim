@@ -175,7 +175,7 @@ const DashboardPage: FC = () => {
   );
 };
 
-const Informasi: FC = () => {
+export const Informasi: FC = () => {
   const intl = useIntl();
 
   const Breadcrumbs: Array<PageLink> = [
@@ -228,5 +228,3 @@ const Informasi: FC = () => {
     </>
   );
 };
-
-export { Informasi };

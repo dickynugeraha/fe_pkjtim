@@ -117,7 +117,7 @@ const Table = ({ data, columns, addData, showAddButton = true }) => {
                   {row.cells.map((cell) => {
                     return (
                       <td {...cell.getCellProps()}>
-                        <p className="my-1">{cell.render("Cell")}</p>
+                        <div className="my-1">{cell.render("Cell")}</div>
                       </td>
                     );
                   })}

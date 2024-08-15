@@ -4,17 +4,19 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { getUserByToken, register } from "../core/_requests";
 import { Link } from "react-router-dom";
-import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/components";
 import { useAuth } from "../core/Auth";
+import Swal from "sweetalert2";
+import CryptoJS from "crypto-js";
+// import hmacSHA512 from "crypto-js/hmac-sha512";
 
 const initialValues = {
-  fullname: "",
-  email: "",
-  phone: "",
-  password: "",
-  passwordConfirm: "",
-  acceptTerms: false,
+  fullname: "Kale Pramono",
+  email: "dicky.dian1@gmail.com",
+  phone: "089675379948",
+  password: "!23QwE123",
+  passwordConfirm: "!23QwE123",
+  acceptTerms: true,
 };
 
 const registrationSchema = Yup.object().shape({
@@ -28,7 +30,7 @@ const registrationSchema = Yup.object().shape({
     .max(50, "Maksimal 50 karakter")
     .required("Email harus diisi"),
 
-  phone: Yup.number()
+  phone: Yup.string()
     .min(11, "Minimal 11 nomor")
     .max(13, "Maksimal 13 nomor")
     .required("Nomor handphone garus diisi"),
@@ -49,29 +51,41 @@ const registrationSchema = Yup.object().shape({
 
 export function Registration() {
   const [loading, setLoading] = useState(false);
-  const { saveAuth, setCurrentUser } = useAuth();
+  const { saveAuth } = useAuth();
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
+      console.log("values", values);
       try {
-        // const { data: auth } = await register(
-        //   values.email,
-        //   values.fullname,
-        //   values.password,
-        //   values.passwordConfirm
-        //   values.
-        // );
-        // saveAuth(auth);
-        // const { data: user } = await getUserByToken(auth.api_token);
-        // setCurrentUser(user);
-      } catch (error) {
+        const res = await register(
+          values.email,
+          values.fullname,
+          values.phone,
+          values.password,
+          values.passwordConfirm
+        );
+        console.log("response register", res);
+
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Berhasil melakukan registrasi!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch (error: any) {
         console.error(error);
         saveAuth(undefined);
         setStatus("The registration details is incorrect");
         setSubmitting(false);
         setLoading(false);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal melakukan registrasi",
+          text: `${error.message}`,
+        });
       }
     },
   });

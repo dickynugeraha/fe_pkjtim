@@ -8,6 +8,7 @@ import Table from "../../../../_metronic/layout/components/table/Table";
 import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
+import { useInfo } from "../../../modules/hooks/master-data/info";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -24,12 +25,15 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SekilasInfo = () => {
+export const SekilasInfo = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
     data: {},
   });
+
+  const { info } = useInfo();
+  console.log("infoooooo", info);
 
   const data = useMemo(
     () => [
@@ -209,5 +213,3 @@ const SekilasInfo = () => {
     </>
   );
 };
-
-export default SekilasInfo;

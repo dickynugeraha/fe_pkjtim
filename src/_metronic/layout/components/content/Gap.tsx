@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Gap({ width = 0, height = 0 }) {
   return (
     <div

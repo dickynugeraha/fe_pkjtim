@@ -46,7 +46,7 @@ const initialValues = {
   tanggalSelesaiPentas: "",
 };
 
-const FormPesanTempat: FC = () => {
+export const FormPesanTempat: FC = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: formPesanScheme,
@@ -80,9 +80,6 @@ const FormPesanTempat: FC = () => {
     default:
       break;
   }
-
-  console.log(params.jenis_tempat);
-  console.log(state.hargaTempat);
 
   return (
     <Content>
@@ -494,5 +491,3 @@ const FormPesanTempat: FC = () => {
     </Content>
   );
 };
-
-export default FormPesanTempat;

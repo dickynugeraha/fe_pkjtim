@@ -22,7 +22,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Faq = () => {
+export const Faq = () => {
   const [itemPemesanan, setItemPemesanan] = useState({
     section1: false,
     section2: false,
@@ -142,5 +142,3 @@ const Faq = () => {
     </>
   );
 };
-
-export default Faq;

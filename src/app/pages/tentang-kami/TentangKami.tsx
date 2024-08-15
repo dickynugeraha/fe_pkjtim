@@ -25,7 +25,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const TentangKami = () => {
+export const TentangKami = () => {
   return (
     <>
       <PageTitle
@@ -281,5 +281,3 @@ const TentangKami = () => {
     );
   }
 };
-
-export default TentangKami;

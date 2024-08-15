@@ -25,7 +25,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const TutupTempat = () => {
+export const TutupTempat = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -180,5 +180,3 @@ const TutupTempat = () => {
     </>
   );
 };
-
-export default TutupTempat;

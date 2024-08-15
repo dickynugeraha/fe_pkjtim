@@ -21,7 +21,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const PesananSaya: FC = () => {
+export const PesananSaya: FC = () => {
   const [modalDetail, setModalDetail] = useState({
     show: false,
     data: {},
@@ -201,5 +201,3 @@ const PesananSaya: FC = () => {
     </>
   );
 };
-
-export default PesananSaya;

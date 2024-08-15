@@ -7,7 +7,7 @@ import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
 import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
 import { KTIcon } from "../../../../_metronic/helpers";
 
-const DetailInformasi = () => {
+export const DetailInformasi = () => {
   const params = useParams();
   const list = params.list;
   const detailId = params.id;
@@ -51,8 +51,6 @@ const DetailInformasi = () => {
       isActive: false,
     },
   ];
-
-  console.log(list, detailId);
 
   return (
     <Content>
@@ -168,5 +166,3 @@ const DetailInformasi = () => {
     </Content>
   );
 };
-
-export default DetailInformasi;

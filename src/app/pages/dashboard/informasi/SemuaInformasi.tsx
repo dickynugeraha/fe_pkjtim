@@ -33,7 +33,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const SemuaInformasi: FC = () => {
+export const SemuaInformasi: FC = () => {
   const navigate = useNavigate();
 
   const params = useParams();
@@ -102,5 +102,3 @@ const SemuaInformasi: FC = () => {
     </>
   );
 };
-
-export default SemuaInformasi;

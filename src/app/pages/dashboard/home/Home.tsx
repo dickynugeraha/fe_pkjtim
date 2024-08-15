@@ -27,7 +27,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Home: FC = () => {
+export const Home: FC = () => {
   const [modalDetailEvent, setModalDetailEvent] = useState({
     show: false,
     data: {},
@@ -241,5 +241,3 @@ const Home: FC = () => {
     );
   }
 };
-
-export default Home;

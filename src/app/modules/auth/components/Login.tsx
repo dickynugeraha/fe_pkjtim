@@ -1,13 +1,15 @@
 import { useState } from "react";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { replace, useFormik } from "formik";
 import { getUserByToken, login } from "../core/_requests";
 import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import { useAuth } from "../core/Auth";
 import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
 import { Card } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-decode";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,9 +24,13 @@ const loginSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  email: "admin@demo.com",
-  password: "demo",
+  email: "dimasbayugumelar713@gmail.com",
+  password: "##Kramat30",
 };
+// const initialValues = {
+//   password: "demo",
+//   email: "admin@demo.com",
+// };
 
 /*
   Formik+YUP+Typescript:
@@ -36,6 +42,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
+  // const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues,
@@ -44,14 +51,27 @@ export function Login() {
       setLoading(true);
       try {
         const { data: auth } = await login(values.email, values.password);
-        saveAuth(auth);
-        const { data: user } = await getUserByToken(auth.api_token);
+        const userDecodeResult = jwtDecode(auth.data.accessToken);
+        const authData = {
+          api_token: auth.data.accessToken,
+          refreshToken: auth.data.refreshToken,
+        };
+        saveAuth(authData);
+        const user = {
+          id: userDecodeResult.Id,
+          email: userDecodeResult.email,
+        };
         setCurrentUser(user);
-      } catch (error) {
-        console.error(error);
+        setLoading(false);
+      } catch (error: never) {
         saveAuth(undefined);
         setStatus("The login details are incorrect");
         setSubmitting(false);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal melakukan login",
+          text: `${error.message}`,
+        });
         setLoading(false);
       }
     },

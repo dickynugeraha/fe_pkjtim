@@ -24,7 +24,7 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const Pementasan = () => {
+export const Pementasan = () => {
   const [modaAddlEdit, setModalAddEdit] = useState({
     fromAdd: false,
     show: false,
@@ -231,5 +231,3 @@ const Pementasan = () => {
     </>
   );
 };
-
-export default Pementasan;
