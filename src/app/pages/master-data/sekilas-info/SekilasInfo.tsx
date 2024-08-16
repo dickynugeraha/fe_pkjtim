@@ -33,7 +33,6 @@ export const SekilasInfo = () => {
   });
 
   const { info } = useInfo();
-  console.log("infoooooo", info);
 
   const data = useMemo(
     () => [

@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <div style={styles.page}>
       <Spinner animation="border text-light" size="lg" />
-      <p className="text-light fs-3">Loading...</p>
+      {/* <p className="text-light fs-4">Loading...</p> */}
     </div>
   );
 }

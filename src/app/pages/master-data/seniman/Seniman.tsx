@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
@@ -37,6 +37,9 @@ export const Seniman = () => {
     performanceDesc: "",
   });
   const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
@@ -61,12 +64,33 @@ export const Seniman = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const { addSeniman, seniman, loading, updateSeniman, deleteSeniman } =
-    useSeniman();
+  const {
+    addSeniman,
+    seniman,
+    loading,
+    updateSeniman,
+    deleteSeniman,
+    searchSeniman,
+  } = useSeniman();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+  useEffect(() => {
+    if (debouncedQuery) {
+      searchSeniman(debouncedQuery);
+    }
+  }, [debouncedQuery]);
 
   const data = useMemo(
     () => seniman,
-    [loading, updateSeniman, addSeniman, deleteSeniman]
+    [loading, updateSeniman, addSeniman, deleteSeniman, searchSeniman]
   );
   const columns = useMemo(
     () => [
@@ -152,7 +176,14 @@ export const Seniman = () => {
         Seniman
       </PageTitle>
       <Content>
-        <Table columns={columns} data={data} addData={() => openModal()} />
+        <Table
+          columns={columns}
+          data={data}
+          addData={() => openModal()}
+          searchData={(val: any) => {
+            setQuery(val);
+          }}
+        />
         <ModalAddEditSeniman
           fromAdd={!isEdit}
           fileValue={formFile}

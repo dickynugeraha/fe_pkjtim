@@ -3,7 +3,13 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import Gap from "../content/Gap";
 import { KTIcon } from "../../../helpers";
 
-const Table = ({ data, columns, addData, showAddButton = true }) => {
+const Table = ({
+  data,
+  columns,
+  addData,
+  showAddButton = true,
+  searchData,
+}) => {
   const availableLimit = [5, 10, 15, 20, 25];
   const [limit, setLimit] = useState(5);
 
@@ -77,6 +83,7 @@ const Table = ({ data, columns, addData, showAddButton = true }) => {
               data-kt-user-table-filter="search"
               className="form-control form-control-solid w-lg-200px ps-14"
               placeholder="Cari"
+              onChange={(e) => searchData(e.target.value)}
             />
           </div>
         </div>

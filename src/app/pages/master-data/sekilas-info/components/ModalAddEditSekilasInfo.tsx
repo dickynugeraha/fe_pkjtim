@@ -81,7 +81,6 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             <div className="col"></div>
           </div>
         </div>
-
         <Gap height={20} />
         <div className="form-group mb-3">
           <label htmlFor="judulInfo" className="fw-bold">

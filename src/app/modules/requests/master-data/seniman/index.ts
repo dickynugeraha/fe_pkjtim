@@ -38,10 +38,12 @@ export const getSingle = (id: any) => {
   );
 };
 
-export const getAll = (Page: number, Limit: number) => {
+export const getAll = (Page: number, Limit: number, Search = "") => {
   return axiosConfig.get(ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN, {
-    Page: Page,
-    Limit: Limit,
+    Page,
+    Limit,
+    Search,
+    Sort: "DESC",
     IsIncludeFile: true,
   });
 };

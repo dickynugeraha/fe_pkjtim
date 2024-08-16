@@ -8,6 +8,7 @@ import {
 } from "../../../requests/master-data/seniman";
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
+import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 
 export default function useSeniman() {
   const [seniman, setSeniman] = useState<any[]>([]);
@@ -15,9 +16,8 @@ export default function useSeniman() {
 
   const fetchAllSeniman = async () => {
     setLoading(true);
-
     try {
-      const res = await getAll(1, 1000);
+      const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
       const data: any[] = [];
       for (let index = 0; index < res.data.data.length; index++) {
         const ell = res.data.data[index];
@@ -40,8 +40,30 @@ export default function useSeniman() {
     setLoading(false);
   };
 
-  const getSinglePhotoSeniman = async (id: any) => {
-    return getSinglePhoto(id);
+  const searchSeniman = async (Search: string) => {
+    setLoading(true);
+    try {
+      const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
+      const data: any[] = [];
+      for (let index = 0; index < res.data.data.length; index++) {
+        const ell = res.data.data[index];
+        const dataWithStream = {
+          ...ell,
+          file: `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}${ell.id}/Image?isStream=true`,
+        };
+        data.push(dataWithStream);
+      }
+      setSeniman(data);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal get data seniman",
+        text: error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    setLoading(false);
   };
 
   const addSeniman = async (data: any) => {
@@ -136,5 +158,12 @@ export default function useSeniman() {
     fetchAllSeniman();
   }, []);
 
-  return { seniman, addSeniman, updateSeniman, deleteSeniman, loading };
+  return {
+    seniman,
+    addSeniman,
+    updateSeniman,
+    deleteSeniman,
+    searchSeniman,
+    loading,
+  };
 }
