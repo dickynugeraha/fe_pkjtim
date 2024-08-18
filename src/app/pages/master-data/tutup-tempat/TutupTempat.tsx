@@ -80,9 +80,7 @@ export const TutupTempat = () => {
   }, [query]);
 
   useEffect(() => {
-    if (debouncedQuery) {
-      fetchAllTutupTempat(debouncedQuery);
-    }
+    fetchAllTutupTempat(debouncedQuery);
   }, [debouncedQuery]);
 
   const data = useMemo(

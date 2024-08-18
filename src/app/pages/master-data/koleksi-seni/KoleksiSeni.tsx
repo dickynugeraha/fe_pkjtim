@@ -74,9 +74,7 @@ export const KoleksiSeni = () => {
   }, [query]);
 
   useEffect(() => {
-    if (debouncedQuery) {
-      searchSeni(debouncedQuery);
-    }
+    searchSeni(debouncedQuery);
   }, [debouncedQuery]);
 
   const data = useMemo(
