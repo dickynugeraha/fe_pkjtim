@@ -27,7 +27,6 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Seniman = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formFile, setFormFile] = useState(null);
   const [formData, setFormData] = useState({
     id: null,
@@ -36,6 +35,7 @@ export const Seniman = () => {
     biografi: "",
     performanceDesc: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -82,10 +82,9 @@ export const Seniman = () => {
       clearTimeout(handler);
     };
   }, [query]);
+
   useEffect(() => {
-    if (debouncedQuery) {
-      searchSeniman(debouncedQuery);
-    }
+    searchSeniman(debouncedQuery);
   }, [debouncedQuery]);
 
   const data = useMemo(

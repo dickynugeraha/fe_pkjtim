@@ -6,6 +6,7 @@ type PropsModalAddEditSekilasInfo = {
   fromAdd: boolean;
   data: any;
   show: boolean;
+  handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
 };
@@ -15,23 +16,10 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
   show,
   handleClose,
   handleSubmit,
+  handleChange,
   data,
 }) => {
   const [isPreEvent, setIsPreEvent] = useState(false);
-  let gambarVal = "",
-    judulInfoVal = "",
-    detailInfoVal = "",
-    statusVal = "draft",
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulInfoVal = data?.judul_info;
-    detailInfoVal = data?.detail_info;
-    statusVal = data?.status;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
 
   return (
     <ModalWrapper
@@ -52,39 +40,45 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
     >
       <form>
         <div className="form-group mb-3">
-          <label htmlFor="namaTempat" className="fw-bold">
+          <label htmlFor="name" className="fw-bold">
             Nama Tempat
           </label>
           <Gap height={10} />
           <input
             type="text"
-            name="namaTempat"
-            id="namaTempat"
+            name="name"
+            id="name"
+            value={data.name}
             className="form-control form-control-solid"
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="mainEventKerja" className="fw-bold">
+          <label htmlFor="priceMainEventWeekDay" className="fw-bold">
             Harga Main Event (Hari Kerja)
           </label>
           <Gap height={10} />
           <input
             type="text"
-            name="mainEventKerja"
-            id="mainEventKerja"
+            name="priceMainEventWeekDay"
+            id="priceMainEventWeekDay"
             className="form-control form-control-solid"
+            value={data.priceMainEventWeekDay}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="mainEventWeekend" className="fw-bold">
+          <label htmlFor="priceMainEventWeekEnd" className="fw-bold">
             Harga Main Event (Akhir Pekan)
           </label>
           <Gap height={10} />
           <input
             type="text"
-            name="mainEventWeekend"
-            id="mainEventWeekend"
+            name="priceMainEventWeekEnd"
+            id="priceMainEventWeekEnd"
+            value={data.priceMainEventWeekEnd}
             className="form-control form-control-solid"
+            onChange={(e) => handleChange(e)}
           />
         </div>
 
@@ -101,27 +95,31 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
         {isPreEvent && (
           <>
             <div className="form-group mb-3">
-              <label htmlFor="preEventKerja" className="fw-bold">
+              <label htmlFor="pricePreEventWeekDay" className="fw-bold">
                 Harga Pre-Event (Hari Kerja)
               </label>
               <Gap height={10} />
               <input
                 type="text"
-                name="preEventKerja"
-                id="preEventKerja"
+                name="pricePreEventWeekDay"
+                value={data.pricePreEventWeekDay}
+                id="pricePreEventWeekDay"
                 className="form-control form-control-solid"
+                onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="preEventWekeend" className="fw-bold">
+              <label htmlFor="pricePreEventWeekEnd" className="fw-bold">
                 Harga Pre-Event (Akhir Pekan)
               </label>
               <Gap height={10} />
               <input
                 type="text"
-                name="preEventWekeend"
-                id="preEventWekeend"
+                name="pricePreEventWeekEnd"
+                value={data.pricePreEventWeekEnd}
+                id="pricePreEventWeekEnd"
                 className="form-control form-control-solid"
+                onChange={(e) => handleChange(e)}
               />
             </div>
           </>

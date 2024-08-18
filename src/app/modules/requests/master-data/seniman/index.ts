@@ -50,12 +50,7 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
 
 export const remove = (id: any) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${id}?actor=Sementara`,
-    {
-      data: {
-        actor: "sementara",
-      },
-    }
+    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${id}?actor=Iq`
   );
 };
 

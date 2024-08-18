@@ -2,37 +2,25 @@ import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 
-type PropsModalAddEditSekilasInfo = {
+type PropsModalAddEditTutupTempat = {
   fromAdd: boolean;
+  tempat: any;
   data: any;
   show: boolean;
+  handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
 };
 
-const ModalAddEditTutupTempat: FC<PropsModalAddEditSekilasInfo> = ({
+const ModalAddEditTutupTempat: FC<PropsModalAddEditTutupTempat> = ({
   fromAdd,
   show,
+  handleChange,
   handleClose,
   handleSubmit,
+  tempat,
   data,
 }) => {
-  const [isPreEvent, setIsPreEvent] = useState(false);
-  let gambarVal = "",
-    judulInfoVal = "",
-    detailInfoVal = "",
-    statusVal = "draft",
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulInfoVal = data?.judul_info;
-    detailInfoVal = data?.detail_info;
-    statusVal = data?.status;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
-
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Tutup Tempat" : "Ubah Tutup Tempat"}
@@ -52,25 +40,42 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditSekilasInfo> = ({
     >
       <form>
         <div className="form-group mb-3">
-          <label htmlFor="namaTempat" className="fw-bold">
+          <label htmlFor="tempatId" className="fw-bold">
             Nama Tempat
           </label>
           <Gap height={10} />
-          <input
-            type="text"
-            name="namaTempat"
-            id="namaTempat"
-            className="form-control form-control-solid"
-          />
+          <select
+            name="tempatId"
+            id="tempatId"
+            className="form-select"
+            onChange={(e) => handleChange(e)}
+          >
+            <option>--- Pilih tempat ---</option>
+            {tempat.map((tmpt: any) => (
+              <option value={tmpt.id} selected={data?.tempat?.id == tmpt.id}>
+                {tmpt.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="" className="fw-bold mb-3">
             Pilih Tanggal Tutup Tempat
           </label>
           <div className="d-flex align-items-center">
-            <input type="date" name="start_service" className="form-control" />
+            <input
+              type="date"
+              name="startDate"
+              className="form-control"
+              onChange={(e) => handleChange(e)}
+            />
             <p className="m-0 mx-3">s/d</p>
-            <input type="date" name="end_service" className="form-control" />
+            <input
+              type="date"
+              name="endDate"
+              className="form-control"
+              onChange={(e) => handleChange(e)}
+            />
           </div>
         </div>
       </form>

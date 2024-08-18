@@ -78,6 +78,7 @@ const Table = ({
               iconName="magnifier"
               className="fs-1 position-absolute ms-6"
             />
+            <Gap width={10} />
             <input
               type="text"
               data-kt-user-table-filter="search"
@@ -117,6 +118,11 @@ const Table = ({
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="text-gray-600 fw-bold">
+            {data.length === 0 && (
+              <p className="my-8 fw-normal text-dark">
+                Tidak ada hasil yang ditemukan!
+              </p>
+            )}
             {page.map((row) => {
               prepareRow(row);
               return (
@@ -135,42 +141,44 @@ const Table = ({
         </table>
       </div>
       <Gap height={12} />
-      <div className="ms-auto">
-        <div className="d-flex">
-          <button
-            className="btn btn-sm p-0 m-0"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            Sebelumnya
-          </button>
-          <Gap width={8} />
-          {pageOptions.map((pageOption, index) => (
-            <>
-              <button
-                key={index}
-                onClick={() => gotoPage(pageOption)}
-                className={
-                  pageOption === pageIndex
-                    ? "btn btn-sm btn-primary px-5 py-1"
-                    : "btn btn-sm btn-outline-primary"
-                }
-              >
-                {pageOption + 1}
-              </button>
-              <Gap width={3} />
-            </>
-          ))}
-          <Gap width={8} />
-          <button
-            className="btn btn-sm p-0 m-0"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            Selanjutnya
-          </button>
+      {data.length !== 0 && (
+        <div className="ms-auto">
+          <div className="d-flex">
+            <button
+              className="btn btn-sm p-0 m-0"
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+            >
+              Sebelumnya
+            </button>
+            <Gap width={8} />
+            {pageOptions.map((pageOption, index) => (
+              <>
+                <button
+                  key={index}
+                  onClick={() => gotoPage(pageOption)}
+                  className={
+                    pageOption === pageIndex
+                      ? "btn btn-sm btn-primary px-5 py-1"
+                      : "btn btn-sm btn-outline-primary"
+                  }
+                >
+                  {pageOption + 1}
+                </button>
+                <Gap width={3} />
+              </>
+            ))}
+            <Gap width={8} />
+            <button
+              className="btn btn-sm p-0 m-0"
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+            >
+              Selanjutnya
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,61 +1,60 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (
-  actor: string,
-  tempatId: number,
-  startDate: string,
-  endDate: string
-) => {
+export const add = (data: any) => {
+  console.log("request", data);
+
   return axiosConfig.post(
-    ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP,
+    ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP,
     {
-      actor,
-      tempatId,
-      startDate,
-      endDate,
+      actor: "Iq",
+      tempatId: data.tempatId as number,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      isIncludeTempat: true,
     }
   );
 };
 
 export const getSinglePhoto = (id: number) => {
   return axiosConfig.get(
-    `${ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP}/${id}`
+    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${id}`
   );
 };
 
 export const getSingle = (id: number) => {
   return axiosConfig.get(
-    `${ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP}/${id}`
+    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${id}`
   );
 };
 
-export const getAll = () => {
+export const getAll = (Page: number, Limit: number, Search = "") => {
   return axiosConfig.get(
-    ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP
+    ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP,
+    {
+      Page,
+      Limit,
+      Search,
+      Sort: "DESC",
+      IsIncludeTempat: true,
+    }
   );
 };
 
 export const remove = (id: number) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP}/${id}`
+    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${id}?actor=Iq`
   );
 };
 
-export const update = (
-  id: number,
-  actor?: string,
-  tempatId?: string,
-  startDate?: string,
-  endDate?: string
-) => {
+export const update = (data: any) => {
   return axiosConfig.put(
-    `${ENDPOINTS.TEMPAT_TUTUTP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUTP}/${id}`,
+    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${data.id}`,
     {
-      actor,
-      tempatId,
-      startDate,
-      endDate,
+      actor: "Iq",
+      tempatId: data.tempatId,
+      startDate: data.startDate,
+      endDate: data.endDate,
     }
   );
 };

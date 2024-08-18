@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 
@@ -6,34 +6,37 @@ type PropsModalAddEditSeniman = {
   fromAdd: boolean;
   data: any;
   show: boolean;
+  handleChangeFile: (e: any) => void;
+  handleChangeVal: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
+  fileValue: any;
 };
 
 const ModalAddEditKoleksiSeni: FC<PropsModalAddEditSeniman> = ({
   fromAdd,
   show,
+  handleChangeVal,
+  handleChangeFile,
   handleClose,
   handleSubmit,
   data,
+  fileValue,
 }) => {
-  let gambarVal = "",
-    judulSinopsis = "",
-    namaSanggar = "",
-    sinopsis = "",
-    statusVal = "draft",
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulSinopsis = data?.judul_sinopsis;
-    namaSanggar = data?.nama_sinopsis;
-    // tipeSinopsis = data?.tipe_sinopsis;
-    sinopsis = data?.detail_info;
-    statusVal = data?.status;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
+  console.log("dataaaaaaaa", data);
+
+  const [imagePreview, setImagePreview] = useState();
+
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  handleImageChange(fileValue);
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Koleksi Seni" : "Ubah Koleksi Seni"}
@@ -58,37 +61,54 @@ const ModalAddEditKoleksiSeni: FC<PropsModalAddEditSeniman> = ({
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
-              {!fromAdd && (
+              {!fromAdd && !fileValue && (
                 <img
                   className="rounded"
-                  style={{ height: "150px" }}
-                  src={gambarVal}
+                  style={{ height: "150px", width: "100%" }}
+                  src={data.file}
+                />
+              )}
+              {fileValue && (
+                <img
+                  className="rounded"
+                  style={{ height: "150px", width: "100%" }}
+                  src={imagePreview}
                 />
               )}
               <Gap height={12} />
-              <input className="form-control" type="file" required />
+              <input
+                className="form-control"
+                type="file"
+                required
+                onChange={(e: any) => handleChangeFile(e.target.files[0])}
+              />
             </div>
             <div className="col"></div>
           </div>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="nama_seniman" className="fw-bold mb-2">
+          <label htmlFor="title" className="fw-bold mb-2">
             Nama Seniman
           </label>
           <input
-            id="nama_seniman"
+            id="title"
+            name="title"
             type="text"
             className="form-control form-control-solid"
+            onChange={(e) => handleChangeVal(e)}
+            value={data.title}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="detail_seni" className="fw-bold mb-2">
+          <label htmlFor="desc" className="fw-bold mb-2">
             Detail Seni
           </label>
           <textarea
-            name="detail_seni"
-            id="detail_seni"
+            name="desc"
+            id="desc"
             className="form-control form-control-solid"
+            onChange={(e) => handleChangeVal(e)}
+            value={data.desc}
           ></textarea>
         </div>
       </>

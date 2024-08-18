@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
@@ -8,6 +8,7 @@ import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
 import { dummyImage } from "../../../helper/helper";
 import ModalAddEditKoleksiSeni from "./components/ModalAddEditKoleksiSeni";
+import useSeni from "../../../modules/hooks/master-data/seni";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -25,58 +26,62 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const KoleksiSeni = () => {
-  const [modaAddlEdit, setModalAddEdit] = useState({
-    fromAdd: false,
-    show: false,
-    data: {},
+  const { addSeni, deleteSeni, loading, searchSeni, seni, updateSeni } =
+    useSeni();
+  const [formFile, setFormFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: null,
+    file: null,
+    title: "",
+    desc: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        file: null,
+        title: "",
+        desc: "",
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormFile(null);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      searchSeni(debouncedQuery);
+    }
+  }, [debouncedQuery]);
 
   const data = useMemo(
-    () => [
-      {
-        id: "1",
-        gambar: { dummyImage },
-        nama_seniman: "Kim Parrish",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-      {
-        id: "2",
-        gambar: { dummyImage },
-        nama_seniman: "Michele Castillo",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-      {
-        id: "3",
-        gambar: { dummyImage },
-        nama_seniman: "Eric Ferris",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-      {
-        id: "4",
-        gambar: { dummyImage },
-        nama_seniman: "Gloria Noble",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-      {
-        id: "5",
-        gambar: { dummyImage },
-        nama_seniman: "Darren Daniels",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-      {
-        id: "6",
-        gambar: { dummyImage },
-        nama_seniman: "Ted McDonald",
-        detail_seni:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-      },
-    ],
-    []
+    () => seni,
+    [loading, addSeni, updateSeni, deleteSeni, searchSeni]
   );
 
   const columns = useMemo(
@@ -91,7 +96,7 @@ export const KoleksiSeni = () => {
           return (
             <div style={{ width: "150px" }}>
               <img
-                src={singleData.gambar.dummyImage}
+                src={singleData.file}
                 className="rounded"
                 style={{ width: "100%" }}
               />
@@ -102,12 +107,12 @@ export const KoleksiSeni = () => {
       {
         Header: "Nama Seniman",
         sortType: "alphanumeric",
-        accessor: "nama_seniman",
+        accessor: "title",
       },
       {
         Header: "Detail Seni",
         sortType: "alphanumeric",
-        accessor: "detail_seni",
+        accessor: "desc",
       },
       {
         Header: "Aksi",
@@ -129,20 +134,17 @@ export const KoleksiSeni = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() =>
-                        setModalAddEdit({
-                          show: true,
-                          data: singleData,
-                          fromAdd: false,
-                        })
-                      }
+                      onClick={() => openModal(singleData)}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
                   <li>
-                    <button className="dropdown-item d-flex align-items-center">
+                    <button
+                      className="dropdown-item d-flex align-items-center"
+                      onClick={() => deleteSeni(singleData.id)}
+                    >
                       <KTIcon iconName="trash-square" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
@@ -168,28 +170,28 @@ export const KoleksiSeni = () => {
       </PageTitle>
       <Content>
         <Table
+          searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}
-          addData={() =>
-            setModalAddEdit({
-              show: true,
-              data: {},
-              fromAdd: true,
-            })
-          }
+          addData={() => openModal()}
         />
         <ModalAddEditKoleksiSeni
-          show={modaAddlEdit.show}
-          data={modaAddlEdit.data}
-          fromAdd={modaAddlEdit.fromAdd}
-          handleClose={() =>
-            setModalAddEdit({
-              fromAdd: false,
-              show: false,
-              data: {},
-            })
-          }
-          handleSubmit={(data: any) => console.log(data)}
+          fileValue={formFile}
+          handleChangeFile={(e: any) => setFormFile(e)}
+          handleChangeVal={(e: any) => handleChange(e)}
+          show={isModalOpen}
+          data={formData}
+          fromAdd={!isEdit}
+          handleClose={() => closeModal()}
+          handleSubmit={() => {
+            const formWithFile = { ...formData, file: formFile };
+            if (isEdit) {
+              updateSeni(formWithFile);
+            } else {
+              addSeni(formWithFile);
+            }
+            closeModal();
+          }}
         />
       </Content>
     </>

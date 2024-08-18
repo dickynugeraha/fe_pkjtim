@@ -5,13 +5,14 @@ import {
   getSinglePhoto,
   remove,
   update,
-} from "../../../requests/master-data/seniman";
+} from "../../../requests/master-data/seni";
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import globalVar from "../../../../helper/globalVar";
 
-export default function useSeniman() {
-  const [seniman, setSeniman] = useState<any[]>([]);
+export default function useSeni() {
+  const [seni, setSeni] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchAllSeniman = async () => {
@@ -21,17 +22,18 @@ export default function useSeniman() {
       const data: any[] = [];
       for (let index = 0; index < res.data.data.length; index++) {
         const ell = res.data.data[index];
+        const urlImage = `${ENDPOINTS.SENI.SENI_IMAGE}/${ell.id}/Image?isStream=true`;
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: urlImage,
         };
         data.push(dataWithStream);
       }
-      setSeniman(data);
+      setSeni(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal get data seniman",
+        title: "Gagal get data seni",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -40,7 +42,7 @@ export default function useSeniman() {
     setLoading(false);
   };
 
-  const searchSeniman = async (Search: string) => {
+  const searchSeni = async (Search: string) => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
@@ -49,15 +51,15 @@ export default function useSeniman() {
         const ell = res.data.data[index];
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: `${ENDPOINTS.SENI.SENI_IMAGE}/${ell.id}/Image?isStream=true`,
         };
         data.push(dataWithStream);
       }
-      setSeniman(data);
+      setSeni(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal get data seniman",
+        title: "Gagal get data seni",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -66,20 +68,14 @@ export default function useSeniman() {
     setLoading(false);
   };
 
-  const addSeniman = async (data: any) => {
+  const addSeni = async (data: any) => {
     setLoading(true);
     try {
-      const res = await add(
-        data.file,
-        "Iq",
-        data.name,
-        data.biografi,
-        data.performanceDesc
-      );
+      const res = await add(data.file, "Iq", data.title, data.desc);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menambah data seniman",
+          title: "Berhasil menambah data seni",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -88,7 +84,7 @@ export default function useSeniman() {
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menambahkan data seniman",
+        title: "Gagal menambahkan data seni",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -97,21 +93,14 @@ export default function useSeniman() {
     setLoading(false);
   };
 
-  const updateSeniman = async (data: any) => {
+  const updateSeni = async (data: any) => {
     setLoading(true);
     try {
-      const res = await update(
-        data.id,
-        data.file,
-        "Iq",
-        data.name,
-        data.biografi,
-        data.performanceDesc
-      );
+      const res = await update(data.id, data.file, "Iq", data.title, data.desc);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil mengubah data seniman",
+          title: "Berhasil mengubah data seni",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -120,7 +109,7 @@ export default function useSeniman() {
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal mengubah data seniman",
+        title: "Gagal mengubah data seni",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -129,14 +118,14 @@ export default function useSeniman() {
     setLoading(false);
   };
 
-  const deleteSeniman = async (id: any) => {
+  const deleteSeni = async (id: any) => {
     setLoading(true);
     try {
       const res = await remove(id);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menghapus data seniman",
+          title: "Berhasil menghapus data seni",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -145,7 +134,7 @@ export default function useSeniman() {
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menghapus data seniman",
+        title: "Gagal menghapus data seni",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -159,11 +148,11 @@ export default function useSeniman() {
   }, []);
 
   return {
-    seniman,
-    addSeniman,
-    updateSeniman,
-    deleteSeniman,
-    searchSeniman,
+    seni,
+    addSeni,
+    updateSeni,
+    deleteSeni,
+    searchSeni,
     loading,
   };
 }

@@ -185,6 +185,7 @@ export const SekilasInfo = () => {
       </PageTitle>
       <Content>
         <Table
+          searchData={() => {}}
           columns={columns}
           data={data}
           addData={() =>

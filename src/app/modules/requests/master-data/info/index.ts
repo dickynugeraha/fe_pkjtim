@@ -1,28 +1,16 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (
-  file: any,
-  actor: string,
-  title: string,
-  content: string,
-  status: string,
-  publishedAt: string,
-  tempatId: number
-) => {
-  return axiosConfig.post(ENDPOINTS, {
-    actor,
-    title,
-    content,
-    status,
-    file,
-    publishedAt,
-    tempatId,
+export const add = (data: any) => {
+  return axiosConfig.post(ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS, {
+    actor: data.actor,
+    title: data.title,
+    content: data.content,
+    status: data.status,
+    file: data.file,
+    publishedAt: data.publishedAt,
+    tempatId: data.tempatId,
   });
-};
-
-export const getSinglePhoto = (id: number) => {
-  return axiosConfig.get(`${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${id}`);
 };
 
 export const getSingle = (id: number) => {

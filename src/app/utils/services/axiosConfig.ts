@@ -37,17 +37,24 @@ axios.interceptors.response.use(
   async function (error) {
     console.log("errorrrrrrrrrrrrr", error);
 
-    const { statusCode } = error?.response?.data;
-
-    if (statusCode === 401 || error.status === 401) {
+    if (error.response.status === 401) {
       removeAuth();
-      // replaceToLogin();
     }
     return Promise.reject(error?.errors || error?.response?.data);
   }
 );
 
 class APIClient {
+  // get data specific for image
+  getImage = (url: any) => {
+    const response = axios.get(url, {
+      responseType: "blob",
+    });
+
+    return response;
+  };
+
+  // get data
   get = (url: any, params?: any) => {
     let response;
 

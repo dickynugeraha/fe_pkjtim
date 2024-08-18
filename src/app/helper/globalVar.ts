@@ -1,4 +1,4 @@
-import { Stream } from "stream";
+import axiosConfig from "../utils/services/axiosConfig";
 
 const BASE_URL = "";
 const today = Date.now();
@@ -15,20 +15,13 @@ function rupiahFormat(number: number) {
   }).format(number);
 }
 
-export async function streamToImageUrl(stream: any) {
-  const reader = stream.getReader();
-  const chunks = [];
-  let result;
+export async function requestImageUseToken(url: string) {
+  const response = await axiosConfig.getImage(url);
 
-  while (!(result = await reader.read()).done) {
-    chunks.push(result.value);
-  }
+  const result = URL.createObjectURL(response.data);
+  console.log("image response", result);
 
-  const blob = new Blob(chunks, { type: "image/png" });
-
-  const imageUrl = URL.createObjectURL(blob);
-
-  return imageUrl;
+  return result;
 }
 
 export default {
@@ -36,4 +29,5 @@ export default {
   today,
   getThreeMonthsFromToday,
   rupiahFormat,
+  requestImageUseToken,
 };

@@ -1,14 +1,15 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
 } from "../../../../_metronic/layout/core/PageData";
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
-import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditTutupTempat from "./components/ModalAddEditTutupTempat";
-import globalVar from "../../../helper/globalVar";
+import useTutupTempat from "../../../modules/hooks/master-data/tempat-tutup";
+import Loading from "../../../../_metronic/layout/components/content/Loading";
+import useTempat from "../../../modules/hooks/master-data/tempat";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -26,46 +27,73 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const TutupTempat = () => {
-  const [modaAddlEdit, setModalAddEdit] = useState({
-    fromAdd: false,
-    show: false,
-    data: {},
+  const {
+    addTutupTempat,
+    deleteTutupTempat,
+    fetchAllTutupTempat,
+    loading,
+    tutupTempat,
+    updateTutupTempat,
+  } = useTutupTempat();
+
+  const { tempat } = useTempat();
+
+  const [formData, setFormData] = useState({
+    tempatId: null,
+    startDate: null,
+    endDate: null,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        tempatId: null,
+        startDate: null,
+        endDate: null,
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      fetchAllTutupTempat(debouncedQuery);
+    }
+  }, [debouncedQuery]);
 
   const data = useMemo(
-    () => [
-      {
-        id: "1",
-        tipe_tempat: "Teater Besar",
-        tanggal_mulai_kunjungan: "11-10-2024",
-        tanggal_akhir_kunjungan: "11-10-2024",
-      },
-      {
-        id: "2",
-        tipe_tempat: "Teater Besar",
-        tanggal_mulai_kunjungan: "11-10-2024",
-        tanggal_akhir_kunjungan: "11-10-2024",
-      },
-      {
-        id: "3",
-        tipe_tempat: "Teater Besar",
-        tanggal_mulai_kunjungan: "11-10-2024",
-        tanggal_akhir_kunjungan: "11-10-2024",
-      },
-      {
-        id: "4",
-        tipe_tempat: "Teater Besar",
-        tanggal_mulai_kunjungan: "11-10-2024",
-        tanggal_akhir_kunjungan: "11-10-2024",
-      },
-      {
-        id: "5",
-        tipe_tempat: "Teater Besar",
-        tanggal_mulai_kunjungan: "11-10-2024",
-        tanggal_akhir_kunjungan: "11-10-2024",
-      },
-    ],
-    []
+    () => tutupTempat,
+    [
+      loading,
+      addTutupTempat,
+      updateTutupTempat,
+      deleteTutupTempat,
+      fetchAllTutupTempat,
+    ]
   );
 
   const columns = useMemo(
@@ -74,6 +102,11 @@ export const TutupTempat = () => {
         Header: "Tipe Tempat",
         accessor: "tipe_tempat",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+
+          return <span>{singleData.tempat.name}</span>;
+        },
       },
       {
         Header: "Tanggal Tutup",
@@ -84,11 +117,11 @@ export const TutupTempat = () => {
           return (
             <div>
               <span className="bg-light-success text-success rounded p-2">
-                {singleData.tanggal_mulai_kunjungan}
+                {new Date(singleData.startDate).toLocaleDateString()}
               </span>
               <span className="mx-3">-</span>
               <span className="bg-light-danger text-danger rounded p-2">
-                {singleData.tanggal_akhir_kunjungan}
+                {new Date(singleData.endDate).toLocaleDateString()}
               </span>
             </div>
           );
@@ -114,20 +147,17 @@ export const TutupTempat = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() =>
-                        setModalAddEdit({
-                          show: true,
-                          data: singleData,
-                          fromAdd: false,
-                        })
-                      }
+                      onClick={() => openModal(singleData)}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
                   <li>
-                    <button className="dropdown-item d-flex align-items-center">
+                    <button
+                      className="dropdown-item d-flex align-items-center"
+                      onClick={() => deleteTutupTempat(singleData.id)}
+                    >
                       <KTIcon iconName="trash-square" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
@@ -144,6 +174,7 @@ export const TutupTempat = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
@@ -153,28 +184,28 @@ export const TutupTempat = () => {
       </PageTitle>
       <Content>
         <Table
+          searchData={(val: any) => {
+            setQuery(val);
+          }}
           columns={columns}
           data={data}
-          addData={() =>
-            setModalAddEdit({
-              show: true,
-              data: {},
-              fromAdd: true,
-            })
-          }
+          addData={() => openModal()}
         />
         <ModalAddEditTutupTempat
-          show={modaAddlEdit.show}
-          data={modaAddlEdit.data}
-          fromAdd={modaAddlEdit.fromAdd}
-          handleClose={() =>
-            setModalAddEdit({
-              fromAdd: false,
-              show: false,
-              data: {},
-            })
-          }
-          handleSubmit={(data) => console.log(data)}
+          handleChange={(e) => handleChange(e)}
+          tempat={tempat}
+          show={isModalOpen}
+          data={formData}
+          fromAdd={!isEdit}
+          handleClose={() => closeModal()}
+          handleSubmit={() => {
+            if (isEdit) {
+              updateTutupTempat(formData);
+            } else {
+              addTutupTempat(formData);
+            }
+            closeModal();
+          }}
         />
       </Content>
     </>
