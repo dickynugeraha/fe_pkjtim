@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/components";
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
-import CryptoJS from "crypto-js";
-// import hmacSHA512 from "crypto-js/hmac-sha512";
 
 const initialValues = {
   fullname: "Kale Pramono",

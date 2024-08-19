@@ -141,6 +141,7 @@ export const PesananPlanetarium = () => {
       </PageTitle>
       <Content>
         <Table
+          searchData={() => {}}
           data={data}
           columns={columns}
           addData={() => {}}

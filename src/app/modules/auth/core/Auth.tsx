@@ -71,7 +71,7 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
   useEffect(() => {
     const requestUser = async (apiToken: string) => {
       try {
-        const userDecodeResult = jwtDecode(apiToken);
+        const userDecodeResult: any = jwtDecode(apiToken);
         const user = {
           id: userDecodeResult.Id,
           email: userDecodeResult.email,

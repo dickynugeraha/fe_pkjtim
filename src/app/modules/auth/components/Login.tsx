@@ -51,7 +51,7 @@ export function Login() {
       setLoading(true);
       try {
         const { data: auth } = await login(values.email, values.password);
-        const userDecodeResult = jwtDecode(auth.data.accessToken);
+        const userDecodeResult: any = jwtDecode(auth.data.accessToken);
         const authData = {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
@@ -63,7 +63,7 @@ export function Login() {
         };
         setCurrentUser(user);
         setLoading(false);
-      } catch (error: never) {
+      } catch (error: any) {
         saveAuth(undefined);
         setStatus("The login details are incorrect");
         setSubmitting(false);

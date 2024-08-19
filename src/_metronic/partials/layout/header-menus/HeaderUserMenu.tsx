@@ -18,8 +18,11 @@ const HeaderUserMenu: FC = () => {
 
           <div className="d-flex flex-column ms-5">
             <div className="fw-bolder d-flex align-items-center fs-5">
-              {currentUser?.first_name} {currentUser?.first_name}
+              Dummy Name
             </div>
+            {/* <div className="fw-bolder d-flex align-items-center fs-5">
+              {currentUser?.first_name} {currentUser?.first_name}
+            </div> */}
             <a href="#" className="fw-bold text-muted text-hover-primary fs-7">
               {currentUser?.email}
             </a>

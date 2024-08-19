@@ -184,6 +184,7 @@ export const PesananMasuk = () => {
       </PageTitle>
       <Content>
         <Table
+          searchData={() => {}}
           data={data}
           columns={columns}
           addData={() => {}}

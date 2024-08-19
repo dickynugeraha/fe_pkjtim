@@ -189,7 +189,12 @@ export const PesananSaya: FC = () => {
         Daftar Pesanan Saya
       </PageTitle>
       <Content>
-        <Table data={data} columns={columns} addData={() => {}} />
+        <Table
+          data={data}
+          columns={columns}
+          addData={() => {}}
+          searchData={() => {}}
+        />
         <ModalDetailPesanan
           data={modalDetail.data}
           show={modalDetail.show}
