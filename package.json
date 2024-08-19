@@ -10,6 +10,10 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "overrides": {
+    "conflicting-package": "desired-version",
+    "another-package/conflicting-dependency": "desired-version"
+  },
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.2.4",
     "@formatjs/intl-relativetimeformat": "11.2.4",
