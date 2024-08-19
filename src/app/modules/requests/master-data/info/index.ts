@@ -2,51 +2,65 @@ import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
-  return axiosConfig.post(ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS, {
-    actor: data.actor,
-    title: data.title,
-    content: data.content,
-    status: data.status,
-    file: data.file,
-    publishedAt: data.publishedAt,
-    tempatId: data.tempatId,
-  });
+  console.log("dataaaaa", data);
+
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", "Iq");
+  formData.append("title", data.title);
+  formData.append("content", data.content);
+  formData.append("status", data.status);
+  formData.append("publishedAt", data.publishedAt);
+  formData.append("tempatId", data.tempatId);
+
+  return axiosConfig.post(
+    ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 };
 
 export const getSingle = (id: number) => {
   return axiosConfig.get(`${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${id}`);
 };
 
-export const getAll = () => {
-  return axiosConfig.get(ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS);
+export const getAll = (Page: number, Limit: number, Search = "") => {
+  return axiosConfig.get(ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS, {
+    Page,
+    Limit,
+    Search,
+    Sort: "DESC",
+    IsIncludeFile: true,
+    IsIncludeTempat: true,
+  });
 };
 
-export const remove = (id: number) => {
+export const remove = (id: any) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${id}`
+    `${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${id}?actor=Iq`
   );
 };
 
-export const update = (
-  id: number,
-  file: any,
-  actor: string,
-  title?: string,
-  content?: string,
-  status?: string,
-  publishedAt?: string,
-  tempatId?: number
-) => {
+export const update = (data: any) => {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", "Iq");
+  formData.append("title", data.title);
+  formData.append("content", data.content);
+  formData.append("status", data.status);
+  formData.append("publishedAt", data.publishedAt);
+  formData.append("tempatId", data.tempatId);
   return axiosConfig.put(
-    `${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${id}`,
+    `${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${data.id}`,
+    formData,
     {
-      file,
-      actor,
-      title,
-      content,
-      status,
-      publishedAt,
-      tempatId,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
 };

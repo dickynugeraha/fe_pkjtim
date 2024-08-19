@@ -185,8 +185,8 @@ export const Seniman = () => {
         />
         <ModalAddEditSeniman
           fromAdd={!isEdit}
-          fileValue={formFile}
           data={formData}
+          fileValue={formFile}
           onchangeVal={(e: any) => handleChange(e)}
           onChangeFile={(e) => setFormFile(e)}
           show={isModalOpen}

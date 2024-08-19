@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
@@ -6,8 +6,10 @@ import {
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
-import { dummyImage } from "../../../helper/helper";
 import ModalAddEditPementasan from "./components/ModalAddEditPementasan";
+import usePentas from "../../../modules/hooks/master-data/pentas";
+import Loading from "../../../../_metronic/layout/components/content/Loading";
+import useTempat from "../../../modules/hooks/master-data/tempat";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -25,79 +27,87 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Pementasan = () => {
-  const [modaAddlEdit, setModalAddEdit] = useState({
-    fromAdd: false,
-    show: false,
-    data: {},
+  const [formFile, setFormFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: null,
+    file: null,
+    tempatId: "",
+    title: "",
+    sinopsis: "",
+    namaSanggar: "",
+    status: "",
+    tipeSanggar: "",
+    jumlahPelakuSeni: "",
+    jumlahPekerjaSeni: "",
+    jumlahPenonton: "",
+    startDate: "",
+    endDate: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        file: null,
+        tempatId: "",
+        title: "",
+        sinopsis: "",
+        namaSanggar: "",
+        status: "",
+        tipeSanggar: "",
+        jumlahPelakuSeni: "",
+        jumlahPekerjaSeni: "",
+        jumlahPenonton: "",
+        startDate: "",
+        endDate: "",
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormFile(null);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const {
+    addPementasan,
+    deletePementasan,
+    pementasan,
+    searchPementasan,
+    updatePementasan,
+    loading,
+  } = usePentas();
+
+  const { tempat } = useTempat();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    searchPementasan(debouncedQuery);
+  }, [debouncedQuery]);
 
   const data = useMemo(
-    () => [
-      {
-        id: "1",
-        gambar: { dummyImage },
-        detail_info: "4420 Valley Street, Garnerville, NY 10923",
-        judul_sinopsis: "Kim Parrish",
-        nama_sanggar: "Kim Parrish",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-        status: "Terbit",
-      },
-      {
-        id: "2",
-        gambar: { dummyImage },
-        detail_info: "637 Kyle Street, Fullerton, NE 68638",
-        judul_sinopsis: "Michele Castillo",
-        nama_sanggar: "Michele Castillo",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-        status: "Draft",
-      },
-      {
-        id: "3",
-        gambar: { dummyImage },
-        detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
-        judul_sinopsis: "Eric Ferris",
-        nama_sanggar: "Eric Ferris",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-
-        status: "Terbit",
-      },
-      {
-        id: "4",
-        gambar: { dummyImage },
-        detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
-        judul_sinopsis: "Gloria Noble",
-        nama_sanggar: "Gloria Noble",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-
-        status: "Terbit",
-      },
-      {
-        id: "5",
-        gambar: { dummyImage },
-        detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        judul_sinopsis: "Darren Daniels",
-        nama_sanggar: "Darren Daniels",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-
-        status: "Draft",
-      },
-      {
-        id: "6",
-        gambar: { dummyImage },
-        detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
-        judul_sinopsis: "Ted McDonald",
-        nama_sanggar: "Ted McDonald",
-        sinopsis:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore laboriosam error praesentium asperiores, aspernatur quam quisquam, voluptatibus quod atque suscipit aliquam eos libero vero ad? Provident doloremque dolore perspiciatis mollitia?",
-        status: "Terbit",
-      },
-    ],
-    []
+    () => pementasan,
+    [addPementasan, updatePementasan, deletePementasan, searchPementasan]
   );
 
   const columns = useMemo(
@@ -112,7 +122,7 @@ export const Pementasan = () => {
           return (
             <div style={{ width: "150px" }}>
               <img
-                src={singleData.gambar.dummyImage}
+                src={singleData.file}
                 className="rounded"
                 style={{ width: "100%" }}
               />
@@ -123,12 +133,12 @@ export const Pementasan = () => {
       {
         Header: "Nama Sanggar",
         sortType: "alphanumeric",
-        accessor: "nama_sanggar",
+        accessor: "namaSanggar",
       },
       {
         Header: "Judul",
         sortType: "alphanumeric",
-        accessor: "judul_sinopsis",
+        accessor: "title",
       },
       {
         Header: "Sinopsis",
@@ -169,20 +179,17 @@ export const Pementasan = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() =>
-                        setModalAddEdit({
-                          show: true,
-                          data: singleData,
-                          fromAdd: false,
-                        })
-                      }
+                      onClick={() => openModal(singleData)}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
                   <li>
-                    <button className="dropdown-item d-flex align-items-center">
+                    <button
+                      className="dropdown-item d-flex align-items-center"
+                      onClick={() => deletePementasan(singleData.id)}
+                    >
                       <KTIcon iconName="trash-square" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
@@ -199,33 +206,35 @@ export const Pementasan = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pementasan">
         Pementasan
       </PageTitle>
       <Content>
         <Table
+          searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}
-          addData={() =>
-            setModalAddEdit({
-              show: true,
-              data: {},
-              fromAdd: true,
-            })
-          }
+          addData={() => openModal()}
         />
         <ModalAddEditPementasan
-          show={modaAddlEdit.show}
-          data={modaAddlEdit.data}
-          fromAdd={modaAddlEdit.fromAdd}
-          handleClose={() =>
-            setModalAddEdit({
-              fromAdd: false,
-              show: false,
-              data: {},
-            })
-          }
-          handleSubmit={(data) => console.log(data)}
+          show={isModalOpen}
+          data={formData}
+          fromAdd={!isEdit}
+          tempat={tempat}
+          fileValue={formFile}
+          onChangeVal={(e: any) => handleChange(e)}
+          onChangeFile={(e) => setFormFile(e)}
+          handleClose={() => closeModal()}
+          handleSubmit={() => {
+            const formWithFile = { ...formData, file: formFile };
+            if (isEdit) {
+              updatePementasan(formWithFile);
+            } else {
+              addPementasan(formWithFile);
+            }
+            closeModal();
+          }}
         />
       </Content>
     </>

@@ -4,8 +4,12 @@ import Gap from "../../../../../_metronic/layout/components/content/Gap";
 
 type PropsModalAddEditSekilasInfo = {
   fromAdd: boolean;
+  fileValue: any;
   data: any;
+  tempat: any[];
   show: boolean;
+  onChangeVal: (e: any) => void;
+  onChangeFile: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
 };
@@ -13,37 +17,28 @@ type PropsModalAddEditSekilasInfo = {
 const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
   show,
+  tempat,
+  fileValue,
+  onChangeVal,
+  onChangeFile,
   handleClose,
   handleSubmit,
   data,
 }) => {
   const [placeIsClose, setPlaceIsClose] = useState(false);
-  const [choosenLocation, setChoosenLocation] = useState("teater_besar");
-  let gambarVal = "",
-    judulInfoVal = "",
-    detailInfoVal = "",
-    statusVal = "draft",
-    pilihTempatVal = choosenLocation,
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulInfoVal = data?.judul_info;
-    detailInfoVal = data?.detail_info;
-    statusVal = data?.status;
-    pilihTempatVal = data?.pilih_tempat;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
-  const [formValue, setFormValue] = useState({
-    file: "",
-    title: "",
-    content: "",
-    status: "",
-    publishedAt: "",
-    tempatId: "",
-  });
+  const [imagePreview, setImagePreview] = useState();
 
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  handleImageChange(fileValue);
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Info" : "Ubah Info"}
@@ -68,54 +63,74 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
-              {!fromAdd && (
+              {!fromAdd && !fileValue && (
                 <img
                   className="rounded"
-                  style={{ height: "150px" }}
-                  src={gambarVal}
+                  style={{ height: "150px", width: "100%" }}
+                  src={data.file}
+                />
+              )}
+              {fileValue && (
+                <img
+                  className="rounded"
+                  style={{ height: "150px", width: "100%" }}
+                  src={imagePreview}
                 />
               )}
               <Gap height={12} />
-              <input className="form-control" type="file" required />
+              <input
+                className="form-control"
+                type="file"
+                required
+                onChange={(e: any) => onChangeFile(e.target.files[0])}
+              />
             </div>
             <div className="col"></div>
           </div>
         </div>
         <Gap height={20} />
         <div className="form-group mb-3">
-          <label htmlFor="judulInfo" className="fw-bold">
+          <label htmlFor="title" className="fw-bold">
             Judul Info
           </label>
           <Gap height={10} />
           <input
-            value={judulInfoVal}
             type="text"
-            name="judulInfo"
-            id="judulInfo"
+            id="title"
             className="form-control form-control-solid"
+            name="title"
+            value={data.title}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="detailInfo" className="fw-bold">
+          <label htmlFor="content" className="fw-bold">
             Detail Info
           </label>
           <Gap height={10} />
           <textarea
-            name="detailInfo"
-            id="detailInfo"
+            name="content"
+            id="content"
             className="form-control form-control-solid"
-            value={detailInfoVal}
+            value={data.content}
+            onChange={(e) => onChangeVal(e)}
           ></textarea>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="status" className="fw-bold mb-3">
             Status
           </label>
-          <select name="status" id="status" className="form-select">
-            <option value="1" selected={statusVal === "Terbit"}>
+          <select
+            name="status"
+            id="status"
+            className="form-select"
+            onChange={(e) => onChangeVal(e)}
+          >
+            <option>--- Pilih satu ---</option>
+            <option value="Terbit" selected={data.status === "Terbit"}>
               Terbit
             </option>
-            <option value="0" selected={statusVal === "Draft"}>
+            <option value="Draft" selected={data.status === "Draft"}>
               Draft
             </option>
           </select>
@@ -133,19 +148,24 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
         {placeIsClose && (
           <>
             <div className="form-group mb-3">
-              <label htmlFor="pilihTempat" className="fw-bold mb-3">
+              <label htmlFor="tempatId" className="fw-bold mb-3">
                 Pilih Tempat
               </label>
               <select
-                id="pilihTempat"
+                name="tempatId"
+                id="tempatId"
                 className="form-select"
-                onChange={(e) => setChoosenLocation(e.target.value)}
+                onChange={(e) => onChangeVal(e)}
               >
-                <option value="teater_besar">Teater Besar</option>
-                <option value="teater_kecil">Teater Kecil</option>
-                <option value="plaza_teater_besar">Plaza Teater Besar</option>
-                <option value="plaza_teater_kecil">Plaza Teater Kecil</option>
-                <option value="ruang_latihan">Ruang Latihan</option>
+                <option>-- Pilih satu --</option>
+                {tempat.map((tmpt) => (
+                  <option
+                    value={tmpt.id}
+                    selected={data?.tempat?.id === tmpt.id}
+                  >
+                    {tmpt.name}
+                  </option>
+                ))}
               </select>
             </div>
             <Gap height={24} />
@@ -155,11 +175,17 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             <div className="d-flex align-items-center">
               <input
                 type="date"
-                name="start_service"
+                name="startDate"
+                onChange={(e) => onChangeVal(e)}
                 className="form-control"
               />
               <p className="m-0 mx-3">s/d</p>
-              <input type="date" name="end_service" className="form-control" />
+              <input
+                type="date"
+                name="endDate"
+                className="form-control"
+                onChange={(e) => onChangeVal(e)}
+              />
             </div>
           </>
         )}

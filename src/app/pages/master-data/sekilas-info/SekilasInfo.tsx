@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
@@ -8,7 +8,9 @@ import Table from "../../../../_metronic/layout/components/table/Table";
 import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
-import { useInfo } from "../../../modules/hooks/master-data/info";
+import useInfo from "../../../modules/hooks/master-data/info";
+import useTempat from "../../../modules/hooks/master-data/tempat";
+import Loading from "../../../../_metronic/layout/components/content/Loading";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -26,60 +28,72 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const SekilasInfo = () => {
-  const [modaAddlEdit, setModalAddEdit] = useState({
-    fromAdd: false,
-    show: false,
-    data: {},
+  const [formFile, setFormFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: null,
+    file: null,
+    name: "",
+    title: "",
+    content: "",
+    status: "",
+    publishedAt: "",
+    tempatId: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const { info } = useInfo();
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        file: null,
+        name: "",
+        title: "",
+        content: "",
+        status: "",
+        publishedAt: "",
+        tempatId: "",
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormFile(null);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const { tempat } = useTempat();
+  const { addInfo, deleteInfo, info, loading, searchInfo, updateInfo } =
+    useInfo();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    searchInfo(debouncedQuery);
+  }, [debouncedQuery]);
+
+  console.log("infoooooo", info);
 
   const data = useMemo(
-    () => [
-      {
-        id: "1",
-        gambar: { dummyImage },
-        judul_info: "Kim Parrish",
-        detail_info: "4420 Valley Street, Garnerville, NY 10923",
-        status: "Terbit",
-      },
-      {
-        id: "2",
-        gambar: { dummyImage },
-        judul_info: "Michele Castillo",
-        detail_info: "637 Kyle Street, Fullerton, NE 68638",
-        status: "Draft",
-      },
-      {
-        id: "3",
-        gambar: { dummyImage },
-        judul_info: "Eric Ferris",
-        detail_info: "906 Hart Country Lane, Toccoa, GA 30577",
-        status: "Terbit",
-      },
-      {
-        id: "4",
-        gambar: { dummyImage },
-        judul_info: "Gloria Noble",
-        detail_info: "2403 Edgewood Avenue, Fresno, CA 93721",
-        status: "Terbit",
-      },
-      {
-        id: "5",
-        gambar: { dummyImage },
-        judul_info: "Darren Daniels",
-        detail_info: "882 Hide A Way Road, Anaktuvuk Pass, AK 99721",
-        status: "Draft",
-      },
-      {
-        id: "6",
-        gambar: { dummyImage },
-        judul_info: "Ted McDonald",
-        detail_info: "796 Bryan Avenue, Minneapolis, MN 55406",
-        status: "Terbit",
-      },
-    ],
-    []
+    () => info,
+    [addInfo, updateInfo, deleteInfo, searchInfo]
   );
 
   const columns = useMemo(
@@ -94,7 +108,7 @@ export const SekilasInfo = () => {
           return (
             <div style={{ width: "150px" }}>
               <img
-                src={singleData.gambar.dummyImage}
+                src={singleData.file}
                 className="rounded"
                 style={{ width: "100%" }}
               />
@@ -104,12 +118,12 @@ export const SekilasInfo = () => {
       },
       {
         Header: "Judul Info",
-        accessor: "judul_info",
+        accessor: "title",
         sortType: "alphanumeric",
       },
       {
         Header: "Detail Info",
-        accessor: "detail_info",
+        accessor: "content",
         sortType: "alphanumeric",
       },
       {
@@ -146,20 +160,17 @@ export const SekilasInfo = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() =>
-                        setModalAddEdit({
-                          show: true,
-                          data: singleData,
-                          fromAdd: false,
-                        })
-                      }
+                      onClick={() => openModal(singleData)}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
                   <li>
-                    <button className="dropdown-item d-flex align-items-center">
+                    <button
+                      className="dropdown-item d-flex align-items-center"
+                      onClick={() => deleteInfo(singleData.id)}
+                    >
                       <KTIcon iconName="trash-square" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
@@ -176,6 +187,7 @@ export const SekilasInfo = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
@@ -185,29 +197,33 @@ export const SekilasInfo = () => {
       </PageTitle>
       <Content>
         <Table
-          searchData={() => {}}
+          searchData={(val: string) => {
+            setQuery(val);
+          }}
           columns={columns}
           data={data}
-          addData={() =>
-            setModalAddEdit({
-              show: true,
-              data: {},
-              fromAdd: true,
-            })
-          }
+          addData={() => openModal()}
         />
         <ModalAddEditSekilasInfo
-          show={modaAddlEdit.show}
-          data={modaAddlEdit.data}
-          fromAdd={modaAddlEdit.fromAdd}
-          handleClose={() =>
-            setModalAddEdit({
-              fromAdd: false,
-              show: false,
-              data: {},
-            })
-          }
-          handleSubmit={(data) => console.log(data)}
+          tempat={tempat}
+          fromAdd={!isEdit}
+          data={formData}
+          fileValue={formFile}
+          onChangeVal={(e: any) => handleChange(e)}
+          onChangeFile={(e) => setFormFile(e)}
+          show={isModalOpen}
+          handleClose={closeModal}
+          handleSubmit={() => {
+            const formWithFile = { ...formData, file: formFile };
+            console.log("formWithFile", formWithFile);
+
+            if (isEdit) {
+              updateInfo(formWithFile);
+            } else {
+              addInfo(formWithFile);
+            }
+            closeModal();
+          }}
         />
       </Content>
     </>

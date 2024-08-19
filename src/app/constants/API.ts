@@ -4,6 +4,9 @@ export const ENDPOINTS = {
     LOGIN: `v1/Authentication/SignIn`,
     REGISTER: `v1/User/Register`,
   },
+  PENGGUNA: {
+    MANAGEMENT_PENGGUNA: "v1/User",
+  },
   SENIMAN: {
     LIST_UPDATE_ADD_DELETE_SENIMAN: "v1/Seniman",
     SENIMAN_IMAGE: API_URL + "/v1/Seniman",

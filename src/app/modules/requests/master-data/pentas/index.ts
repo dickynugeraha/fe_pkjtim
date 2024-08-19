@@ -1,36 +1,31 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (
-  file: any,
-  actor: string,
-  tempatId: number,
-  title: string,
-  sinopsis: string,
-  namaSanggar: string,
-  status: string,
-  tipeSanggar: string,
-  jumlahPelakuSeni: number,
-  jumlahPekerjaSeni: number,
-  jumlahPenonton: number,
-  startDate: string,
-  endDate: string
-) => {
-  return axiosConfig.post(ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS, {
-    file,
-    actor,
-    tempatId,
-    title,
-    sinopsis,
-    namaSanggar,
-    status,
-    tipeSanggar,
-    jumlahPelakuSeni,
-    jumlahPekerjaSeni,
-    jumlahPenonton,
-    startDate,
-    endDate,
-  });
+export const add = (data: any) => {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", "Iq");
+  formData.append("tempatId", data.tempatId);
+  formData.append("title", data.title);
+  formData.append("sinopsis", data.sinopsis);
+  formData.append("namaSanggar", data.namaSanggar);
+  formData.append("status", data.status);
+  formData.append("tipeSanggar", data.tipeSanggar);
+  formData.append("jumlahPelakuSeni", data.jumlahPelakuSeni);
+  formData.append("jumlahPekerjaSeni", data.jumlahPekerjaSeni);
+  formData.append("jumlahPenonton", data.jumlahPenonton);
+  formData.append("startDate", data.startDate);
+  formData.append("endDate", data.endDate);
+
+  return axiosConfig.post(
+    ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 };
 
 export const getSinglePhoto = (id: number) => {
@@ -45,48 +40,45 @@ export const getSingle = (id: number) => {
   );
 };
 
-export const getAll = () => {
-  return axiosConfig.get(ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS);
+export const getAll = (Page: number, Limit: number, Search = "") => {
+  return axiosConfig.get(ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS, {
+    Page,
+    Limit,
+    Search,
+    Sort: "DESC",
+    IsIncludeFile: true,
+    IsIncludeTempat: true,
+  });
 };
 
-export const remove = (id: number) => {
+export const remove = (id: any) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS}/${id}`
+    `${ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS}/${id}?actor=Iq`
   );
 };
 
-export const update = (
-  id: number,
-  file?: any,
-  actor?: string,
-  tempatId?: string,
-  title?: string,
-  sinopsis?: string,
-  namaSanggar?: string,
-  status?: string,
-  tipeSanggar?: string,
-  jumlahPelakuSeni?: number,
-  jumlahPekerjaSeni?: number,
-  jumlahPenonton?: number,
-  startDate?: string,
-  endDate?: string
-) => {
+export const update = (data: any) => {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", "Iq");
+  formData.append("tempatId", data.tempatId);
+  formData.append("title", data.title);
+  formData.append("sinopsis", data.sinopsis);
+  formData.append("namaSanggar", data.namaSanggar);
+  formData.append("status", data.status);
+  formData.append("tipeSanggar", data.tipeSanggar);
+  formData.append("jumlahPelakuSeni", data.jumlahPelakuSeni);
+  formData.append("jumlahPekerjaSeni", data.jumlahPekerjaSeni);
+  formData.append("jumlahPenonton", data.jumlahPenonton);
+  formData.append("startDate", data.startDate);
+  formData.append("endDate", data.endDate);
   return axiosConfig.put(
-    `${ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS}/${id}`,
+    `${ENDPOINTS.PENTAS.LIST_UPDATE_ADD_DELETE_PENTAS}/${data.id}`,
+    formData,
     {
-      file,
-      actor,
-      tempatId,
-      title,
-      sinopsis,
-      namaSanggar,
-      status,
-      tipeSanggar,
-      jumlahPelakuSeni,
-      jumlahPekerjaSeni,
-      jumlahPenonton,
-      startDate,
-      endDate,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
 };

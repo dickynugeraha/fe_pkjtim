@@ -7,6 +7,7 @@ type PropsModalAddEditSekilasInfo = {
   isRoleKurator: boolean;
   data: any;
   show: boolean;
+  handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
 };
@@ -15,26 +16,11 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
   show,
   isRoleKurator,
+  handleChange,
   handleClose,
   handleSubmit,
   data,
 }) => {
-  const [isPreEvent, setIsPreEvent] = useState(false);
-  let gambarVal = "",
-    judulInfoVal = "",
-    detailInfoVal = "",
-    statusVal = "draft",
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulInfoVal = data?.judul_info;
-    detailInfoVal = data?.detail_info;
-    statusVal = data?.status;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
-
   const valueSelectOption = [
     { value: "komite_seni_rupa", text: "Komite Seni Rupa" },
     { value: "komite_tari", text: "Komite Tari" },
@@ -66,15 +52,17 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
     >
       <form>
         <div className="form-group mb-3">
-          <label htmlFor="namaLengkap" className="fw-bold">
+          <label htmlFor="fullName" className="fw-bold">
             Nama Lengkap
           </label>
           <Gap height={10} />
           <input
             type="text"
-            name="namaLengkap"
-            id="namaLengkap"
+            name="fullName"
+            id="fullName"
+            value={data.fullName}
             className="form-control form-control-solid"
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="form-group mb-3">
@@ -86,18 +74,36 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             type="email"
             name="email"
             id="email"
+            value={data.email}
             className="form-control form-control-solid"
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="noHp" className="fw-bold">
+          <label htmlFor="phoneNumber" className="fw-bold">
             Nomor Handphone
           </label>
           <Gap height={10} />
           <input
             type="number"
-            name="noHp"
-            id="noHp"
+            name="phoneNumber"
+            id="phoneNumber"
+            value={data.phoneNumber}
+            onChange={(e) => handleChange(e)}
+            className="form-control form-control-solid"
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="password" className="fw-bold">
+            Password
+          </label>
+          <Gap height={10} />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={data.password}
+            onChange={(e) => handleChange(e)}
             className="form-control form-control-solid"
           />
         </div>
@@ -106,10 +112,33 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             Status
           </label>
           <Gap height={10} />
-          <select name="status" id="status" className="form-select">
-            <option value="user">User</option>
-            <option value="pengelola">Pengelola</option>
-            <option value="kurator">Kurator</option>
+          <select
+            name="status"
+            id="status"
+            className="form-select"
+            onChange={(e) => handleChange(e)}
+          >
+            <option>-- Pilih satu --</option>
+            <option value="Aktive">Aktif</option>
+            <option value="Requested">Requested</option>
+            <option value="NonAktive">Non Aktive</option>
+          </select>
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="role" className="fw-bold">
+            Role
+          </label>
+          <Gap height={10} />
+          <select
+            name="role"
+            id="role"
+            className="form-select"
+            onChange={(e) => handleChange(e)}
+          >
+            <option>-- Pilih satu --</option>
+            <option value="User">User</option>
+            <option value="Pengelola">Pengelola</option>
+            <option value="Kurator">Kurator</option>
           </select>
         </div>
 

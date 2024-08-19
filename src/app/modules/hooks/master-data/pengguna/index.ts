@@ -1,63 +1,29 @@
 import { useEffect, useState } from "react";
 import {
   add,
+  approve,
   getAll,
   remove,
   update,
-} from "../../../requests/master-data/info";
+} from "../../../requests/master-data/pengguna";
 import Swal from "sweetalert2";
-import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 
-export default function useInfo() {
-  const [info, setInfo] = useState<any[]>([]);
+export default function usePengguna() {
+  const [pengguna, setPengguna] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchAllInfo = async () => {
-    setLoading(true);
-    try {
-      const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
-      const data: any[] = [];
-      for (let index = 0; index < res.data.data.data.length; index++) {
-        const ell = res.data.data.data[index];
-        const dataWithStream = {
-          ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
-        };
-
-        data.push(dataWithStream);
-      }
-      setInfo(data);
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal get data info",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
-  };
-
-  const searchInfo = async (Search: string) => {
+  const fetchAllPengguna = async (Search = "") => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
-      const data: any[] = [];
-      for (let index = 0; index < res.data.data.data.length; index++) {
-        const ell = res.data.data.data[index];
-        const dataWithStream = {
-          ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
-        };
-        data.push(dataWithStream);
-      }
-      setInfo(data);
+      console.log("resssss", res);
+
+      setPengguna(res.data.data.data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal get data info",
+        title: "Gagal get data pengguna",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -66,23 +32,23 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const addInfo = async (data: any) => {
+  const addPengguna = async (data: any) => {
     setLoading(true);
     try {
       const res = await add(data);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menambah data info",
+          title: "Berhasil menambah data pengguna",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllPengguna();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menambahkan data info",
+        title: "Gagal menambahkan data pengguna",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -91,23 +57,47 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const updateInfo = async (data: any) => {
+  const updatePengguna = async (data: any) => {
     setLoading(true);
     try {
       const res = await update(data);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil mengubah data info",
+          title: "Berhasil mengubah data pengguna",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllPengguna();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal mengubah data info",
+        title: "Gagal mengubah data pengguna",
+        text: error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    setLoading(false);
+  };
+  const approveRequestRegisterFromAdmin = async (id: any) => {
+    setLoading(true);
+    try {
+      const res = await approve(id);
+      if (res) {
+        Swal.fire({
+          icon: "success",
+          title: "Register pengguna berhasil di setujui",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        fetchAllPengguna();
+      }
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Register pengguna gagal di setujui",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -116,23 +106,23 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const deleteInfo = async (id: any) => {
+  const deletePengguna = async (id: any) => {
     setLoading(true);
     try {
       const res = await remove(id);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menghapus data info",
+          title: "Berhasil menghapus data pengguna",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllPengguna();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menghapus data info",
+        title: "Gagal menghapus data pengguna",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -142,15 +132,16 @@ export default function useInfo() {
   };
 
   useEffect(() => {
-    fetchAllInfo();
+    fetchAllPengguna();
   }, []);
 
   return {
-    info,
-    addInfo,
-    updateInfo,
-    deleteInfo,
-    searchInfo,
+    pengguna,
+    addPengguna,
+    updatePengguna,
+    deletePengguna,
+    fetchAllPengguna,
+    approveRequestRegisterFromAdmin,
     loading,
   };
 }

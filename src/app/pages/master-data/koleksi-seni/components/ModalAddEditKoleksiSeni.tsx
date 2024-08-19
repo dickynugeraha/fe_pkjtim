@@ -23,8 +23,6 @@ const ModalAddEditKoleksiSeni: FC<PropsModalAddEditSeniman> = ({
   data,
   fileValue,
 }) => {
-  console.log("dataaaaaaaa", data);
-
   const [imagePreview, setImagePreview] = useState();
 
   const handleImageChange = (file: any) => {

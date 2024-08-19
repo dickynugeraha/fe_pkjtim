@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 
@@ -6,34 +6,39 @@ type PropsModalAddEditPementasan = {
   fromAdd: boolean;
   data: any;
   show: boolean;
+  fileValue: any;
+  tempat: any[];
+  onChangeVal: (e: any) => void;
+  onChangeFile: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
 };
 
 const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
   fromAdd,
+  fileValue,
   show,
+  tempat,
+  onChangeFile,
+  onChangeVal,
   handleClose,
   handleSubmit,
   data,
 }) => {
-  let gambarVal = "",
-    judulSinopsis = "",
-    namaSanggar = "",
-    sinopsis = "",
-    statusVal = "draft",
-    startServiceVal = new Date().toDateString(),
-    endServiceVal = new Date().toDateString();
-  if (!fromAdd) {
-    gambarVal = data?.gambar?.dummyImage;
-    judulSinopsis = data?.judul_sinopsis;
-    namaSanggar = data?.nama_sinopsis;
-    // tipeSinopsis = data?.tipe_sinopsis;
-    sinopsis = data?.detail_info;
-    statusVal = data?.status;
-    startServiceVal = data?.start_service;
-    endServiceVal = data?.end_service;
-  }
+  const [imagePreview, setImagePreview] = useState();
+
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  handleImageChange(fileValue);
+
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Pementasan" : "Ubah Pementasan"}
@@ -58,27 +63,42 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
-              {!fromAdd && (
+              {!fromAdd && !fileValue && (
                 <img
                   className="rounded"
-                  style={{ height: "150px" }}
-                  // src={gambarVal}
+                  style={{ height: "150px", width: "100%" }}
+                  src={data.file}
+                />
+              )}
+              {fileValue && (
+                <img
+                  className="rounded"
+                  style={{ height: "150px", width: "100%" }}
+                  src={imagePreview}
                 />
               )}
               <Gap height={12} />
-              <input className="form-control" type="file" required />
+              <input
+                className="form-control"
+                type="file"
+                required
+                onChange={(e: any) => onChangeFile(e.target.files[0])}
+              />
             </div>
             <div className="col"></div>
           </div>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="judul" className="fw-bold mb-2">
+          <label htmlFor="title" className="fw-bold mb-2">
             Judul
           </label>
           <input
-            id="judul"
+            id="title"
+            name="title"
             type="text"
             className="form-control form-control-solid"
+            value={data.title}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
@@ -89,89 +109,130 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
             name="sinopsis"
             id="sinopsis"
             className="form-control form-control-solid"
+            value={data.sinopsis}
+            onChange={(e) => onChangeVal(e)}
           ></textarea>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="nama_sanggar" className="fw-bold mb-2">
+          <label htmlFor="namaSanggar" className="fw-bold mb-2">
             Nama Sanggar
           </label>
           <input
-            id="nama_sanggar"
+            id="namaSanggar"
+            name="namaSanggar"
             type="text"
             className="form-control form-control-solid"
+            value={data.namaSanggar}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="tipe_sanggar" className="fw-bold mb-2">
+          <label htmlFor="tipeSanggar" className="fw-bold mb-2">
             Tipe Sanggar
           </label>
           <input
-            id="tipe_sanggar"
+            id="tipeSanggar"
+            name="tipeSanggar"
             type="text"
             className="form-control form-control-solid"
+            value={data.tipeSanggar}
+            onChange={(e) => onChangeVal(e)}
           />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="tempatId" className="fw-bold mb-2">
+            Tipe Tempat
+          </label>
+          <select
+            name="tempatId"
+            id="tempatId"
+            className="form-select"
+            onChange={(e) => onChangeVal(e)}
+          >
+            <option>-- Pilih satu --</option>
+            {tempat.map((tmpt) => (
+              <option value={tmpt.id} selected={data?.tempat?.id === tmpt.id}>
+                {tmpt.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="tipe_sanggar" className="fw-bold mb-2">
             Tanggal Pentas
           </label>
           <div className="d-flex align-items-center">
-            <input type="date" name="start_service" className="form-control" />
+            <input
+              type="date"
+              className="form-control"
+              name="startDate"
+              value={data.startDate}
+              onChange={(e) => onChangeVal(e)}
+            />
             <p className="m-0 mx-3">s/d</p>
-            <input type="date" name="end_service" className="form-control" />
+            <input
+              type="date"
+              className="form-control"
+              name="endDate"
+              value={data.endDate}
+              onChange={(e) => onChangeVal(e)}
+            />
           </div>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="tipe_sanggar" className="fw-bold mb-2">
-            Tipe Sanggar
-          </label>
-          <input
-            id="tipe_sanggar"
-            type="text"
-            className="form-control form-control-solid"
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label htmlFor="JumlahPelakuSeni" className="fw-bold mb-2">
+          <label htmlFor="jumlahPelakuSeni" className="fw-bold mb-2">
             Jumlah Pelaku Seni
           </label>
           <input
-            id="JumlahPelakuSeni"
+            id="jumlahPelakuSeni"
+            name="jumlahPelakuSeni"
             type="text"
             className="form-control form-control-solid"
+            value={data.jumlahPelakuSeni}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="JumlahPekerjaSeni" className="fw-bold mb-2">
+          <label htmlFor="jumlahPekerjaSeni" className="fw-bold mb-2">
             Jumlah Pekerja Seni
           </label>
           <input
-            id="JumlahPekerjaSeni"
+            id="jumlahPekerjaSeni"
+            name="jumlahPekerjaSeni"
             type="text"
             className="form-control form-control-solid"
+            value={data.jumlahPekerjaSeni}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="jumlah_penonton" className="fw-bold mb-2">
+          <label htmlFor="jumlahPenonton" className="fw-bold mb-2">
             Jumlah Penonton
           </label>
           <input
-            id="jumlah_penonton"
+            id="jumlahPenonton"
+            name="jumlahPenonton"
             type="text"
             className="form-control form-control-solid"
+            value={data.jumlahPenonton}
+            onChange={(e) => onChangeVal(e)}
           />
         </div>
         <div className="form-group mb-3">
           <label htmlFor="status" className="fw-bold mb-3">
             Status
           </label>
-          <select name="status" id="status" className="form-select">
-            <option value="1">
-              {/* <option value="1" selected={statusVal === "Terbit"}> */}
+          <select
+            name="status"
+            id="status"
+            className="form-select"
+            onChange={(e) => onChangeVal(e)}
+          >
+            <option>-- Pilih satu --</option>
+            <option value="Terbit" selected={data.status === "Terbit"}>
               Terbit
             </option>
-            <option value="0">
-              {/* <option value="0" selected={statusVal === "Draft"}> */}
+            <option value="Draft" selected={data.status === "Draft"}>
               Draft
             </option>
           </select>

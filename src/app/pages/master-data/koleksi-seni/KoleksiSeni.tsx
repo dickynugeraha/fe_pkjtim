@@ -9,6 +9,7 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import { dummyImage } from "../../../helper/helper";
 import ModalAddEditKoleksiSeni from "./components/ModalAddEditKoleksiSeni";
 import useSeni from "../../../modules/hooks/master-data/seni";
+import Loading from "../../../../_metronic/layout/components/content/Loading";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -159,6 +160,7 @@ export const KoleksiSeni = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}

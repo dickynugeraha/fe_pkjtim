@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   PageTitle,
   PageLink,
@@ -9,6 +9,8 @@ import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
 import globalVar from "../../../helper/globalVar";
+import usePengguna from "../../../modules/hooks/master-data/pengguna";
+import Loading from "../../../../_metronic/layout/components/content/Loading";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -33,57 +35,71 @@ export const Pengguna = () => {
     role: "",
   });
 
+  const {
+    addPengguna,
+    deletePengguna,
+    fetchAllPengguna,
+    loading,
+    pengguna,
+    updatePengguna,
+    approveRequestRegisterFromAdmin,
+  } = usePengguna();
+
+  const [formData, setFormData] = useState({
+    tempatId: null,
+    startDate: null,
+    endDate: null,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        tempatId: null,
+        startDate: null,
+        endDate: null,
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    fetchAllPengguna(debouncedQuery);
+  }, [debouncedQuery]);
+
   const data = useMemo(
-    () => [
-      {
-        id: "1",
-        nama_lengkap: "Kale Pramono",
-        email: "kale@gmail.com",
-        nomor_telepon: "0896226849841",
-        role: "User",
-        status: "Not Active",
-      },
-      {
-        id: "2",
-        nama_lengkap: "Kale Pramono",
-        nomor_telepon: "0896226849841",
-        email: "kale@gmail.com",
-        role: "Kurator",
-        status: "Requested",
-      },
-      {
-        id: "3",
-        nama_lengkap: "Kale Pramono",
-        nomor_telepon: "0896226849841",
-        email: "kale@gmail.com",
-        role: "Pengelola",
-        status: "Active",
-      },
-      {
-        id: "4",
-        nama_lengkap: "Kale Pramono",
-        nomor_telepon: "0896226849841",
-        email: "kale@gmail.com",
-        role: "Kurator",
-        status: "Active",
-      },
-      {
-        id: "5",
-        nama_lengkap: "Kale Pramono",
-        nomor_telepon: "0896226849841",
-        email: "kale@gmail.com",
-        role: "User",
-        status: "Requested",
-      },
-    ],
-    []
+    () => pengguna,
+    [updatePengguna, addPengguna, deletePengguna, fetchAllPengguna]
   );
 
   const columns = useMemo(
     () => [
       {
         Header: "Nama Lengkap",
-        accessor: "nama_lengkap",
+        accessor: "fullName",
         sortType: "alphanumeric",
       },
       {
@@ -93,7 +109,7 @@ export const Pengguna = () => {
       },
       {
         Header: "Nomor Telepom",
-        accessor: "nomor_telepon",
+        accessor: "phoneNumber",
         sortType: "alphanumeric",
       },
       {
@@ -125,21 +141,17 @@ export const Pengguna = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() =>
-                        setModalAddEdit({
-                          show: true,
-                          data: singleData,
-                          fromAdd: false,
-                          role: singleData.role,
-                        })
-                      }
+                      onClick={() => openModal(singleData)}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
                   <li>
-                    <button className="dropdown-item d-flex align-items-center">
+                    <button
+                      className="dropdown-item d-flex align-items-center"
+                      onClick={() => deletePengguna(singleData.id)}
+                    >
                       <KTIcon iconName="trash-square" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
@@ -149,10 +161,13 @@ export const Pengguna = () => {
             </>
           );
 
-          if (singleData.status === "Requested") {
+          if (singleData.status === "REQUEST") {
             actionButton = (
               <div className="d-flex align-items-center">
-                <div role="button">
+                <div
+                  role="button"
+                  onClick={() => approveRequestRegisterFromAdmin(singleData.id)}
+                >
                   <KTIcon
                     iconName="check-square"
                     className="fs-1 text-success me-3"
@@ -177,36 +192,32 @@ export const Pengguna = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pengguna">
         Pengguna
       </PageTitle>
       <Content>
         <Table
+          searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}
-          addData={() =>
-            setModalAddEdit({
-              show: true,
-              data: {},
-              fromAdd: true,
-              role: "",
-            })
-          }
+          addData={() => openModal()}
         />
         <ModalAddEditPengguna
-          show={modalAddlEdit.show}
-          data={modalAddlEdit.data}
-          fromAdd={modalAddlEdit.fromAdd}
+          handleChange={(e) => handleChange(e)}
+          show={isModalOpen}
+          data={formData}
+          fromAdd={!isEdit}
           isRoleKurator={modalAddlEdit.role === "Kurator"}
-          handleClose={() =>
-            setModalAddEdit({
-              fromAdd: false,
-              show: false,
-              data: {},
-              role: "",
-            })
-          }
-          handleSubmit={(data) => console.log(data)}
+          handleClose={() => closeModal()}
+          handleSubmit={() => {
+            if (isEdit) {
+              updatePengguna(formData);
+            } else {
+              addPengguna(formData);
+            }
+            closeModal();
+          }}
         />
       </Content>
     </>

@@ -4,34 +4,33 @@ import {
   getAll,
   remove,
   update,
-} from "../../../requests/master-data/info";
+} from "../../../requests/master-data/pentas";
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 
-export default function useInfo() {
-  const [info, setInfo] = useState<any[]>([]);
+export default function usePentas() {
+  const [pementasan, setPentas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchAllInfo = async () => {
+  const fetchAllSeniman = async () => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
       const data: any[] = [];
-      for (let index = 0; index < res.data.data.data.length; index++) {
-        const ell = res.data.data.data[index];
+      for (let index = 0; index < res.data.data.length; index++) {
+        const ell = res.data.data[index];
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${ell.id}/Image?isStream=true`,
         };
-
         data.push(dataWithStream);
       }
-      setInfo(data);
+      setPentas(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal get data info",
+        title: "Gagal get data pementasan",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -40,24 +39,24 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const searchInfo = async (Search: string) => {
+  const searchPementasan = async (Search: string) => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
       const data: any[] = [];
-      for (let index = 0; index < res.data.data.data.length; index++) {
-        const ell = res.data.data.data[index];
+      for (let index = 0; index < res.data.data.length; index++) {
+        const ell = res.data.data[index];
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${ell.id}/Image?isStream=true`,
         };
         data.push(dataWithStream);
       }
-      setInfo(data);
+      setPentas(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal get data info",
+        title: "Gagal get data pementasan",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -66,23 +65,23 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const addInfo = async (data: any) => {
+  const addPementasan = async (data: any) => {
     setLoading(true);
     try {
       const res = await add(data);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menambah data info",
+          title: "Berhasil menambah data pementasan",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllSeniman();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menambahkan data info",
+        title: "Gagal menambahkan data pementasan",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -91,23 +90,23 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const updateInfo = async (data: any) => {
+  const updatePementasan = async (data: any) => {
     setLoading(true);
     try {
       const res = await update(data);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil mengubah data info",
+          title: "Berhasil mengubah data pementasan",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllSeniman();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal mengubah data info",
+        title: "Gagal mengubah data pementasan",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -116,23 +115,23 @@ export default function useInfo() {
     setLoading(false);
   };
 
-  const deleteInfo = async (id: any) => {
+  const deletePementasan = async (id: any) => {
     setLoading(true);
     try {
       const res = await remove(id);
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "Berhasil menghapus data info",
+          title: "Berhasil menghapus data pementasan",
           showConfirmButton: false,
           timer: 1500,
         });
-        fetchAllInfo();
+        fetchAllSeniman();
       }
     } catch (error: any) {
       Swal.fire({
         icon: "error",
-        title: "Gagal menghapus data info",
+        title: "Gagal menghapus data pementasan",
         text: error.message,
         showConfirmButton: false,
         timer: 1500,
@@ -142,15 +141,15 @@ export default function useInfo() {
   };
 
   useEffect(() => {
-    fetchAllInfo();
+    fetchAllSeniman();
   }, []);
 
   return {
-    info,
-    addInfo,
-    updateInfo,
-    deleteInfo,
-    searchInfo,
+    pementasan,
+    addPementasan,
+    updatePementasan,
+    deletePementasan,
+    searchPementasan,
     loading,
   };
 }

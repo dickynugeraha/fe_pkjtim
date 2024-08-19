@@ -78,17 +78,17 @@ class APIClient {
   /**
    * post given data to url
    */
-  post = (url: any, data: any, options?: any) => {
+  post = (url: any, data?: any, options?: any) => {
     return axios.post(`${API_URL}/${url}`, data, options);
   };
   /**
    * Updates data
    */
-  patch = (url: any, data: any, config?: any) => {
+  patch = (url: any, data?: any, config?: any) => {
     return axios.patch(`${API_URL}/${url}`, data, config);
   };
 
-  put = (url: any, data: any, options?: any) => {
+  put = (url: any, data?: any, options?: any) => {
     return axios.put(`${API_URL}/${url}`, data, options);
   };
   /**
