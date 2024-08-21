@@ -36,7 +36,9 @@ export default function usePentas() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const searchPementasan = async (Search: string) => {
@@ -62,7 +64,9 @@ export default function usePentas() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addPementasan = async (data: any) => {

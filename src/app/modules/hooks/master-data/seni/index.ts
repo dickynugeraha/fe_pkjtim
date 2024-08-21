@@ -39,7 +39,9 @@ export default function useSeni() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const searchSeni = async (Search: string) => {
@@ -65,7 +67,9 @@ export default function useSeni() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addSeni = async (data: any) => {

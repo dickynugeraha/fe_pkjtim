@@ -29,7 +29,9 @@ export default function usePengguna() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addPengguna = async (data: any) => {

@@ -37,7 +37,9 @@ export default function useSeniman() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const searchSeniman = async (Search: string) => {
@@ -63,7 +65,9 @@ export default function useSeniman() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addSeniman = async (data: any) => {

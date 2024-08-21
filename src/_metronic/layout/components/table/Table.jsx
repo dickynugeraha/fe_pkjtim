@@ -48,17 +48,19 @@ const Table = ({
   let content;
   if (loading) {
     content = <UsersListLoading />;
-  } else if (data.length === 0) {
-    content = (
-      <tr>
-        <td colSpan={headerGroups[0].headers.length}>
-          <div className="d-flex text-center w-100 align-content-center justify-content-center">
-            Tidak ada hasil yang ditemukan!
-          </div>
-        </td>
-      </tr>
-    );
-  } else {
+  }
+  // else if (data.length === 0) {
+  //   content = (
+  //     <tr>
+  //       <td colSpan={headerGroups[0].headers.length}>
+  //         <div className="d-flex text-center w-100 align-content-center justify-content-center">
+  //           Tidak ada hasil yang ditemukan!
+  //         </div>
+  //       </td>
+  //     </tr>
+  //   );
+  // }
+  else {
     content = page.map((row) => {
       prepareRow(row);
       return (

@@ -27,7 +27,9 @@ export default function useTempat() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addTempat = async (data: any) => {

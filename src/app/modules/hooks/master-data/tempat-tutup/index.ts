@@ -27,7 +27,9 @@ export default function useTutupTempat() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addTutupTempat = async (data: any) => {

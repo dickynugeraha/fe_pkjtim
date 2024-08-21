@@ -37,7 +37,9 @@ export default function useInfo() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const searchInfo = async (Search: string) => {
@@ -63,7 +65,9 @@ export default function useInfo() {
         timer: 1500,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const addInfo = async (data: any) => {
