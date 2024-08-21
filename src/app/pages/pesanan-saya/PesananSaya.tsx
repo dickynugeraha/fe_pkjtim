@@ -190,6 +190,7 @@ export const PesananSaya: FC = () => {
       </PageTitle>
       <Content>
         <Table
+          loading={false}
           data={data}
           columns={columns}
           addData={() => {}}

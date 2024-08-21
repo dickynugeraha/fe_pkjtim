@@ -172,6 +172,7 @@ export const KurasiPentas = () => {
 
       <Content>
         <Table
+          loading={false}
           searchData={() => {}}
           data={data}
           columns={columns}
