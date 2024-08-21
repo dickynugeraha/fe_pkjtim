@@ -8,8 +8,8 @@ import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditPementasan from "./components/ModalAddEditPementasan";
 import usePentas from "../../../modules/hooks/master-data/pentas";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
 import useTempat from "../../../modules/hooks/master-data/tempat";
+import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -36,7 +36,6 @@ export const Pementasan = () => {
     sinopsis: "",
     namaSanggar: "",
     status: "",
-    tipeSanggar: "",
     jumlahPelakuSeni: "",
     jumlahPekerjaSeni: "",
     jumlahPenonton: "",
@@ -61,7 +60,6 @@ export const Pementasan = () => {
         sinopsis: "",
         namaSanggar: "",
         status: "",
-        tipeSanggar: "",
         jumlahPelakuSeni: "",
         jumlahPekerjaSeni: "",
         jumlahPenonton: "",
@@ -117,17 +115,32 @@ export const Pementasan = () => {
         accessor: "gambar",
         sortType: "alphanumeric",
         Cell: (props: any) => {
+          const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
 
-          return (
-            <div style={{ width: "150px" }}>
-              <img
-                src={singleData.file}
-                className="rounded"
-                style={{ width: "100%" }}
-              />
-            </div>
-          );
+          const handleImageLoad = () => {
+            setLoading(false);
+          };
+
+          let content = <Skeleton height={80} width={150} />;
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+
+          if (!loading) {
+            content = (
+              <div style={{ width: "150px" }}>
+                <img
+                  src={singleData.file}
+                  className="rounded"
+                  style={{ width: "100%" }}
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            );
+          }
+
+          return content;
         },
       },
       {
@@ -153,9 +166,9 @@ export const Pementasan = () => {
           let singleData = props.cell.row.original;
           const className =
             singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded p-2"
-              : "m-0 text-success bg-light-success text-center rounded p-2";
-          return <p className={className}>{singleData.status}</p>;
+              ? "badge badge-light-dager fs-6"
+              : "badge badge-light-success fs-6";
+          return <span className={className}>{singleData.status}</span>;
         },
       },
 
@@ -190,7 +203,7 @@ export const Pementasan = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deletePementasan(singleData.id)}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -206,12 +219,12 @@ export const Pementasan = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pementasan">
         Pementasan
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}

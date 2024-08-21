@@ -105,11 +105,11 @@ export const PesananMasuk = () => {
 
           return (
             <div style={{ width: "230px" }}>
-              <span className="text-success bg-light-success rounded p-2">
+              <span className="badge badge-light-success fs-6">
                 {singleData.tanggal_mulai_sewa}
               </span>
               <span> - </span>
-              <span className="text-danger bg-light-danger rounded p-2">
+              <span className="badge badge-light-danger fs-6">
                 {singleData.tanggal_akhir_sewa}
               </span>
             </div>
@@ -125,19 +125,19 @@ export const PesananMasuk = () => {
           let statusClass = "";
           switch (singleData.status) {
             case "Selesai":
-              statusClass = "bg-light-success text-success rounded p-2";
+              statusClass = "badge badge-light-success fs-6";
               break;
             case "Proses":
-              statusClass = "bg-light-warning text-warning rounded p-2";
+              statusClass = "badge badge-light-warning fs-6";
               break;
             case "Ditolak":
-              statusClass = "bg-light-danger text-danger rounded p-2";
+              statusClass = "badge badge-light-danger fs-6";
               break;
             case "Revisi":
-              statusClass = "bg-light-danger text-danger rounded p-2";
+              statusClass = "badge badge-light-danger fs-6";
               break;
             case "Menunggu Surat Jawaban":
-              statusClass = "bg-light-success text-success rounded p-2";
+              statusClass = "badge badge-light-success fs-6";
               break;
           }
 

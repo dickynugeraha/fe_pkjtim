@@ -127,19 +127,6 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
           />
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="tipeSanggar" className="fw-bold mb-2">
-            Tipe Sanggar
-          </label>
-          <input
-            id="tipeSanggar"
-            name="tipeSanggar"
-            type="text"
-            className="form-control form-control-solid"
-            value={data.tipeSanggar}
-            onChange={(e) => onChangeVal(e)}
-          />
-        </div>
-        <div className="form-group mb-3">
           <label htmlFor="tempatId" className="fw-bold mb-2">
             Tipe Tempat
           </label>

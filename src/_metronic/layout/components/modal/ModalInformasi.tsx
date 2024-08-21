@@ -8,7 +8,6 @@ const ModalInformasi: FC<{
   message: string;
   icon: string;
   type: string;
-  handleShow: () => {};
   handleClose: () => {};
 }> = ({ isShow, title, message, icon, type, handleClose }) => {
   let iconComponent;
@@ -43,7 +42,7 @@ const ModalInformasi: FC<{
 
   return (
     <>
-      <Modal show={isShow} onHide={handleClose}>
+      <Modal show={isShow} onHide={handleClose} centered={true} size="sm">
         <Modal.Body>
           <div className="d-flex justify-content-center align-items-center mb-4">
             {iconComponent}

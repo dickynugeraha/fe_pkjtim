@@ -10,7 +10,7 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
 import useInfo from "../../../modules/hooks/master-data/info";
 import useTempat from "../../../modules/hooks/master-data/tempat";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
+import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -103,17 +103,32 @@ export const SekilasInfo = () => {
         accessor: "gambar",
         sortType: "alphanumeric",
         Cell: (props: any) => {
+          const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
 
-          return (
-            <div style={{ width: "150px" }}>
-              <img
-                src={singleData.file}
-                className="rounded"
-                style={{ width: "100%" }}
-              />
-            </div>
-          );
+          const handleImageLoad = () => {
+            setLoading(false);
+          };
+
+          let content = <Skeleton height={80} width={150} />;
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+
+          if (!loading) {
+            content = (
+              <div style={{ width: "150px" }}>
+                <img
+                  src={singleData.file}
+                  className="rounded"
+                  style={{ width: "100%" }}
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            );
+          }
+
+          return content;
         },
       },
       {
@@ -132,11 +147,21 @@ export const SekilasInfo = () => {
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          const className =
-            singleData.status === "Draft"
-              ? "m-0 text-danger bg-light-danger text-center rounded p-2"
-              : "m-0 text-success bg-light-success text-center rounded p-2";
-          return <span className={className}>{singleData.status}</span>;
+          let className = "",
+            title = "";
+
+          switch (singleData.status) {
+            case "DRAFT":
+              className = "badge badge-light-danger fs-6";
+              title = "Draft";
+              break;
+            case "PUBLISHED":
+              className = "badge badge-light-success fs-6";
+              title = "Terbit";
+              break;
+          }
+
+          return <span className={className}>{title}</span>;
         },
       },
 
@@ -171,7 +196,7 @@ export const SekilasInfo = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deleteInfo(singleData.id)}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -187,7 +212,6 @@ export const SekilasInfo = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
@@ -197,6 +221,7 @@ export const SekilasInfo = () => {
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           searchData={(val: string) => {
             setQuery(val);
           }}

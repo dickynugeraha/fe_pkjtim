@@ -25,7 +25,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
   handleSubmit,
   data,
 }) => {
-  const [placeIsClose, setPlaceIsClose] = useState(false);
+  // const [placeIsClose, setPlaceIsClose] = useState(false);
   const [imagePreview, setImagePreview] = useState();
 
   const handleImageChange = (file: any) => {
@@ -135,7 +135,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             </option>
           </select>
         </div>
-        <div className="my-5 d-flex align-items-center">
+        {/* <div className="my-5 d-flex align-items-center">
           <input
             id="placeIsClose"
             type="checkbox"
@@ -144,8 +144,8 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             checked={placeIsClose}
           />
           <label htmlFor="placeIsClose">Tutup Tempat</label>
-        </div>
-        {placeIsClose && (
+        </div> */}
+        {/* {placeIsClose && (
           <>
             <div className="form-group mb-3">
               <label htmlFor="tempatId" className="fw-bold mb-3">
@@ -188,7 +188,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
               />
             </div>
           </>
-        )}
+        )} */}
       </form>
     </ModalWrapper>
   );

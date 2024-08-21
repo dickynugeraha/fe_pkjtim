@@ -9,7 +9,6 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditTempat from "./components/ModalAddEditTempat";
 import globalVar from "../../../helper/globalVar";
 import useTempat from "../../../modules/hooks/master-data/tempat";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -188,7 +187,7 @@ export const Tempat = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deleteTempat(singleData.id)}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -204,12 +203,12 @@ export const Tempat = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Tempat">
         Tempat
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           searchData={(val: string) => {
             setQuery(val);
           }}

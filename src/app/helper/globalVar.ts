@@ -15,13 +15,12 @@ function rupiahFormat(number: number) {
   }).format(number);
 }
 
-export async function requestImageUseToken(url: string) {
-  const response = await axiosConfig.getImage(url);
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  const options: any = { day: "numeric", month: "short", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-GB", options);
 
-  const result = URL.createObjectURL(response.data);
-  console.log("image response", result);
-
-  return result;
+  return formattedDate;
 }
 
 export default {
@@ -29,5 +28,5 @@ export default {
   today,
   getThreeMonthsFromToday,
   rupiahFormat,
-  requestImageUseToken,
+  formatDate,
 };

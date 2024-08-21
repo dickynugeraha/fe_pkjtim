@@ -10,7 +10,6 @@ export const add = (data: any) => {
   formData.append("sinopsis", data.sinopsis);
   formData.append("namaSanggar", data.namaSanggar);
   formData.append("status", data.status);
-  formData.append("tipeSanggar", data.tipeSanggar);
   formData.append("jumlahPelakuSeni", data.jumlahPelakuSeni);
   formData.append("jumlahPekerjaSeni", data.jumlahPekerjaSeni);
   formData.append("jumlahPenonton", data.jumlahPenonton);
@@ -66,7 +65,6 @@ export const update = (data: any) => {
   formData.append("sinopsis", data.sinopsis);
   formData.append("namaSanggar", data.namaSanggar);
   formData.append("status", data.status);
-  formData.append("tipeSanggar", data.tipeSanggar);
   formData.append("jumlahPelakuSeni", data.jumlahPelakuSeni);
   formData.append("jumlahPekerjaSeni", data.jumlahPekerjaSeni);
   formData.append("jumlahPenonton", data.jumlahPenonton);

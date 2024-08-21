@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
 import Gap from "../content/Gap";
 import { KTIcon } from "../../../helpers";
+import { UsersListLoading } from "../../../../app/modules/apps/user-management/users-list/components/loading/UsersListLoading";
 
 const Table = ({
   data,
@@ -9,6 +10,7 @@ const Table = ({
   addData,
   showAddButton = true,
   searchData,
+  loading,
 }) => {
   const availableLimit = [5, 10, 15, 20, 25];
   const [limit, setLimit] = useState(5);
@@ -42,6 +44,36 @@ const Table = ({
   useEffect(() => {
     setPageSize(limit);
   }, [limit, setPageSize]);
+
+  let content;
+  if (loading) {
+    content = <UsersListLoading />;
+  } else if (data.length === 0) {
+    content = (
+      <tr>
+        <td colSpan={headerGroups[0].headers.length}>
+          <div className="d-flex text-center w-100 align-content-center justify-content-center">
+            Tidak ada hasil yang ditemukan!
+          </div>
+        </td>
+      </tr>
+    );
+  } else {
+    content = page.map((row) => {
+      prepareRow(row);
+      return (
+        <tr {...row.getRowProps()}>
+          {row.cells.map((cell) => {
+            return (
+              <td {...cell.getCellProps()}>
+                <div className="my-1">{cell.render("Cell")}</div>
+              </td>
+            );
+          })}
+        </tr>
+      );
+    });
+  }
 
   return (
     <div className="card p-8">
@@ -118,25 +150,7 @@ const Table = ({
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="text-gray-600 fw-bold">
-            {data.length === 0 && (
-              <p className="my-8 fw-normal text-dark">
-                Tidak ada hasil yang ditemukan!
-              </p>
-            )}
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>
-                        <div className="my-1">{cell.render("Cell")}</div>
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            {content}
           </tbody>
         </table>
       </div>

@@ -27,6 +27,7 @@ const AuthLayout = () => {
         WebkitBackgroundSize: "cover",
         MozBackgroundSize: "cover",
         OBackgroundSize: "cover",
+        height: "100vh",
       }}
     >
       {/* begin::Aside */}
@@ -44,7 +45,7 @@ const AuthLayout = () => {
       {/* end::Aside */}
 
       {/* begin::Body */}
-      <div className="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+      <div className="d-flex flex-column flex-lg-row-fluid w-lg-50 order-2 order-lg-1">
         {/* begin::Form */}
         <div className="d-flex flex-center flex-column flex-lg-row-fluid">
           {/* begin::Wrapper */}

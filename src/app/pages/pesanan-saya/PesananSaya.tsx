@@ -108,11 +108,11 @@ export const PesananSaya: FC = () => {
 
           return (
             <>
-              <span className="bg-light-success text-success rounded p-2">
+              <span className="badge badge-light-success fs-6">
                 {singleData.tanggal_mulai_sewa}
               </span>
               <span> - </span>
-              <span className="bg-light-danger text-danger rounded p-2">
+              <span className="badge badge-light-danger fs-6">
                 {singleData.tanggal_akhir_sewa}
               </span>
             </>
@@ -128,16 +128,16 @@ export const PesananSaya: FC = () => {
           let statusClass = "";
           switch (singleData.status) {
             case "Selesai":
-              statusClass = "bg-light-success text-success rounded p-2";
+              statusClass = "badge badge-light-success fs-6";
               break;
             case "Proses":
-              statusClass = "bg-light-warning text-warning rounded p-2";
+              statusClass = "badge badge-light-warning fs-6";
               break;
             case "Ditolak":
-              statusClass = "bg-light-danger text-danger rounded p-2";
+              statusClass = "badge badge-light-danger fs-6";
               break;
             case "Pending":
-              statusClass = "bg-light-danger text-danger rounded p-2";
+              statusClass = "badge badge-light-danger fs-6";
               break;
           }
 

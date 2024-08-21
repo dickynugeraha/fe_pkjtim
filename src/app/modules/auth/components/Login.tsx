@@ -42,6 +42,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
+
   // const navigate = useNavigate();
 
   const formik = useFormik({
@@ -72,6 +73,7 @@ export function Login() {
           title: "Gagal melakukan login",
           text: `${error.message}`,
         });
+
         setLoading(false);
       }
     },
@@ -192,7 +194,6 @@ export function Login() {
             title="Lupa Password"
             message="Silahkan menghubungi nomor ini wa.me"
             type="info"
-            handleShow={async () => setShowModalLupaPassword(true)}
             icon=""
           />
 

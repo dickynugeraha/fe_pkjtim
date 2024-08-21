@@ -10,7 +10,6 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
 import globalVar from "../../../helper/globalVar";
 import usePengguna from "../../../modules/hooks/master-data/pengguna";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -121,6 +120,24 @@ export const Pengguna = () => {
         Header: "Status",
         accessor: "status",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          let className = "";
+          let title = "";
+
+          if (singleData.status === "ACTIVE") {
+            className = "badge badge-light-success fs-6";
+            title = "Aktif";
+          } else if (singleData.status === "REQUESTED") {
+            className = "badge badge-light-warning fs-6";
+            title = "Request";
+          } else {
+            className = "badge badge-light-success fs-6";
+            title = "Tidak aktif";
+          }
+
+          return <span className={className}>{title}</span>;
+        },
       },
       {
         Header: "Aksi",
@@ -152,7 +169,7 @@ export const Pengguna = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deletePengguna(singleData.id)}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -173,7 +190,10 @@ export const Pengguna = () => {
                     className="fs-1 text-success me-3"
                   />
                 </div>
-                <div role="button">
+                <div
+                  role="button"
+                  onClick={() => deletePengguna(singleData.id)}
+                >
                   <KTIcon
                     iconName="delete-folder"
                     className="fs-1 text-danger"
@@ -192,12 +212,12 @@ export const Pengguna = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pengguna">
         Pengguna
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}

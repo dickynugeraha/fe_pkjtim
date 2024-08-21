@@ -6,10 +6,9 @@ import {
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
-import { dummyImage } from "../../../helper/helper";
 import ModalAddEditSeniman from "./components/ModalAddEditSeniman";
 import useSeniman from "../../../modules/hooks/master-data/seniman";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
+import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -95,20 +94,35 @@ export const Seniman = () => {
     () => [
       {
         Header: "Gambar",
-        accessor: "file",
+        accessor: "gambar",
         sortType: "alphanumeric",
         Cell: (props: any) => {
+          const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
 
-          return (
-            <div style={{ width: "150px" }}>
-              <img
-                src={singleData.file}
-                className="rounded"
-                style={{ width: "100%" }}
-              />
-            </div>
-          );
+          const handleImageLoad = () => {
+            setLoading(false);
+          };
+
+          let content = <Skeleton height={80} width={150} />;
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+
+          if (!loading) {
+            content = (
+              <div style={{ width: "150px" }}>
+                <img
+                  src={singleData.file}
+                  className="rounded"
+                  style={{ width: "100%" }}
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            );
+          }
+
+          return content;
         },
       },
       {
@@ -154,7 +168,7 @@ export const Seniman = () => {
                         deleteSeniman(singleData.id);
                       }}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -170,12 +184,12 @@ export const Seniman = () => {
 
   return (
     <>
-      {loading && <Loading />}
       <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Seniman">
         Seniman
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           columns={columns}
           data={data}
           addData={() => openModal()}

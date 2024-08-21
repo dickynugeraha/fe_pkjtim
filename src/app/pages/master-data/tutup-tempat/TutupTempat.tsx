@@ -10,6 +10,7 @@ import ModalAddEditTutupTempat from "./components/ModalAddEditTutupTempat";
 import useTutupTempat from "../../../modules/hooks/master-data/tempat-tutup";
 import Loading from "../../../../_metronic/layout/components/content/Loading";
 import useTempat from "../../../modules/hooks/master-data/tempat";
+import globalVar from "../../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -114,12 +115,12 @@ export const TutupTempat = () => {
           let singleData = props.cell.row.original;
           return (
             <div>
-              <span className="bg-light-success text-success rounded p-2">
-                {new Date(singleData.startDate).toLocaleDateString()}
+              <span className="badge badge-light-success fs-6">
+                {globalVar.formatDate(singleData.startDate)}
               </span>
               <span className="mx-3">-</span>
-              <span className="bg-light-danger text-danger rounded p-2">
-                {new Date(singleData.endDate).toLocaleDateString()}
+              <span className="badge badge-light-danger fs-6">
+                {globalVar.formatDate(singleData.endDate)}
               </span>
             </div>
           );
@@ -156,7 +157,7 @@ export const TutupTempat = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deleteTutupTempat(singleData.id)}
                     >
-                      <KTIcon iconName="trash-square" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -172,7 +173,7 @@ export const TutupTempat = () => {
 
   return (
     <>
-      {loading && <Loading />}
+      {/* {loading && <Loading />} */}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
@@ -182,6 +183,7 @@ export const TutupTempat = () => {
       </PageTitle>
       <Content>
         <Table
+          loading={loading}
           searchData={(val: any) => {
             setQuery(val);
           }}
