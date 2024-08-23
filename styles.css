@@ -10,3 +10,7 @@
 .text-hover-white:hover {
   color: white;
 }
+button:disabled,
+button[disabled] {
+  color: #666666;
+}

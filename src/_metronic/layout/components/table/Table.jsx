@@ -159,7 +159,7 @@ const Table = ({
         <div className="ms-auto">
           <div className="d-flex">
             <button
-              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
@@ -174,7 +174,7 @@ const Table = ({
                   className={
                     pageOption === pageIndex
                       ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
-                      : "btn btn-sm btn-outline-primary text-hover-white"
+                      : "btn btn-sm btn-outline-primary text-hover-white text-primary"
                   }
                 >
                   {pageOption + 1}
@@ -184,7 +184,7 @@ const Table = ({
             ))}
             <Gap width={8} />
             <button
-              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >
