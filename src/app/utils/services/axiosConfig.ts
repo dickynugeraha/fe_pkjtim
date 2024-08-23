@@ -30,13 +30,9 @@ axios.interceptors.request.use(
 // intercepting to capture errors
 axios.interceptors.response.use(
   function (response) {
-    console.log("responseeeeeeeeeeee", response);
-
     return response;
   },
   async function (error) {
-    console.log("errorrrrrrrrrrrrr", error);
-
     if (error.response.status === 401) {
       removeAuth();
     }
@@ -95,8 +91,6 @@ class APIClient {
    * Delete
    */
   delete = (url: any, config?: any) => {
-    console.log("config", config);
-
     return axios.delete(`${API_URL}/${url}`, config);
   };
 }

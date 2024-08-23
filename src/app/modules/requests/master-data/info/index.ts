@@ -2,8 +2,6 @@ import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
-  console.log("dataaaaa", data);
-
   const formData = new FormData();
   formData.append("file", data.file);
   formData.append("actor", "Iq");
@@ -53,7 +51,6 @@ export const update = (data: any) => {
   formData.append("content", data.content);
   formData.append("status", data.status);
   formData.append("publishedAt", data.publishedAt);
-  formData.append("tempatId", data.tempatId);
   return axiosConfig.put(
     `${ENDPOINTS.NEWS.LIST_UPDATE_ADD_DELETE_NEWS}/${data.id}`,
     formData,

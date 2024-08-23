@@ -49,8 +49,6 @@ export const SemuaInformasi: FC = () => {
   }, []);
 
   function ListViewData(data: any) {
-    console.log(params.list);
-
     return (
       <div>
         <div className="row row-cols-2 row-cols-lg-3 g-3">

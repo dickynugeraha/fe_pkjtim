@@ -33,78 +33,129 @@ export default function useTempat() {
   };
 
   const addTempat = async (data: any) => {
-    setLoading(true);
-    try {
-      const res = await add(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambah data tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await add(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menambah data tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menambahkan data tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menambahkan data tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const updateTempat = async (data: any) => {
-    setLoading(true);
-    try {
-      const res = await update(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengubah data tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await update(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil mengubah data tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal mengubah data tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const deleteTempat = async (id: any) => {
-    setLoading(true);
-    try {
-      const res = await remove(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menghapus data tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await remove(id);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menghapus data tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menghapus data tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

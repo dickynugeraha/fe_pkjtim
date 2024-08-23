@@ -7,6 +7,8 @@ type PropsModalAddEditSekilasInfo = {
   isRoleKurator: boolean;
   data: any;
   show: boolean;
+  isLockedCheck: boolean;
+  handleIsCheckLocked: (e: any) => void;
   handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
@@ -15,7 +17,9 @@ type PropsModalAddEditSekilasInfo = {
 const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
   show,
+  isLockedCheck,
   isRoleKurator,
+  handleIsCheckLocked,
   handleChange,
   handleClose,
   handleSubmit,
@@ -95,7 +99,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="password" className="fw-bold">
-            Password
+            Password Baru
           </label>
           <Gap height={10} />
           <input
@@ -119,10 +123,30 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             onChange={(e) => handleChange(e)}
           >
             <option>-- Pilih satu --</option>
-            <option value="Aktive">Aktif</option>
-            <option value="Requested">Requested</option>
-            <option value="NonAktive">Non Aktive</option>
+            <option value="ACTIVE" selected={data.status === "ACTIVE"}>
+              Aktif
+            </option>
+            <option value="REQUEST" selected={data.status === "REQUEST"}>
+              Requested
+            </option>
           </select>
+        </div>
+        <div className="form-group my-6">
+          <div className="d-flex">
+            <label htmlFor="status" className="fw-bold me-3">
+              Kunci pengguna
+            </label>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="isLocked"
+              checked={isLockedCheck}
+              onChange={(e) => {
+                const val = e.target.value === "on" ? true : false;
+                handleIsCheckLocked(val);
+              }}
+            />
+          </div>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="role" className="fw-bold">

@@ -9,6 +9,7 @@ import {
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export default function useSeniman() {
   const [seniman, setSeniman] = useState<any[]>([]);
@@ -18,12 +19,16 @@ export default function useSeniman() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
+
       const data: any[] = [];
-      for (let index = 0; index < res.data.data.length; index++) {
-        const ell = res.data.data[index];
+      for (let index = 0; index < res.data.data.data.length; index++) {
+        const ell = res.data.data.data[index];
+        const imageUrl: any = `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${ell.id}/Image?isStream=false`;
+        const resBase64 = await axiosConfig.get(imageUrl);
+        const base64 = `data:image/png;base64,${resBase64.data.data.fileContents}`;
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: base64,
         };
         data.push(dataWithStream);
       }
@@ -71,91 +76,142 @@ export default function useSeniman() {
   };
 
   const addSeniman = async (data: any) => {
-    setLoading(true);
-    try {
-      const res = await add(
-        data.file,
-        "Iq",
-        data.name,
-        data.biografi,
-        data.performanceDesc
-      );
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambah data seniman",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllSeniman();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await add(
+            data.file,
+            "Iq",
+            data.name,
+            data.biografi,
+            data.performanceDesc
+          );
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menambah data seniman",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllSeniman();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menambahkan data seniman",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menambahkan data seniman",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const updateSeniman = async (data: any) => {
-    setLoading(true);
-    try {
-      const res = await update(
-        data.id,
-        data.file,
-        "Iq",
-        data.name,
-        data.biografi,
-        data.performanceDesc
-      );
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengubah data seniman",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllSeniman();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await update(
+            data.id,
+            data.file,
+            "Iq",
+            data.name,
+            data.biografi,
+            data.performanceDesc
+          );
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil mengubah data seniman",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllSeniman();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data seniman",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal mengubah data seniman",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const deleteSeniman = async (id: any) => {
-    setLoading(true);
-    try {
-      const res = await remove(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menghapus data seniman",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllSeniman();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await remove(id);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menghapus data seniman",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllSeniman();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data seniman",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menghapus data seniman",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

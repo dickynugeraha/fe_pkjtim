@@ -23,10 +23,16 @@ function formatDate(dateStr: string) {
   return formattedDate;
 }
 
+function formatInputDate(dateStr: any) {
+  const formatted = new Date(dateStr).toISOString().split("T")[0];
+  return formatted;
+}
+
 export default {
   BASE_URL,
   today,
   getThreeMonthsFromToday,
   rupiahFormat,
   formatDate,
+  formatInputDate,
 };

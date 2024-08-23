@@ -217,7 +217,6 @@ const Kegiatan = () => {
                         peneropongan_matahari:
                           !checkedBoxes.peneropongan_matahari,
                       });
-                      console.log(checkedBoxes.peneropongan_matahari);
                     }}
                   />
                   <div>
@@ -271,7 +270,6 @@ const Kegiatan = () => {
                       ...checkedBoxes,
                       percobaan_roket_air: !checkedBoxes.percobaan_roket_air,
                     });
-                    console.log(checkedBoxes.percobaan_roket_air);
                   }}
                 />
                 <div>

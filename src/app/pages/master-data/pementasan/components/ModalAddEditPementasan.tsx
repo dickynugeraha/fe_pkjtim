@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
+import globalVar from "../../../../helper/globalVar";
 
 type PropsModalAddEditPementasan = {
   fromAdd: boolean;
@@ -137,11 +138,13 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
             onChange={(e) => onChangeVal(e)}
           >
             <option>-- Pilih satu --</option>
-            {tempat.map((tmpt) => (
-              <option value={tmpt.id} selected={data?.tempat?.id === tmpt.id}>
-                {tmpt.name}
-              </option>
-            ))}
+            {tempat.map((tmpt) => {
+              return (
+                <option value={tmpt.id} selected={data?.tempat?.id == tmpt.id}>
+                  {tmpt.name}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="form-group mb-3">
@@ -153,7 +156,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
               type="date"
               className="form-control"
               name="startDate"
-              value={data.startDate}
+              defaultValue={data.startDate}
               onChange={(e) => onChangeVal(e)}
             />
             <p className="m-0 mx-3">s/d</p>
@@ -161,7 +164,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
               type="date"
               className="form-control"
               name="endDate"
-              value={data.endDate}
+              defaultValue={data.endDate}
               onChange={(e) => onChangeVal(e)}
             />
           </div>
@@ -216,10 +219,10 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
             onChange={(e) => onChangeVal(e)}
           >
             <option>-- Pilih satu --</option>
-            <option value="Terbit" selected={data.status === "Terbit"}>
+            <option value="PUBLISHED" selected={data.status === "PUBLISHED"}>
               Terbit
             </option>
-            <option value="Draft" selected={data.status === "Draft"}>
+            <option value="DRAFT" selected={data.status === "DRAFT"}>
               Draft
             </option>
           </select>

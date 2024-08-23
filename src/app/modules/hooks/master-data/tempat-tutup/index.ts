@@ -7,6 +7,7 @@ import {
 } from "../../../requests/master-data/tempat-tutup";
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import globalVar from "../../../../helper/globalVar";
 
 export default function useTutupTempat() {
   const [tutupTempat, setTutupTempat] = useState<any[]>([]);
@@ -16,8 +17,18 @@ export default function useTutupTempat() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
+      const data: any[] = [];
+      for (let index = 0; index < res.data.data.data.length; index++) {
+        const ell = res.data.data.data[index];
+        const dataWithStream = {
+          ...ell,
+          startDate: globalVar.formatInputDate(ell.startDate),
+          endDate: globalVar.formatInputDate(ell.endDate),
+        };
+        data.push(dataWithStream);
+      }
 
-      setTutupTempat(res.data.data.data);
+      setTutupTempat(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -33,80 +44,133 @@ export default function useTutupTempat() {
   };
 
   const addTutupTempat = async (data: any) => {
-    console.log("data from view", data);
-
-    setLoading(true);
-    try {
-      const res = await add(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambah data tutup tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTutupTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await add(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menambah data tutup tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTutupTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menambahkan data tutup tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menambahkan data tutup tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const updateTutupTempat = async (data: any) => {
-    setLoading(true);
-    try {
-      const res = await update(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengubah data tutup tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    console.log("dataaaa", data);
+
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTutupTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await update(data);
+          console.log(res);
+
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil mengubah data tutup tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTutupTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data tutup tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal mengubah data tutup tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   const deleteTutupTempat = async (id: any) => {
-    setLoading(true);
-    try {
-      const res = await remove(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menghapus data tutup tempat",
-          showConfirmButton: false,
-          timer: 1500,
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
         });
-        fetchAllTutupTempat();
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await remove(id);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menghapus data tutup tempat",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllTutupTempat();
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data tutup tempat",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menghapus data tutup tempat",
-        text: error.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    setLoading(false);
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

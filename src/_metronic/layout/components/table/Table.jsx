@@ -48,19 +48,17 @@ const Table = ({
   let content;
   if (loading) {
     content = <UsersListLoading />;
-  }
-  // else if (data.length === 0) {
-  //   content = (
-  //     <tr>
-  //       <td colSpan={headerGroups[0].headers.length}>
-  //         <div className="d-flex text-center w-100 align-content-center justify-content-center">
-  //           Tidak ada hasil yang ditemukan!
-  //         </div>
-  //       </td>
-  //     </tr>
-  //   );
-  // }
-  else {
+  } else if (data.length === 0) {
+    content = (
+      <tr>
+        <td colSpan={headerGroups[0].headers.length}>
+          <div className="d-flex text-center w-100 align-content-center justify-content-center">
+            Tidak ada hasil yang ditemukan!
+          </div>
+        </td>
+      </tr>
+    );
+  } else {
     content = page.map((row) => {
       prepareRow(row);
       return (
@@ -161,7 +159,7 @@ const Table = ({
         <div className="ms-auto">
           <div className="d-flex">
             <button
-              className="btn btn-sm p-0 m-0"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
@@ -175,8 +173,8 @@ const Table = ({
                   onClick={() => gotoPage(pageOption)}
                   className={
                     pageOption === pageIndex
-                      ? "btn btn-sm btn-primary px-5 py-1"
-                      : "btn btn-sm btn-outline-primary"
+                      ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
+                      : "btn btn-sm btn-outline-primary text-hover-white"
                   }
                 >
                   {pageOption + 1}
@@ -186,7 +184,7 @@ const Table = ({
             ))}
             <Gap width={8} />
             <button
-              className="btn btn-sm p-0 m-0"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >

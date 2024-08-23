@@ -63,6 +63,7 @@ export const SekilasInfo = () => {
     }
     setIsModalOpen(true);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setFormFile(null);
@@ -88,8 +89,6 @@ export const SekilasInfo = () => {
   useEffect(() => {
     searchInfo(debouncedQuery);
   }, [debouncedQuery]);
-
-  console.log("infoooooo", info);
 
   const data = useMemo(
     () => info,
@@ -222,9 +221,7 @@ export const SekilasInfo = () => {
       <Content>
         <Table
           loading={loading}
-          searchData={(val: string) => {
-            setQuery(val);
-          }}
+          searchData={(val: string) => setQuery(val)}
           columns={columns}
           data={data}
           addData={() => openModal()}
@@ -240,7 +237,6 @@ export const SekilasInfo = () => {
           handleClose={closeModal}
           handleSubmit={() => {
             const formWithFile = { ...formData, file: formFile };
-            console.log("formWithFile", formWithFile);
 
             if (isEdit) {
               updateInfo(formWithFile);

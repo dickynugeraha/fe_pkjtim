@@ -35,6 +35,9 @@ export const Tempat = () => {
     pricePreEventWeekEnd: 0,
     pricePreEventWeekDay: 0,
   });
+  const [isPreEvent, setIsPreEvent] = useState(
+    formData.pricePreEventWeekDay !== 0
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [query, setQuery] = useState("");
@@ -176,7 +179,10 @@ export const Tempat = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() => openModal(singleData)}
+                      onClick={() => {
+                        openModal(singleData);
+                        setIsPreEvent(singleData.pricePreEventWeekEnd !== 0);
+                      }}
                     >
                       <KTIcon iconName="pencil" className="me-3 fs-3" />
                       <p className="m-0">Ubah</p>
@@ -217,6 +223,8 @@ export const Tempat = () => {
           addData={() => openModal()}
         />
         <ModalAddEditTempat
+          isPreEvent={isPreEvent}
+          setIsPreEvent={() => setIsPreEvent(!isPreEvent)}
           show={isModalOpen}
           data={formData}
           handleChange={(e: any) => handleChange(e)}

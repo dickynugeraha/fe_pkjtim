@@ -45,10 +45,15 @@ export const Pengguna = () => {
   } = usePengguna();
 
   const [formData, setFormData] = useState({
-    tempatId: null,
-    startDate: null,
-    endDate: null,
+    email: "",
+    fullName: "",
+    id: null,
+    isLocked: false,
+    phoneNumber: "",
+    status: "",
+    role: "",
   });
+  const [isLockedCheck, setIsLockedCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [query, setQuery] = useState("");
@@ -60,9 +65,13 @@ export const Pengguna = () => {
       setIsEdit(true);
     } else {
       setFormData({
-        tempatId: null,
-        startDate: null,
-        endDate: null,
+        email: "",
+        fullName: "",
+        id: null,
+        isLocked: false,
+        phoneNumber: "",
+        status: "",
+        role: "",
       });
       setIsEdit(false);
     }
@@ -107,7 +116,7 @@ export const Pengguna = () => {
         sortType: "alphanumeric",
       },
       {
-        Header: "Nomor Telepom",
+        Header: "Nomor Telepon",
         accessor: "phoneNumber",
         sortType: "alphanumeric",
       },
@@ -128,7 +137,7 @@ export const Pengguna = () => {
           if (singleData.status === "ACTIVE") {
             className = "badge badge-light-success fs-6";
             title = "Aktif";
-          } else if (singleData.status === "REQUESTED") {
+          } else if (singleData.status === "REQUEST") {
             className = "badge badge-light-warning fs-6";
             title = "Request";
           } else {
@@ -224,6 +233,8 @@ export const Pengguna = () => {
           addData={() => openModal()}
         />
         <ModalAddEditPengguna
+          isLockedCheck={isLockedCheck}
+          handleIsCheckLocked={(val) => setIsLockedCheck(!isLockedCheck)}
           handleChange={(e) => handleChange(e)}
           show={isModalOpen}
           data={formData}
@@ -231,10 +242,11 @@ export const Pengguna = () => {
           isRoleKurator={modalAddlEdit.role === "Kurator"}
           handleClose={() => closeModal()}
           handleSubmit={() => {
+            const formWithLocked = { ...formData, isLocked: isLockedCheck };
             if (isEdit) {
-              updatePengguna(formData);
+              updatePengguna(formWithLocked);
             } else {
-              addPengguna(formData);
+              addPengguna(formWithLocked);
             }
             closeModal();
           }}

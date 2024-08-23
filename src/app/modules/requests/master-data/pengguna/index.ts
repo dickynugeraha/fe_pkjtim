@@ -8,6 +8,7 @@ export const add = (data: any) => {
     phoneNumber: data.phoneNumber,
     status: data.status,
     role: data.role,
+    isLocked: data.isLocked,
     password: data.password,
   });
 };
@@ -49,6 +50,7 @@ export const update = (data: any) => {
       email: data.email,
       phoneNumber: data.phoneNumber,
       status: data.status,
+      isLocked: data.isLocked,
       role: data.role,
       password: data.password,
     }

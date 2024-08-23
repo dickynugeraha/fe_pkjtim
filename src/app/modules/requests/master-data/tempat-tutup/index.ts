@@ -2,8 +2,6 @@ import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
-  console.log("request", data);
-
   return axiosConfig.post(
     ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP,
     {

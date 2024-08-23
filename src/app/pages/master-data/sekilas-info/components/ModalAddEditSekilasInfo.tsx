@@ -127,10 +127,10 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             onChange={(e) => onChangeVal(e)}
           >
             <option>--- Pilih satu ---</option>
-            <option value="Terbit" selected={data.status === "Terbit"}>
+            <option value="PUBLISHED" selected={data.status === "PUBLISHED"}>
               Terbit
             </option>
-            <option value="Draft" selected={data.status === "Draft"}>
+            <option value="DRAFT" selected={data.status === "DRAFT"}>
               Draft
             </option>
           </select>

@@ -164,11 +164,19 @@ export const Pementasan = () => {
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          const className =
-            singleData.status === "Draft"
-              ? "badge badge-light-dager fs-6"
-              : "badge badge-light-success fs-6";
-          return <span className={className}>{singleData.status}</span>;
+          let className = "",
+            title = "";
+          switch (singleData.status) {
+            case "DRAFT":
+              className = "badge badge-light-danger fs-6";
+              title = "Draft";
+              break;
+            case "PUBLISHED":
+              className = "badge badge-light-success fs-6";
+              title = "Terbit";
+              break;
+          }
+          return <span className={className}>{title}</span>;
         },
       },
 

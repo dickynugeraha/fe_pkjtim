@@ -3,7 +3,7 @@ import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
   return axiosConfig.post(ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT, {
-    actor: data.actor,
+    actor: "Iq",
     name: data.name,
     priceMainEventWeekEnd: data.priceMainEventWeekEnd,
     priceMainEventWeekDay: data.priceMainEventWeekDay,

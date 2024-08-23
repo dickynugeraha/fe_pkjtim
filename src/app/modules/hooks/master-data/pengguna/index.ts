@@ -17,7 +17,6 @@ export default function usePengguna() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
-      console.log("resssss", res);
 
       setPengguna(res.data.data.data);
     } catch (error: any) {
@@ -26,7 +25,6 @@ export default function usePengguna() {
         title: "Gagal get data pengguna",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setInterval(() => {
@@ -37,23 +35,40 @@ export default function usePengguna() {
   const addPengguna = async (data: any) => {
     setLoading(true);
     try {
-      const res = await add(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambah data pengguna",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllPengguna();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan penambahan data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await add(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menambah data pengguna",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllPengguna();
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal menambahkan data pengguna",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);
@@ -62,47 +77,91 @@ export default function usePengguna() {
   const updatePengguna = async (data: any) => {
     setLoading(true);
     try {
-      const res = await update(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengubah data pengguna",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllPengguna();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan perubahan data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await update(data);
+            if (res) {
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil mengubah data pengguna",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              fetchAllPengguna();
+            }
+          } catch (error: any) {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal menghapus data",
+              text: error.message,
+              showConfirmButton: false,
+            });
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal mengubah data pengguna",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);
   };
+
   const approveRequestRegisterFromAdmin = async (id: any) => {
     setLoading(true);
     try {
-      const res = await approve(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Register pengguna berhasil di setujui",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllPengguna();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan Persetujuan request?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await approve(id);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Register pengguna berhasil di setujui",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            fetchAllPengguna();
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Register pengguna gagal di setujui",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);
@@ -111,23 +170,49 @@ export default function usePengguna() {
   const deletePengguna = async (id: any) => {
     setLoading(true);
     try {
-      const res = await remove(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menghapus data pengguna",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllPengguna();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan hapus data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await remove(id);
+            if (res) {
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil menghapus data pengguna",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              fetchAllPengguna();
+            }
+          } catch (error: any) {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal menghapus data",
+              text: error.message,
+              showConfirmButton: false,
+            });
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal menghapus data pengguna",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);

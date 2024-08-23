@@ -9,11 +9,11 @@ import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
 
 const initialValues = {
-  fullname: "Kale Pramono",
-  email: "dicky.dian1@gmail.com",
-  phone: "089675379948",
-  password: "!23QwE123",
-  passwordConfirm: "!23QwE123",
+  fullname: "",
+  email: "",
+  phone: "",
+  password: "",
+  passwordConfirm: "",
   acceptTerms: true,
 };
 
@@ -55,7 +55,6 @@ export function Registration() {
     validationSchema: registrationSchema,
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      console.log("values", values);
       try {
         const res = await register(
           values.email,
@@ -64,14 +63,12 @@ export function Registration() {
           values.password,
           values.passwordConfirm
         );
-        console.log("response register", res);
 
         Swal.fire({
-          position: "top-end",
           icon: "success",
           title: "Berhasil melakukan registrasi!",
+          text: "Silahkan cek email anda untuk melakukan konfirmasi",
           showConfirmButton: false,
-          timer: 1500,
         });
       } catch (error: any) {
         console.error(error);

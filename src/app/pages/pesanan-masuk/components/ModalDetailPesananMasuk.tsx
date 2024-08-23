@@ -229,9 +229,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <ModalReasonReject
           show={modalTolak}
           handleClose={() => setModalTolak(false)}
-          onSubmit={(reason) => {
-            console.log("reason tolak", reason);
-          }}
+          onSubmit={(reason) => {}}
         />
       </>
     </ModalWrapper>

@@ -67,6 +67,7 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditTutupTempat> = ({
               type="date"
               name="startDate"
               className="form-control"
+              defaultValue={data.startDate}
               onChange={(e) => handleChange(e)}
             />
             <p className="m-0 mx-3">s/d</p>
@@ -74,6 +75,7 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditTutupTempat> = ({
               type="date"
               name="endDate"
               className="form-control"
+              defaultValue={data.endDate}
               onChange={(e) => handleChange(e)}
             />
           </div>

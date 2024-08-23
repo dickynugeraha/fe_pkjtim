@@ -8,23 +8,26 @@ import {
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export default function useInfo() {
   const [info, setInfo] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
   const fetchAllInfo = async () => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
+
       const data: any[] = [];
       for (let index = 0; index < res.data.data.data.length; index++) {
         const ell = res.data.data.data[index];
+        const imageUrl: any = `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=false`;
+        const resBase64 = await axiosConfig.get(imageUrl);
+        const base64 = `data:image/png;base64,${resBase64.data.data.fileContents}`;
         const dataWithStream = {
           ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
+          file: base64,
         };
-
         data.push(dataWithStream);
       }
       setInfo(data);
@@ -34,7 +37,6 @@ export default function useInfo() {
         title: "Gagal get data info",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setInterval(() => {
@@ -62,7 +64,6 @@ export default function useInfo() {
         title: "Gagal get data info",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setInterval(() => {
@@ -73,23 +74,40 @@ export default function useInfo() {
   const addInfo = async (data: any) => {
     setLoading(true);
     try {
-      const res = await add(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menambah data info",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllInfo();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan penambahan data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await add(data);
+
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil menambah data info",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            fetchAllInfo();
+          });
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal menambahkan data info",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);
@@ -98,23 +116,41 @@ export default function useInfo() {
   const updateInfo = async (data: any) => {
     setLoading(true);
     try {
-      const res = await update(data);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil mengubah data info",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllInfo();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan perubahan data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await update(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil mengubah data info",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+
+            fetchAllInfo();
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal mengubah data info",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);
@@ -123,23 +159,40 @@ export default function useInfo() {
   const deleteInfo = async (id: any) => {
     setLoading(true);
     try {
-      const res = await remove(id);
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil menghapus data info",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        fetchAllInfo();
-      }
+      Swal.fire({
+        title: "Apakah anda yakin",
+        text: "Akan melakukan penghapusan data?!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        preConfirm: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve("Confirmed");
+            }, 1000);
+          });
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await remove(id);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menghapus data info",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            fetchAllInfo();
+          }
+        }
+      });
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Gagal menghapus data info",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
       });
     }
     setLoading(false);

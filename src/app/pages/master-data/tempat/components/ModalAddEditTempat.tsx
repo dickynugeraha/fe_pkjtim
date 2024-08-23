@@ -6,6 +6,8 @@ type PropsModalAddEditSekilasInfo = {
   fromAdd: boolean;
   data: any;
   show: boolean;
+  isPreEvent: boolean;
+  setIsPreEvent: () => void;
   handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
@@ -13,14 +15,14 @@ type PropsModalAddEditSekilasInfo = {
 
 const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
+  isPreEvent,
   show,
   handleClose,
+  setIsPreEvent,
   handleSubmit,
   handleChange,
   data,
 }) => {
-  const [isPreEvent, setIsPreEvent] = useState(false);
-
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Tempat" : "Ubah Tempat"}
@@ -87,7 +89,7 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
             id="placeIsClose"
             type="checkbox"
             className="form-check-input me-3"
-            onChange={() => setIsPreEvent(!isPreEvent)}
+            onChange={() => setIsPreEvent()}
             checked={isPreEvent}
           />
           <label htmlFor="placeIsClose">Pre-Event</label>
