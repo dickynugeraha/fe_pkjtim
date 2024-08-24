@@ -85,14 +85,18 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
 
         <div className="my-5 d-flex align-items-center">
-          <input
-            id="placeIsClose"
-            type="checkbox"
-            className="form-check-input me-3"
-            onChange={() => setIsPreEvent()}
-            checked={isPreEvent}
-          />
-          <label htmlFor="placeIsClose">Pre-Event</label>
+          <label htmlFor="placeIsClose" className="me-3 fw-bold">
+            Pre-Event
+          </label>
+          <div className="form-check">
+            <input
+              id="placeIsClose"
+              type="checkbox"
+              className="form-check-input me-3"
+              onChange={() => setIsPreEvent()}
+              checked={isPreEvent}
+            />
+          </div>
         </div>
         {isPreEvent && (
           <>

@@ -26,56 +26,23 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const KoleksiSeni = () => {
-  const { addSeni, deleteSeni, loading, searchSeni, seni, updateSeni } =
-    useSeni();
-  const [formFile, setFormFile] = useState(null);
-  const [formData, setFormData] = useState({
-    id: null,
-    file: null,
-    title: "",
-    desc: "",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
-  const openModal = (data = null) => {
-    if (data) {
-      setFormData(data);
-      setIsEdit(true);
-    } else {
-      setFormData({
-        id: null,
-        file: null,
-        title: "",
-        desc: "",
-      });
-      setIsEdit(false);
-    }
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setFormFile(null);
-  };
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    searchSeni(debouncedQuery);
-  }, [debouncedQuery]);
+  const {
+    addSeni,
+    deleteSeni,
+    loading,
+    searchSeni,
+    seni,
+    updateSeni,
+    closeModal,
+    formData,
+    formFile,
+    handleChange,
+    isEdit,
+    isModalOpen,
+    openModal,
+    setFormFile,
+    setQuery,
+  } = useSeni();
 
   const data = useMemo(
     () => seni,
@@ -204,7 +171,6 @@ export const KoleksiSeni = () => {
             } else {
               addSeni(formWithFile);
             }
-            closeModal();
           }}
         />
       </Content>

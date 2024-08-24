@@ -13,6 +13,51 @@ export default function useTutupTempat() {
   const [tutupTempat, setTutupTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    tempatId: null,
+    startDate: null,
+    endDate: null,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        tempatId: null,
+        startDate: null,
+        endDate: null,
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    fetchAllTutupTempat(debouncedQuery);
+  }, [debouncedQuery]);
+
   const fetchAllTutupTempat = async (Search = "") => {
     setLoading(true);
     try {
@@ -59,8 +104,8 @@ export default function useTutupTempat() {
         });
       },
     }).then(async (result) => {
-      setLoading(true);
       if (result.isConfirmed) {
+        setLoading(true);
         try {
           const res = await add(data);
           if (res) {
@@ -68,7 +113,6 @@ export default function useTutupTempat() {
               icon: "success",
               title: "Berhasil menambah data tutup tempat",
               showConfirmButton: false,
-              timer: 1500,
             });
             fetchAllTutupTempat();
           }
@@ -80,8 +124,8 @@ export default function useTutupTempat() {
             showConfirmButton: false,
           });
         }
+        setLoading(false);
       }
-      setLoading(false);
     });
   };
 
@@ -183,6 +227,13 @@ export default function useTutupTempat() {
     updateTutupTempat,
     deleteTutupTempat,
     fetchAllTutupTempat,
+    setQuery,
+    isModalOpen,
+    isEdit,
+    openModal,
+    closeModal,
+    handleChange,
+    formData,
     loading,
   };
 }

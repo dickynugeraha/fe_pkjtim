@@ -27,13 +27,6 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Pengguna = () => {
-  const [modalAddlEdit, setModalAddEdit] = useState({
-    fromAdd: false,
-    show: false,
-    data: {},
-    role: "",
-  });
-
   const {
     addPengguna,
     deletePengguna,
@@ -42,61 +35,16 @@ export const Pengguna = () => {
     pengguna,
     updatePengguna,
     approveRequestRegisterFromAdmin,
+    closeModal,
+    formData,
+    handleChange,
+    isEdit,
+    isLockedCheck,
+    isModalOpen,
+    openModal,
+    setIsLockedCheck,
+    setQuery,
   } = usePengguna();
-
-  const [formData, setFormData] = useState({
-    email: "",
-    fullName: "",
-    id: null,
-    isLocked: false,
-    phoneNumber: "",
-    status: "",
-    role: "",
-  });
-  const [isLockedCheck, setIsLockedCheck] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
-  const openModal = (data = null) => {
-    if (data) {
-      setFormData(data);
-      setIsEdit(true);
-    } else {
-      setFormData({
-        email: "",
-        fullName: "",
-        id: null,
-        isLocked: false,
-        phoneNumber: "",
-        status: "",
-        role: "",
-      });
-      setIsEdit(false);
-    }
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    fetchAllPengguna(debouncedQuery);
-  }, [debouncedQuery]);
 
   const data = useMemo(
     () => pengguna,
@@ -234,12 +182,11 @@ export const Pengguna = () => {
         />
         <ModalAddEditPengguna
           isLockedCheck={isLockedCheck}
-          handleIsCheckLocked={(val) => setIsLockedCheck(!isLockedCheck)}
+          handleIsCheckLocked={() => setIsLockedCheck(!isLockedCheck)}
           handleChange={(e) => handleChange(e)}
           show={isModalOpen}
           data={formData}
           fromAdd={!isEdit}
-          isRoleKurator={modalAddlEdit.role === "Kurator"}
           handleClose={() => closeModal()}
           handleSubmit={() => {
             const formWithLocked = { ...formData, isLocked: isLockedCheck };

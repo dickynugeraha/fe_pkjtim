@@ -15,6 +15,71 @@ export default function usePentas() {
   const [pementasan, setPentas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [formFile, setFormFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: null,
+    file: null,
+    tempatId: "",
+    title: "",
+    sinopsis: "",
+    namaSanggar: "",
+    status: "",
+    jumlahPelakuSeni: "",
+    jumlahPekerjaSeni: "",
+    jumlahPenonton: "",
+    startDate: "",
+    endDate: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        file: null,
+        tempatId: "",
+        title: "",
+        sinopsis: "",
+        namaSanggar: "",
+        status: "",
+        jumlahPelakuSeni: "",
+        jumlahPekerjaSeni: "",
+        jumlahPenonton: "",
+        startDate: "",
+        endDate: "",
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormFile(null);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    searchPementasan(debouncedQuery);
+  }, [debouncedQuery]);
+
   const fetchAllPentas = async () => {
     setLoading(true);
     try {
@@ -222,5 +287,14 @@ export default function usePentas() {
     deletePementasan,
     searchPementasan,
     loading,
+    setQuery,
+    isModalOpen,
+    isEdit,
+    openModal,
+    closeModal,
+    handleChange,
+    formData,
+    formFile,
+    setFormFile,
   };
 }

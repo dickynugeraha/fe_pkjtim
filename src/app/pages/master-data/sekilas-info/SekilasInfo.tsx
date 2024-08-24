@@ -28,67 +28,24 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const SekilasInfo = () => {
-  const [formFile, setFormFile] = useState(null);
-  const [formData, setFormData] = useState({
-    id: null,
-    file: null,
-    name: "",
-    title: "",
-    content: "",
-    status: "",
-    publishedAt: "",
-    tempatId: "",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
-  const openModal = (data = null) => {
-    if (data) {
-      setFormData(data);
-      setIsEdit(true);
-    } else {
-      setFormData({
-        id: null,
-        file: null,
-        name: "",
-        title: "",
-        content: "",
-        status: "",
-        publishedAt: "",
-        tempatId: "",
-      });
-      setIsEdit(false);
-    }
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setFormFile(null);
-  };
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const { tempat } = useTempat();
-  const { addInfo, deleteInfo, info, loading, searchInfo, updateInfo } =
-    useInfo();
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    searchInfo(debouncedQuery);
-  }, [debouncedQuery]);
+  const {
+    addInfo,
+    deleteInfo,
+    info,
+    loading,
+    searchInfo,
+    updateInfo,
+    closeModal,
+    formData,
+    formFile,
+    handleChange,
+    isEdit,
+    isModalOpen,
+    openModal,
+    setFormFile,
+    setQuery,
+  } = useInfo();
 
   const data = useMemo(
     () => info,
@@ -243,7 +200,6 @@ export const SekilasInfo = () => {
             } else {
               addInfo(formWithFile);
             }
-            closeModal();
           }}
         />
       </Content>

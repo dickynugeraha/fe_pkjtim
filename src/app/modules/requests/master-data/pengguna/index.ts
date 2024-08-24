@@ -42,6 +42,18 @@ export const approve = (id: any) => {
   );
 };
 
+export const lockAccount = (id: any) => {
+  return axiosConfig.post(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}Lock`
+  );
+};
+
+export const unlockAccount = (id: any) => {
+  return axiosConfig.post(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}Unlock`
+  );
+};
+
 export const update = (data: any) => {
   return axiosConfig.put(
     `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}`,

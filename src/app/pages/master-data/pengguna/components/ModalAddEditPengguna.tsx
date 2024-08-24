@@ -4,7 +4,7 @@ import Gap from "../../../../../_metronic/layout/components/content/Gap";
 
 type PropsModalAddEditSekilasInfo = {
   fromAdd: boolean;
-  isRoleKurator: boolean;
+  isRoleKurator?: boolean;
   data: any;
   show: boolean;
   isLockedCheck: boolean;
@@ -18,7 +18,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
   show,
   isLockedCheck,
-  isRoleKurator,
+  isRoleKurator = false,
   handleIsCheckLocked,
   handleChange,
   handleClose,
@@ -136,16 +136,18 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             <label htmlFor="status" className="fw-bold me-3">
               Kunci pengguna
             </label>
-            <input
-              className="form-check-input"
-              type="checkbox"
-              name="isLocked"
-              checked={isLockedCheck}
-              onChange={(e) => {
-                const val = e.target.value === "on" ? true : false;
-                handleIsCheckLocked(val);
-              }}
-            />
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="isLocked"
+                checked={isLockedCheck}
+                onChange={(e) => {
+                  const val = e.target.value === "on" ? true : false;
+                  handleIsCheckLocked(val);
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="form-group mb-3">

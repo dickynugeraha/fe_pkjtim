@@ -12,6 +12,62 @@ export default function useTempat() {
   const [tempat, setTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    id: null,
+    actor: "",
+    name: "",
+    priceMainEventWeekEnd: 0,
+    priceMainEventWeekDay: 0,
+    pricePreEventWeekEnd: 0,
+    pricePreEventWeekDay: 0,
+  });
+  const [isPreEvent, setIsPreEvent] = useState(
+    formData.pricePreEventWeekDay !== 0
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        actor: "",
+        name: "",
+        priceMainEventWeekEnd: 0,
+        priceMainEventWeekDay: 0,
+        pricePreEventWeekEnd: 0,
+        pricePreEventWeekDay: 0,
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    fetchAllTempat(debouncedQuery);
+  }, [debouncedQuery]);
+
   const fetchAllTempat = async (Search = "") => {
     setLoading(true);
     try {
@@ -169,5 +225,14 @@ export default function useTempat() {
     deleteTempat,
     fetchAllTempat,
     loading,
+    openModal,
+    setIsPreEvent,
+    setQuery,
+    isPreEvent,
+    isModalOpen,
+    formData,
+    handleChange,
+    isEdit,
+    closeModal,
   };
 }

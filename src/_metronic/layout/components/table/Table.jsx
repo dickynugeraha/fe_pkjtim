@@ -157,7 +157,7 @@ const Table = ({
       <Gap height={12} />
       {data.length !== 0 && (
         <div className="ms-auto">
-          <div className="d-flex">
+          <div className="d-md-flex align-items-center">
             <button
               className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"
               onClick={() => previousPage()}
@@ -166,22 +166,78 @@ const Table = ({
               Sebelumnya
             </button>
             <Gap width={8} />
-            {pageOptions.map((pageOption, index) => (
-              <>
-                <button
-                  key={index}
-                  onClick={() => gotoPage(pageOption)}
-                  className={
-                    pageOption === pageIndex
-                      ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
-                      : "btn btn-sm btn-outline-primary text-hover-white text-primary"
-                  }
-                >
-                  {pageOption + 1}
-                </button>
-                <Gap width={3} />
-              </>
-            ))}
+            <div className="d-flex">
+              {pageOptions.length > 4 ? (
+                <>
+                  {/* Render first page */}
+                  <button
+                    key={0}
+                    onClick={() => gotoPage(0)}
+                    className={
+                      pageIndex === 0
+                        ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
+                        : "btn btn-sm btn-outline-primary text-hover-white text-primary"
+                    }
+                  >
+                    {1}
+                  </button>
+                  <Gap width={3} />
+                  {/* Add ellipsis if necessary */}
+                  {pageIndex > 1 && (
+                    <div className="px-5 py-1 text-primary">...</div>
+                  )}
+
+                  {/* Render current page */}
+                  {pageIndex > 0 && pageIndex < pageOptions.length - 1 && (
+                    <>
+                      <button
+                        key={pageIndex}
+                        onClick={() => gotoPage(pageIndex)}
+                        className="btn btn-sm btn-primary px-5 py-1 text-hover-white"
+                      >
+                        {pageIndex + 1}
+                      </button>
+                      <Gap width={3} />
+                    </>
+                  )}
+
+                  {/* Add ellipsis if necessary */}
+                  {pageIndex < pageOptions.length - 2 && (
+                    <div className="px-5 py-1 text-primary">...</div>
+                  )}
+
+                  {/* Render last page */}
+                  <button
+                    key={pageOptions.length - 1}
+                    onClick={() => gotoPage(pageOptions.length - 1)}
+                    className={
+                      pageIndex === pageOptions.length - 1
+                        ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
+                        : "btn btn-sm btn-outline-primary text-hover-white text-primary"
+                    }
+                  >
+                    {pageOptions.length}
+                  </button>
+                </>
+              ) : (
+                pageOptions.map((pageOption, index) => (
+                  <>
+                    <button
+                      key={index}
+                      onClick={() => gotoPage(pageOption)}
+                      className={
+                        pageOption === pageIndex
+                          ? "btn btn-sm btn-primary px-5 py-1 text-hover-white"
+                          : "btn btn-sm btn-outline-primary text-hover-white text-primary"
+                      }
+                    >
+                      {pageOption + 1}
+                    </button>
+                    <Gap width={3} />
+                  </>
+                ))
+              )}
+            </div>
             <Gap width={8} />
             <button
               className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"

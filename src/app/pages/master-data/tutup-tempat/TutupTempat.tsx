@@ -35,64 +35,19 @@ export const TutupTempat = () => {
     loading,
     tutupTempat,
     updateTutupTempat,
+    closeModal,
+    handleChange,
+    isEdit,
+    isModalOpen,
+    openModal,
+    setQuery,
+    formData,
   } = useTutupTempat();
-
   const { tempat } = useTempat();
-
-  const [formData, setFormData] = useState({
-    tempatId: null,
-    startDate: null,
-    endDate: null,
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
-  const openModal = (data = null) => {
-    if (data) {
-      setFormData(data);
-      setIsEdit(true);
-    } else {
-      setFormData({
-        tempatId: null,
-        startDate: null,
-        endDate: null,
-      });
-      setIsEdit(false);
-    }
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    fetchAllTutupTempat(debouncedQuery);
-  }, [debouncedQuery]);
 
   const data = useMemo(
     () => tutupTempat,
-    [
-      loading,
-      addTutupTempat,
-      updateTutupTempat,
-      deleteTutupTempat,
-      fetchAllTutupTempat,
-    ]
+    [addTutupTempat, updateTutupTempat, deleteTutupTempat, fetchAllTutupTempat]
   );
 
   const columns = useMemo(
@@ -173,7 +128,6 @@ export const TutupTempat = () => {
 
   return (
     <>
-      {/* {loading && <Loading />} */}
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
@@ -204,7 +158,6 @@ export const TutupTempat = () => {
             } else {
               addTutupTempat(formData);
             }
-            closeModal();
           }}
         />
       </Content>

@@ -13,6 +13,60 @@ export default function usePengguna() {
   const [pengguna, setPengguna] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    email: "",
+    fullName: "",
+    id: null,
+    isLocked: false,
+    phoneNumber: "",
+    status: "",
+    role: "",
+  });
+  const [isLockedCheck, setIsLockedCheck] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        email: "",
+        fullName: "",
+        id: null,
+        isLocked: false,
+        phoneNumber: "",
+        status: "",
+        role: "",
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    fetchAllPengguna(debouncedQuery);
+  }, [debouncedQuery]);
+
   const fetchAllPengguna = async (Search = "") => {
     setLoading(true);
     try {
@@ -230,5 +284,14 @@ export default function usePengguna() {
     fetchAllPengguna,
     approveRequestRegisterFromAdmin,
     loading,
+    setQuery,
+    isModalOpen,
+    isEdit,
+    openModal,
+    closeModal,
+    handleChange,
+    formData,
+    isLockedCheck,
+    setIsLockedCheck,
   };
 }

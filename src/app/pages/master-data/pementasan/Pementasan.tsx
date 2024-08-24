@@ -27,57 +27,6 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Pementasan = () => {
-  const [formFile, setFormFile] = useState(null);
-  const [formData, setFormData] = useState({
-    id: null,
-    file: null,
-    tempatId: "",
-    title: "",
-    sinopsis: "",
-    namaSanggar: "",
-    status: "",
-    jumlahPelakuSeni: "",
-    jumlahPekerjaSeni: "",
-    jumlahPenonton: "",
-    startDate: "",
-    endDate: "",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
-
-  const openModal = (data = null) => {
-    if (data) {
-      setFormData(data);
-      setIsEdit(true);
-    } else {
-      setFormData({
-        id: null,
-        file: null,
-        tempatId: "",
-        title: "",
-        sinopsis: "",
-        namaSanggar: "",
-        status: "",
-        jumlahPelakuSeni: "",
-        jumlahPekerjaSeni: "",
-        jumlahPenonton: "",
-        startDate: "",
-        endDate: "",
-      });
-      setIsEdit(false);
-    }
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setFormFile(null);
-  };
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const {
     addPementasan,
     deletePementasan,
@@ -85,23 +34,18 @@ export const Pementasan = () => {
     searchPementasan,
     updatePementasan,
     loading,
+    closeModal,
+    formData,
+    formFile,
+    handleChange,
+    isEdit,
+    isModalOpen,
+    openModal,
+    setFormFile,
+    setQuery,
   } = usePentas();
 
   const { tempat } = useTempat();
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    searchPementasan(debouncedQuery);
-  }, [debouncedQuery]);
 
   const data = useMemo(
     () => pementasan,

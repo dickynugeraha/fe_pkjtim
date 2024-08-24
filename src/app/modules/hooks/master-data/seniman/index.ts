@@ -15,6 +15,56 @@ export default function useSeniman() {
   const [seniman, setSeniman] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [formFile, setFormFile] = useState(null);
+  const [formData, setFormData] = useState({
+    id: null,
+    file: null,
+    name: "",
+    biografi: "",
+    performanceDesc: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsEdit(true);
+    } else {
+      setFormData({
+        id: null,
+        name: "",
+        biografi: "",
+        performanceDesc: "",
+        file: null,
+      });
+      setIsEdit(false);
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormFile(null);
+  };
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    searchSeniman(debouncedQuery);
+  }, [debouncedQuery]);
   const fetchAllSeniman = async () => {
     setLoading(true);
     try {
@@ -225,5 +275,14 @@ export default function useSeniman() {
     deleteSeniman,
     searchSeniman,
     loading,
+    setQuery,
+    isModalOpen,
+    isEdit,
+    openModal,
+    closeModal,
+    handleChange,
+    formData,
+    formFile,
+    setFormFile,
   };
 }
