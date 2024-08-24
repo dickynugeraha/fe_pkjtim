@@ -125,7 +125,7 @@ const Table = ({
       <div className="table-responsive">
         <table
           {...getTableProps()}
-          className="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
+          className="table align-middle table-row-bordered table-rounded table-striped fs-6 dataTable no-footer gy-7 gs-7"
         >
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -149,7 +149,7 @@ const Table = ({
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="text-gray-600 fw-bold">
+          <tbody {...getTableBodyProps()} className="text-gray-600">
             {content}
           </tbody>
         </table>
