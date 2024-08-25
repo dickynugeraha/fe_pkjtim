@@ -11,9 +11,9 @@ import Swal from "sweetalert2";
 const initialValues = {
   fullname: "",
   email: "",
-  phone: "",
+  phoneNumber: "",
   password: "",
-  passwordConfirm: "",
+  rePassword: "",
   acceptTerms: true,
 };
 
@@ -27,8 +27,7 @@ const registrationSchema = Yup.object().shape({
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Email harus diisi"),
-
-  phone: Yup.string()
+  phoneNumber: Yup.string()
     .min(11, "Minimal 11 nomor")
     .max(13, "Maksimal 13 nomor")
     .required("Nomor handphone garus diisi"),
@@ -36,7 +35,7 @@ const registrationSchema = Yup.object().shape({
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Kata sandi harus diisi"),
-  passwordConfirm: Yup.string()
+  rePassword: Yup.string()
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Konfirmasi password harus diisi")
@@ -56,13 +55,7 @@ export function Registration() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
       try {
-        const res = await register(
-          values.email,
-          values.fullname,
-          values.phone,
-          values.password,
-          values.passwordConfirm
-        );
+        const res = await register(values);
 
         Swal.fire({
           icon: "success",
@@ -70,6 +63,7 @@ export function Registration() {
           text: "Silahkan cek email anda untuk melakukan konfirmasi",
           showConfirmButton: false,
         });
+        setLoading(false);
       } catch (error: any) {
         console.error(error);
         saveAuth(undefined);
@@ -91,7 +85,7 @@ export function Registration() {
 
   return (
     <form
-      className="card p-8 form overflow-y-scroll w-md-400px w-lg-500px"
+      className="card p-8 form overflow-y-scroll w-md-400px w-lg-500px h-500px h-lg-700px m-6"
       noValidate
       id="kt_login_signup_form"
       onSubmit={formik.handleSubmit}
@@ -147,21 +141,23 @@ export function Registration() {
             placeholder="Nomor Handphone"
             type="number"
             autoComplete="off"
-            {...formik.getFieldProps("phone")}
+            {...formik.getFieldProps("phoneNumber")}
             className={clsx(
               "form-control bg-transparent",
               {
-                "is-invalid": formik.touched.phone && formik.errors.phone,
+                "is-invalid":
+                  formik.touched.phoneNumber && formik.errors.phoneNumber,
               },
               {
-                "is-valid": formik.touched.phone && !formik.errors.phone,
+                "is-valid":
+                  formik.touched.phoneNumber && !formik.errors.phoneNumber,
               }
             )}
           />
-          {formik.touched.phone && formik.errors.phone && (
+          {formik.touched.phoneNumber && formik.errors.phoneNumber && (
             <div className="fv-plugins-message-container">
               <div className="fv-help-block">
-                <span role="alert">{formik.errors.phone}</span>
+                <span role="alert">{formik.errors.phoneNumber}</span>
               </div>
             </div>
           )}
@@ -246,25 +242,23 @@ export function Registration() {
             type="password"
             placeholder="Konfirmasi password  "
             autoComplete="off"
-            {...formik.getFieldProps("passwordConfirm")}
+            {...formik.getFieldProps("rePassword")}
             className={clsx(
               "form-control bg-transparent",
               {
                 "is-invalid":
-                  formik.touched.passwordConfirm &&
-                  formik.errors.passwordConfirm,
+                  formik.touched.rePassword && formik.errors.rePassword,
               },
               {
                 "is-valid":
-                  formik.touched.passwordConfirm &&
-                  !formik.errors.passwordConfirm,
+                  formik.touched.rePassword && !formik.errors.rePassword,
               }
             )}
           />
-          {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
+          {formik.touched.rePassword && formik.errors.rePassword && (
             <div className="fv-plugins-message-container">
               <div className="fv-help-block">
-                <span role="alert">{formik.errors.passwordConfirm}</span>
+                <span role="alert">{formik.errors.rePassword}</span>
               </div>
             </div>
           )}

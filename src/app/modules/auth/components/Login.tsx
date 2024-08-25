@@ -28,8 +28,8 @@ const initialValues = {
   password: "",
 };
 // const initialValues = {
-//   password: "demo",
-//   email: "admin@demo.com",
+//   password: "##Admin@1234",
+//   email: "admin@gmail.com",
 // };
 
 /*
@@ -65,6 +65,8 @@ export function Login() {
         setCurrentUser(user);
         setLoading(false);
       } catch (error: any) {
+        console.log("error in view", error);
+
         saveAuth(undefined);
         setStatus("The login details are incorrect");
         setSubmitting(false);

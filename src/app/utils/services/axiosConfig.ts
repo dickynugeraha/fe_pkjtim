@@ -33,6 +33,8 @@ axios.interceptors.response.use(
     return response;
   },
   async function (error) {
+    console.log("response error", error);
+
     if (error.response.status === 401) {
       removeAuth();
     }

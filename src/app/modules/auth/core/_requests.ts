@@ -27,19 +27,15 @@ export function login(email: string, password: string) {
 }
 
 // Server should return AuthModel
-export function register(
-  email: string,
-  fullName: string,
-  phoneNumber: string,
-  password: string,
-  rePassword: string
-) {
+export function register(data: any) {
+  console.log("payload register", data);
+
   return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, {
-    email,
-    fullName,
-    phoneNumber,
-    password,
-    rePassword,
+    email: data.email,
+    fullName: data.fullName,
+    phoneNumber: `0${data.phoneNumber}`,
+    password: data.password,
+    rePassword: data.rePassword,
   });
 }
 

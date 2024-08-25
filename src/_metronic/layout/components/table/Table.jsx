@@ -157,16 +157,16 @@ const Table = ({
       <Gap height={12} />
       {data.length !== 0 && (
         <div className="ms-auto">
-          <div className="d-md-flex align-items-center">
+          <div className="d-flex flex-wrap align-items-center">
             <button
-              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 my-2 text-hover-white text-primary"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
               Sebelumnya
             </button>
             <Gap width={8} />
-            <div className="d-flex">
+            <div className="d-flex my-2">
               {pageOptions.length > 4 ? (
                 <>
                   {/* Render first page */}
@@ -240,7 +240,7 @@ const Table = ({
             </div>
             <Gap width={8} />
             <button
-              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary"
+              className="btn btn-sm btn-outline-primary p-3 mx-2 text-hover-white text-primary my-2"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >

@@ -130,8 +130,6 @@ export default function useTutupTempat() {
   };
 
   const updateTutupTempat = async (data: any) => {
-    console.log("dataaaa", data);
-
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan perubahan data?!",
@@ -151,7 +149,6 @@ export default function useTutupTempat() {
       if (result.isConfirmed) {
         try {
           const res = await update(data);
-          console.log(res);
 
           if (res) {
             Swal.fire({
