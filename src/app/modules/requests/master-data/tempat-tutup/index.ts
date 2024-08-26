@@ -1,11 +1,11 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (data: any) => {
+export const add = (data: any, actor: string) => {
   return axiosConfig.post(
     ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP,
     {
-      actor: "Iq",
+      actor: actor,
       tempatId: data.tempatId as number,
       startDate: data.startDate,
       endDate: data.endDate,
@@ -39,17 +39,17 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
   );
 };
 
-export const remove = (id: number) => {
+export const remove = (id: number, actor: string) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${id}?actor=Iq`
+    `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${id}?actor=${actor}`
   );
 };
 
-export const update = (data: any) => {
+export const update = (data: any, actor: string) => {
   return axiosConfig.put(
     `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${data.id}`,
     {
-      actor: "Iq",
+      actor: actor,
       tempatId: data.tempatId,
       startDate: data.startDate,
       endDate: data.endDate,

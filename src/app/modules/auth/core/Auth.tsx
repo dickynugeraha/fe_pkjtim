@@ -11,7 +11,7 @@ import {
 import { LayoutSplashScreen } from "../../../../_metronic/layout/core";
 import { AuthModel, UserModel } from "./_models";
 import * as authHelper from "./AuthHelpers";
-import { getUserByToken } from "./_requests";
+import { getUserByToken, refresToken } from "./_requests";
 import { WithChildren } from "../../../../_metronic/helpers";
 import { jwtDecode } from "jwt-decode";
 
@@ -69,20 +69,26 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
 
   // We should request user by authToken (IN OUR EXAMPLE IT'S accessToken) before rendering the application
   useEffect(() => {
-    const requestUser = async (apiToken: string) => {
+    const requestUser = async (refreshToken: string) => {
       try {
-        const userDecodeResult: any = jwtDecode(apiToken);
-        const user = {
-          id: userDecodeResult.Id,
-          email: userDecodeResult.email,
-        };
         if (!currentUser) {
-          setCurrentUser(user);
           // set refresh token disini
-          // const { data } = await getUserByToken(apiToken);
-          // if (data) {
-          //   setCurrentUser(data);
-          // }
+          const res = await refresToken(refreshToken);
+          const userDecodeResult: any = jwtDecode(res.data.data.accessToken);
+          const authData = {
+            api_token: res.data.data.accessToken,
+            refreshToken: res.data.data.refreshToken,
+          };
+          authHelper.setAuth(authData);
+          const user = {
+            id: userDecodeResult.Id,
+            email: userDecodeResult.email,
+            name: userDecodeResult.name,
+            phoneNumber: userDecodeResult.phone_number,
+          };
+          if (res.data.data) {
+            setCurrentUser(user);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -95,10 +101,8 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
     };
 
     if (auth && auth.api_token) {
-      requestUser(auth.api_token);
+      requestUser(auth.refreshToken);
     } else {
-      ("kesinaaa");
-
       logout();
       setShowSplashScreen(false);
     }

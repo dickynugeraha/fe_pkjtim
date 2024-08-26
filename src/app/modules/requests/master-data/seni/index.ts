@@ -1,12 +1,12 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (file: any, actor: string, title: string, desc: string) => {
+export const add = (data: any, actor: string) => {
   const formData = new FormData();
-  formData.append("file", file);
-  formData.append("actor", "Iq");
-  formData.append("title", title);
-  formData.append("desc", desc);
+  formData.append("file", data.file);
+  formData.append("actor", actor);
+  formData.append("title", data.title);
+  formData.append("desc", data.desc);
   return axiosConfig.post(
     ENDPOINTS.SENI.LIST_UPDATE_ADD_DELETE_SENI,
     formData,
@@ -36,27 +36,21 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
   });
 };
 
-export const remove = (id: any) => {
+export const remove = (id: any, actor: string) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.SENI.LIST_UPDATE_ADD_DELETE_SENI}/${id}?actor=Iq`
+    `${ENDPOINTS.SENI.LIST_UPDATE_ADD_DELETE_SENI}/${id}?actor=${actor}`
   );
 };
 
-export const update = (
-  id: any,
-  file?: any,
-  actor?: string,
-  title?: string,
-  desc?: string
-) => {
+export const update = (data: any, actor: string) => {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", actor);
+  formData.append("title", data.title);
+  formData.append("desc", data.desc);
   return axiosConfig.put(
-    `${ENDPOINTS.SENI.LIST_UPDATE_ADD_DELETE_SENI}/${id}`,
-    {
-      file,
-      actor: "Iq",
-      title,
-      desc,
-    },
+    `${ENDPOINTS.SENI.LIST_UPDATE_ADD_DELETE_SENI}/${data.id}`,
+    formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",

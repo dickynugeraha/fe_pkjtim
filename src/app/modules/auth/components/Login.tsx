@@ -52,7 +52,9 @@ export function Login() {
       setLoading(true);
       try {
         const { data: auth } = await login(values.email, values.password);
+
         const userDecodeResult: any = jwtDecode(auth.data.accessToken);
+        console.log("userDecodeResult ", userDecodeResult);
         const authData = {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
@@ -61,6 +63,8 @@ export function Login() {
         const user = {
           id: userDecodeResult.Id,
           email: userDecodeResult.email,
+          name: userDecodeResult.name,
+          phoneNumber: userDecodeResult.phone_number,
         };
         setCurrentUser(user);
         setLoading(false);

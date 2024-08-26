@@ -2,6 +2,7 @@ export const API_URL = "http://49.50.9.223:10029/api";
 export const ENDPOINTS = {
   AUTH: {
     LOGIN: `v1/Authentication/SignIn`,
+    REFRESH_TOKEN: `v1/Authentication/Refresh`,
     REGISTER: `v1/User/Register`,
   },
   PENGGUNA: {

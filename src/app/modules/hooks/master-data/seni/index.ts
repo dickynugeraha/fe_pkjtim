@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   add,
   getAll,
-  getSinglePhoto,
   remove,
   update,
 } from "../../../requests/master-data/seni";
@@ -10,8 +9,12 @@ import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import axiosConfig from "../../../../utils/services/axiosConfig";
+import { useAuth } from "../../../auth";
 
 export default function useSeni() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [seni, setSeni] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [formFile, setFormFile] = useState(null);
@@ -142,7 +145,7 @@ export default function useSeni() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await add(data.file, "Iq", data.title, data.desc);
+          const res = await add(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -184,13 +187,7 @@ export default function useSeni() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(
-            data.id,
-            data.file,
-            "Iq",
-            data.title,
-            data.desc
-          );
+          const res = await update(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -232,7 +229,7 @@ export default function useSeni() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

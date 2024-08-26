@@ -10,8 +10,12 @@ import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 import globalVar from "../../../../helper/globalVar";
+import { useAuth } from "../../../auth";
 
 export default function usePentas() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [pementasan, setPentas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -168,7 +172,7 @@ export default function usePentas() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await add(data);
+          const res = await add(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -210,7 +214,7 @@ export default function usePentas() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(data);
+          const res = await update(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -253,7 +257,7 @@ export default function usePentas() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

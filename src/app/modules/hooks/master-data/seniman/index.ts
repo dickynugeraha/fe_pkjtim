@@ -10,8 +10,12 @@ import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import axiosConfig from "../../../../utils/services/axiosConfig";
+import { useAuth } from "../../../auth";
 
 export default function useSeniman() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [seniman, setSeniman] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -144,13 +148,7 @@ export default function useSeniman() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await add(
-            data.file,
-            "Iq",
-            data.name,
-            data.biografi,
-            data.performanceDesc
-          );
+          const res = await add(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -192,14 +190,7 @@ export default function useSeniman() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(
-            data.id,
-            data.file,
-            "Iq",
-            data.name,
-            data.biografi,
-            data.performanceDesc
-          );
+          const res = await update(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -241,7 +232,7 @@ export default function useSeniman() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

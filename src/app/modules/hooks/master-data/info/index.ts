@@ -9,8 +9,12 @@ import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../../../constants/API";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import axiosConfig from "../../../../utils/services/axiosConfig";
+import { useAuth } from "../../../auth";
 
 export default function useInfo() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [info, setInfo] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [formFile, setFormFile] = useState(null);
@@ -148,7 +152,7 @@ export default function useInfo() {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await add(data);
+          const res = await add(data, actor);
 
           Swal.fire({
             icon: "success",
@@ -190,7 +194,7 @@ export default function useInfo() {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await update(data);
+          const res = await update(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -233,7 +237,7 @@ export default function useInfo() {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

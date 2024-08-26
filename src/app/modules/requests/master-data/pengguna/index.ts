@@ -31,9 +31,7 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
 };
 
 export const remove = (id: number) => {
-  return axiosConfig.delete(
-    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}?actor=Iq`
-  );
+  return axiosConfig.delete(`${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}`);
 };
 
 export const approve = (id: any) => {

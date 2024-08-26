@@ -8,8 +8,12 @@ import {
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import globalVar from "../../../../helper/globalVar";
+import { useAuth } from "../../../auth";
 
 export default function useTutupTempat() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [tutupTempat, setTutupTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -107,7 +111,7 @@ export default function useTutupTempat() {
       if (result.isConfirmed) {
         setLoading(true);
         try {
-          const res = await add(data);
+          const res = await add(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -148,7 +152,7 @@ export default function useTutupTempat() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(data);
+          const res = await update(data, actor);
 
           if (res) {
             Swal.fire({
@@ -191,7 +195,7 @@ export default function useTutupTempat() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

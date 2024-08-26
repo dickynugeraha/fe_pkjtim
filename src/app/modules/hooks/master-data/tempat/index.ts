@@ -7,8 +7,12 @@ import {
 } from "../../../requests/master-data/tempat";
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import { useAuth } from "../../../auth";
 
 export default function useTempat() {
+  const { currentUser } = useAuth();
+  const actor = currentUser?.email ?? "Admin";
+
   const [tempat, setTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -107,7 +111,7 @@ export default function useTempat() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await add(data);
+          const res = await add(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -149,7 +153,7 @@ export default function useTempat() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(data);
+          const res = await update(data, actor);
           if (res) {
             Swal.fire({
               icon: "success",
@@ -191,7 +195,7 @@ export default function useTempat() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(id);
+          const res = await remove(id, actor);
           if (res) {
             Swal.fire({
               icon: "success",

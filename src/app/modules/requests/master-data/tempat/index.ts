@@ -1,9 +1,9 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (data: any) => {
+export const add = (data: any, actor: string) => {
   return axiosConfig.post(ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT, {
-    actor: "Iq",
+    actor: actor,
     name: data.name,
     priceMainEventWeekEnd: data.priceMainEventWeekEnd,
     priceMainEventWeekDay: data.priceMainEventWeekDay,
@@ -34,17 +34,17 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
   });
 };
 
-export const remove = (id: number) => {
+export const remove = (id: number, actor: string) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT}/${id}?actor=Iq`
+    `${ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT}/${id}?actor=${actor}`
   );
 };
 
-export const update = (data: any) => {
+export const update = (data: any, actor: string) => {
   return axiosConfig.put(
     `${ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT}/${data.id}`,
     {
-      actor: data.actor,
+      actor: actor,
       name: data.name,
       priceMainEventWeekEnd: data.priceMainEventWeekEnd,
       priceMainEventWeekDay: data.priceMainEventWeekDay,

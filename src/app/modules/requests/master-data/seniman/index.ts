@@ -1,19 +1,13 @@
 import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
-export const add = (
-  file: any,
-  actor: string,
-  name: string,
-  biografi: string,
-  performanceDesc: string
-) => {
+export const add = (data: any, actor: string) => {
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", data.file);
   formData.append("actor", actor);
-  formData.append("name", name);
-  formData.append("biografi", biografi);
-  formData.append("performanceDesc", performanceDesc);
+  formData.append("name", data.name);
+  formData.append("biografi", data.biografi);
+  formData.append("performanceDesc", data.performanceDesc);
 
   return axiosConfig.post(
     ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN,
@@ -48,29 +42,22 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
   });
 };
 
-export const remove = (id: any) => {
+export const remove = (id: any, actor: string) => {
   return axiosConfig.delete(
-    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${id}?actor=Iq`
+    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${id}?actor=${actor}`
   );
 };
 
-export const update = (
-  id: any,
-  file?: any,
-  actor?: string,
-  name?: string,
-  biografi?: string,
-  performanceDesc?: string
-) => {
+export const update = (data: any, actor: string) => {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("actor", actor);
+  formData.append("name", data.name);
+  formData.append("biografi", data.biografi);
+  formData.append("performanceDesc", data.performanceDesc);
   return axiosConfig.put(
-    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${id}`,
-    {
-      actor,
-      name,
-      biografi,
-      performanceDesc,
-      file,
-    },
+    `${ENDPOINTS.SENIMAN.LIST_UPDATE_ADD_DELETE_SENIMAN}/${data.id}`,
+    formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",
