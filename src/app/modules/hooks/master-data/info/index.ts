@@ -53,10 +53,30 @@ export default function useInfo() {
     setIsModalOpen(true);
   };
 
+  const validateForm = (data: any) => {
+    if (
+      !data.name ||
+      !data.file ||
+      !data.title ||
+      !data.content ||
+      !data.status
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setFormFile(null);
   };
+
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -134,25 +154,27 @@ export default function useInfo() {
   };
 
   const addInfo = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan penambahan data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const res = await add(data, actor);
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await add(data, actor);
 
           Swal.fire({
             icon: "success",
@@ -160,40 +182,44 @@ export default function useInfo() {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
+            closeModal();
             fetchAllInfo();
           });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menambahkan data info",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menambahkan data info",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
+
     setLoading(false);
   };
 
   const updateInfo = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan perubahan data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
           const res = await update(data, actor);
           if (res) {
             Swal.fire({
@@ -201,42 +227,43 @@ export default function useInfo() {
               title: "Berhasil mengubah data info",
               showConfirmButton: false,
               timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllInfo();
             });
-
-            fetchAllInfo();
           }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data info",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal mengubah data info",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
     setLoading(false);
   };
 
   const deleteInfo = async (id: any) => {
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan penghapusan data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penghapusan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
           const res = await remove(id, actor);
           if (res) {
             Swal.fire({
@@ -244,19 +271,20 @@ export default function useInfo() {
               title: "Berhasil menghapus data info",
               showConfirmButton: false,
               timer: 2000,
+            }).then(() => {
+              fetchAllInfo();
             });
-            fetchAllInfo();
           }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data info",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menghapus data info",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
     setLoading(false);
   };
 

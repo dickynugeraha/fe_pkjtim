@@ -39,7 +39,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
 
   return (
     <ModalWrapper
-      title={fromAdd ? "Tambah Tutup Tempat" : "Ubah Tutup Tempat"}
+      title={fromAdd ? "Tambah Pengguna" : "Ubah Pengguna"}
       className="modal-md"
       attribute={{ centered: true }}
       show={show}
@@ -57,7 +57,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
       <form>
         <div className="form-group mb-3">
           <label htmlFor="fullName" className="fw-bold">
-            Nama Lengkap
+            Nama Lengkap <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -71,7 +71,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="email" className="fw-bold">
-            Email
+            Email <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -85,7 +85,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="phoneNumber" className="fw-bold">
-            Nomor Handphone
+            Nomor Handphone <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -99,7 +99,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="password" className="fw-bold">
-            Password Baru
+            Password Baru <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -113,7 +113,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="status" className="fw-bold">
-            Status
+            Status <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <select
@@ -134,7 +134,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         <div className="form-group my-6">
           <div className="d-flex">
             <label htmlFor="status" className="fw-bold me-3">
-              Kunci pengguna
+              Kunci pengguna <span className="text-danger">*</span>
             </label>
             <div className="form-check">
               <input
@@ -152,7 +152,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="role" className="fw-bold">
-            Role
+            Role <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <select
@@ -171,7 +171,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         {!fromAdd && isRoleKurator && (
           <div className="form-group mb-3">
             <label htmlFor="komite" className="fw-bold">
-              Komite
+              Komite <span className="text-danger">*</span>
             </label>
             <Gap height={10} />
             <select name="komite" id="komite" className="form-select">

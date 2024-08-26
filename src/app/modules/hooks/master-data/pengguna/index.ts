@@ -46,9 +46,24 @@ export default function usePengguna() {
     }
     setIsModalOpen(true);
   };
+
+  const validateForm = (data: any) => {
+    if (!data.fullName || !data.email || !data.isLocked || !data.phoneNumber) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -87,188 +102,179 @@ export default function usePengguna() {
   };
 
   const addPengguna = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan penambahan data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const res = await add(data);
-          if (res) {
-            Swal.fire({
-              icon: "success",
-              title: "Berhasil menambah data pengguna",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await add(data);
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil menambah data pengguna",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
             fetchAllPengguna();
-          }
+            closeModal();
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menambahkan data pengguna",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menambahkan data pengguna",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
     setLoading(false);
   };
 
   const updatePengguna = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan perubahan data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await update(data);
-            if (res) {
-              Swal.fire({
-                icon: "success",
-                title: "Berhasil mengubah data pengguna",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              fetchAllPengguna();
-            }
-          } catch (error: any) {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await update(data);
+          if (res) {
             Swal.fire({
-              icon: "error",
-              title: "Gagal menghapus data",
-              text: error.message,
+              icon: "success",
+              title: "Berhasil mengubah data pengguna",
               showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              fetchAllPengguna();
+              closeModal();
             });
           }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data pengguna",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal mengubah data pengguna",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
     setLoading(false);
   };
 
   const approveRequestRegisterFromAdmin = async (id: any) => {
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan Persetujuan request?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan Persetujuan request?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
           const res = await approve(id);
           if (res) {
             Swal.fire({
               icon: "success",
               title: "Register pengguna berhasil di setujui",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              fetchAllPengguna();
             });
-            fetchAllPengguna();
           }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Register pengguna gagal di setujui",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Register pengguna gagal di setujui",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
     setLoading(false);
   };
 
   const deletePengguna = async (id: any) => {
     setLoading(true);
-    try {
-      Swal.fire({
-        title: "Apakah anda yakin",
-        text: "Akan melakukan hapus data?!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
-        preConfirm: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve("Confirmed");
-            }, 1000);
-          });
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await remove(id);
-            if (res) {
-              Swal.fire({
-                icon: "success",
-                title: "Berhasil menghapus data pengguna",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              fetchAllPengguna();
-            }
-          } catch (error: any) {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await remove(id);
+          if (res) {
             Swal.fire({
-              icon: "error",
-              title: "Gagal menghapus data",
-              text: error.message,
+              icon: "success",
+              title: "Berhasil menghapus data pengguna",
               showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              fetchAllPengguna();
             });
           }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus data",
+            text: error.message,
+            showConfirmButton: false,
+          });
         }
-      });
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menghapus data pengguna",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
+      }
+    });
+
     setLoading(false);
   };
 

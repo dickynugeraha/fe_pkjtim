@@ -198,7 +198,6 @@ export const Pementasan = () => {
             } else {
               addPementasan(formWithFile);
             }
-            closeModal();
           }}
         />
       </Content>

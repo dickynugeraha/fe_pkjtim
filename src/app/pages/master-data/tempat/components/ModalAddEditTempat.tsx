@@ -43,7 +43,7 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
       <form>
         <div className="form-group mb-3">
           <label htmlFor="name" className="fw-bold">
-            Nama Tempat
+            Nama Tempat <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -57,7 +57,7 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="priceMainEventWeekDay" className="fw-bold">
-            Harga Main Event (Hari Kerja)
+            Harga Main Event (Hari Kerja) <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -71,7 +71,8 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="priceMainEventWeekEnd" className="fw-bold">
-            Harga Main Event (Akhir Pekan)
+            Harga Main Event (Akhir Pekan){" "}
+            <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input

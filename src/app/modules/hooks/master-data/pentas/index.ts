@@ -39,6 +39,30 @@ export default function usePentas() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
+  const validateForm = (data: any) => {
+    if (
+      !data.file ||
+      !data.sinopsis ||
+      !data.title ||
+      !data.namaSanggar ||
+      !data.jumlahPekerjaSeni ||
+      !data.jumlahPelakuSeni ||
+      !data.jumlahPenonton ||
+      !data.startDate ||
+      !data.endDate ||
+      !data.status
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
@@ -154,6 +178,8 @@ export default function usePentas() {
   };
 
   const addPementasan = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -179,8 +205,10 @@ export default function usePentas() {
               title: "Berhasil menambah data pementasan",
               showConfirmButton: false,
               timer: 1500,
+            }).then(() => {
+              closeModal();
+              fetchAllPentas();
             });
-            fetchAllPentas();
           }
         } catch (error: any) {
           Swal.fire({
@@ -196,6 +224,8 @@ export default function usePentas() {
   };
 
   const updatePementasan = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan perubahan data?!",
@@ -221,9 +251,10 @@ export default function usePentas() {
               title: "Berhasil mengubah data pementasan",
               showConfirmButton: false,
               timer: 1500,
+            }).then(() => {
+              closeModal();
+              fetchAllPentas();
             });
-
-            fetchAllPentas();
           }
         } catch (error: any) {
           Swal.fire({
@@ -264,8 +295,9 @@ export default function usePentas() {
               title: "Berhasil menghapus data pementasan",
               showConfirmButton: false,
               timer: 1500,
+            }).then(() => {
+              fetchAllPentas();
             });
-            fetchAllPentas();
           }
         } catch (error: any) {
           Swal.fire({

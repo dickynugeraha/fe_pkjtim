@@ -5,7 +5,6 @@ import {
 } from "../../../../_metronic/layout/core/PageData";
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
-import { dummyImage } from "../../../helper/helper";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
 import useInfo from "../../../modules/hooks/master-data/info";
@@ -193,7 +192,11 @@ export const SekilasInfo = () => {
           show={isModalOpen}
           handleClose={closeModal}
           handleSubmit={() => {
-            const formWithFile = { ...formData, file: formFile };
+            const formWithFile = {
+              ...formData,
+              file: formFile,
+              publishAt: new Date(),
+            };
 
             if (isEdit) {
               updateInfo(formWithFile);

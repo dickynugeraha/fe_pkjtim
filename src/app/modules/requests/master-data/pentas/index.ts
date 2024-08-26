@@ -60,7 +60,7 @@ export const update = (data: any, actor: string) => {
   const formData = new FormData();
   formData.append("file", data.file);
   formData.append("actor", actor);
-  formData.append("tempatId", data.tempat.id);
+  formData.append("tempatId", data.tempatId ?? data.tempat.id);
   formData.append("title", data.title);
   formData.append("sinopsis", data.sinopsis);
   formData.append("namaSanggar", data.namaSanggar);

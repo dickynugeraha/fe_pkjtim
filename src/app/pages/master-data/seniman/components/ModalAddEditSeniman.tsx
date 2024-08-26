@@ -57,7 +57,7 @@ const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
       <>
         <div className="form-group mb-3">
           <label htmlFor="" className="fw-bold mb-2">
-            Gambar
+            Gambar <span className="text-danger">*</span>
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
@@ -88,7 +88,7 @@ const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="name" className="fw-bold mb-2">
-            Nama Seniman
+            Nama Seniman <span className="text-danger">*</span>
           </label>
           <input
             id="name"
@@ -102,7 +102,7 @@ const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="biografi" className="fw-bold mb-2">
-            Biografi
+            Biografi <span className="text-danger">*</span>
           </label>
           <textarea
             name="biografi"
@@ -115,7 +115,7 @@ const ModalAddEditSeniman: FC<PropsModalAddEditSeniman> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="performanceDesc" className="fw-bold mb-2">
-            Deskripsi Pentas
+            Deskripsi Pentas <span className="text-danger">*</span>
           </label>
           <textarea
             name="performanceDesc"

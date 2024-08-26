@@ -195,7 +195,6 @@ export const Pengguna = () => {
             } else {
               addPengguna(formWithLocked);
             }
-            closeModal();
           }}
         />
       </Content>

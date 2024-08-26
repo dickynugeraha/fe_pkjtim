@@ -50,7 +50,7 @@ export const update = (data: any, actor: string) => {
     `${ENDPOINTS.TEMPAT_TUTUP.LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP}/${data.id}`,
     {
       actor: actor,
-      tempatId: data.tempatId,
+      tempatId: data.tempatId ?? data.tempat.id,
       startDate: data.startDate,
       endDate: data.endDate,
     }

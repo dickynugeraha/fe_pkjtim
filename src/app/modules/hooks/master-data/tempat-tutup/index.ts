@@ -62,6 +62,21 @@ export default function useTutupTempat() {
     fetchAllTutupTempat(debouncedQuery);
   }, [debouncedQuery]);
 
+  const validateForm = (data: any) => {
+    if (!data.startDate || !data.endDate) {
+      console.log("kesiniiii");
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const fetchAllTutupTempat = async (Search = "") => {
     setLoading(true);
     try {
@@ -84,7 +99,7 @@ export default function useTutupTempat() {
         title: "Gagal get data tutup tempat",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     }
     setInterval(() => {
@@ -93,6 +108,9 @@ export default function useTutupTempat() {
   };
 
   const addTutupTempat = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
+
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -117,8 +135,11 @@ export default function useTutupTempat() {
               icon: "success",
               title: "Berhasil menambah data tutup tempat",
               showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllTutupTempat();
             });
-            fetchAllTutupTempat();
           }
         } catch (error: any) {
           Swal.fire({
@@ -134,6 +155,9 @@ export default function useTutupTempat() {
   };
 
   const updateTutupTempat = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
+
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan perubahan data?!",
@@ -159,9 +183,11 @@ export default function useTutupTempat() {
               icon: "success",
               title: "Berhasil mengubah data tutup tempat",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllTutupTempat();
             });
-            fetchAllTutupTempat();
           }
         } catch (error: any) {
           Swal.fire({
@@ -201,9 +227,10 @@ export default function useTutupTempat() {
               icon: "success",
               title: "Berhasil menghapus data tutup tempat",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              fetchAllTutupTempat();
             });
-            fetchAllTutupTempat();
           }
         } catch (error: any) {
           Swal.fire({

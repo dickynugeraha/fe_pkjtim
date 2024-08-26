@@ -60,7 +60,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
       <>
         <div className="form-group mb-3">
           <label htmlFor="" className="fw-bold mb-2">
-            Gambar
+            Gambar <span className="text-danger">*</span>
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
@@ -91,7 +91,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="title" className="fw-bold mb-2">
-            Judul
+            Judul <span className="text-danger">*</span>
           </label>
           <input
             id="title"
@@ -104,7 +104,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="sinopsis" className="fw-bold mb-2">
-            Sinopsis
+            Sinopsis <span className="text-danger">*</span>
           </label>
           <textarea
             name="sinopsis"
@@ -116,7 +116,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="namaSanggar" className="fw-bold mb-2">
-            Nama Sanggar
+            Nama Sanggar <span className="text-danger">*</span>
           </label>
           <input
             id="namaSanggar"
@@ -129,7 +129,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="tempatId" className="fw-bold mb-2">
-            Tipe Tempat
+            Tipe Tempat <span className="text-danger">*</span>
           </label>
           <select
             name="tempatId"
@@ -149,7 +149,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="tipe_sanggar" className="fw-bold mb-2">
-            Tanggal Pentas
+            Tanggal Pentas <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
             <input
@@ -171,7 +171,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="jumlahPelakuSeni" className="fw-bold mb-2">
-            Jumlah Pelaku Seni
+            Jumlah Pelaku Seni <span className="text-danger">*</span>
           </label>
           <input
             id="jumlahPelakuSeni"
@@ -184,7 +184,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="jumlahPekerjaSeni" className="fw-bold mb-2">
-            Jumlah Pekerja Seni
+            Jumlah Pekerja Seni <span className="text-danger">*</span>
           </label>
           <input
             id="jumlahPekerjaSeni"
@@ -197,7 +197,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="jumlahPenonton" className="fw-bold mb-2">
-            Jumlah Penonton
+            Jumlah Penonton <span className="text-danger">*</span>
           </label>
           <input
             id="jumlahPenonton"
@@ -210,7 +210,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="status" className="fw-bold mb-3">
-            Status
+            Status <span className="text-danger">*</span>
           </label>
           <select
             name="status"

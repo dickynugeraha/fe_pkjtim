@@ -59,7 +59,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
       <form>
         <div>
           <label htmlFor="" className="fw-bold mb-2">
-            Gambar
+            Gambar <span className="text-danger">*</span>
           </label>
           <div className="row row-cols-lg-2">
             <div className="col">
@@ -91,7 +91,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
         <Gap height={20} />
         <div className="form-group mb-3">
           <label htmlFor="title" className="fw-bold">
-            Judul Info
+            Judul Info <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <input
@@ -105,7 +105,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="content" className="fw-bold">
-            Detail Info
+            Detail Info <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <textarea
@@ -118,7 +118,7 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="status" className="fw-bold mb-3">
-            Status
+            Status <span className="text-danger">*</span>
           </label>
           <select
             name="status"
@@ -135,60 +135,6 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
             </option>
           </select>
         </div>
-        {/* <div className="my-5 d-flex align-items-center">
-          <input
-            id="placeIsClose"
-            type="checkbox"
-            className="form-check-input me-3"
-            onChange={() => setPlaceIsClose(!placeIsClose)}
-            checked={placeIsClose}
-          />
-          <label htmlFor="placeIsClose">Tutup Tempat</label>
-        </div> */}
-        {/* {placeIsClose && (
-          <>
-            <div className="form-group mb-3">
-              <label htmlFor="tempatId" className="fw-bold mb-3">
-                Pilih Tempat
-              </label>
-              <select
-                name="tempatId"
-                id="tempatId"
-                className="form-select"
-                onChange={(e) => onChangeVal(e)}
-              >
-                <option>-- Pilih satu --</option>
-                {tempat.map((tmpt) => (
-                  <option
-                    value={tmpt.id}
-                    selected={data?.tempat?.id === tmpt.id}
-                  >
-                    {tmpt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <Gap height={24} />
-            <label htmlFor="" className="fw-bold mb-3">
-              Pilih Tanggal Tutup Layanan
-            </label>
-            <div className="d-flex align-items-center">
-              <input
-                type="date"
-                name="startDate"
-                onChange={(e) => onChangeVal(e)}
-                className="form-control"
-              />
-              <p className="m-0 mx-3">s/d</p>
-              <input
-                type="date"
-                name="endDate"
-                className="form-control"
-                onChange={(e) => onChangeVal(e)}
-              />
-            </div>
-          </>
-        )} */}
       </form>
     </ModalWrapper>
   );

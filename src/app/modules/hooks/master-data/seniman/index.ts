@@ -32,6 +32,19 @@ export default function useSeniman() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
+  const validateForm = (data: any) => {
+    if (!data.name || !data.fle || !data.biografi || !data.performanceDesc) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
@@ -93,7 +106,7 @@ export default function useSeniman() {
         title: "Gagal get data seniman",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     }
     setInterval(() => {
@@ -121,7 +134,7 @@ export default function useSeniman() {
         title: "Gagal get data seniman",
         text: error.message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     }
     setInterval(() => {
@@ -130,6 +143,8 @@ export default function useSeniman() {
   };
 
   const addSeniman = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -154,9 +169,11 @@ export default function useSeniman() {
               icon: "success",
               title: "Berhasil menambah data seniman",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({
@@ -172,6 +189,8 @@ export default function useSeniman() {
   };
 
   const updateSeniman = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan perubahan data?!",
@@ -196,9 +215,11 @@ export default function useSeniman() {
               icon: "success",
               title: "Berhasil mengubah data seniman",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({
@@ -238,9 +259,10 @@ export default function useSeniman() {
               icon: "success",
               title: "Berhasil menghapus data seniman",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({

@@ -41,7 +41,7 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditTutupTempat> = ({
       <form>
         <div className="form-group mb-3">
           <label htmlFor="tempatId" className="fw-bold">
-            Nama Tempat
+            Nama Tempat <span className="text-danger">*</span>
           </label>
           <Gap height={10} />
           <select
@@ -60,7 +60,7 @@ const ModalAddEditTutupTempat: FC<PropsModalAddEditTutupTempat> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="" className="fw-bold mb-3">
-            Pilih Tanggal Tutup Tempat
+            Pilih Tanggal Tutup Tempat <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
             <input

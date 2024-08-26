@@ -85,7 +85,7 @@ export function Registration() {
 
   return (
     <form
-      className="card p-8 form overflow-y-scroll w-md-400px w-lg-500px h-500px h-lg-700px m-6"
+      className="card p-8 form w-md-400px w-lg-500px h-650px m-6"
       noValidate
       id="kt_login_signup_form"
       onSubmit={formik.handleSubmit}

@@ -29,6 +29,19 @@ export default function useSeni() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
+  const validateForm = (data: any) => {
+    if (!data.file || !data.title || !data.desc) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Semua field harus diisi!",
+        showConfirmButton: false,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
@@ -127,6 +140,8 @@ export default function useSeni() {
   };
 
   const addSeni = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -151,9 +166,11 @@ export default function useSeni() {
               icon: "success",
               title: "Berhasil menambah data seni",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({
@@ -169,6 +186,8 @@ export default function useSeni() {
   };
 
   const updateSeni = async (data: any) => {
+    const validate = validateForm(data);
+    if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -193,9 +212,11 @@ export default function useSeni() {
               icon: "success",
               title: "Berhasil mengubah data seni",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({
@@ -235,9 +256,10 @@ export default function useSeni() {
               icon: "success",
               title: "Berhasil menghapus data seni",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
+            }).then(() => {
+              fetchAllSeniman();
             });
-            fetchAllSeniman();
           }
         } catch (error: any) {
           Swal.fire({
