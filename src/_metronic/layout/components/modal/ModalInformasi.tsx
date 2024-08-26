@@ -16,7 +16,7 @@ const ModalInformasi: FC<{
       iconComponent = (
         <i
           className="bi bi-check-circle-fill text-success"
-          style={{ fontSize: "3rem" }}
+          style={{ fontSize: "5rem" }}
         ></i>
       );
       break;
@@ -24,7 +24,7 @@ const ModalInformasi: FC<{
       iconComponent = (
         <i
           className="bi bi-x-circle-fill text-danger"
-          style={{ fontSize: "3rem" }}
+          style={{ fontSize: "5rem" }}
         ></i>
       );
       break;
@@ -32,7 +32,7 @@ const ModalInformasi: FC<{
       iconComponent = (
         <i
           className="bi bi-info-circle-fill text-info"
-          style={{ fontSize: "3rem" }}
+          style={{ fontSize: "5rem" }}
         ></i>
       );
       break;
@@ -42,20 +42,18 @@ const ModalInformasi: FC<{
 
   return (
     <>
-      <Modal show={isShow} onHide={handleClose} centered={true} size="sm">
+      <Modal show={isShow} onHide={handleClose} centered={true}>
         <Modal.Body>
           <div className="d-flex justify-content-center align-items-center mb-4">
             {iconComponent}
           </div>
           <div className="text-center mb-4">
-            <h6>{message}</h6>
+            <h6>{title}</h6>
+          </div>
+          <div className="text-center mb-4">
+            <p>{message}</p>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <div className="btn btn-sm btn-secondary" onClick={handleClose}>
-            Close
-          </div>
-        </Modal.Footer>
       </Modal>
     </>
   );

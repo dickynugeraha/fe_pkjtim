@@ -24,8 +24,8 @@ const loginSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "dicky.dian1@gmail.com",
+  password: "!23QwE1234",
 };
 // const initialValues = {
 //   password: "##Admin@1234",
@@ -42,6 +42,10 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
+  const [modalError, setModalError] = useState({
+    show: false,
+    text: "",
+  });
 
   // const navigate = useNavigate();
 
@@ -69,14 +73,16 @@ export function Login() {
         setCurrentUser(user);
         setLoading(false);
       } catch (error: any) {
-        console.log("error in view", error);
-
         saveAuth(undefined);
         setStatus("The login details are incorrect");
         setSubmitting(false);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal melakukan login",
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Gagal melakukan login",
+        //   text: `${error.message}`,
+        // });
+        setModalError({
+          show: true,
           text: `${error.message}`,
         });
 
@@ -87,6 +93,13 @@ export function Login() {
 
   return (
     <Card>
+      <ModalInformasi
+        type="failed"
+        handleClose={() => setModalError({ show: false, text: "" })}
+        message={modalError.text}
+        isShow={modalError.show}
+        title="ERROR"
+      />
       <Card.Body>
         <form
           onSubmit={formik.handleSubmit}
@@ -126,7 +139,9 @@ export function Login() {
             />
             {formik.touched.email && formik.errors.email && (
               <div className="fv-plugins-message-container">
-                <span role="alert">{formik.errors.email}</span>
+                <div className="fv-help-block">
+                  <span role="alert">{formik.errors.email}</span>
+                </div>
               </div>
             )}
           </div>

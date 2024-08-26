@@ -1,3 +1,6 @@
+html {
+  transform-origin: 0 0; /* Ensures scaling starts from the top left */
+}
 .overlay {
   position: fixed;
   width: 100%;
