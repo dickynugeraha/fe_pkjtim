@@ -8,7 +8,7 @@ const ModalInformasi: FC<{
   message: string;
   icon: string;
   type: string;
-  handleClose: () => {};
+  handleClose: () => void;
 }> = ({ isShow, title, message, icon, type, handleClose }) => {
   let iconComponent;
   switch (type) {

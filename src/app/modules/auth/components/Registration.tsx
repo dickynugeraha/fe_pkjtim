@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/components";
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
+import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
 
 const initialValues = {
   fullname: "",
@@ -48,6 +49,10 @@ const registrationSchema = Yup.object().shape({
 
 export function Registration() {
   const [loading, setLoading] = useState(false);
+  const [modalError, setModalError] = useState({
+    show: false,
+    text: "",
+  });
   const { saveAuth } = useAuth();
   const formik = useFormik({
     initialValues,
@@ -70,9 +75,13 @@ export function Registration() {
         setStatus("The registration details is incorrect");
         setSubmitting(false);
         setLoading(false);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal melakukan registrasi",
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Gagal melakukan registrasi",
+        //   text: `${error.message}`,
+        // });
+        setModalError({
+          show: true,
           text: `${error.message}`,
         });
       }
@@ -90,6 +99,14 @@ export function Registration() {
       id="kt_login_signup_form"
       onSubmit={formik.handleSubmit}
     >
+      <ModalInformasi
+        type="failed"
+        handleClose={() => setModalError({ show: false, text: "" })}
+        message={modalError.text}
+        isShow={modalError.show}
+        title="ERROR"
+        icon={""}
+      />
       <div className="">
         <div className="text-center">
           <h1 className="text-gray-900 fw-bolder">Daftar</h1>

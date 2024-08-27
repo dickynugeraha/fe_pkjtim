@@ -24,8 +24,8 @@ const loginSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  email: "dicky.dian1@gmail.com",
-  password: "!23QwE1234",
+  email: "",
+  password: "",
 };
 // const initialValues = {
 //   password: "##Admin@1234",
@@ -99,6 +99,7 @@ export function Login() {
         message={modalError.text}
         isShow={modalError.show}
         title="ERROR"
+        icon={""}
       />
       <Card.Body>
         <form

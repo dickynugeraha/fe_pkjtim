@@ -22,15 +22,10 @@ const AuthLayout = () => {
         background: `url(${toAbsoluteUrl(
           "media/misc/auth-bg-pkjtim-2.png"
         )}) no-repeat center center fixed`,
-        "-webkit-background-size": "cover",
-        "-moz-background-size": "cover",
-        "-o-background-size": "cover",
-        "background-size": "cover",
-        // backgroundRepeat: "no-repeat",
-        // backgroundSize: "cover",
-        // WebkitBackgroundSize: "cover",
-        // MozBackgroundSize: "cover",
-        // OBackgroundSize: "cover",
+        backgroundSize: "cover",
+        WebkitBackgroundSize: "cover",
+        MozBackgroundSize: "cover",
+        OBackgroundSize: "cover",
       }}
     >
       {/* begin::Aside */}
