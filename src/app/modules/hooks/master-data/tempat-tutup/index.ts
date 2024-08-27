@@ -108,8 +108,8 @@ export default function useTutupTempat() {
   };
 
   const addTutupTempat = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
 
     Swal.fire({
       title: "Apakah anda yakin",
@@ -155,8 +155,8 @@ export default function useTutupTempat() {
   };
 
   const updateTutupTempat = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
 
     Swal.fire({
       title: "Apakah anda yakin",
