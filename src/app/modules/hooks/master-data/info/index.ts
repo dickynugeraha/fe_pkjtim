@@ -154,8 +154,8 @@ export default function useInfo() {
   };
 
   const addInfo = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     setLoading(true);
     Swal.fire({
       title: "Apakah anda yakin",
@@ -200,8 +200,8 @@ export default function useInfo() {
   };
 
   const updateInfo = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     setLoading(true);
     Swal.fire({
       title: "Apakah anda yakin",

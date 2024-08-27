@@ -140,8 +140,8 @@ export default function useSeni() {
   };
 
   const addSeni = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",
@@ -186,8 +186,8 @@ export default function useSeni() {
   };
 
   const updateSeni = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penambahan data?!",

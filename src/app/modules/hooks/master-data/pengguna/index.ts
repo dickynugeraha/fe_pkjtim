@@ -102,8 +102,8 @@ export default function usePengguna() {
   };
 
   const addPengguna = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     setLoading(true);
     Swal.fire({
       title: "Apakah anda yakin",
@@ -146,8 +146,8 @@ export default function usePengguna() {
   };
 
   const updatePengguna = async (data: any) => {
-    const validate = validateForm(data);
-    if (!validate) return;
+    // const validate = validateForm(data);
+    // if (!validate) return;
     setLoading(true);
     Swal.fire({
       title: "Apakah anda yakin",
