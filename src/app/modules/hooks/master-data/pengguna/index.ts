@@ -398,6 +398,7 @@ export default function usePengguna() {
     getSinglePengguna,
     profileChangePassword,
     sendEmailVerif,
+    setIsValidated,
     pengguna,
     singlePengguna,
     loading,
@@ -405,5 +406,6 @@ export default function usePengguna() {
     isEdit,
     formData,
     isLockedCheck,
+    isValidated,
   };
 }
