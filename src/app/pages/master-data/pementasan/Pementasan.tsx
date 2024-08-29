@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PageTitle,
   PageLink,
-} from "../../../../_metronic/layout/core/PageData";
-import { Content } from "../../../../_metronic/layout/components/content";
-import Table from "../../../../_metronic/layout/components/table/Table";
-import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditPementasan from "./components/ModalAddEditPementasan";
-import usePentas from "../../../modules/hooks/master-data/pentas";
-import useTempat from "../../../modules/hooks/master-data/tempat";
-import Skeleton from "react-loading-skeleton";
+} from '../../../../_metronic/layout/core/PageData';
+import { Content } from '../../../../_metronic/layout/components/content';
+import Table from '../../../../_metronic/layout/components/table/Table';
+import { KTIcon } from '../../../../_metronic/helpers';
+import ModalAddEditPementasan from './components/ModalAddEditPementasan';
+import usePentas from '../../../modules/hooks/master-data/pentas';
+import useTempat from '../../../modules/hooks/master-data/tempat';
+import Skeleton from 'react-loading-skeleton';
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Pementasan",
-    path: "/master-data/pementasan",
+    title: 'Pementasan',
+    path: '/master-data/pementasan',
     isSeparator: false,
     isActive: true,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: true,
   },
@@ -55,9 +55,9 @@ export const Pementasan = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
+        Header: 'Gambar',
+        accessor: 'gambar',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
@@ -73,11 +73,11 @@ export const Pementasan = () => {
 
           if (!loading) {
             content = (
-              <div style={{ width: "150px" }}>
+              <div style={{ width: '150px' }}>
                 <img
                   src={singleData.file}
-                  className="rounded"
-                  style={{ width: "100%" }}
+                  className='rounded'
+                  style={{ width: '100%' }}
                   onLoad={handleImageLoad}
                 />
               </div>
@@ -88,36 +88,36 @@ export const Pementasan = () => {
         },
       },
       {
-        Header: "Nama Sanggar",
-        sortType: "alphanumeric",
-        accessor: "namaSanggar",
+        Header: 'Nama Sanggar',
+        sortType: 'alphanumeric',
+        accessor: 'namaSanggar',
       },
       {
-        Header: "Judul",
-        sortType: "alphanumeric",
-        accessor: "title",
+        Header: 'Judul',
+        sortType: 'alphanumeric',
+        accessor: 'title',
       },
       {
-        Header: "Sinopsis",
-        sortType: "alphanumeric",
-        accessor: "sinopsis",
+        Header: 'Sinopsis',
+        sortType: 'alphanumeric',
+        accessor: 'sinopsis',
       },
       {
-        Header: "Status",
-        accessor: "status",
-        sortType: "alphanumeric",
+        Header: 'Status',
+        accessor: 'status',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          let className = "",
-            title = "";
+          let className = '',
+            title = '';
           switch (singleData.status) {
-            case "DRAFT":
-              className = "badge badge-light-danger fs-6";
-              title = "Draft";
+            case 'DRAFT':
+              className = 'badge badge-light-danger fs-6';
+              title = 'Draft';
               break;
-            case "PUBLISHED":
-              className = "badge badge-light-success fs-6";
-              title = "Terbit";
+            case 'PUBLISHED':
+              className = 'badge badge-light-success fs-6';
+              title = 'Terbit';
               break;
           }
           return <span className={className}>{title}</span>;
@@ -125,38 +125,38 @@ export const Pementasan = () => {
       },
 
       {
-        Header: "Aksi",
+        Header: 'Aksi',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
           return (
             <>
-              <div className="input-group mb-3">
+              <div className='input-group'>
                 <button
-                  className="btn btn-sm btn-primary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className='btn btn-sm btn-primary dropdown-toggle'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
-                <ul className="dropdown-menu">
+                <ul className='dropdown-menu'>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => openModal(singleData)}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
-                      <p className="m-0">Ubah</p>
+                      <KTIcon iconName='pencil' className='me-3 fs-3' />
+                      <p className='m-0'>Ubah</p>
                     </button>
                   </li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => deletePementasan(singleData.id)}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
-                      <p className="m-0">Hapus</p>
+                      <KTIcon iconName='trash' className='me-3 fs-3' />
+                      <p className='m-0'>Hapus</p>
                     </button>
                   </li>
                 </ul>
@@ -171,7 +171,7 @@ export const Pementasan = () => {
 
   return (
     <>
-      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Pementasan">
+      <PageTitle icon='data' breadcrumbs={Breadcrumbs} description='Pementasan'>
         Pementasan
       </PageTitle>
       <Content>

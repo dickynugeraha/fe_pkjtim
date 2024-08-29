@@ -104,14 +104,14 @@ export const Pengguna = () => {
           let singleData = props.cell.row.original;
           let actionButton = (
             <>
-              <div className='input-group mb-3'>
+              <div className='input-group'>
                 <button
                   className='btn btn-sm btn-primary dropdown-toggle'
                   type='button'
                   data-bs-toggle='dropdown'
                   aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
                 <ul className='dropdown-menu'>
                   <li>

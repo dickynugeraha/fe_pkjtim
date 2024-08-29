@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PageTitle,
   PageLink,
-} from "../../../../_metronic/layout/core/PageData";
-import { Content } from "../../../../_metronic/layout/components/content";
-import Table from "../../../../_metronic/layout/components/table/Table";
-import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSeniman from "./components/ModalAddEditSeniman";
-import useSeniman from "../../../modules/hooks/master-data/seniman";
-import Skeleton from "react-loading-skeleton";
+} from '../../../../_metronic/layout/core/PageData';
+import { Content } from '../../../../_metronic/layout/components/content';
+import Table from '../../../../_metronic/layout/components/table/Table';
+import { KTIcon } from '../../../../_metronic/helpers';
+import ModalAddEditSeniman from './components/ModalAddEditSeniman';
+import useSeniman from '../../../modules/hooks/master-data/seniman';
+import Skeleton from 'react-loading-skeleton';
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Seniman",
-    path: "/master-data/seniman",
+    title: 'Seniman',
+    path: '/master-data/seniman',
     isSeparator: false,
     isActive: true,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: true,
   },
@@ -51,9 +51,9 @@ export const Seniman = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
+        Header: 'Gambar',
+        accessor: 'gambar',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
@@ -69,11 +69,11 @@ export const Seniman = () => {
 
           if (!loading) {
             content = (
-              <div style={{ width: "150px" }}>
+              <div style={{ width: '150px' }}>
                 <img
                   src={singleData.file}
-                  className="rounded"
-                  style={{ width: "100%" }}
+                  className='rounded'
+                  style={{ width: '100%' }}
                   onLoad={handleImageLoad}
                 />
               </div>
@@ -84,50 +84,50 @@ export const Seniman = () => {
         },
       },
       {
-        Header: "Nama Seniman",
-        sortType: "alphanumeric",
-        accessor: "name",
+        Header: 'Nama Seniman',
+        sortType: 'alphanumeric',
+        accessor: 'name',
       },
       {
-        Header: "Deskripsi",
-        sortType: "alphanumeric",
-        accessor: "performanceDesc",
+        Header: 'Deskripsi',
+        sortType: 'alphanumeric',
+        accessor: 'performanceDesc',
       },
       {
-        Header: "Aksi",
+        Header: 'Aksi',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
           return (
             <>
-              <div className="input-group mb-3">
+              <div className='input-group'>
                 <button
-                  className="btn btn-sm btn-primary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className='btn btn-sm btn-primary dropdown-toggle'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
-                <ul className="dropdown-menu">
+                <ul className='dropdown-menu'>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => openModal(singleData)}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
-                      <p className="m-0">Ubah</p>
+                      <KTIcon iconName='pencil' className='me-3 fs-3' />
+                      <p className='m-0'>Ubah</p>
                     </button>
                   </li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => {
                         deleteSeniman(singleData.id);
                       }}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
-                      <p className="m-0">Hapus</p>
+                      <KTIcon iconName='trash' className='me-3 fs-3' />
+                      <p className='m-0'>Hapus</p>
                     </button>
                   </li>
                 </ul>
@@ -142,7 +142,7 @@ export const Seniman = () => {
 
   return (
     <>
-      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Seniman">
+      <PageTitle icon='data' breadcrumbs={Breadcrumbs} description='Seniman'>
         Seniman
       </PageTitle>
       <Content>

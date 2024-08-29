@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PageTitle,
   PageLink,
-} from "../../../../_metronic/layout/core/PageData";
-import { Content } from "../../../../_metronic/layout/components/content";
-import Table from "../../../../_metronic/layout/components/table/Table";
-import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditTempat from "./components/ModalAddEditTempat";
-import globalVar from "../../../helper/globalVar";
-import useTempat from "../../../modules/hooks/master-data/tempat";
+} from '../../../../_metronic/layout/core/PageData';
+import { Content } from '../../../../_metronic/layout/components/content';
+import Table from '../../../../_metronic/layout/components/table/Table';
+import { KTIcon } from '../../../../_metronic/helpers';
+import ModalAddEditTempat from './components/ModalAddEditTempat';
+import globalVar from '../../../helper/globalVar';
+import useTempat from '../../../modules/hooks/master-data/tempat';
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Tempat",
-    path: "/master-data/tempat",
+    title: 'Tempat',
+    path: '/master-data/tempat',
     isSeparator: false,
     isActive: true,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: true,
   },
@@ -52,14 +52,14 @@ export const Tempat = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Nama Tempat",
-        accessor: "name",
-        sortType: "alphanumeric",
+        Header: 'Nama Tempat',
+        accessor: 'name',
+        sortType: 'alphanumeric',
       },
       {
-        Header: "Harga Main Event (Hari kerja)",
-        accessor: "priceMainEventWeekDay",
-        sortType: "alphanumeric",
+        Header: 'Harga Main Event (Hari kerja)',
+        accessor: 'priceMainEventWeekDay',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
@@ -71,9 +71,9 @@ export const Tempat = () => {
         },
       },
       {
-        Header: "Harga Main Event (Akhir pekan)",
-        accessor: "priceMainEventWeekEnd",
-        sortType: "alphanumeric",
+        Header: 'Harga Main Event (Akhir pekan)',
+        accessor: 'priceMainEventWeekEnd',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
@@ -85,9 +85,9 @@ export const Tempat = () => {
         },
       },
       {
-        Header: "Harga Pre Event (Hari kerja)",
-        accessor: "pricePreEventWeekDay",
-        sortType: "alphanumeric",
+        Header: 'Harga Pre Event (Hari kerja)',
+        accessor: 'pricePreEventWeekDay',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
@@ -99,9 +99,9 @@ export const Tempat = () => {
         },
       },
       {
-        Header: "Harga Pre Event (Akhir pekan)",
-        accessor: "pricePreEventWeekEnd",
-        sortType: "alphanumeric",
+        Header: 'Harga Pre Event (Akhir pekan)',
+        accessor: 'pricePreEventWeekEnd',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
@@ -113,41 +113,41 @@ export const Tempat = () => {
         },
       },
       {
-        Header: "Aksi",
+        Header: 'Aksi',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
           return (
             <>
-              <div className="input-group mb-3">
+              <div className='input-group'>
                 <button
-                  className="btn btn-sm btn-primary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className='btn btn-sm btn-primary dropdown-toggle'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
-                <ul className="dropdown-menu">
+                <ul className='dropdown-menu'>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => {
                         openModal(singleData);
                         setIsPreEvent(singleData.pricePreEventWeekEnd !== 0);
                       }}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
-                      <p className="m-0">Ubah</p>
+                      <KTIcon iconName='pencil' className='me-3 fs-3' />
+                      <p className='m-0'>Ubah</p>
                     </button>
                   </li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => deleteTempat(singleData.id)}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
-                      <p className="m-0">Hapus</p>
+                      <KTIcon iconName='trash' className='me-3 fs-3' />
+                      <p className='m-0'>Hapus</p>
                     </button>
                   </li>
                 </ul>
@@ -162,7 +162,7 @@ export const Tempat = () => {
 
   return (
     <>
-      <PageTitle icon="data" breadcrumbs={Breadcrumbs} description="Tempat">
+      <PageTitle icon='data' breadcrumbs={Breadcrumbs} description='Tempat'>
         Tempat
       </PageTitle>
       <Content>
