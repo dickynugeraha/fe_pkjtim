@@ -6,7 +6,7 @@ import ModalInformationCustom from "../../../_metronic/layout/components/content
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import Kegiatan from "./components/Kegiatan";
 import { KTIcon } from "../../../_metronic/helpers";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Card } from "react-bootstrap";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
 
@@ -80,19 +80,19 @@ export const Planetarium = () => {
           }}
           variant={showFailedNext.variant}
         />
-        <div className="card">
-          <div className="card-header d-flex justify-content-between align-items-center">
-            <h4 className="m-0">Pilih Kegiatan</h4>
-          </div>
-          <div className="card-body">
+        <Card>
+          <Card.Header className="d-flex align-items-center">
+            <h4 className="m-0 p-0">Pilih Kegiatan</h4>
+          </Card.Header>
+          <Card.Body>
             <Kegiatan
               indoor={indoor}
               outdoor={outdoor}
               setIndoor={(e) => setIndoor(e)}
               setOutdoor={(e) => setOutdoor(e)}
             />
-          </div>
-        </div>
+          </Card.Body>
+        </Card>
         <Gap height={24} />
         <Persetujuan />
         <Gap height={24} />
@@ -122,8 +122,8 @@ export const Planetarium = () => {
     return (
       <Row>
         <Col lg={6}>
-          <div className="card">
-            <div className="card-body">
+          <Card>
+            <Card.Body>
               <div className="align-items-center mb-4">
                 <Row>
                   <Col lg={8}>
@@ -151,8 +151,8 @@ export const Planetarium = () => {
               >
                 Selanjutnya
               </Button>
-            </div>
-          </div>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     );

@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PageTitle,
   PageLink,
-} from "../../../../_metronic/layout/core/PageData";
-import { Content } from "../../../../_metronic/layout/components/content";
-import Table from "../../../../_metronic/layout/components/table/Table";
-import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
-import useInfo from "../../../modules/hooks/master-data/info";
-import useTempat from "../../../modules/hooks/master-data/tempat";
-import Skeleton from "react-loading-skeleton";
+} from '../../../../_metronic/layout/core/PageData';
+import { Content } from '../../../../_metronic/layout/components/content';
+import Table from '../../../../_metronic/layout/components/table/Table';
+import { KTIcon } from '../../../../_metronic/helpers';
+import ModalAddEditSekilasInfo from './components/ModalAddEditSekilasInfo';
+import useInfo from '../../../modules/hooks/master-data/info';
+import useTempat from '../../../modules/hooks/master-data/tempat';
+import Skeleton from 'react-loading-skeleton';
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: 'Sekilas Info',
+    path: '/master-data/sekilas-info',
     isSeparator: false,
     isActive: true,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: true,
   },
@@ -54,9 +54,9 @@ export const SekilasInfo = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
+        Header: 'Gambar',
+        accessor: 'gambar',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           const [loading, setLoading] = useState(true);
           let singleData = props.cell.row.original;
@@ -72,11 +72,11 @@ export const SekilasInfo = () => {
 
           if (!loading) {
             content = (
-              <div style={{ width: "150px" }}>
+              <div style={{ width: '150px' }}>
                 <img
                   src={singleData.file}
-                  className="rounded"
-                  style={{ width: "100%" }}
+                  className='rounded'
+                  style={{ width: '100%' }}
                   onLoad={handleImageLoad}
                 />
               </div>
@@ -87,32 +87,32 @@ export const SekilasInfo = () => {
         },
       },
       {
-        Header: "Judul Info",
-        accessor: "title",
-        sortType: "alphanumeric",
+        Header: 'Judul Info',
+        accessor: 'title',
+        sortType: 'alphanumeric',
       },
       {
-        Header: "Detail Info",
-        accessor: "content",
-        sortType: "alphanumeric",
+        Header: 'Detail Info',
+        accessor: 'content',
+        sortType: 'alphanumeric',
       },
       {
-        Header: "Status",
-        accessor: "status",
-        sortType: "alphanumeric",
+        Header: 'Status',
+        accessor: 'status',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          let className = "",
-            title = "";
+          let className = '',
+            title = '';
 
           switch (singleData.status) {
-            case "DRAFT":
-              className = "badge badge-light-danger fs-6";
-              title = "Draft";
+            case 'DRAFT':
+              className = 'badge badge-light-danger fs-6';
+              title = 'Draft';
               break;
-            case "PUBLISHED":
-              className = "badge badge-light-success fs-6";
-              title = "Terbit";
+            case 'PUBLISHED':
+              className = 'badge badge-light-success fs-6';
+              title = 'Terbit';
               break;
           }
 
@@ -121,38 +121,38 @@ export const SekilasInfo = () => {
       },
 
       {
-        Header: "Aksi",
+        Header: 'Aksi',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
           return (
             <>
-              <div className="input-group mb-3">
+              <div className='input-group'>
                 <button
-                  className="btn btn-sm btn-primary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className='btn btn-sm btn-primary dropdown-toggle'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
-                <ul className="dropdown-menu">
+                <ul className='dropdown-menu'>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => openModal(singleData)}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
-                      <p className="m-0">Ubah</p>
+                      <KTIcon iconName='pencil' className='me-3 fs-3' />
+                      <p className='m-0'>Ubah</p>
                     </button>
                   </li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => deleteInfo(singleData.id)}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
-                      <p className="m-0">Hapus</p>
+                      <KTIcon iconName='trash' className='me-3 fs-3' />
+                      <p className='m-0'>Hapus</p>
                     </button>
                   </li>
                 </ul>
@@ -168,9 +168,9 @@ export const SekilasInfo = () => {
   return (
     <>
       <PageTitle
-        icon="data"
+        icon='data'
         breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
+        description='Sekilas Info'
       >
         Sekilas Info
       </PageTitle>

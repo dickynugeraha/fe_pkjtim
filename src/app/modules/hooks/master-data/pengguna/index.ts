@@ -28,6 +28,7 @@ export default function usePengguna() {
   });
   const [isLockedCheck, setIsLockedCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -36,6 +37,7 @@ export default function usePengguna() {
     if (data) {
       setFormData(data);
       setIsEdit(true);
+      setIsValidated(false);
     } else {
       setFormData({
         email: "",
@@ -66,6 +68,7 @@ export default function usePengguna() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsValidated(false);
   };
 
   const handleChange = (e: any) => {
@@ -211,6 +214,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -255,6 +259,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -299,6 +304,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -342,6 +348,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {

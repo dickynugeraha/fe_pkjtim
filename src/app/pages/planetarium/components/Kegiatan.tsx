@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import ModalKegiatan from "./ModalKegiatan";
-import { Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 
 const dataKegiatan = [
   {
@@ -78,12 +78,6 @@ const Kegiatan: FC<KegiatanProps> = ({
   setIndoor,
   setOutdoor,
 }) => {
-  // const [indoor, setIndoor] = useState("");
-  // const [outdoor, setOutdoor] = useState({
-  //   peneropongan_matahari: false,
-  //   percobaan_roket_air: false,
-  // });
-
   const [dataModalChoose, setDataModalChoose] = useState({
     title: "",
     desc: "",
@@ -98,14 +92,14 @@ const Kegiatan: FC<KegiatanProps> = ({
         <h5 className="m-0">Indoor</h5>
         <p>Pilih salah satu</p>
         <div>
-          <div
-            className={`card p-8 ${
+          <Card
+            className={`px-4 py-2 ${
               indoor === "planetarium_mini" ? "bg-light" : ""
             }`}
           >
             <Row className="align-items-center">
               <Col>
-                <div className="form-check d-flex align-items-center me-8">
+                <div className="form-check d-flex align-items-center">
                   <input
                     type="radio"
                     id="planetarium_mini"
@@ -119,7 +113,7 @@ const Kegiatan: FC<KegiatanProps> = ({
                   />
                   <div>
                     <h5>Pertunjukan Planetarium Mini</h5>
-                    <p>
+                    <p className="m-0">
                       Kegiatan berupa pemutaran simulasi langit di dalam kubah
                       planetarium mini selama 15 s.d. 20 menit. Peserta
                       mendapatkan penjelasan dari penceramah astronomi mengenai
@@ -129,7 +123,7 @@ const Kegiatan: FC<KegiatanProps> = ({
                   </div>
                 </div>
               </Col>
-              <Col className="text-center" lg={2}>
+              <Col className="text-center p-1" lg={2}>
                 <div>
                   <div
                     className="btn btn-light-primary btn-sm"
@@ -148,17 +142,17 @@ const Kegiatan: FC<KegiatanProps> = ({
                 </div>
               </Col>
             </Row>
-          </div>
+          </Card>
         </div>
-        <Gap height={12} />
-        <div
-          className={`card p-8 ${
+        <Gap height={5} />
+        <Card
+          className={`px-4 py-5 ${
             indoor === "diskusi_astronomi" ? "bg-light" : ""
           }`}
         >
           <Row className="align-items-center">
             <Col>
-              <div className="form-check d-flex align-items-center me-8">
+              <div className="form-check d-flex align-items-center">
                 <input
                   type="radio"
                   id="diskusi_astronomi"
@@ -172,14 +166,14 @@ const Kegiatan: FC<KegiatanProps> = ({
                 />
                 <div>
                   <h5>Diskusi Astronomi</h5>
-                  <p>
+                  <p className="m-0">
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
                     astronomi di dalam kelas menggunakan power point.
                   </p>
                 </div>
               </div>
             </Col>
-            <Col className="text-center" lg={2}>
+            <Col className="text-center p-1" lg={2}>
               <div>
                 <div
                   className="btn btn-light-primary btn-sm"
@@ -198,7 +192,7 @@ const Kegiatan: FC<KegiatanProps> = ({
               </div>
             </Col>
           </Row>
-        </div>
+        </Card>
       </div>
     );
   };
@@ -209,14 +203,14 @@ const Kegiatan: FC<KegiatanProps> = ({
         <h5 className="m-0">Outdoor</h5>
         <p>Dapat memilih keduanya</p>
         <div>
-          <div
-            className={`card p-8 ${
+          <Card
+            className={`px-4 py-5 ${
               outdoor.peneropongan_matahari ? "bg-light" : ""
             }`}
           >
             <Row className="align-items-center">
               <Col>
-                <div className="form-check d-flex align-items-center me-8">
+                <div className="form-check d-flex align-items-center">
                   <input
                     type="checkbox"
                     id="peneropongan_matahari"
@@ -233,14 +227,14 @@ const Kegiatan: FC<KegiatanProps> = ({
                   />
                   <div>
                     <h5>Peneropongan Matahari</h5>
-                    <p>
+                    <p className="m-0">
                       Kegiatan berupa pengamatan Matahari menggunakan teleskop
                       yang telah dilengkapi oleh filter matahari.
                     </p>
                   </div>
                 </div>
               </Col>
-              <Col className="text-center" lg={2}>
+              <Col className="text-center p-1" lg={2}>
                 <div>
                   <div
                     className="btn btn-light-primary btn-sm"
@@ -259,17 +253,17 @@ const Kegiatan: FC<KegiatanProps> = ({
                 </div>
               </Col>
             </Row>
-          </div>
+          </Card>
         </div>
-        <Gap height={12} />
-        <div
-          className={`card p-8 ${
+        <Gap height={5} />
+        <Card
+          className={`px-4 py-2 ${
             outdoor.percobaan_roket_air ? "bg-light" : ""
           }`}
         >
           <Row className="align-items-center">
             <Col>
-              <div className="form-check d-flex align-items-center me-8">
+              <div className="form-check d-flex align-items-center">
                 <input
                   type="checkbox"
                   id="percobaan_roket_air"
@@ -286,7 +280,7 @@ const Kegiatan: FC<KegiatanProps> = ({
                 />
                 <div>
                   <h5>Percobaan Roket Air</h5>
-                  <p>
+                  <p className="m-0">
                     Kegiatan berupa penjelasan dari narasumber mengenai konsep
                     peluncuran roket serta mendemonstrasikan peluncuran roket
                     menggunakan model Roket Air
@@ -294,7 +288,7 @@ const Kegiatan: FC<KegiatanProps> = ({
                 </div>
               </div>
             </Col>
-            <Col className="text-center" lg={2}>
+            <Col className="text-center p-1" lg={2}>
               <div>
                 <div
                   className="btn btn-light-primary btn-sm"
@@ -313,7 +307,7 @@ const Kegiatan: FC<KegiatanProps> = ({
               </div>
             </Col>
           </Row>
-        </div>
+        </Card>
       </div>
     );
   };
@@ -329,7 +323,7 @@ const Kegiatan: FC<KegiatanProps> = ({
         fasilitas={dataModalChoose.fasilitas as []}
       />
       <Indoor />
-      <Gap height={32} />
+      <Gap height={15} />
       <Outdoor />
     </div>
   );

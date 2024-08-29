@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
-import { Col, Row } from "react-bootstrap";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import globalVar from "../../../helper/globalVar";
+import { Card, Col, Row } from "react-bootstrap";
 
 type Props = {
   tempat: any[];
@@ -18,11 +18,11 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
   });
   return (
     <div className="col-12 col-lg-6">
-      <div className="card">
-        <div className="card-header d-flex align-items-center">
+      <Card>
+        <Card.Header className="d-flex align-items-center">
           <h4 className="m-0">Tarif Sewa</h4>
-        </div>
-        <div className="card-body">
+        </Card.Header>
+        <Card.Body>
           <div className="row row-cols-2">
             <div className="col-6 col-md-4">
               <ul>
@@ -53,8 +53,8 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
           <p className="text-danger">
             *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
           </p>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
       <ModalWrapper
         footerCustom={<></>}
         title={`Tarif Sewa ${modalDetailTarif?.data?.name}`}

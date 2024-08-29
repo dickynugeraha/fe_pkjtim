@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const Peraturan = () => {
   return (
-    <div className="col-12 col-lg-6">
-      <div className="card">
-        <div className="card-header d-flex align-items-center">
-          <h4 className="m-0 p-0">Peraturan</h4>
-        </div>
-        <div className="p-4">
+    <div className='col-12 col-lg-6'>
+      <Card>
+        <Card.Header className='d-flex align-items-center'>
+          <h4 className='m-0 p-0'>Peraturan</h4>
+        </Card.Header>
+        <Card.Body>
           <ol>
-            <li className="mb-4">
-              <h6 className="fw-bold m-0">Kegiatan yang Dilarang</h6>
+            <li className='mb-4'>
+              <h6 className='fw-bold m-0'>Kegiatan yang Dilarang</h6>
               <ul>
                 <li>Politik/Ormas/Sekolah/Kampus</li>
                 <li>Melanggar Hukum/ Norma -Melanggar Hak Cipta</li>
@@ -19,8 +20,8 @@ const Peraturan = () => {
                 <li>Kebencian -Keagamaan</li>
               </ul>
             </li>
-            <li className="mb-4">
-              <h6 className="m-0 fw-bold">Wajib mencantumkan</h6>
+            <li className='mb-4'>
+              <h6 className='m-0 fw-bold'>Wajib mencantumkan</h6>
               <ul>
                 <li>Nama Kegiatan</li>
                 <li>Genre Seni</li>
@@ -30,7 +31,7 @@ const Peraturan = () => {
               </ul>
             </li>
             <li>
-              <h6 className="m-0 fw-bold">Wajib menyampaikan</h6>
+              <h6 className='m-0 fw-bold'>Wajib menyampaikan</h6>
               <ul>
                 <li>Group Yang Akan Pentas</li>
                 <li>Rekam Jejak</li>
@@ -41,8 +42,8 @@ const Peraturan = () => {
               </ul>
             </li>
           </ol>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

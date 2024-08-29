@@ -1,27 +1,27 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PageTitle,
   PageLink,
-} from "../../../../_metronic/layout/core/PageData";
-import { Content } from "../../../../_metronic/layout/components/content";
-import Table from "../../../../_metronic/layout/components/table/Table";
-import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditTutupTempat from "./components/ModalAddEditTutupTempat";
-import useTutupTempat from "../../../modules/hooks/master-data/tempat-tutup";
-import Loading from "../../../../_metronic/layout/components/content/Loading";
-import useTempat from "../../../modules/hooks/master-data/tempat";
-import globalVar from "../../../helper/globalVar";
+} from '../../../../_metronic/layout/core/PageData';
+import { Content } from '../../../../_metronic/layout/components/content';
+import Table from '../../../../_metronic/layout/components/table/Table';
+import { KTIcon } from '../../../../_metronic/helpers';
+import ModalAddEditTutupTempat from './components/ModalAddEditTutupTempat';
+import useTutupTempat from '../../../modules/hooks/master-data/tempat-tutup';
+import Loading from '../../../../_metronic/layout/components/content/Loading';
+import useTempat from '../../../modules/hooks/master-data/tempat';
+import globalVar from '../../../helper/globalVar';
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Tutup Tempat",
-    path: "/master-data/tutup-tempat",
+    title: 'Tutup Tempat',
+    path: '/master-data/tutup-tempat',
     isSeparator: false,
     isActive: true,
   },
   {
-    title: "",
-    path: "",
+    title: '',
+    path: '',
     isSeparator: true,
     isActive: true,
   },
@@ -53,9 +53,9 @@ export const TutupTempat = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Tipe Tempat",
-        accessor: "tipe_tempat",
-        sortType: "alphanumeric",
+        Header: 'Tipe Tempat',
+        accessor: 'tipe_tempat',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
@@ -63,18 +63,18 @@ export const TutupTempat = () => {
         },
       },
       {
-        Header: "Tanggal Tutup",
-        accessor: "tanggal_kunjungan",
-        sortType: "alphanumeric",
+        Header: 'Tanggal Tutup',
+        accessor: 'tanggal_kunjungan',
+        sortType: 'alphanumeric',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           return (
             <div>
-              <span className="badge badge-light-success fs-6">
+              <span className='badge badge-light-success fs-6'>
                 {globalVar.formatDate(singleData.startDate)}
               </span>
-              <span className="mx-3">-</span>
-              <span className="badge badge-light-danger fs-6">
+              <span className='mx-3'>-</span>
+              <span className='badge badge-light-danger fs-6'>
                 {globalVar.formatDate(singleData.endDate)}
               </span>
             </div>
@@ -82,38 +82,38 @@ export const TutupTempat = () => {
         },
       },
       {
-        Header: "Aksi",
+        Header: 'Aksi',
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
           return (
             <>
-              <div className="input-group mb-3">
+              <div className='input-group'>
                 <button
-                  className="btn btn-sm btn-primary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className='btn btn-sm btn-primary dropdown-toggle'
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                 >
-                  Pilih
+                  Aksi
                 </button>
-                <ul className="dropdown-menu">
+                <ul className='dropdown-menu'>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => openModal(singleData)}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
-                      <p className="m-0">Ubah</p>
+                      <KTIcon iconName='pencil' className='me-3 fs-3' />
+                      <p className='m-0'>Ubah</p>
                     </button>
                   </li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center"
+                      className='dropdown-item d-flex align-items-center'
                       onClick={() => deleteTutupTempat(singleData.id)}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
-                      <p className="m-0">Hapus</p>
+                      <KTIcon iconName='trash' className='me-3 fs-3' />
+                      <p className='m-0'>Hapus</p>
                     </button>
                   </li>
                 </ul>
@@ -129,9 +129,9 @@ export const TutupTempat = () => {
   return (
     <>
       <PageTitle
-        icon="data"
+        icon='data'
         breadcrumbs={Breadcrumbs}
-        description="Tutup Tempat"
+        description='Tutup Tempat'
       >
         Tutup Tempat
       </PageTitle>
