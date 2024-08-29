@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import ModalKegiatan from "./ModalKegiatan";
 import { Col, Row } from "react-bootstrap";
@@ -65,12 +65,25 @@ const dataKegiatan = [
   },
 ];
 
-const Kegiatan = () => {
-  const [radioValue, setRadioValue] = useState("");
-  const [checkedBoxes, setCheckedBoxes] = useState({
-    peneropongan_matahari: false,
-    percobaan_roket_air: false,
-  });
+type KegiatanProps = {
+  indoor: any;
+  outdoor: any;
+  setIndoor: (e: any) => void;
+  setOutdoor: (e: any) => void;
+};
+
+const Kegiatan: FC<KegiatanProps> = ({
+  indoor,
+  outdoor,
+  setIndoor,
+  setOutdoor,
+}) => {
+  // const [indoor, setIndoor] = useState("");
+  // const [outdoor, setOutdoor] = useState({
+  //   peneropongan_matahari: false,
+  //   percobaan_roket_air: false,
+  // });
+
   const [dataModalChoose, setDataModalChoose] = useState({
     title: "",
     desc: "",
@@ -87,7 +100,7 @@ const Kegiatan = () => {
         <div>
           <div
             className={`card p-8 ${
-              radioValue === "planetarium_mini" ? "bg-light" : ""
+              indoor === "planetarium_mini" ? "bg-light" : ""
             }`}
           >
             <Row className="align-items-center">
@@ -99,9 +112,9 @@ const Kegiatan = () => {
                     name="indoor"
                     value="planetarium_mini"
                     className="form-check-input me-8"
-                    checked={radioValue === "planetarium_mini"}
+                    checked={indoor === "planetarium_mini"}
                     onChange={(e) => {
-                      setRadioValue(e.target.value);
+                      setIndoor(e.target.value);
                     }}
                   />
                   <div>
@@ -140,7 +153,7 @@ const Kegiatan = () => {
         <Gap height={12} />
         <div
           className={`card p-8 ${
-            radioValue === "diskusi_astronomi" ? "bg-light" : ""
+            indoor === "diskusi_astronomi" ? "bg-light" : ""
           }`}
         >
           <Row className="align-items-center">
@@ -152,9 +165,9 @@ const Kegiatan = () => {
                   name="indoor"
                   value="diskusi_astronomi"
                   className="form-check-input me-8"
-                  checked={radioValue === "diskusi_astronomi"}
+                  checked={indoor === "diskusi_astronomi"}
                   onChange={(e) => {
-                    setRadioValue(e.target.value);
+                    setIndoor(e.target.value);
                   }}
                 />
                 <div>
@@ -198,7 +211,7 @@ const Kegiatan = () => {
         <div>
           <div
             className={`card p-8 ${
-              checkedBoxes.peneropongan_matahari ? "bg-light" : ""
+              outdoor.peneropongan_matahari ? "bg-light" : ""
             }`}
           >
             <Row className="align-items-center">
@@ -210,12 +223,11 @@ const Kegiatan = () => {
                     name="outdoor"
                     value="peneropongan_matahari"
                     className="form-check-input me-8"
-                    checked={checkedBoxes.peneropongan_matahari}
+                    checked={outdoor.peneropongan_matahari}
                     onChange={() => {
-                      setCheckedBoxes({
-                        ...checkedBoxes,
-                        peneropongan_matahari:
-                          !checkedBoxes.peneropongan_matahari,
+                      setOutdoor({
+                        ...outdoor,
+                        peneropongan_matahari: !outdoor.peneropongan_matahari,
                       });
                     }}
                   />
@@ -252,7 +264,7 @@ const Kegiatan = () => {
         <Gap height={12} />
         <div
           className={`card p-8 ${
-            checkedBoxes.percobaan_roket_air ? "bg-light" : ""
+            outdoor.percobaan_roket_air ? "bg-light" : ""
           }`}
         >
           <Row className="align-items-center">
@@ -264,11 +276,11 @@ const Kegiatan = () => {
                   name="outdoor"
                   value="percobaan_roket_air"
                   className="form-check-input me-8"
-                  checked={checkedBoxes.percobaan_roket_air}
+                  checked={outdoor.percobaan_roket_air}
                   onChange={() => {
-                    setCheckedBoxes({
-                      ...checkedBoxes,
-                      percobaan_roket_air: !checkedBoxes.percobaan_roket_air,
+                    setOutdoor({
+                      ...outdoor,
+                      percobaan_roket_air: !outdoor.percobaan_roket_air,
                     });
                   }}
                 />

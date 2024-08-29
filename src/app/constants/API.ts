@@ -32,4 +32,10 @@ export const ENDPOINTS = {
     LIST_UPDATE_ADD_DELETE_TEMPAT_TUTUP: "v1/TempatTutup",
     TEMPAT_TUTUP_IMAGE: API_URL + "/v1/TempatTutup",
   },
+  PLANETARIUM: {
+    LIST_UPDATE_ADD_DELETE_PLANETARIUM: "v1/Planetarium",
+  },
+  PESAN_TEMPAT: {
+    LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT: "v1/Reservasi",
+  },
 };

@@ -58,7 +58,6 @@ export function Login() {
         const { data: auth } = await login(values.email, values.password);
 
         const userDecodeResult: any = jwtDecode(auth.data.accessToken);
-        console.log("userDecodeResult ", userDecodeResult);
         const authData = {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,

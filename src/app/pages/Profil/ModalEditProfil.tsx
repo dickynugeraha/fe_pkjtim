@@ -5,47 +5,82 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import {
   IProfileDetails,
-  profileDetailsInitValues as initialValues,
+  // profileDetailsInitValues as initialValues,
 } from "../../modules/accounts/components/settings/SettingsModel";
+import { useAuth, UserModel } from "../../modules/auth";
+import usePengguna from "../../modules/hooks/master-data/pengguna";
 
 type Props = {
   show: boolean;
+  singlePengguna: any;
   hideModal: () => void;
+  onChangeProfile: () => void;
 };
 
 const profileDetailsSchema = Yup.object().shape({
-  fName: Yup.string().required("First name is required"),
-  lName: Yup.string().required("Last name is required"),
-  company: Yup.string().required("Company name is required"),
-  contactPhone: Yup.string().required("Contact phone is required"),
-  companySite: Yup.string().required("Company site is required"),
-  country: Yup.string().required("Country is required"),
-  language: Yup.string().required("Language is required"),
-  timeZone: Yup.string().required("Time zone is required"),
-  currency: Yup.string().required("Currency is required"),
+  fullName: Yup.string().required("Nama lengkap harus diisi"),
+  phoneNumber: Yup.string().required("Nomor handphone harus diisi"),
 });
 
-const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
+const ModalEditProfil: FC<Props> = ({
+  show,
+  hideModal,
+  singlePengguna,
+  onChangeProfile,
+}) => {
+  const { currentUser, setCurrentUser } = useAuth();
+  const initialValues: IProfileDetails = {
+    id: currentUser?.id as string,
+    fullName: currentUser?.name as string,
+    email: currentUser?.email as string,
+    phoneNumber: currentUser?.phoneNumber as string,
+    isLocked: singlePengguna?.isLocked,
+    status: singlePengguna?.status,
+    companySite: "",
+    country: "",
+    language: "",
+    timeZone: "",
+    currency: "",
+    communications: {
+      email: false,
+      phone: false,
+    },
+    allowMarketing: false,
+  };
+  const { updatePengguna, loading } = usePengguna();
+
   const [data, setData] = useState<IProfileDetails>(initialValues);
   const updateData = (fieldsToUpdate: Partial<IProfileDetails>): void => {
     const updatedData = Object.assign(data, fieldsToUpdate);
     setData(updatedData);
   };
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const formik = useFormik<IProfileDetails>({
     initialValues,
     validationSchema: profileDetailsSchema,
     onSubmit: (values) => {
-      setLoading(true);
-      setTimeout(() => {
-        values.communications.email = data.communications.email;
-        values.communications.phone = data.communications.phone;
-        values.allowMarketing = data.allowMarketing;
-        const updatedData = Object.assign(data, values);
-        setData(updatedData);
-        setLoading(false);
-      }, 1000);
+      const payload = {
+        id: values.id,
+        fullName: values.fullName,
+        phoneNumber: values.phoneNumber,
+        email: currentUser?.email as string,
+        status: singlePengguna.status,
+      };
+      updatePengguna(payload);
+      const newCurrentUser = {
+        id: values.id,
+        name: values.fullName,
+        phoneNumber: values.phoneNumber,
+        email: currentUser?.email as string,
+      };
+      setCurrentUser(newCurrentUser as UserModel | undefined);
+
+      const updatedData = Object.assign(data, values);
+      console.log("updateData", updatedData);
+
+      setData(updatedData);
+      onChangeProfile();
     },
   });
 
@@ -69,52 +104,62 @@ const ModalEditProfil: FC<Props> = ({ show, hideModal }) => {
           </div>
         </div>
       </Modal.Header>
-      <Modal.Body>
-        <div className="row mb-6">
-          <label className="col-lg-5 col-form-label required fw-bold fs-6">
-            Nama Lengkap
-          </label>
+      <form onSubmit={formik.handleSubmit} noValidate className="form">
+        <Modal.Body>
+          <div className="row mb-6">
+            <label className="col-lg-5 col-form-label required fw-bold fs-6">
+              Nama Lengkap
+            </label>
 
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-              placeholder="First name"
-              {...formik.getFieldProps("fName")}
-            />
-            {formik.touched.fName && formik.errors.fName && (
-              <div className="fv-plugins-message-container">
-                <div className="fv-help-block">{formik.errors.fName}</div>
-              </div>
-            )}
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="Nama lengkap"
+                {...formik.getFieldProps("fullName")}
+              />
+              {formik.touched.fullName && formik.errors.fullName && (
+                <div className="fv-plugins-message-container">
+                  <div className="fv-help-block">{formik.errors.fullName}</div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="row mb-6">
-          <label className="col-lg-5 col-form-label required fw-bold fs-6">
-            Nomor Handphone
-          </label>
+          <div className="row mb-6">
+            <label className="col-lg-5 col-form-label required fw-bold fs-6">
+              Nomor Handphone
+            </label>
 
-          <div className="col-lg-7">
-            <input
-              type="text"
-              className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-              placeholder="First name"
-              {...formik.getFieldProps("contactPhone")}
-            />
-            {formik.touched.fName && formik.errors.fName && (
-              <div className="fv-plugins-message-container">
-                <div className="fv-help-block">{formik.errors.fName}</div>
-              </div>
-            )}
+            <div className="col-lg-7">
+              <input
+                type="text"
+                className="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                placeholder="Nomor handphone"
+                {...formik.getFieldProps("phoneNumber")}
+              />
+              {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                <div className="fv-plugins-message-container">
+                  <div className="fv-help-block">
+                    {formik.errors.phoneNumber}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <div className="btn btn-sm btn-light" onClick={hideModal}>
-          Batal
-        </div>
-        <div className="btn btn-sm btn-primary">Ubah</div>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="btn btn-sm btn-light" onClick={hideModal}>
+            Batal
+          </div>
+          <button
+            type="submit"
+            className="btn btn-sm btn-primary"
+            disabled={!!loading}
+          >
+            {loading ? `Loading...` : `Ubah`}
+          </button>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };

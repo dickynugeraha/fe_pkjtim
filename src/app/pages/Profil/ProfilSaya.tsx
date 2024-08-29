@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import ModalEditProfil from "./ModalEditProfil";
 import * as Yup from "yup";
@@ -12,6 +12,9 @@ import {
   updatePassword,
 } from "../../modules/accounts/components/settings/SettingsModel";
 import { useFormik } from "formik";
+import usePengguna from "../../modules/hooks/master-data/pengguna";
+import { useAuth } from "../../modules/auth";
+import { Spinner } from "react-bootstrap";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -57,16 +60,26 @@ const passwordFormValidationSchema = Yup.object().shape({
 });
 
 export const ProfilSaya = () => {
+  const {
+    getSinglePengguna,
+    singlePengguna,
+    loading,
+    profileChangePassword,
+    sendEmailVerif,
+  } = usePengguna();
+  const { currentUser } = useAuth();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [emailUpdateData, setEmailUpdateData] =
-    useState<IUpdateEmail>(updateEmail);
+  const updateEmailVal = {
+    newEmail: singlePengguna?.email,
+    confirmPassword: "",
+  };
+  const [emailUpdateData, setEmailUpdateData] = useState(updateEmailVal);
   const [passwordUpdateData, setPasswordUpdateData] =
     useState<IUpdatePassword>(updatePassword);
 
   const [showEmailForm, setShowEmailForm] = useState<boolean>(false);
   const [showPasswordForm, setPasswordForm] = useState<boolean>(false);
-
-  const [loading1, setLoading1] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
 
   const formik1 = useFormik<IUpdateEmail>({
     initialValues: {
@@ -74,16 +87,10 @@ export const ProfilSaya = () => {
     },
     validationSchema: emailFormValidationSchema,
     onSubmit: (values) => {
-      setLoading1(true);
-      setTimeout(() => {
-        setEmailUpdateData(values);
-        setLoading1(false);
-        setShowEmailForm(false);
-      }, 1000);
+      setEmailUpdateData(values);
+      setShowEmailForm(false);
     },
   });
-
-  const [loading2, setLoading2] = useState(false);
 
   const formik2 = useFormik<IUpdatePassword>({
     initialValues: {
@@ -91,14 +98,21 @@ export const ProfilSaya = () => {
     },
     validationSchema: passwordFormValidationSchema,
     onSubmit: (values) => {
-      setLoading2(true);
-      setTimeout(() => {
-        setPasswordUpdateData(values);
-        setLoading2(false);
-        setPasswordForm(false);
-      }, 1000);
+      const payload = { ...values, id: currentUser?.id };
+      profileChangePassword(payload);
+      setPasswordUpdateData(values);
+      setPasswordForm(false);
     },
   });
+
+  const setRefresh = () => {
+    getSinglePengguna(currentUser?.id as string);
+  };
+
+  useEffect(() => {
+    getSinglePengguna(currentUser?.id as string);
+  }, [currentUser]);
+
   return (
     <>
       <PageTitle
@@ -110,31 +124,33 @@ export const ProfilSaya = () => {
       </PageTitle>
       <Content>
         {/* alert jika email belum terverifikasi */}
-        <div className="alert alert-dismissible bg-light-warning border border-warning p-5">
-          <div className="d-flex flex-column flex-md-row justify-content-between ">
-            <div className="d-flex align-items-center">
-              <KTIcon
-                iconName="information-2"
-                className="fs-2x text-warning justify-content-center me-4"
-              />
-              <div>
-                <h5 className="mb-1">Email anda belum terverifikasi!</h5>
-                <span className="text-warning">
-                  Silahkan melakukan verifikasi email untuk dapat melakukan
-                  pemesanan tempat
-                </span>
+        {singlePengguna?.status !== "ACTIVE" &&
+          singlePengguna?.status !== undefined && (
+            <div className="alert alert-dismissible bg-light-warning border border-warning p-5">
+              <div className="d-flex flex-column flex-md-row justify-content-between ">
+                <div className="d-flex align-items-center">
+                  <KTIcon
+                    iconName="information-2"
+                    className="fs-2x text-warning justify-content-center me-4"
+                  />
+                  <div>
+                    <h5 className="mb-1">Email anda belum terverifikasi!</h5>
+                    <span className="text-warning">
+                      Silahkan melakukan verifikasi email untuk dapat melakukan
+                      pemesanan tempat
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-warning m-2"
+                  onClick={() => sendEmailVerif(singlePengguna?.id)}
+                >
+                  Kirim email verifikasi
+                </button>
               </div>
             </div>
-            <button
-              type="button"
-              className="btn btn-sm btn-warning m-2"
-              // style={{ width: "180px" }}
-            >
-              Kirim email verifikasi
-            </button>
-          </div>
-        </div>
-
+          )}
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
             <h4 className="m-0">Detail Profil Saya</h4>
@@ -153,7 +169,7 @@ export const ProfilSaya = () => {
               </label>
 
               <div className="col-lg-8 fv-row">
-                <span className="fs-6">Kale Pramono</span>
+                <span className="fs-6">{singlePengguna?.fullName}</span>
               </div>
             </div>
             <div className="row mb-7">
@@ -162,16 +178,20 @@ export const ProfilSaya = () => {
               </label>
 
               <div className="col-lg-8 fv-row">
-                <span className="fs-6">08963214785</span>
+                <span className="fs-6">{singlePengguna?.phoneNumber}</span>
               </div>
             </div>
             <div className="row mb-7">
               <label className="col-lg-4 fw-bold text-gray-600">Email</label>
 
               <div className="col-lg-8 d-flex align-items-center">
-                <span className="fs-6">kale@gmail.com</span>
+                <span className="fs-6">{singlePengguna?.email}</span>
                 <Gap width={5} />
-                <span className="badge badge-success">Verified</span>
+                {singlePengguna?.status === "ACTIVE" ? (
+                  <span className="badge badge-success">Verified</span>
+                ) : (
+                  <span className="badge badge-danger">Not Verified</span>
+                )}
               </div>
             </div>
           </div>
@@ -193,7 +213,9 @@ export const ProfilSaya = () => {
                   className={" " + (showEmailForm && "d-none")}
                 >
                   <div className="fs-6 fw-bold mb-1">Email Address</div>
-                  <div className="fw-bold text-gray-600">kale@gmail.com</div>
+                  <div className="fw-bold text-gray-600">
+                    {singlePengguna?.email}
+                  </div>
                 </div>
 
                 <div
@@ -213,7 +235,7 @@ export const ProfilSaya = () => {
                             htmlFor="emailaddress"
                             className="form-label fs-6 fw-bold mb-3"
                           >
-                            Enter New Email Address
+                            Masukkan Email Baru
                           </label>
                           <input
                             type="email"
@@ -238,7 +260,7 @@ export const ProfilSaya = () => {
                             htmlFor="confirmemailpassword"
                             className="form-label fs-6 fw-bold mb-3"
                           >
-                            Confirm Password
+                            Konfirm Password
                           </label>
                           <input
                             type="password"
@@ -263,13 +285,13 @@ export const ProfilSaya = () => {
                         type="submit"
                         className="btn btn-sm btn-primary  me-2 px-6"
                       >
-                        {!loading1 && "Update Email"}
-                        {loading1 && (
+                        {!loading && "Ganti Email"}
+                        {loading && (
                           <span
                             className="indicator-progress"
                             style={{ display: "block" }}
                           >
-                            Please wait...{" "}
+                            Loading...{" "}
                             <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
                           </span>
                         )}
@@ -333,7 +355,7 @@ export const ProfilSaya = () => {
                             htmlFor="currentpassword"
                             className="form-label fs-6 fw-bold mb-3"
                           >
-                            Current Password
+                            Password Sekarang
                           </label>
                           <input
                             type="password"
@@ -358,7 +380,7 @@ export const ProfilSaya = () => {
                             htmlFor="newpassword"
                             className="form-label fs-6 fw-bold mb-3"
                           >
-                            New Password
+                            Password Baru
                           </label>
                           <input
                             type="password"
@@ -383,7 +405,7 @@ export const ProfilSaya = () => {
                             htmlFor="confirmpassword"
                             className="form-label fs-6 fw-bold mb-3"
                           >
-                            Confirm New Password
+                            Konfirmasi Password Baru
                           </label>
                           <input
                             type="password"
@@ -402,24 +424,22 @@ export const ProfilSaya = () => {
                         </div>
                       </div>
                     </div>
-
                     <div className="form-text mb-5">
                       Password must be at least 8 character and contain symbols
                     </div>
-
                     <div className="d-flex">
                       <button
                         id="kt_password_submit"
                         type="submit"
                         className="btn btn-sm btn-primary me-2 px-6"
                       >
-                        {!loading2 && "Update Password"}
-                        {loading2 && (
+                        {!loading && "Ganti Password"}
+                        {loading && (
                           <span
                             className="indicator-progress"
                             style={{ display: "block" }}
                           >
-                            Please wait...{" "}
+                            Loading...{" "}
                             <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
                           </span>
                         )}
@@ -457,6 +477,10 @@ export const ProfilSaya = () => {
         </div>
         <ModalEditProfil
           show={showModal}
+          singlePengguna={singlePengguna}
+          onChangeProfile={() => {
+            setRefresh();
+          }}
           hideModal={() => setShowModal(false)}
         />
       </Content>

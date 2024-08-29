@@ -51,6 +51,10 @@ export const Pengguna = () => {
     [updatePengguna, addPengguna, deletePengguna, fetchAllPengguna]
   );
 
+  useEffect(() => {
+    fetchAllPengguna();
+  }, []);
+
   const columns = useMemo(
     () => [
       {

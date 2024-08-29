@@ -8,6 +8,7 @@ import Kegiatan from "./components/Kegiatan";
 import { KTIcon } from "../../../_metronic/helpers";
 import { Button, Col, Row } from "react-bootstrap";
 import globalVar from "../../helper/globalVar";
+import usePlanetarium from "../../modules/hooks/planetarium";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -26,6 +27,7 @@ const Breadcrumbs: Array<PageLink> = [
 
 export const Planetarium = () => {
   const navigate = useNavigate();
+  const { nextStepHandler } = usePlanetarium();
   const [bookingDate, setBookingDate] = useState("");
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [showFailedNext, setShowFailedNext] = useState({
@@ -33,6 +35,11 @@ export const Planetarium = () => {
     title: "",
     desc: "",
     variant: "failed",
+  });
+  const [indoor, setIndoor] = useState("");
+  const [outdoor, setOutdoor] = useState({
+    peneropongan_matahari: false,
+    percobaan_roket_air: false,
   });
 
   const nextButtonSubmit = () => {
@@ -78,7 +85,12 @@ export const Planetarium = () => {
             <h4 className="m-0">Pilih Kegiatan</h4>
           </div>
           <div className="card-body">
-            <Kegiatan />
+            <Kegiatan
+              indoor={indoor}
+              outdoor={outdoor}
+              setIndoor={(e) => setIndoor(e)}
+              setOutdoor={(e) => setOutdoor(e)}
+            />
           </div>
         </div>
         <Gap height={24} />
@@ -133,7 +145,9 @@ export const Planetarium = () => {
               <Button
                 variant="primary"
                 type="button"
-                onClick={nextButtonSubmit}
+                onClick={() => {
+                  nextStepHandler(indoor, outdoor, bookingDate);
+                }}
               >
                 Selanjutnya
               </Button>
