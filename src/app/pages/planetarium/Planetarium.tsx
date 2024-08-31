@@ -1,24 +1,25 @@
-import { useState } from 'react';
-import { Content } from '../../../_metronic/layout/components/content';
-import { useNavigate } from 'react-router-dom';
-import Gap from '../../../_metronic/layout/components/content/Gap';
-import ModalInformationCustom from '../../../_metronic/layout/components/content/ModalInformationCustom';
-import { PageLink, PageTitle } from '../../../_metronic/layout/core';
-import Kegiatan from './components/Kegiatan';
-import { KTIcon } from '../../../_metronic/helpers';
-import { Button, Card, Col, Row } from 'react-bootstrap';
-import globalVar from '../../helper/globalVar';
+import { useState } from "react";
+import { Content } from "../../../_metronic/layout/components/content";
+import { useNavigate } from "react-router-dom";
+import Gap from "../../../_metronic/layout/components/content/Gap";
+import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import Kegiatan from "./components/Kegiatan";
+import { KTIcon } from "../../../_metronic/helpers";
+import { Button, Col, Row, Card } from "react-bootstrap";
+import globalVar from "../../helper/globalVar";
+import usePlanetarium from "../../modules/hooks/planetarium";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: 'Planetarium Goes to School',
-    path: '/planetarium',
+    title: "Planetarium Goes to School",
+    path: "/planetarium",
     isSeparator: false,
     isActive: false,
   },
   {
-    title: '',
-    path: '',
+    title: "",
+    path: "",
     isSeparator: true,
     isActive: false,
   },
@@ -26,22 +27,28 @@ const Breadcrumbs: Array<PageLink> = [
 
 export const Planetarium = () => {
   const navigate = useNavigate();
-  const [bookingDate, setBookingDate] = useState('');
+  const { nextStepHandler } = usePlanetarium();
+  const [bookingDate, setBookingDate] = useState("");
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [showFailedNext, setShowFailedNext] = useState({
     isShow: false,
-    title: '',
-    desc: '',
-    variant: 'failed',
+    title: "",
+    desc: "",
+    variant: "failed",
+  });
+  const [indoor, setIndoor] = useState("");
+  const [outdoor, setOutdoor] = useState({
+    peneropongan_matahari: false,
+    percobaan_roket_air: false,
   });
 
   const nextButtonSubmit = () => {
     if (!bookingDate) {
       setShowFailedNext({
         isShow: true,
-        title: 'Gagal Melakukan Pesanan',
-        desc: 'Silahkan isi form booking',
-        variant: 'failed',
+        title: "Gagal Melakukan Pesanan",
+        desc: "Silahkan isi form booking",
+        variant: "failed",
       });
       return;
     }
@@ -54,9 +61,9 @@ export const Planetarium = () => {
   return (
     <>
       <PageTitle
-        icon='moon'
+        icon="moon"
         breadcrumbs={Breadcrumbs}
-        description='Planetarium Goes To School'
+        description="Planetarium Goes To School"
       >
         Planetarium Goes To School
       </PageTitle>
@@ -74,11 +81,16 @@ export const Planetarium = () => {
           variant={showFailedNext.variant}
         />
         <Card>
-          <Card.Header className='d-flex align-items-center'>
-            <h4 className='m-0 p-0'>Pilih Kegiatan</h4>
+          <Card.Header className="d-flex align-items-center">
+            <h4 className="m-0 p-0">Pilih Kegiatan</h4>
           </Card.Header>
-          <Card.Body className=''>
-            <Kegiatan />
+          <Card.Body>
+            <Kegiatan
+              indoor={indoor}
+              outdoor={outdoor}
+              setIndoor={(e) => setIndoor(e)}
+              setOutdoor={(e) => setOutdoor(e)}
+            />
           </Card.Body>
         </Card>
         <Gap height={24} />
@@ -91,15 +103,15 @@ export const Planetarium = () => {
 
   function Persetujuan() {
     return (
-      <div className='form-check d-flex align-items-center'>
+      <div className="form-check d-flex align-items-center">
         <input
-          type='checkbox'
-          id='agree-terms-planet'
-          className='form-check-input me-4'
+          type="checkbox"
+          id="agree-terms-planet"
+          className="form-check-input me-4"
           onClick={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
         />
-        <label htmlFor='agree-terms-planet'>
+        <label htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
           Planetarium Goes to School diatas
         </label>
@@ -112,15 +124,15 @@ export const Planetarium = () => {
         <Col lg={6}>
           <Card>
             <Card.Body>
-              <div className='align-items-center mb-4'>
+              <div className="align-items-center mb-4">
                 <Row>
                   <Col lg={8}>
-                    <div className='form-group'>
+                    <div className="form-group">
                       <h6>Pilih Tanggal</h6>
                       <Gap height={12} />
                       <input
-                        type='date'
-                        className='form-control form-control-solid'
+                        type="date"
+                        className="form-control form-control-solid"
                         value={bookingDate}
                         onChange={(e) => setBookingDate(e.target.value)}
                         min={globalVar.getThreeMonthsFromToday()}
@@ -131,9 +143,11 @@ export const Planetarium = () => {
                 </Row>
               </div>
               <Button
-                variant='primary'
-                type='button'
-                onClick={nextButtonSubmit}
+                variant="primary"
+                type="button"
+                onClick={() => {
+                  nextStepHandler(indoor, outdoor, bookingDate);
+                }}
               >
                 Selanjutnya
               </Button>

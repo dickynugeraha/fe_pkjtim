@@ -1,32 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   add,
   approve,
+  changePassword,
+  resendEmailVerif,
   getAll,
+  getSingle,
   remove,
   update,
-} from '../../../requests/master-data/pengguna';
-import Swal from 'sweetalert2';
-import { INITIAL_PAGE, DEFAULT_LIMIT } from '../../../../constants/PAGE';
+} from "../../../requests/master-data/pengguna";
+import Swal from "sweetalert2";
+import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 
 export default function usePengguna() {
   const [pengguna, setPengguna] = useState<any[]>([]);
+  const [singlePengguna, setSinglePengguna] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: '',
-    fullName: '',
+    email: "",
+    fullName: "",
     id: null,
     isLocked: false,
-    phoneNumber: '',
-    status: '',
-    role: '',
+    phoneNumber: "",
+    status: "",
+    role: "",
   });
   const [isLockedCheck, setIsLockedCheck] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
   const openModal = (data = null) => {
@@ -36,13 +40,13 @@ export default function usePengguna() {
       setIsValidated(false);
     } else {
       setFormData({
-        email: '',
-        fullName: '',
+        email: "",
+        fullName: "",
         id: null,
         isLocked: false,
-        phoneNumber: '',
-        status: '',
-        role: '',
+        phoneNumber: "",
+        status: "",
+        role: "",
       });
       setIsEdit(false);
     }
@@ -72,7 +76,102 @@ export default function usePengguna() {
     fetchAllPengguna(debouncedQuery);
   }, [debouncedQuery]);
 
-  const fetchAllPengguna = async (Search = '') => {
+  const getSinglePengguna = async (id: any) => {
+    setLoading(true);
+    try {
+      const res = await getSingle(id);
+
+      setSinglePengguna(res.data.data);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal get data pengguna",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setLoading(false);
+  };
+
+  const profileChangePassword = async (data: any) => {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan password?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        try {
+          await changePassword(data);
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil mengubah password",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah password",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+        setLoading(false);
+      }
+    });
+  };
+
+  const sendEmailVerif = async (id: any) => {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan verifikasi email?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        try {
+          await resendEmailVerif(id);
+          Swal.fire({
+            icon: "success",
+            title: "Verifikasi berhasil terkirim",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Verifikasi gagal terkirim",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+        setLoading(false);
+      }
+    });
+  };
+
+  const fetchAllPengguna = async (Search = "") => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
@@ -80,8 +179,8 @@ export default function usePengguna() {
       setPengguna(res.data.data.data);
     } catch (error: any) {
       Swal.fire({
-        icon: 'error',
-        title: 'Gagal get data pengguna',
+        icon: "error",
+        title: "Gagal get data pengguna",
         text: error.message,
         showConfirmButton: false,
       });
@@ -96,17 +195,17 @@ export default function usePengguna() {
     // if (!validate) return;
     setLoading(true);
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan penambahan data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -115,8 +214,8 @@ export default function usePengguna() {
         try {
           await add(data);
           Swal.fire({
-            icon: 'success',
-            title: 'Berhasil menambah data pengguna',
+            icon: "success",
+            title: "Berhasil menambah data pengguna",
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
@@ -125,8 +224,8 @@ export default function usePengguna() {
           });
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal menambahkan data pengguna',
+            icon: "error",
+            title: "Gagal menambahkan data pengguna",
             text: error.message,
             showConfirmButton: false,
           });
@@ -141,17 +240,17 @@ export default function usePengguna() {
     // if (!validate) return;
     setLoading(true);
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan perubahan data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -161,8 +260,8 @@ export default function usePengguna() {
           const res = await update(data);
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Berhasil mengubah data pengguna',
+              icon: "success",
+              title: "Berhasil mengubah data pengguna",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -172,8 +271,8 @@ export default function usePengguna() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal mengubah data pengguna',
+            icon: "error",
+            title: "Gagal mengubah data pengguna",
             text: error.message,
             showConfirmButton: false,
           });
@@ -186,17 +285,17 @@ export default function usePengguna() {
   const approveRequestRegisterFromAdmin = async (id: any) => {
     setLoading(true);
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan Persetujuan request?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan Persetujuan request?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -206,8 +305,8 @@ export default function usePengguna() {
           const res = await approve(id);
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Register pengguna berhasil di setujui',
+              icon: "success",
+              title: "Register pengguna berhasil di setujui",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -216,8 +315,8 @@ export default function usePengguna() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Register pengguna gagal di setujui',
+            icon: "error",
+            title: "Register pengguna gagal di setujui",
             text: error.message,
             showConfirmButton: false,
           });
@@ -230,17 +329,17 @@ export default function usePengguna() {
   const deletePengguna = async (id: any) => {
     setLoading(true);
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan hapus data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -250,8 +349,8 @@ export default function usePengguna() {
           const res = await remove(id);
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Berhasil menghapus data pengguna',
+              icon: "success",
+              title: "Berhasil menghapus data pengguna",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -260,8 +359,8 @@ export default function usePengguna() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal menghapus data',
+            icon: "error",
+            title: "Gagal menghapus data",
             text: error.message,
             showConfirmButton: false,
           });
@@ -272,28 +371,28 @@ export default function usePengguna() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchAllPengguna();
-  }, []);
-
   return {
-    pengguna,
     addPengguna,
     updatePengguna,
     deletePengguna,
     fetchAllPengguna,
     approveRequestRegisterFromAdmin,
-    loading,
     setQuery,
-    isModalOpen,
-    isEdit,
     openModal,
     closeModal,
     handleChange,
+    setIsLockedCheck,
+    getSinglePengguna,
+    profileChangePassword,
+    sendEmailVerif,
+    setIsValidated,
+    pengguna,
+    singlePengguna,
+    loading,
+    isModalOpen,
+    isEdit,
     formData,
     isLockedCheck,
-    setIsLockedCheck,
     isValidated,
-    setIsValidated,
   };
 }

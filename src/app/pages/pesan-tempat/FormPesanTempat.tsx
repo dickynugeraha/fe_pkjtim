@@ -55,7 +55,7 @@ export const FormPesanTempat: FC = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const { state }: any = useLocation();
+  // const { state }: any = useLocation();
   let title;
   switch (params.jenis_tempat) {
     case "teater_jakarta":
@@ -92,7 +92,7 @@ export const FormPesanTempat: FC = () => {
           <input
             type="date"
             disabled
-            value={state.tanggalPesan}
+            value={globalVar.formatInputDate(new Date())}
             className="p-2 rounded form-control form-control-solid"
             style={{ width: "200px" }}
           />

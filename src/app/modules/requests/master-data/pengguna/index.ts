@@ -17,8 +17,24 @@ export const getSinglePhoto = (id: number) => {
   return axiosConfig.get(`${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}`);
 };
 
-export const getSingle = (id: number) => {
+export const getSingle = (id: any) => {
   return axiosConfig.get(`${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}`);
+};
+
+export const changePassword = (data: any) => {
+  return axiosConfig.put(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}/Password/Update`,
+    {
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    }
+  );
+};
+
+export const resendEmailVerif = (id: any) => {
+  return axiosConfig.put(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}/Email/Resend`
+  );
 };
 
 export const getAll = (Page: number, Limit: number, Search = "") => {
