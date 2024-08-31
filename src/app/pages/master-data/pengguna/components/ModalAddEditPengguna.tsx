@@ -143,7 +143,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
               value={data.password}
               onChange={(e) => handleChange(e)}
               className='form-control form-control-solid'
-              required={formAdd ? false : true}
+              required={formAdd ? true : false}
             />
             <Form.Control.Feedback type='invalid'>
               Password Wajib Diisi!
@@ -172,9 +172,6 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         </Form.Group>
         <Form.Group className='form-group my-6'>
           <div className='d-flex'>
-            <Form.Label htmlFor='status' className='fw-bold me-3'>
-              Kunci pengguna <span className='text-danger'>*</span>
-            </Form.Label>
             <Form.Check className='form-check'>
               <input
                 className='form-check-input'
@@ -187,6 +184,9 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
                 }}
               />
             </Form.Check>
+            <Form.Label htmlFor='status' className='fw-bold me-3'>
+              Kunci pengguna
+            </Form.Label>
           </div>
         </Form.Group>
         <Form.Group className='form-group mb-3'>

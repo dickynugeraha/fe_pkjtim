@@ -85,7 +85,7 @@ export const KoleksiSeni = () => {
         },
       },
       {
-        Header: 'Nama Seniman',
+        Header: 'Nama Seni',
         sortType: 'alphanumeric',
         accessor: 'title',
       },

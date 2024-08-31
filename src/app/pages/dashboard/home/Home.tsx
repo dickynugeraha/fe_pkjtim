@@ -10,9 +10,12 @@ import ModalWrapper from '../../../../_metronic/layout/components/content/ModalW
 import Gap from '../../../../_metronic/layout/components/content/Gap';
 import polygonImage from '../../../../../public/media/images/polygon.png';
 import { KTIcon } from '../../../../_metronic/helpers';
+import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import ModalDetailAcara from './components/ModalDetailAcara';
 import { Card, Col, Row } from 'react-bootstrap';
 import { CardJumlahAcara } from './components/CardJumlahAcara';
+import idLocale from '@fullcalendar/core/locales/id';
+import { CardJumlahPengguna } from './components/CardJumlahPengguna';
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -83,13 +86,14 @@ export const Home: FC = () => {
                 {/* <SwitchTypeCalendar /> */}
                 <div className='p-8'>
                   <FullCalendar
-                    height={500}
+                    locale={idLocale}
+                    height={555}
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView='dayGridMonth'
                     headerToolbar={{
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                      left: 'title',
+                      center: '',
+                      right: 'prev,today,next',
                     }}
                     events={events}
                     eventContent={renderEventContent}
@@ -99,8 +103,13 @@ export const Home: FC = () => {
               </Card>
             </Col>
             <Col md={4}>
-              <DetailCalendarPesanan />
-              <CardJumlahAcara className='' />
+              <CardJumlahPengguna
+                className='mb-5'
+                description='Pengguna Aktif'
+                color='#F1416C'
+                img={toAbsoluteUrl('media/patterns/vector-1.png')}
+              />
+              <CardJumlahAcara className='mb-2' />
             </Col>
           </Row>
         </div>
@@ -207,87 +216,88 @@ export const Home: FC = () => {
       </>
     );
   }
-  function DetailCalendarPesanan() {
-    return (
-      // <>
-      //   <div className="card p-8">
-      //     <div className="d-flex align-items-center justify-content-center">
-      //       <div
-      //         style={{
-      //           backgroundImage: `url(${polygonImage})`,
-      //           backgroundRepeat: "no-repeat",
-      //           backgroundSize: "cover",
-      //           backgroundPosition: "center center",
-      //           height: "200px",
-      //           width: "200px",
-      //         }}
-      //         className="d-flex align-items-center justify-content-center flex-column"
-      //       >
-      //         <KTIcon iconName="user" className="fs-1 text-primary" />
-      //         <p className="m-0 fs-1 fw-bold mt-2">100</p>
-      //         <p className="m-0 fs-6 text-muted">Pengguna</p>
-      //       </div>
-      //       <Gap width={80} />
-      //       <div
-      //         style={{
-      //           backgroundImage: `url(${polygonImage})`,
-      //           backgroundRepeat: "no-repeat",
-      //           backgroundSize: "cover",
-      //           backgroundPosition: "center center",
-      //           height: "200px",
-      //           width: "200px",
-      //         }}
-      //         className="d-flex align-items-center justify-content-center flex-column"
-      //       >
-      //         <KTIcon iconName="book" className="fs-1 text-success" />
-      //         <p className="m-0 fs-1 fw-bold mt-2">50</p>
-      //         <p className="m-0 fs-6 text-muted">Pesanan</p>
-      //         <p className="m-0 fs-6 text-muted">Masuk</p>
-      //       </div>
-      //     </div>
-      //   </div>
-      //   <Gap height={25} />
-      // </>
 
-      <div
-        className={`card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end bg-primary mb-2`}
-        // style={{
-        //   backgroundColor: color,
-        //   backgroundImage: `url('${img}')`,
-        // }}
-      >
-        <div className='card-header pt-5'>
-          <div className='card-title d-flex flex-column'>
-            <span className='fs-2hx fw-bold text-white me-2 lh-1 ls-n2'>
-              69
-            </span>
+  // function DetailCalendarPesanan() {
+  //   return (
+  //     // <>
+  //     //   <div className="card p-8">
+  //     //     <div className="d-flex align-items-center justify-content-center">
+  //     //       <div
+  //     //         style={{
+  //     //           backgroundImage: `url(${polygonImage})`,
+  //     //           backgroundRepeat: "no-repeat",
+  //     //           backgroundSize: "cover",
+  //     //           backgroundPosition: "center center",
+  //     //           height: "200px",
+  //     //           width: "200px",
+  //     //         }}
+  //     //         className="d-flex align-items-center justify-content-center flex-column"
+  //     //       >
+  //     //         <KTIcon iconName="user" className="fs-1 text-primary" />
+  //     //         <p className="m-0 fs-1 fw-bold mt-2">100</p>
+  //     //         <p className="m-0 fs-6 text-muted">Pengguna</p>
+  //     //       </div>
+  //     //       <Gap width={80} />
+  //     //       <div
+  //     //         style={{
+  //     //           backgroundImage: `url(${polygonImage})`,
+  //     //           backgroundRepeat: "no-repeat",
+  //     //           backgroundSize: "cover",
+  //     //           backgroundPosition: "center center",
+  //     //           height: "200px",
+  //     //           width: "200px",
+  //     //         }}
+  //     //         className="d-flex align-items-center justify-content-center flex-column"
+  //     //       >
+  //     //         <KTIcon iconName="book" className="fs-1 text-success" />
+  //     //         <p className="m-0 fs-1 fw-bold mt-2">50</p>
+  //     //         <p className="m-0 fs-6 text-muted">Pesanan</p>
+  //     //         <p className="m-0 fs-6 text-muted">Masuk</p>
+  //     //       </div>
+  //     //     </div>
+  //     //   </div>
+  //     //   <Gap height={25} />
+  //     // </>
 
-            <span className='text-white opacity-75 pt-1 fw-semibold fs-6'>
-              {/* {description} */}
-              Test
-            </span>
-          </div>
-        </div>
-        <div className='card-body d-flex align-items-end pt-0'>
-          <div className='d-flex align-items-center flex-column mt-3 w-100'>
-            <div className='d-flex justify-content-between fw-bold fs-6 text-white opacity-75 w-100 mt-auto mb-2'>
-              <span>43 Pending</span>
-              <span>72%</span>
-            </div>
+  //     <div
+  //       className={`card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end bg-primary mb-2`}
+  //       // style={{
+  //       //   backgroundColor: color,
+  //       //   backgroundImage: `url('${img}')`,
+  //       // }}
+  //     >
+  //       <div className='card-header pt-5'>
+  //         <div className='card-title d-flex flex-column'>
+  //           <span className='fs-2hx fw-bold text-white me-2 lh-1 ls-n2'>
+  //             69
+  //           </span>
 
-            <div className='h-8px mx-3 w-100 bg-white bg-opacity-50 rounded'>
-              <div
-                className='bg-white rounded h-8px'
-                role='progressbar'
-                style={{ width: '72%' }}
-                aria-valuenow={50}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //           <span className='text-white opacity-75 pt-1 fw-semibold fs-6'>
+  //             {/* {description} */}
+  //             Test
+  //           </span>
+  //         </div>
+  //       </div>
+  //       <div className='card-body d-flex align-items-end pt-0'>
+  //         <div className='d-flex align-items-center flex-column mt-3 w-100'>
+  //           <div className='d-flex justify-content-between fw-bold fs-6 text-white opacity-75 w-100 mt-auto mb-2'>
+  //             <span>43 Pending</span>
+  //             <span>72%</span>
+  //           </div>
+
+  //           <div className='h-8px mx-3 w-100 bg-white bg-opacity-50 rounded'>
+  //             <div
+  //               className='bg-white rounded h-8px'
+  //               role='progressbar'
+  //               style={{ width: '72%' }}
+  //               aria-valuenow={50}
+  //               aria-valuemin={0}
+  //               aria-valuemax={100}
+  //             ></div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 };

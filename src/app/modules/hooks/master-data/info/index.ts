@@ -17,6 +17,7 @@ export default function useInfo() {
 
   const [info, setInfo] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
   const [formFile, setFormFile] = useState(null);
   const [formData, setFormData] = useState({
     id: null,
@@ -37,6 +38,7 @@ export default function useInfo() {
     if (data) {
       setFormData(data);
       setIsEdit(true);
+      setIsValidated(false);
     } else {
       setFormData({
         id: null,
@@ -53,28 +55,10 @@ export default function useInfo() {
     setIsModalOpen(true);
   };
 
-  const validateForm = (data: any) => {
-    if (
-      !data.name ||
-      !data.file ||
-      !data.title ||
-      !data.content ||
-      !data.status
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setFormFile(null);
+    setIsValidated(false);
   };
 
   const handleChange = (e: any) => {
@@ -308,5 +292,7 @@ export default function useInfo() {
     formData,
     formFile,
     setFormFile,
+    isValidated,
+    setIsValidated,
   };
 }

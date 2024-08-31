@@ -44,6 +44,8 @@ export const SekilasInfo = () => {
     openModal,
     setFormFile,
     setQuery,
+    isValidated,
+    setIsValidated,
   } = useInfo();
 
   const data = useMemo(
@@ -191,6 +193,8 @@ export const SekilasInfo = () => {
           onChangeFile={(e) => setFormFile(e)}
           show={isModalOpen}
           handleClose={closeModal}
+          handleIsValidated={setIsValidated}
+          isValidated={isValidated}
           handleSubmit={() => {
             const formWithFile = {
               ...formData,

@@ -32,19 +32,6 @@ export default function useSeniman() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const validateForm = (data: any) => {
-    if (!data.name || !data.fle || !data.biografi || !data.performanceDesc) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);
