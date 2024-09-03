@@ -53,19 +53,6 @@ export default function usePengguna() {
     setIsModalOpen(true);
   };
 
-  const validateForm = (data: any) => {
-    if (!data.fullName || !data.email || !data.isLocked || !data.phoneNumber) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setIsValidated(false);

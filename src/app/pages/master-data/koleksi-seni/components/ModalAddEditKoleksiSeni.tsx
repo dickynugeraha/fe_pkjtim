@@ -86,7 +86,7 @@ const ModalAddEditKoleksiSeni: FC<PropsModalAddEditSeniman> = ({
         </div>
         <div className="form-group mb-3">
           <label htmlFor="title" className="fw-bold mb-2">
-            Nama Seniman <span className="text-danger">*</span>
+            Nama Seni <span className="text-danger">*</span>
           </label>
           <input
             id="title"

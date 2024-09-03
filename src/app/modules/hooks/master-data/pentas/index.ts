@@ -39,30 +39,6 @@ export default function usePentas() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const validateForm = (data: any) => {
-    if (
-      !data.file ||
-      !data.sinopsis ||
-      !data.title ||
-      !data.namaSanggar ||
-      !data.jumlahPekerjaSeni ||
-      !data.jumlahPelakuSeni ||
-      !data.jumlahPenonton ||
-      !data.startDate ||
-      !data.endDate ||
-      !data.status
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);

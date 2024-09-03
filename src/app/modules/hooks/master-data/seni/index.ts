@@ -29,19 +29,6 @@ export default function useSeni() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const validateForm = (data: any) => {
-    if (!data.file || !data.title || !data.desc) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const openModal = (data = null) => {
     if (data) {
       setFormData(data);

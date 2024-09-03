@@ -72,25 +72,6 @@ export default function useTempat() {
     fetchAllTempat(debouncedQuery);
   }, [debouncedQuery]);
 
-  const validateForm = (data: any) => {
-    if (
-      !data.name ||
-      !data.priceMainEventWeekEnd ||
-      !data.priceMainEventWeekDay ||
-      !data.pricePreEventWeekDay ||
-      !data.pricePreEventWeekEnd
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Semua field harus diisi!",
-        showConfirmButton: false,
-      });
-      return false;
-    }
-    return true;
-  };
-
   const fetchAllTempat = async (Search = "") => {
     setLoading(true);
     try {

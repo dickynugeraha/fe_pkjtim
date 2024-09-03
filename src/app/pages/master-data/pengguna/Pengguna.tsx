@@ -192,7 +192,7 @@ export const Pengguna = () => {
           handleChange={(e) => handleChange(e)}
           show={isModalOpen}
           data={formData}
-          formAdd={isEdit}
+          formAdd={!isEdit}
           handleClose={() => closeModal()}
           isValidated={isValidated}
           handleIsValidated={setIsValidated}
