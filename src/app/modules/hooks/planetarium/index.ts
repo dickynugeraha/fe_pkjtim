@@ -225,6 +225,8 @@ export default function usePlanetarium() {
             title: "Reservasi berhasil ditolak",
             showConfirmButton: false,
             timer: 2000,
+          }).then(() => {
+            window.location.reload();
           });
         } catch (error: any) {
           Swal.fire({
@@ -253,6 +255,8 @@ export default function usePlanetarium() {
             title: "Reservasi berhasil diterima",
             showConfirmButton: false,
             timer: 2000,
+          }).then(() => {
+            window.location.reload();
           });
         } catch (error: any) {
           Swal.fire({

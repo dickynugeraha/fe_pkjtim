@@ -20,6 +20,8 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
 
   const data = useMemo(() => allReservationPlanetarium, [loading]);
 
+  console.log("allReservationPlanetarium", allReservationPlanetarium);
+
   const columns = useMemo(
     () => [
       {

@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   add,
   getAll,
   remove,
   update,
-} from '../../../requests/master-data/tempat-tutup';
-import Swal from 'sweetalert2';
-import { INITIAL_PAGE, DEFAULT_LIMIT } from '../../../../constants/PAGE';
-import globalVar from '../../../../helper/globalVar';
-import { useAuth } from '../../../auth';
+} from "../../../requests/master-data/tempat-tutup";
+import Swal from "sweetalert2";
+import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import globalVar from "../../../../helper/globalVar";
+import { useAuth } from "../../../auth";
 
 export default function useTutupTempat() {
   const { currentUser } = useAuth();
-  const actor = currentUser?.email ?? 'Admin';
+  const actor = currentUser?.email ?? "Admin";
 
   const [tutupTempat, setTutupTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ export default function useTutupTempat() {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
   const openModal = (data = null) => {
@@ -62,7 +62,7 @@ export default function useTutupTempat() {
     fetchAllTutupTempat(debouncedQuery);
   }, [debouncedQuery]);
 
-  const fetchAllTutupTempat = async (Search = '') => {
+  const fetchAllTutupTempat = async (Search = "") => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
@@ -80,8 +80,8 @@ export default function useTutupTempat() {
       setTutupTempat(data);
     } catch (error: any) {
       Swal.fire({
-        icon: 'error',
-        title: 'Gagal get data tutup tempat',
+        icon: "error",
+        title: "Gagal get data tutup tempat",
         text: error.message,
         showConfirmButton: false,
         timer: 2000,
@@ -93,20 +93,17 @@ export default function useTutupTempat() {
   };
 
   const addTutupTempat = async (data: any) => {
-    // const validate = validateForm(data);
-    // if (!validate) return;
-
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan penambahan data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penambahan data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -117,8 +114,8 @@ export default function useTutupTempat() {
           const res = await add(data, actor);
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Berhasil menambah data tutup tempat',
+              icon: "success",
+              title: "Berhasil menambah data tutup tempat",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -128,8 +125,8 @@ export default function useTutupTempat() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal menambahkan data tutup tempat',
+            icon: "error",
+            title: "Gagal menambahkan data tutup tempat",
             text: error.message,
             showConfirmButton: false,
           });
@@ -140,20 +137,17 @@ export default function useTutupTempat() {
   };
 
   const updateTutupTempat = async (data: any) => {
-    // const validate = validateForm(data);
-    // if (!validate) return;
-
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan perubahan data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -165,8 +159,8 @@ export default function useTutupTempat() {
 
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Berhasil mengubah data tutup tempat',
+              icon: "success",
+              title: "Berhasil mengubah data tutup tempat",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -176,8 +170,8 @@ export default function useTutupTempat() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal mengubah data tutup tempat',
+            icon: "error",
+            title: "Gagal mengubah data tutup tempat",
             text: error.message,
             showConfirmButton: false,
           });
@@ -189,16 +183,16 @@ export default function useTutupTempat() {
 
   const deleteTutupTempat = async (id: any) => {
     Swal.fire({
-      title: 'Apakah anda yakin',
-      text: 'Akan melakukan hapus data?!',
-      icon: 'warning',
+      title: "Apakah anda yakin",
+      text: "Akan melakukan hapus data?!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve('Confirmed');
+            resolve("Confirmed");
           }, 1000);
         });
       },
@@ -209,8 +203,8 @@ export default function useTutupTempat() {
           const res = await remove(id, actor);
           if (res) {
             Swal.fire({
-              icon: 'success',
-              title: 'Berhasil menghapus data tutup tempat',
+              icon: "success",
+              title: "Berhasil menghapus data tutup tempat",
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
@@ -219,8 +213,8 @@ export default function useTutupTempat() {
           }
         } catch (error: any) {
           Swal.fire({
-            icon: 'error',
-            title: 'Gagal menghapus data tutup tempat',
+            icon: "error",
+            title: "Gagal menghapus data tutup tempat",
             text: error.message,
             showConfirmButton: false,
           });

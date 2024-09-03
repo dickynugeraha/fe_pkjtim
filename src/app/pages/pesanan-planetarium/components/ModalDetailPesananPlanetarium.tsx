@@ -155,6 +155,13 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             isFile
             urlFile={data.pernyataanPersetujuan}
           />
+          {data.reason && (
+            <DetailIten
+              iconName={"pencil"}
+              title={"Alasan"}
+              desc={data.reason}
+            />
+          )}
         </div>
         {modalAlasan.show && <div className="overlay" />}
         <ModalWrapper
