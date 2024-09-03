@@ -55,36 +55,12 @@ export const FormPesanTempat: FC = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  // const { state }: any = useLocation();
-  let title;
-  switch (params.jenis_tempat) {
-    case "teater_jakarta":
-      title = "Teater Jakarta";
-      break;
-    case "ruang_latihan":
-      title = "Ruang Latihan";
-      break;
-    case "gladi":
-      title = "Gladi Bersih";
-      break;
-    case "shooting":
-      title = "Shooting/ Photo profesional";
-      break;
-    case "plaza_jakarta":
-      title = "Plaza Jakarta";
-      break;
-    case "teater_kecil":
-      title = "Teater Kecil";
-      break;
-
-    default:
-      break;
-  }
+  const { state }: any = useLocation();
 
   return (
     <Content>
       <PageTitle icon="geolocation" breadcrumbs={Breadcrumbs}>
-        {`Form ${title}`}
+        {`Form ${state.jenis_tempat}`}
       </PageTitle>
       <div className="card p-8">
         <div>

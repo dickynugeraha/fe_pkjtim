@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import InputCustom from "../../../_metronic/layout/components/content/InputCustom";
 import { useFormik } from "formik";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Content } from "../../../_metronic/layout/components/content";
 import HeadPage from "../../modules/widgets/components/HeadPage";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import globalVar from "../../helper/globalVar";
+import usePlanetarium from "../../modules/hooks/planetarium";
+import Remining from "./components/Remining";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -28,16 +31,6 @@ const formPesanScheme = Yup.object().shape({
   alamatSekolah: Yup.string().required("alamat sekolah harus diisi"),
   jumlahPeserta: Yup.string().required("Jumlah peserta harus diisi"),
   daerah: Yup.string().required("Daerah harus dipilih"),
-  kodeBooking: Yup.string().required(
-    "Kode booking harus diisi dengan menekan tombol buat kode"
-  ),
-  tanggalMulaiKunjungan: Yup.string().required(
-    "Tanggal mulai kunjungan pentas harus diisi"
-  ),
-  tanggalSelesaiKunjungan: Yup.string().required(
-    "Tanggal selesai kunjungan pentas harus diisi"
-  ),
-  keperluan: Yup.string().required("Keperluan harus dipilih"),
 });
 
 const initialValues = {
@@ -45,16 +38,37 @@ const initialValues = {
   alamatSekolah: "",
   jumlahPeserta: "",
   daerah: "",
-  tanggalMulaiKunjungan: "",
-  tanggalSelesaiKunjungan: "",
-  keperluan: "",
+  fileSuratUndangan: null,
+  fileLembarPernyataan: null,
 };
 
+const now = new Date().toISOString();
+
 export const FormPlanetarium = () => {
+  const {
+    requestReservationPlanetarium,
+    getSingleReservationPlanetarium,
+    singleReservationPlanetarium,
+  } = usePlanetarium();
+  const [fileLembarPernyataan, setFileLembarPernyataan] = useState(null);
+  const [fileSuratUndangan, setFileSuratUndangan] = useState(null);
+
+  console.log("singleReservationPlanetarium", singleReservationPlanetarium);
+
+  const params = useParams();
   const formik = useFormik({
     initialValues,
     validationSchema: formPesanScheme,
-    onSubmit: async (values, { setStatus, setSubmitting }) => {},
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
+      const data = {
+        ...values,
+        id: params.id,
+        contact: "0896785146914651",
+        fileLembarPernyataan: fileLembarPernyataan,
+        fileSuratUndangan: fileSuratUndangan,
+      };
+      requestReservationPlanetarium(data);
+    },
   });
   const { state }: any = useLocation();
   const navigate = useNavigate();
@@ -71,6 +85,13 @@ export const FormPlanetarium = () => {
     { name: "Bekasi", value: "bekasi" },
   ];
 
+  useEffect(() => {
+    getSingleReservationPlanetarium(params.id);
+  }, [params.id]);
+
+  const expired = new Date(singleReservationPlanetarium.expiredAt);
+  const checkingNumber = expired.getTime();
+
   return (
     <>
       <PageTitle
@@ -83,15 +104,20 @@ export const FormPlanetarium = () => {
       <Content>
         <div className="card">
           <div className="p-8">
-            <div>
-              <p className="fw-bold">Tanggal Pemesanan</p>
-              <input
-                type="date"
-                disabled
-                className="p-2 rounded form-control form-control-solid"
-                style={{ width: "200px" }}
-                value={state.bookingDate}
-              />
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <p className="fw-bold">Tanggal Pemesanan</p>
+                <input
+                  type="date"
+                  disabled
+                  className="p-2 rounded form-control form-control-solid"
+                  style={{ width: "200px" }}
+                  value={globalVar.formatInputDate(new Date())}
+                />
+              </div>
+              {!isNaN(checkingNumber) && (
+                <Remining expired={expired} onFinishTime={() => {}} />
+              )}
             </div>
             <Gap height={24} />
             <form onSubmit={formik.handleSubmit} noValidate>
@@ -124,7 +150,16 @@ export const FormPlanetarium = () => {
                       Daerah
                     </label>
                     <Gap height={10} />
-                    <select className="form-select" name="daerah" id="daerah">
+                    <select
+                      className="form-select"
+                      name="daerah"
+                      id="daerah"
+                      value={formik.values.daerah}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    >
+                      <option>--Pilih satu--</option>
+
                       {optionRegion.map((region) => (
                         <option value={region.value}>{region.name}</option>
                       ))}
@@ -162,83 +197,18 @@ export const FormPlanetarium = () => {
                     <Gap height={10} />
                     <div className="d-flex align-items-center">
                       <input
-                        id="tanggalMulaiKunjungan"
-                        name="tanggalMulaiKunjungan"
+                        id="startDate"
+                        name="startDate"
                         type="date"
-                        value={formik.values.tanggalMulaiKunjungan}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        className="form-control form-control-solid"
-                        style={{ width: "200px" }}
-                      />
-                      <p className="m-0 mx-5">s/d</p>
-                      <input
-                        id="tanggalSelesaiKunjungan"
-                        name="tanggalSelesaiKunjungan"
-                        type="date"
-                        value={formik.values.tanggalSelesaiKunjungan}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        value={state.reservationDate}
+                        readOnly
                         className="form-control form-control-solid"
                         style={{ width: "200px" }}
                       />
                     </div>
                   </div>
-                  {(formik.errors.tanggalSelesaiKunjungan ||
-                    formik.errors.tanggalMulaiKunjungan) && (
-                    <div className="fv-plugins-message-container">
-                      <span role="alert" className="text-danger">
-                        {`${formik.errors.tanggalSelesaiKunjungan} ${formik.errors.tanggalMulaiKunjungan}`}
-                      </span>
-                    </div>
-                  )}
                 </div>
               </div>
-              {/* <div className="row">
-              <div className="col">
-                <div>
-                  <p className="fw-bold">Keperluan</p>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      type="radio"
-                      name="keperluan"
-                      id="peneropongan"
-                      value={"peneropongan"}
-                      checked={formik.values.keperluan === "peneropongan"}
-                    />
-                    <label className="form-check-label" htmlFor="peneropongan">
-                      Peneropongan benda langit
-                    </label>
-                  </div>
-                  <Gap height={12} />
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      type="radio"
-                      name="keperluan"
-                      id="pengenalan"
-                      value={"pengenalan"}
-                      checked={formik.values.keperluan === "pengenalan"}
-                    />
-                    <label className="form-check-label" htmlFor="pengenalan">
-                      Pengenalan benda langit
-                    </label>
-                  </div>
-                </div>
-                {formik.errors.keperluan && (
-                  <div className="fv-plugins-message-container">
-                    <span role="alert" className="text-danger">
-                      {`${formik.errors.keperluan}`}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div> */}
               <Gap height={24} />
               <div className="row">
                 <label htmlFor="" className="fw-bold fs-3">
@@ -254,7 +224,15 @@ export const FormPlanetarium = () => {
                   <div className="me-lg-4">
                     <label className="fw-bold">Surat undangan resmi</label>
                     <Gap height={10} />
-                    <input type="file" className="form-control" />
+                    <input
+                      id="fileSuratUndangan"
+                      name="fileSuratUndangan"
+                      type="file"
+                      onChange={(e: any) =>
+                        setFileSuratUndangan(e.target.files[0])
+                      }
+                      className="form-control"
+                    />
                     <p className="text-muted m-0">
                       *) Surat Undangan Resmi WAJIB ditandatangani Kepala
                       Sekolah
@@ -265,7 +243,15 @@ export const FormPlanetarium = () => {
                       Lembar Pernyataan Persetujuan Peserta
                     </label>
                     <Gap height={10} />
-                    <input type="file" className="form-control" />
+                    <input
+                      id="fileLembarPersetujuan"
+                      name="fileLembarPersetujuan"
+                      type="file"
+                      onChange={(e: any) =>
+                        setFileLembarPernyataan(e.target.files[0])
+                      }
+                      className="form-control"
+                    />
                     <p className="text-muted m-0">
                       *) Formulir dapat diunduh di bit.ly/pernyataanPGS
                     </p>

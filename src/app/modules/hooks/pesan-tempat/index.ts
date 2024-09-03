@@ -50,15 +50,17 @@ export default function usePesanTempat() {
           };
           console.log("payload", payload);
 
-          await initBooking(payload);
-
+          const res = await initBooking(payload);
+          const reserveData = res.data.data;
           Swal.fire({
             icon: "success",
             title: "Berhasil melakukan reservasi",
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            navigate(`/pesan-tempat/${choosenTempat.id}`);
+            navigate(`/form-pesan-tempat/${reserveData.id}`, {
+              state: { nama_tempat: choosenTempat.name },
+            });
           });
         } catch (error: any) {
           Swal.fire({

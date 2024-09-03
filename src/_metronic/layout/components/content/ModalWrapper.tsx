@@ -1,6 +1,7 @@
 import React, { ReactElement, ReactNode } from "react";
 import { Modal } from "react-bootstrap";
 import { KTSVG } from "../../../helpers";
+import Gap from "./Gap";
 
 type Props = {
   show: boolean;
@@ -42,7 +43,7 @@ const ModalWrapper: React.FC<Props> = ({
         </div>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer className="d-flex justify-content-between align-items-center">
+      <Modal.Footer className="d-flex align-items-center">
         <div
           className="btn btn-sm btn-light"
           role="button"
@@ -51,6 +52,7 @@ const ModalWrapper: React.FC<Props> = ({
         >
           Tutup
         </div>
+        <Gap width={4} />
         <div>{footerCustom}</div>
       </Modal.Footer>
     </Modal>

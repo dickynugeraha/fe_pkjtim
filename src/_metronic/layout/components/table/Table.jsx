@@ -56,8 +56,6 @@ const Table = ({
     setPageSize(limit);
   }, [limit, setPageSize]);
 
-  console.log("LENGTH", data.length);
-
   let content;
   if (loading) {
     content = <UsersListLoading />;

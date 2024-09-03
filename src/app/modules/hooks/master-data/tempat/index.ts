@@ -246,10 +246,6 @@ export default function useTempat() {
     });
   };
 
-  useEffect(() => {
-    fetchAllTempat();
-  }, []);
-
   return {
     tempat,
     addTempat,

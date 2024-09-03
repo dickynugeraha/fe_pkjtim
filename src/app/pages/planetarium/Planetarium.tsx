@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
-import { useNavigate } from "react-router-dom";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import Kegiatan from "./components/Kegiatan";
-import { KTIcon } from "../../../_metronic/helpers";
 import { Button, Col, Row, Card } from "react-bootstrap";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
@@ -26,7 +24,6 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Planetarium = () => {
-  const navigate = useNavigate();
   const { nextStepHandler } = usePlanetarium();
   const [bookingDate, setBookingDate] = useState("");
   const [termIsCheck, setTermIsCheck] = useState(false);
@@ -42,21 +39,7 @@ export const Planetarium = () => {
     percobaan_roket_air: false,
   });
 
-  const nextButtonSubmit = () => {
-    if (!bookingDate) {
-      setShowFailedNext({
-        isShow: true,
-        title: "Gagal Melakukan Pesanan",
-        desc: "Silahkan isi form booking",
-        variant: "failed",
-      });
-      return;
-    }
-
-    navigate(`/form-planetarium`, {
-      state: { bookingDate: bookingDate },
-    });
-  };
+  console.log("new Date()", new Date().toISOString());
 
   return (
     <>

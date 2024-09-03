@@ -60,10 +60,7 @@ const PenggunaRoutes = () => {
         />
         <Route path="dashboard/home" element={<Home />} />
         <Route path="pesan-tempat" element={<PesanTempat />} />
-        <Route
-          path="pesan-tempat/:jenis_tempat"
-          element={<FormPesanTempat />}
-        />
+        <Route path="form-pesan-tempat/:id" element={<FormPesanTempat />} />
         <Route path="faq" element={<Faq />} />
         <Route path="builder" element={<BuilderPageWrapper />} />
         <Route path="menu-test" element={<MenuTestPage />} />
@@ -71,7 +68,7 @@ const PenggunaRoutes = () => {
         <Route path="pesanan-saya" element={<PesananSaya />} />
         <Route path="tentang-kami" element={<TentangKami />} />
         <Route path="planetarium" element={<Planetarium />} />
-        <Route path="form-planetarium" element={<FormPlanetarium />} />
+        <Route path="form-planetarium/:id" element={<FormPlanetarium />} />
         <Route path="pesanan-masuk" element={<PesananMasuk />} />
         <Route path="pesanan-planet" element={<PesananPlanetarium />} />
         <Route path="kurasi-pentas" element={<KurasiPentas />} />
