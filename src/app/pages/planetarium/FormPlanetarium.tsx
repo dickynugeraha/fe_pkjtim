@@ -10,6 +10,7 @@ import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
 import Remining from "./components/Remining";
+import Swal from "sweetalert2";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -42,7 +43,7 @@ const initialValues = {
   fileLembarPernyataan: null,
 };
 
-const now = new Date().toISOString();
+const now: any = new Date();
 
 export const FormPlanetarium = () => {
   const {
@@ -89,7 +90,21 @@ export const FormPlanetarium = () => {
     getSingleReservationPlanetarium(params.id);
   }, [params.id]);
 
-  const expired = new Date(singleReservationPlanetarium.expiredAt);
+  const expired = new Date(singleReservationPlanetarium.expiredAt + "Z");
+
+  if (now > expired) {
+    Swal.fire({
+      icon: "error",
+      title: "EROR",
+      text: "Pesanan anda sudah kadaluarsa",
+      showConfirmButton: false,
+    }).then(() => {
+      navigate("/pesanan-saya");
+    });
+
+    return;
+  }
+
   const checkingNumber = expired.getTime();
 
   return (
@@ -116,7 +131,20 @@ export const FormPlanetarium = () => {
                 />
               </div>
               {!isNaN(checkingNumber) && (
-                <Remining expired={expired} onFinishTime={() => {}} />
+                <Remining
+                  expired={expired}
+                  now={now}
+                  onFinishTime={() => {
+                    Swal.fire({
+                      icon: "error",
+                      title: "EROR",
+                      text: "Pesanan anda sudah kadaluarsa",
+                      showConfirmButton: false,
+                    }).then(() => {
+                      navigate("/pesanan-saya");
+                    });
+                  }}
+                />
               )}
             </div>
             <Gap height={24} />

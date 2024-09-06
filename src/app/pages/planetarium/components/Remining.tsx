@@ -1,67 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const now: any = new Date();
-
 type Props = {
+  now: any;
   expired: any;
   onFinishTime: () => void;
 };
 
 const Remining: React.FC<Props> = ({ expired, onFinishTime }) => {
-  const navigate = useNavigate();
-  const expiredConvert: any = new Date(expired);
-  const gapTime = now - expiredConvert;
-  const remainingSeconds = gapTime % 60;
-
-  console.log("now", now);
-  console.log("expired", expired);
-
-  if (now > expired) {
-    Swal.fire({
-      icon: "error",
-      title: "EROR",
-      text: "Pesanan anda sudah kadaluarsa",
-      showConfirmButton: false,
-    }).then(() => {
-      navigate("/pesanan-saya");
-    });
-
-    return;
-  }
-
-  const [timeRemaining, setTimeRemaining] = useState<number>(remainingSeconds);
+  const [timeLeft, setTimeLeft] = useState<any>({});
 
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      setTimeRemaining((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(timerInterval);
-          onFinishTime();
-          Swal.fire({
-            icon: "error",
-            title: "EROR",
-            text: "Pesanan anda sudah kadaluarsa",
-            showConfirmButton: false,
-          });
-          console.log("Countdown complete!");
-          return 0;
-        } else {
-          return prevTime - 1;
-        }
-      });
-    }, 1000);
+    const calculateTimeLeft = () => {
+      const now: any = new Date();
+      const expirationTime: any = new Date(expired);
+      const difference = expirationTime - now;
 
-    return () => clearInterval(timerInterval);
-  }, []);
+      if (difference > 0) {
+        const hours = Math.floor(difference / (1000 * 60 * 60));
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        setTimeLeft({ hours, minutes, seconds });
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        onFinishTime();
+      }
+    };
 
-  const minutes = Math.floor((timeRemaining % 3600) / 60);
-  const seconds = timeRemaining % 60;
+    // Initial calculation
+    calculateTimeLeft();
+
+    // Update countdown every second
+    const intervalId = setInterval(calculateTimeLeft, 1000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [expired]);
+
+  console.log(`0${timeLeft.minutes}:${timeLeft.seconds}`);
+
   return (
     <div className="d-block badge badge-light-warning p-6 ">
       <p className="fs-6 p-0 m-0">
-        Selesaikan pesanan sebelum ({`0${minutes}:${seconds}`})
+        Selesaikan pesanan sebelum ({`0${timeLeft.minutes}:${timeLeft.seconds}`}
+        )
       </p>
       {/* <p className="p-0 m-0 fs-6 text-right">{`0${minutes}:${seconds}`}</p> */}
     </div>
