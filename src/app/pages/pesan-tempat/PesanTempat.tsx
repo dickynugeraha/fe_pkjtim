@@ -25,16 +25,12 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 export const PesanTempat: FC = () => {
+  const [choosenTempat, setChoosenTempat] = useState<any>();
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+
   const { tempat, loading } = useTempat();
-  const {
-    endDate,
-    startDate,
-    nextStepHandler,
-    setChoosenTempat,
-    setEndDate,
-    setStartDate,
-    choosenTempat,
-  } = usePesanTempat();
+  const { nextStepHandler } = usePesanTempat();
   const [termIsCheck, setTermIsCheck] = useState(false);
 
   const Persetujuan = () => {
@@ -126,7 +122,7 @@ export const PesanTempat: FC = () => {
               type="button"
               className="btn btn-primary"
               style={{ width: "150px" }}
-              onClick={nextStepHandler}
+              onClick={() => nextStepHandler(choosenTempat, startDate, endDate)}
             >
               Selanjutnya
             </button>

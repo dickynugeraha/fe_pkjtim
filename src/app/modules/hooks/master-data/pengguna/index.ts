@@ -101,6 +101,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -140,6 +141,7 @@ export default function usePengguna() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {

@@ -207,7 +207,9 @@ export default function usePlanetarium() {
         showConfirmButton: false,
       });
     }
-    setLoading(false);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const rejectReservation = async (data: any) => {

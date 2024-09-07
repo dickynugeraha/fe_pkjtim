@@ -12,3 +12,9 @@ export const initBooking = (data: any) => {
     }
   );
 };
+
+export const getSingleReservation = (id: number) => {
+  return axiosConfig.get(
+    `${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${id}`
+  );
+};

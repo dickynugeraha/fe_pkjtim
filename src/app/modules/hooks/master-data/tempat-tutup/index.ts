@@ -99,6 +99,7 @@ export default function useTutupTempat() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Ya",
+      showLoaderOnConfirm: true,
       cancelButtonText: "Tidak",
       preConfirm: () => {
         return new Promise((resolve) => {
@@ -144,6 +145,7 @@ export default function useTutupTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -189,6 +191,7 @@ export default function useTutupTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {

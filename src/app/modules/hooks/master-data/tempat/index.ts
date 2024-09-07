@@ -102,6 +102,7 @@ export default function useTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -148,6 +149,7 @@ export default function useTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -192,6 +194,7 @@ export default function useTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -229,19 +232,19 @@ export default function useTempat() {
 
   return {
     tempat,
+    loading,
+    isPreEvent,
+    isModalOpen,
+    formData,
+    isEdit,
     addTempat,
     updateTempat,
     deleteTempat,
     fetchAllTempat,
-    loading,
     openModal,
     setIsPreEvent,
     setQuery,
-    isPreEvent,
-    isModalOpen,
-    formData,
     handleChange,
-    isEdit,
     closeModal,
   };
 }

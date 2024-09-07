@@ -28,10 +28,42 @@ function formatInputDate(dateStr: any) {
   return formatted;
 }
 
+function formatInputDateFromDB(dateStr: any) {
+  const dateObj = new Date(dateStr);
+
+  const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
+
+  return formattedDate;
+}
+
+function createCodeBooking(
+  bookingNow: string,
+  startDate: any,
+  endDate: any,
+  idBook: string
+) {
+  const initial = "TB";
+  let [year, month, day] = bookingNow.split("-");
+  const booking = day + month + year.slice(-2);
+
+  const start: any = new Date(startDate);
+  const end: any = new Date(endDate);
+  const timeDifference = end - start;
+
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24) + 1;
+  const threeCharId = idBook.slice(-3);
+
+  return `${initial}${booking}0${daysDifference}${threeCharId}`;
+}
+
 export default {
   BASE_URL,
   today,
+  createCodeBooking,
   getThreeMonthsFromToday,
+  formatInputDateFromDB,
   rupiahFormat,
   formatDate,
   formatInputDate,

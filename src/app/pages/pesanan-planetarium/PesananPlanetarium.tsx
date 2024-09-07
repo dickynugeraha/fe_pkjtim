@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import { PageTitle, PageLink } from "../../../_metronic/layout/core/PageData";
-import { Card } from "react-bootstrap";
 import Table from "../../../_metronic/layout/components/table/Table";
 import ModalDetailPesananPlanetarium from "./components/ModalDetailPesananPlanetarium";
 import usePlanetarium from "../../modules/hooks/planetarium";

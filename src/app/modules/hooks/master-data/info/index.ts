@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   add,
   getAll,
@@ -79,7 +79,7 @@ export default function useInfo() {
     searchInfo(debouncedQuery);
   }, [debouncedQuery]);
 
-  const fetchAllInfo = async () => {
+  const fetchAllInfo = useCallback(async () => {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
@@ -108,34 +108,37 @@ export default function useInfo() {
     setInterval(() => {
       setLoading(false);
     }, 1000);
-  };
+  }, [info]);
 
-  const searchInfo = async (Search: string) => {
-    setLoading(true);
-    try {
-      const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
-      const data: any[] = [];
-      for (let index = 0; index < res.data.data.data.length; index++) {
-        const ell = res.data.data.data[index];
-        const dataWithStream = {
-          ...ell,
-          file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
-        };
-        data.push(dataWithStream);
+  const searchInfo = useCallback(
+    async (Search: string) => {
+      setLoading(true);
+      try {
+        const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
+        const data: any[] = [];
+        for (let index = 0; index < res.data.data.data.length; index++) {
+          const ell = res.data.data.data[index];
+          const dataWithStream = {
+            ...ell,
+            file: `${ENDPOINTS.NEWS.NEWS_IMAGE}/${ell.id}/Image?isStream=true`,
+          };
+          data.push(dataWithStream);
+        }
+        setInfo(data);
+      } catch (error: any) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal get data info",
+          text: error.message,
+          showConfirmButton: false,
+        });
       }
-      setInfo(data);
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal get data info",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
-    setInterval(() => {
-      setLoading(false);
-    }, 1000);
-  };
+      setInterval(() => {
+        setLoading(false);
+      }, 1000);
+    },
+    [info]
+  );
 
   const addInfo = async (data: any) => {
     // const validate = validateForm(data);
@@ -148,6 +151,7 @@ export default function useInfo() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -194,6 +198,7 @@ export default function useInfo() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -237,6 +242,7 @@ export default function useInfo() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Ya",
+      showLoaderOnConfirm: true,
       cancelButtonText: "Tidak",
       preConfirm: () => {
         return new Promise((resolve) => {
@@ -294,5 +300,6 @@ export default function useInfo() {
     setFormFile,
     isValidated,
     setIsValidated,
+    fetchAllInfo,
   };
 }

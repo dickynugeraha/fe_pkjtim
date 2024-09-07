@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Content } from "../../../_metronic/layout/components/content";
 import { useFormik } from "formik";
@@ -7,6 +7,9 @@ import * as Yup from "yup";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import globalVar from "../../helper/globalVar";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import useTempat from "../../modules/hooks/master-data/tempat";
+import usePesanTempat from "../../modules/hooks/pesan-tempat";
+import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -30,10 +33,6 @@ const formPesanScheme = Yup.object().shape({
     "Kode booking harus diisi dengan menekan tombol buat kode"
   ),
   alamatSanggar: Yup.string().required("Alamat sanggar harus diisi"),
-  tanggalMulaiPentas: Yup.string().required("Tanggal mulai pentas harus diisi"),
-  tanggalSelesaiPentas: Yup.string().required(
-    "Tanggal selesai pentas harus diisi"
-  ),
 });
 
 const initialValues = {
@@ -42,11 +41,10 @@ const initialValues = {
   kodeBooking: "",
   tarif: "",
   alamatSanggar: "",
-  tanggalMulaiPentas: "",
-  tanggalSelesaiPentas: "",
 };
 
 export const FormPesanTempat: FC = () => {
+  const [codeBooking, setCodeBooking] = useState<string>("");
   const formik = useFormik({
     initialValues,
     validationSchema: formPesanScheme,
@@ -55,12 +53,44 @@ export const FormPesanTempat: FC = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  const { state }: any = useLocation();
+
+  const { getSinglePesanTempat, singleReservationTempat, loading } =
+    usePesanTempat();
+  const bookingNow = globalVar.formatInputDate(new Date());
+  const endDate = globalVar.formatInputDateFromDB(
+    singleReservationTempat.endDate
+  );
+  const startDate = globalVar.formatInputDateFromDB(
+    singleReservationTempat.startDate
+  );
+  useEffect(() => {
+    getSinglePesanTempat(params.id);
+  }, []);
+
+  const createBookingCode = () => {
+    const bookingCode = globalVar.createCodeBooking(
+      bookingNow,
+      startDate,
+      endDate,
+      singleReservationTempat.id
+    );
+    setCodeBooking(bookingCode);
+  };
+
+  const tarifCalculation = () => {
+    const start: any = new Date(startDate);
+    const end: any = new Date(endDate);
+    const timeDifference = end - start;
+
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24) + 1;
+
+    // return daysDifference *
+  };
 
   return (
     <Content>
       <PageTitle icon="geolocation" breadcrumbs={Breadcrumbs}>
-        {`Form ${state.jenis_tempat}`}
+        {`Form ${loading ? "..." : singleReservationTempat?.tempat?.name}`}
       </PageTitle>
       <div className="card p-8">
         <div>
@@ -68,7 +98,7 @@ export const FormPesanTempat: FC = () => {
           <input
             type="date"
             disabled
-            value={globalVar.formatInputDate(new Date())}
+            value={bookingNow}
             className="p-2 rounded form-control form-control-solid"
             style={{ width: "200px" }}
           />
@@ -196,31 +226,15 @@ export const FormPesanTempat: FC = () => {
                         id="tanggalMulaiPentas"
                         {...formik.getFieldProps("tanggalMulaiPentas")}
                         className={clsx(
-                          "form-control form-control-solid form-control-solid",
-                          {
-                            "is-invalid":
-                              formik.touched.tanggalMulaiPentas &&
-                              formik.errors.tanggalMulaiPentas,
-                          },
-                          {
-                            "is-valid":
-                              formik.touched.tanggalMulaiPentas &&
-                              !formik.errors.tanggalMulaiPentas,
-                          }
+                          "form-control form-control-solid form-control-solid"
                         )}
+                        value={startDate}
                         type="date"
                         min={globalVar.getThreeMonthsFromToday()}
                         name="tanggalMulaiPentas"
                         autoComplete="off"
+                        readOnly
                       />
-                      {formik.touched.tanggalMulaiPentas &&
-                        formik.errors.tanggalMulaiPentas && (
-                          <div className="fv-plugins-message-container">
-                            <span role="alert" className="text-danger">
-                              {formik.errors.tanggalMulaiPentas}
-                            </span>
-                          </div>
-                        )}
                     </div>
                     <p className="m-0 mx-5">s/d</p>
                     <div style={{ width: "100%" }}>
@@ -228,31 +242,15 @@ export const FormPesanTempat: FC = () => {
                         id="tanggalSelesaiPentas"
                         {...formik.getFieldProps("tanggalSelesaiPentas")}
                         className={clsx(
-                          "form-control form-control-solid form-control-solid",
-                          {
-                            "is-invalid":
-                              formik.touched.tanggalSelesaiPentas &&
-                              formik.errors.tanggalSelesaiPentas,
-                          },
-                          {
-                            "is-valid":
-                              formik.touched.tanggalSelesaiPentas &&
-                              !formik.errors.tanggalSelesaiPentas,
-                          }
+                          "form-control form-control-solid form-control-solid"
                         )}
                         min={globalVar.getThreeMonthsFromToday()}
                         type="date"
                         name="tanggalSelesaiPentas"
                         autoComplete="off"
+                        value={endDate}
+                        readOnly
                       />
-                      {formik.touched.tanggalSelesaiPentas &&
-                        formik.errors.tanggalSelesaiPentas && (
-                          <div className="fv-plugins-message-container">
-                            <span role="alert" className="text-danger">
-                              {formik.errors.tanggalSelesaiPentas}
-                            </span>
-                          </div>
-                        )}
                     </div>
                   </div>
                 </div>
@@ -289,16 +287,16 @@ export const FormPesanTempat: FC = () => {
                     type="text"
                     name="kodeBooking"
                     autoComplete="off"
-                    placeholder="Recipient's username"
-                    aria-label="Recipient's username"
                     aria-describedby="button-addon2"
+                    value={codeBooking}
                   />
                   <button
                     className="btn btn-light-primary"
                     type="button"
                     id="button-addon2"
+                    onClick={createBookingCode}
                   >
-                    Button
+                    Buat kode
                   </button>
                 </div>
                 {formik.touched.kodeBooking && formik.errors.kodeBooking && (
@@ -323,34 +321,16 @@ export const FormPesanTempat: FC = () => {
                       </label>
                       <div style={{ width: "100%" }}>
                         <input
-                          id="tanggalSelesaiPentas"
-                          {...formik.getFieldProps("tanggalSelesaiPentas")}
+                          id="tanggalMainEvent"
+                          {...formik.getFieldProps("tanggalMainEvent")}
                           className={clsx(
-                            "form-control form-control-solid form-control-solid",
-                            {
-                              "is-invalid":
-                                formik.touched.tanggalSelesaiPentas &&
-                                formik.errors.tanggalSelesaiPentas,
-                            },
-                            {
-                              "is-valid":
-                                formik.touched.tanggalSelesaiPentas &&
-                                !formik.errors.tanggalSelesaiPentas,
-                            }
+                            "form-control form-control-solid form-control-solid"
                           )}
                           min={globalVar.getThreeMonthsFromToday()}
                           type="date"
-                          name="tanggalSelesaiPentas"
+                          name="tanggalMainEvent"
                           autoComplete="off"
                         />
-                        {formik.touched.tanggalSelesaiPentas &&
-                          formik.errors.tanggalSelesaiPentas && (
-                            <div className="fv-plugins-message-container">
-                              <span role="alert" className="text-danger">
-                                {formik.errors.tanggalSelesaiPentas}
-                              </span>
-                            </div>
-                          )}
                       </div>
                     </div>
                     <div className="col mt-4 mt-md-0">
@@ -362,34 +342,16 @@ export const FormPesanTempat: FC = () => {
                       </label>
                       <div style={{ width: "100%" }}>
                         <input
-                          id="tanggalSelesaiPentas"
-                          {...formik.getFieldProps("tanggalSelesaiPentas")}
+                          id="jumlahHari"
+                          {...formik.getFieldProps("jumlahHari")}
                           className={clsx(
-                            "form-control form-control-solid form-control-solid",
-                            {
-                              "is-invalid":
-                                formik.touched.tanggalSelesaiPentas &&
-                                formik.errors.tanggalSelesaiPentas,
-                            },
-                            {
-                              "is-valid":
-                                formik.touched.tanggalSelesaiPentas &&
-                                !formik.errors.tanggalSelesaiPentas,
-                            }
+                            "form-control form-control-solid form-control-solid"
                           )}
                           min={globalVar.getThreeMonthsFromToday()}
                           type="number"
-                          name="tanggalSelesaiPentas"
+                          name="jumlahHari"
                           autoComplete="off"
                         />
-                        {formik.touched.tanggalSelesaiPentas &&
-                          formik.errors.tanggalSelesaiPentas && (
-                            <div className="fv-plugins-message-container">
-                              <span role="alert" className="text-danger">
-                                {formik.errors.tanggalSelesaiPentas}
-                              </span>
-                            </div>
-                          )}
                       </div>
                     </div>
                   </div>

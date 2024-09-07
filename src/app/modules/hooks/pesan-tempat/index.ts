@@ -1,20 +1,43 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { initBooking } from "../../requests/pesan-tempat";
+import { getSingleReservation, initBooking } from "../../requests/pesan-tempat";
 import { useAuth } from "../../auth";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [choosenTempat, setChoosenTempat] = useState<any>();
-  const [startDate, setStartDate] = useState<any>();
-  const [endDate, setEndDate] = useState<any>();
+  const [singleReservationTempat, setSingleReservationTempat] = useState<any>(
+    {}
+  );
 
-  const nextStepHandler = async () => {
-    console.log("choosenTempat", choosenTempat);
+  const getSinglePesanTempat = async (id: any) => {
+    setLoading(true);
+    try {
+      const res = await getSingleReservation(id);
+      const reservation = res.data.data;
+      console.log("reservation", reservation);
 
+      setSingleReservationTempat(reservation);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Gagal mengambil data",
+        showConfirmButton: false,
+      });
+    }
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const nextStepHandler = async (
+    choosenTempat: any,
+    startDate: any,
+    endDate: any
+  ) => {
     if (!choosenTempat || !startDate) {
       Swal.fire({
         icon: "error",
@@ -32,6 +55,7 @@ export default function usePesanTempat() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -48,7 +72,6 @@ export default function usePesanTempat() {
             startDate: startDate,
             endDate: endDate,
           };
-          console.log("payload", payload);
 
           const res = await initBooking(payload);
           const reserveData = res.data.data;
@@ -59,7 +82,11 @@ export default function usePesanTempat() {
             timer: 2000,
           }).then(() => {
             navigate(`/form-pesan-tempat/${reserveData.id}`, {
-              state: { nama_tempat: choosenTempat.name },
+              state: {
+                namaTempat: choosenTempat.name,
+                startDate: startDate,
+                endDate: endDate,
+              },
             });
           });
         } catch (error: any) {
@@ -75,12 +102,9 @@ export default function usePesanTempat() {
   };
 
   return {
-    setStartDate,
-    startDate,
-    endDate,
-    setChoosenTempat,
-    setEndDate,
+    singleReservationTempat,
+    loading,
+    getSinglePesanTempat,
     nextStepHandler,
-    choosenTempat,
   };
 }

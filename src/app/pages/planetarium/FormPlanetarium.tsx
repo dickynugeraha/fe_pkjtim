@@ -228,7 +228,9 @@ export const FormPlanetarium = () => {
                         id="startDate"
                         name="startDate"
                         type="date"
-                        value={state.reservationDate}
+                        value={globalVar.formatInputDateFromDB(
+                          singleReservationPlanetarium.tanggalPemesanan
+                        )}
                         readOnly
                         className="form-control form-control-solid"
                         style={{ width: "200px" }}

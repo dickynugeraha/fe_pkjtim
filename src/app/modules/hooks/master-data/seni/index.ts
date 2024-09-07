@@ -70,9 +70,11 @@ export default function useSeni() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
+      const seni = res.data.data.data;
+
       const data: any[] = [];
-      for (let index = 0; index < res.data.data.length; index++) {
-        const ell = res.data.data[index];
+      for (let index = 0; index < seni.length; index++) {
+        const ell = seni[index];
         const imageUrl: any = `${ENDPOINTS.SENI.SENI_IMAGE}/${ell.id}/Image?isStream=false`;
         const resBase64 = await axiosConfig.get(imageUrl);
         const base64 = `data:image/png;base64,${resBase64.data.data.fileContents}`;
@@ -136,6 +138,7 @@ export default function useSeni() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -155,8 +158,8 @@ export default function useSeni() {
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
-              closeModal();
               fetchAllSeniman();
+              closeModal();
             });
           }
         } catch (error: any) {
@@ -182,6 +185,7 @@ export default function useSeni() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -226,6 +230,7 @@ export default function useSeni() {
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
       preConfirm: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
