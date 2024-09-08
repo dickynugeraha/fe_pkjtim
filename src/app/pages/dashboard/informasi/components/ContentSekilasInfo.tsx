@@ -52,7 +52,7 @@ const ContentSekilasInfo: FC<PropsSekilasInfo> = ({ data, loading }) => {
       </div>
     );
     if (data.length === 0) {
-      content = <p>Data tidak ditemukan</p>;
+      content = <p>Data tidak tersedia</p>;
     }
   }
   return (

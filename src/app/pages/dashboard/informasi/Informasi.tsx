@@ -58,11 +58,13 @@ const DashboardPage: FC = () => {
 
   const newInfo: any[] = [];
   info.map((sn) => {
-    newInfo.push({
-      file: sn.file,
-      title: sn.title,
-      desc: sn.content,
-    });
+    if (sn.status === "PUBLISHED") {
+      newInfo.push({
+        file: sn.file,
+        title: sn.title,
+        desc: sn.content,
+      });
+    }
   });
   const newSeni: any[] = [];
   seni.map((sn) => {
@@ -74,11 +76,13 @@ const DashboardPage: FC = () => {
   });
   const newPementasan: any[] = [];
   pementasan.map((pn) => {
-    newPementasan.push({
-      file: pn.file,
-      title: pn.title,
-      desc: pn.sinopsis,
-    });
+    if (pn.status === "PUBLISHED") {
+      newPementasan.push({
+        file: pn.file,
+        title: pn.title,
+        desc: pn.sinopsis,
+      });
+    }
   });
   const newSeniman: any[] = [];
   seniman.map((pn) => {
@@ -88,6 +92,11 @@ const DashboardPage: FC = () => {
       desc: pn.performanceDesc,
     });
   });
+
+  console.log("seni", seni);
+  console.log("pementasan", pementasan);
+  console.log("info", info);
+  console.log("seniman", seniman);
 
   return (
     <Content>

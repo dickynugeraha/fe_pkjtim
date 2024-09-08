@@ -70,14 +70,16 @@ export const DetailInformasi = () => {
         res = await getAllInfo(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          const imageUrl: any = `${ENDPOINTS.NEWS.NEWS_IMAGE}/${dt.id}/Image?isStream=true`;
-          newData.push({
-            id: dt.id,
-            file: imageUrl,
-            title: dt.title,
-            desc: dt.content,
-            createdAt: dt.createdAt,
-          });
+          if (dt.status === "PUBLISHED") {
+            const imageUrl: any = `${ENDPOINTS.NEWS.NEWS_IMAGE}/${dt.id}/Image?isStream=true`;
+            newData.push({
+              id: dt.id,
+              file: imageUrl,
+              title: dt.title,
+              desc: dt.content,
+              createdAt: dt.createdAt,
+            });
+          }
         });
         setData(newData);
         break;
@@ -116,14 +118,16 @@ export const DetailInformasi = () => {
         res = await getAllPentas(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          const imageUrl: any = `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${dt.id}/Image?isStream=true`;
-          newData.push({
-            id: dt.id,
-            file: imageUrl,
-            title: dt.title,
-            desc: dt.sinopsis,
-            createdAt: dt.createdAt,
-          });
+          if (dt.status === "PUBLISHED") {
+            const imageUrl: any = `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${dt.id}/Image?isStream=true`;
+            newData.push({
+              id: dt.id,
+              file: imageUrl,
+              title: dt.title,
+              desc: dt.sinopsis,
+              createdAt: dt.createdAt,
+            });
+          }
         });
         setData(newData);
         break;

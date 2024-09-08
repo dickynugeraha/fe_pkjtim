@@ -40,7 +40,7 @@ const ListViewItem: FC<PropsListItem> = ({
       </div>
     );
     if (data.length === 0) {
-      content = <p>Data tidak ditemukan</p>;
+      content = <p>Data tidak tersedia</p>;
     }
   }
 
