@@ -23,14 +23,14 @@ const loginSchema = Yup.object().shape({
     .required("Password harus diisi"),
 });
 
-const initialValues = {
-  email: "",
-  password: "",
-};
 // const initialValues = {
-//   password: "##Admin@1234",
-//   email: "admin@gmail.com",
+//   email: "",
+//   password: "",
 // };
+const initialValues = {
+  password: "##Admin@1234",
+  email: "admin@gmail.com",
+};
 
 /*
   Formik+YUP+Typescript:
@@ -46,7 +46,7 @@ export function Login() {
     show: false,
     text: "",
   });
-
+  const navigate = useNavigate();
   // const navigate = useNavigate();
 
   const formik = useFormik({
@@ -70,6 +70,7 @@ export function Login() {
           phoneNumber: userDecodeResult.phone_number,
         };
         setCurrentUser(user);
+        navigate("/dashboard");
         setLoading(false);
       } catch (error: any) {
         saveAuth(undefined);

@@ -39,8 +39,6 @@ export const Planetarium = () => {
     percobaan_roket_air: false,
   });
 
-  console.log("new Date()", new Date().toISOString());
-
   return (
     <>
       <PageTitle

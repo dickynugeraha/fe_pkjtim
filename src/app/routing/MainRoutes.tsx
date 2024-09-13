@@ -2,7 +2,6 @@ import { lazy, FC, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import TopBarProgress from "react-topbar-progress-indicator";
-import { MenuTestPage } from "../pages/MenuTestPage";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
 // PKJTIM
@@ -35,7 +34,7 @@ import {
   TutupTempat,
 } from "../pages/master-data";
 
-const PenggunaRoutes = () => {
+const MainRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
   const WizardsPage = lazy(() => import("../modules/wizards/WizardsPage"));
   const AccountPage = lazy(() => import("../modules/accounts/AccountPage"));
@@ -60,18 +59,17 @@ const PenggunaRoutes = () => {
         />
         <Route path="dashboard/home" element={<Home />} />
         <Route path="pesan-tempat" element={<PesanTempat />} />
-        <Route path="form-pesan-tempat/:id" element={<FormPesanTempat />} />
         <Route path="faq" element={<Faq />} />
+        <Route path="planetarium" element={<Planetarium />} />
+        <Route path="tentang-kami" element={<TentangKami />} />
         <Route path="builder" element={<BuilderPageWrapper />} />
-        <Route path="menu-test" element={<MenuTestPage />} />
         <Route path="profil-saya" element={<ProfilSaya />} />
         <Route path="pesanan-saya" element={<PesananSaya />} />
-        <Route path="tentang-kami" element={<TentangKami />} />
-        <Route path="planetarium" element={<Planetarium />} />
+        <Route path="form-pesan-tempat/:id" element={<FormPesanTempat />} />
         <Route path="form-planetarium/:id" element={<FormPlanetarium />} />
+        <Route path="kurasi-pentas" element={<KurasiPentas />} />
         <Route path="pesanan-masuk" element={<PesananMasuk />} />
         <Route path="pesanan-planet" element={<PesananPlanetarium />} />
-        <Route path="kurasi-pentas" element={<KurasiPentas />} />
         {/* Pengelola */}
         <Route path="master-data/pengguna" element={<Pengguna />} />
         <Route path="master-data/sekilas-info" element={<SekilasInfo />} />
@@ -140,4 +138,4 @@ const SuspensedView: FC<WithChildren> = ({ children }) => {
   return <Suspense fallback={<TopBarProgress />}>{children}</Suspense>;
 };
 
-export { PenggunaRoutes };
+export { MainRoutes };

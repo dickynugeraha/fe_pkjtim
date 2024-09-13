@@ -7,11 +7,39 @@
 
 import { FC } from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import { PenggunaRoutes } from "./PenggunaRoutes";
+import { MainRoutes } from "./MainRoutes";
 import { ErrorsPage } from "../modules/errors/ErrorsPage";
 import { Logout, AuthPage, useAuth } from "../modules/auth";
 import { App } from "../App";
-import { PengelolaRoutes } from "./PengelolaRoutes";
+import GuestRoutes from "./GuestRoutes";
+
+import {
+  SekilasInfo,
+  Pementasan,
+  KoleksiSeni,
+  Pengguna,
+  Seniman,
+  Tempat,
+  TutupTempat,
+} from "../pages/master-data";
+import {
+  Home,
+  DetailInformasi,
+  Faq,
+  Informasi,
+  PesanTempat,
+  Planetarium,
+  SemuaInformasi,
+  TentangKami,
+  ProfilSaya,
+  PesananSaya,
+  FormPesanTempat,
+  FormPlanetarium,
+  KurasiPentas,
+} from "../pages";
+
+import { PesananMasuk, PesananPlanetarium } from "../pages";
+import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 
 /**
  * Base URL of the website.
@@ -22,22 +50,72 @@ const { BASE_URL } = import.meta.env;
 
 const AppRoutes: FC = () => {
   const { currentUser } = useAuth();
+
   return (
     <BrowserRouter basename={BASE_URL}>
       <Routes>
         <Route element={<App />}>
           <Route path="error/*" element={<ErrorsPage />} />
           <Route path="logout" element={<Logout />} />
+          <Route element={<MasterLayout />}>
+            <Route path="dashboard" element={<Informasi />} />
+            <Route path="dashboard/informasi" element={<Informasi />} />
+            <Route
+              path="dashboard/informasi/:list"
+              element={<SemuaInformasi />}
+            />
+            <Route
+              path="dashboard/informasi/:list/:id"
+              element={<DetailInformasi />}
+            />
+            <Route path="dashboard/home" element={<Home />} />
+            <Route path="pesan-tempat" element={<PesanTempat />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="planetarium" element={<Planetarium />} />
+            <Route path="tentang-kami" element={<TentangKami />} />
+          </Route>
           {currentUser ? (
             <>
-              <Route path="/*" element={<PenggunaRoutes />} />
-              {/* <Route path="pengelola/*" element={<PengelolaRoutes />} /> */}
+              <Route element={<MasterLayout />}>
+                <Route path="error/*" element={<ErrorsPage />} />
+                <Route path="profil-saya" element={<ProfilSaya />} />
+                <Route path="pesanan-saya" element={<PesananSaya />} />
+                <Route
+                  path="form-pesan-tempat/:id"
+                  element={<FormPesanTempat />}
+                />
+                <Route
+                  path="form-planetarium/:id"
+                  element={<FormPlanetarium />}
+                />
+                <Route path="kurasi-pentas" element={<KurasiPentas />} />
+                <Route path="pesanan-masuk" element={<PesananMasuk />} />
+                <Route path="pesanan-planet" element={<PesananPlanetarium />} />
+                {/* Pengelola */}
+                <Route path="master-data/pengguna" element={<Pengguna />} />
+                <Route
+                  path="master-data/sekilas-info"
+                  element={<SekilasInfo />}
+                />
+                <Route path="master-data/pementasan" element={<Pementasan />} />
+                <Route path="master-data/seniman" element={<Seniman />} />
+                <Route
+                  path="master-data/koleksi-seni"
+                  element={<KoleksiSeni />}
+                />
+                <Route path="master-data/tempat" element={<Tempat />} />
+                <Route
+                  path="master-data/tutup-tempat"
+                  element={<TutupTempat />}
+                />
+              </Route>
+              <Route path="/*" element={<MainRoutes />} />
               <Route index element={<Navigate to="/dashboard" />} />
             </>
           ) : (
             <>
               <Route path="auth/*" element={<AuthPage />} />
-              <Route path="*" element={<Navigate to="/auth" />} />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
             </>
           )}
         </Route>

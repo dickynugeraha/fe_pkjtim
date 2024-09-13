@@ -143,7 +143,7 @@ export const SemuaInformasi: FC = () => {
                   height={200}
                   loading="lazy"
                   className="rounded mb-3"
-                  style={{ width: "100%", objectFit: "cover" }}
+                  style={{ width: "100%", objectFit: "contain" }}
                 />
                 <h4>{item.title}</h4>
                 <p className="text-truncate">{item.desc}</p>

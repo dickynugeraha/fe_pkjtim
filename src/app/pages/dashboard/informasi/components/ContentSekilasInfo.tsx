@@ -23,7 +23,7 @@ const ContentSekilasInfo: FC<PropsSekilasInfo> = ({ data, loading }) => {
               <img
                 loading="lazy"
                 src={data[0]?.file}
-                style={{ width: "100%" }}
+                style={{ width: "100%", objectFit: "contain" }}
                 height={400}
                 className="rounded mb-6"
               />
@@ -35,14 +35,14 @@ const ContentSekilasInfo: FC<PropsSekilasInfo> = ({ data, loading }) => {
                 <p>Tidak ada info terkini lainnya</p>
               ) : (
                 <>
-                  {anotherData.map((item) => (
-                    <>
+                  {anotherData.map((item, idx) => (
+                    <div key={idx.toString()}>
                       <div className="mb-3">
                         <h4 className="m-0 mb-2">{item.title}</h4>
                         <p className="text-truncate m-0">{item.desc}</p>
                       </div>
                       <hr />
-                    </>
+                    </div>
                   ))}
                 </>
               )}

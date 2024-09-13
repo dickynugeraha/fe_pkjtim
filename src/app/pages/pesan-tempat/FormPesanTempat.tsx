@@ -7,9 +7,11 @@ import * as Yup from "yup";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import globalVar from "../../helper/globalVar";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
-import useTempat from "../../modules/hooks/master-data/tempat";
 import usePesanTempat from "../../modules/hooks/pesan-tempat";
-import Skeleton from "react-loading-skeleton";
+import Remining from "../../../_metronic/layout/components/content/Remining";
+import Swal from "sweetalert2";
+
+const now: any = new Date();
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -29,34 +31,35 @@ const Breadcrumbs: Array<PageLink> = [
 const formPesanScheme = Yup.object().shape({
   namaSanggar: Yup.string().required("Nama sanggar harus diisi"),
   judulPentas: Yup.string().required("Judul pentas harus diisi"),
-  kodeBooking: Yup.string().required(
-    "Kode booking harus diisi dengan menekan tombol buat kode"
-  ),
   alamatSanggar: Yup.string().required("Alamat sanggar harus diisi"),
 });
 
 const initialValues = {
   namaSanggar: "",
   judulPentas: "",
-  kodeBooking: "",
-  tarif: "",
   alamatSanggar: "",
 };
 
 export const FormPesanTempat: FC = () => {
+  const {
+    getSinglePesanTempat,
+    singleReservationTempat,
+    loading,
+    requestReservationPesanTempat,
+  } = usePesanTempat();
   const [codeBooking, setCodeBooking] = useState<string>("");
-  const formik = useFormik({
-    initialValues,
-    validationSchema: formPesanScheme,
-    onSubmit: async (values, { setStatus, setSubmitting }) => {},
-  });
+  const [fileProposal, setFileProposal] = useState<any>(null);
+  const [fileSuratPermohonan, setFileSuratPermohonan] = useState<any>(null);
+  const [fileTandaPengenal, setFileTandaPengenal] = useState<any>(null);
+  const [startMainEventDate, setStartMainEventDate] = useState<any>(null);
+  const [mainEventDay, setMainEventDay] = useState<any>(0);
 
   const navigate = useNavigate();
   const params = useParams();
 
-  const { getSinglePesanTempat, singleReservationTempat, loading } =
-    usePesanTempat();
-  const bookingNow = globalVar.formatInputDate(new Date());
+  const bookingNow = globalVar.formatInputDateFromDB(
+    singleReservationTempat.createdAt
+  );
   const endDate = globalVar.formatInputDateFromDB(
     singleReservationTempat.endDate
   );
@@ -65,7 +68,26 @@ export const FormPesanTempat: FC = () => {
   );
   useEffect(() => {
     getSinglePesanTempat(params.id);
-  }, []);
+  }, [params.id]);
+
+  const expired = new Date(singleReservationTempat?.expiredDateTime + "Z");
+
+  console.log("now > expired", now > expired);
+
+  if (now > expired) {
+    Swal.fire({
+      icon: "error",
+      title: "EROR",
+      text: "Pesanan anda sudah kadaluarsa",
+      showConfirmButton: false,
+    }).then(() => {
+      navigate("/pesanan-saya");
+    });
+  }
+
+  const checkingNumber = expired.getTime();
+
+  console.log("checkingNumber", checkingNumber);
 
   const createBookingCode = () => {
     const bookingCode = globalVar.createCodeBooking(
@@ -77,15 +99,117 @@ export const FormPesanTempat: FC = () => {
     setCodeBooking(bookingCode);
   };
 
+  const formik = useFormik({
+    initialValues,
+    validationSchema: formPesanScheme,
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
+      const payload = {
+        ...values,
+        id: singleReservationTempat.id,
+        kodeBooking: codeBooking,
+        fileProposal,
+        fileSuratPermohonan,
+        fileTandaPengenal,
+        priceTotal: tarifCalculation().tarif,
+        startMainEventDate: startMainEventDate ?? startDate,
+        days: mainEventDay,
+      };
+
+      requestReservationPesanTempat(payload);
+    },
+  });
+
   const tarifCalculation = () => {
     const start: any = new Date(startDate);
     const end: any = new Date(endDate);
-    const timeDifference = end - start;
 
-    const daysDifference = timeDifference / (1000 * 60 * 60 * 24) + 1;
+    let dayWeekend = 0;
+    while (start <= end) {
+      const day = start.getDay();
+      if (day === 0 || day === 6) {
+        dayWeekend += 1;
+      }
+      start.setDate(start.getDate() + 1);
+    }
 
-    // return daysDifference *
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    const differenceInMilliseconds = start - end;
+    const differentDay =
+      Math.round(differenceInMilliseconds / oneDayInMilliseconds) + 1;
+    const dayWeekday = differentDay - dayWeekend;
+
+    // calculation
+    let tarif =
+      dayWeekend * singleReservationTempat?.tempat?.priceMainEventWeekEnd +
+      dayWeekday * singleReservationTempat?.tempat?.priceMainEventWeekDay;
+
+    if (
+      singleReservationTempat?.tempat?.pricePreEventWeekDay !== 0 &&
+      singleReservationTempat?.tempat?.pricePreEventWeekEnd !== 0
+    ) {
+      if (mainEventDay != 0 && startMainEventDate) {
+        const startMainEvent: any = new Date(startMainEventDate);
+        console.log("startMainEvent", startMainEvent);
+
+        let futureDateMainEvent = new Date(
+          startMainEvent.setDate(
+            new Date(startMainEventDate).getDate() + mainEventDay
+          )
+        );
+        console.log("mainEventDay1111111111111", mainEventDay);
+
+        const cek = new Date(startMainEventDate).setDate(
+          startMainEvent.getDate() + 1
+        );
+        console.log("cek", cek);
+
+        // if (mainEventDay == 1) {
+        //   futureDateMainEvent = startMainEvent;
+        // }
+        console.log("startMainEvent", startMainEvent);
+        console.log("futureDateMainEvent", futureDateMainEvent);
+
+        let dayWeekendMain = 0;
+        // while (startMainEvent <= futureDateMainEvent) {
+        //   const day = startMainEvent.getDay();
+        //   if (day === 0 || day === 6) {
+        //     dayWeekendMain += 1;
+        //   }
+        //   startMainEvent.setDate(startMainEvent.getDate());
+        // }
+        console.log("dayWeekendMain", dayWeekendMain);
+
+        // const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+        // const differenceInMilliseconds = startMainEvent - futureDateMainEvent;
+        // const differentDay =
+        //   Math.round(differenceInMilliseconds / oneDayInMilliseconds) + 1;
+        // const dayWeekdayMain = differentDay - dayWeekendMain;
+
+        // let tarif =
+        //   dayWeekendMain *
+        //     singleReservationTempat?.tempat?.priceMainEventWeekEnd +
+        //   dayWeekdayMain *
+        //     singleReservationTempat?.tempat?.priceMainEventWeekDay;
+        // const calculationDayWeekday = dayWeekday - dayWeekdayMain;
+        // const calculationDayWeekend = dayWeekend - dayWeekendMain;
+        // tarif =
+        //   tarif +
+        //   (calculationDayWeekend *
+        //     singleReservationTempat?.tempat?.pricePreEventWeekEnd +
+        //     calculationDayWeekday *
+        //       singleReservationTempat?.tempat?.pricePreEventWeekDay);
+      } else {
+        tarif = 0;
+      }
+    }
+    return { tarif };
   };
+
+  // useEffect(() => {
+  //   tarifCalculation();
+  // }, [startMainEventDate, mainEventDay]);
+
+  console.log("tarifCalculation().tarif", tarifCalculation().tarif);
 
   return (
     <Content>
@@ -93,16 +217,35 @@ export const FormPesanTempat: FC = () => {
         {`Form ${loading ? "..." : singleReservationTempat?.tempat?.name}`}
       </PageTitle>
       <div className="card p-8">
-        <div>
-          <p className="fw-bold">Tanggal Pemesanan</p>
-          <input
-            type="date"
-            disabled
-            value={bookingNow}
-            className="p-2 rounded form-control form-control-solid"
-            style={{ width: "200px" }}
-          />
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <p className="fw-bold">Tanggal Pemesanan</p>
+            <input
+              type="date"
+              disabled
+              value={bookingNow}
+              className="p-2 rounded form-control form-control-solid"
+              style={{ width: "200px" }}
+            />
+          </div>
+          {!isNaN(checkingNumber) && (
+            <Remining
+              expired={expired}
+              now={now}
+              onFinishTime={() => {
+                Swal.fire({
+                  icon: "error",
+                  title: "EROR",
+                  text: "Pesanan anda sudah kadaluarsa",
+                  showConfirmButton: false,
+                }).then(() => {
+                  navigate("/pesanan-saya");
+                });
+              }}
+            />
+          )}
         </div>
+
         <Gap height={30} />
         <form onSubmit={formik.handleSubmit} noValidate>
           {/* nama sanggar dan alamat sanggar */}
@@ -271,19 +414,7 @@ export const FormPesanTempat: FC = () => {
                     readOnly
                     id="kodeBooking"
                     {...formik.getFieldProps("kodeBooking")}
-                    className={clsx(
-                      "form-control form-control-solid",
-                      {
-                        "is-invalid":
-                          formik.touched.kodeBooking &&
-                          formik.errors.kodeBooking,
-                      },
-                      {
-                        "is-valid":
-                          formik.touched.kodeBooking &&
-                          !formik.errors.kodeBooking,
-                      }
-                    )}
+                    className={clsx("form-control form-control-solid")}
                     type="text"
                     name="kodeBooking"
                     autoComplete="off"
@@ -299,94 +430,126 @@ export const FormPesanTempat: FC = () => {
                     Buat kode
                   </button>
                 </div>
-                {formik.touched.kodeBooking && formik.errors.kodeBooking && (
-                  <div className="fv-plugins-message-container">
-                    <span role="alert" className="text-danger">
-                      {formik.errors.kodeBooking}
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
             <div className="col">
               <div className="fv-row">
-                <div>
-                  <div className="row row-cols-1 row-cols-lg-2">
-                    <div className="col">
-                      <label
-                        htmlFor="start_main_event"
-                        className="fw-bold mb-3"
-                      >
-                        Tanggal mulai main event
-                      </label>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="tanggalMainEvent"
-                          {...formik.getFieldProps("tanggalMainEvent")}
-                          className={clsx(
-                            "form-control form-control-solid form-control-solid"
-                          )}
-                          min={globalVar.getThreeMonthsFromToday()}
-                          type="date"
-                          name="tanggalMainEvent"
-                          autoComplete="off"
-                        />
+                {singleReservationTempat?.tempat?.pricePreEventWeekDay !== 0 &&
+                  singleReservationTempat?.tempat?.pricePreEventWeekEnd !==
+                    0 && (
+                    <div>
+                      <div className="row row-cols-1 row-cols-lg-2">
+                        <div className="col">
+                          <label
+                            htmlFor="start_main_event"
+                            className="fw-bold mb-3"
+                          >
+                            Tanggal mulai main event
+                          </label>
+                          <div style={{ width: "100%" }}>
+                            <input
+                              id="tanggalMainEvent"
+                              {...formik.getFieldProps("tanggalMainEvent")}
+                              className={clsx(
+                                "form-control form-control-solid form-control-solid"
+                              )}
+                              // min={new Date(
+                              //   singleReservationTempat?.startDate
+                              // )?.toISOString()}
+                              min={globalVar.getThreeMonthsFromToday()}
+                              // max={singleReservationTempat?.endDate?.toISOString()}
+                              type="date"
+                              name="tanggalMainEvent"
+                              autoComplete="off"
+                              onChange={(e: any) =>
+                                setStartMainEventDate(e.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col mt-4 mt-md-0">
+                          <label
+                            htmlFor="start_main_event"
+                            className="fw-bold mb-3"
+                          >
+                            Jumlah hari main event
+                          </label>
+                          <div style={{ width: "100%" }}>
+                            <input
+                              id="jumlahHari"
+                              {...formik.getFieldProps("jumlahHari")}
+                              className={clsx(
+                                "form-control form-control-solid form-control-solid"
+                              )}
+                              min={globalVar.getThreeMonthsFromToday()}
+                              type="number"
+                              onChange={(e: any) =>
+                                setMainEventDay(e.target.value)
+                              }
+                              name="jumlahHari"
+                              autoComplete="off"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="col mt-4 mt-md-0">
-                      <label
-                        htmlFor="start_main_event"
-                        className="fw-bold mb-3"
-                      >
-                        Jumlah hari main event
-                      </label>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          id="jumlahHari"
-                          {...formik.getFieldProps("jumlahHari")}
-                          className={clsx(
-                            "form-control form-control-solid form-control-solid"
-                          )}
-                          min={globalVar.getThreeMonthsFromToday()}
-                          type="number"
-                          name="jumlahHari"
+                  )}
+                {singleReservationTempat?.tempat?.pricePreEventWeekDay === 0 &&
+                  singleReservationTempat?.tempat?.pricePreEventWeekEnd ===
+                    0 && (
+                    <div className="row row-cols-1">
+                      <div className="col"></div>
+                      <div className="col">
+                        <label htmlFor="tarif" className="fw-bold">
+                          Kalkulasi Tarif
+                        </label>
+                        <Gap height={10} />
+
+                        <h4>
+                          {globalVar.rupiahFormat(tarifCalculation().tarif)}
+                        </h4>
+                        <Gap height={10} />
+                        {/* <input
+                          readOnly
+                          disabled
+                          id="tarif"
+                          {...formik.getFieldProps("tarif")}
+                          className={clsx("form-control form-control-solid")}
+                          type="text"
+                          name="tarif"
                           autoComplete="off"
-                        />
+                          value={tarifCalculation().tarif}
+                        /> */}
                       </div>
                     </div>
-                  </div>
-                </div>
+                  )}
               </div>
             </div>
           </div>
           <Gap height={10} />
-          <div className="row row-cols-1 row-cols-lg-2">
-            <div className="col"></div>
-            <div className="col">
-              <label htmlFor="tarif" className="fw-bold">
-                Kalkulasi Tarif
-              </label>
-              <Gap height={10} />
-              <input
-                readOnly
-                disabled
-                id="tarif"
-                {...formik.getFieldProps("tarif")}
-                className={clsx(
-                  "form-control form-control-solid",
-                  {
-                    "is-invalid": formik.touched.tarif && formik.errors.tarif,
-                  },
-                  {
-                    "is-valid": formik.touched.tarif && !formik.errors.tarif,
-                  }
-                )}
-                type="text"
-                name="tarif"
-                autoComplete="off"
-              />
-            </div>
-          </div>
+          {singleReservationTempat?.tempat?.pricePreEventWeekDay !== 0 &&
+            singleReservationTempat?.tempat?.pricePreEventWeekEnd !== 0 && (
+              <div className="row row-cols-1 row-cols-lg-2">
+                <div className="col"></div>
+                <div className="col">
+                  <label htmlFor="tarif" className="fw-bold">
+                    Kalkulasi Tarif
+                  </label>
+                  <Gap height={10} />
+                  <input
+                    readOnly
+                    disabled
+                    id="tarif"
+                    {...formik.getFieldProps("tarif")}
+                    className={clsx("form-control form-control-solid")}
+                    type="text"
+                    name="tarif"
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+            )}
+
           <Gap height={10} />
           {/* Upload berkas */}
           <div className="row">
@@ -400,15 +563,31 @@ export const FormPesanTempat: FC = () => {
               <div className="d-flex flex-wrap">
                 <div className="mb-5 me-5">
                   <p className="fw-bold mb-1">Surat permohonan</p>
-                  <input type="file" className="form-control bg-transparant" />
+                  <input
+                    type="file"
+                    className="form-control bg-transparant"
+                    onChange={(e: any) =>
+                      setFileSuratPermohonan(e.target.files[0])
+                    }
+                  />
                 </div>
                 <div className="mb-5 me-5">
                   <p className="fw-bold mb-1">Tanda pengenal</p>
-                  <input type="file" className="form-control bg-transparant" />
+                  <input
+                    type="file"
+                    className="form-control bg-transparant"
+                    onChange={(e: any) =>
+                      setFileTandaPengenal(e.target.files[0])
+                    }
+                  />
                 </div>
                 <div className="mb-5">
                   <p className="fw-bold mb-1">Proposal</p>
-                  <input type="file" className="form-control bg-transparant" />
+                  <input
+                    type="file"
+                    className="form-control bg-transparant"
+                    onChange={(e: any) => setFileProposal(e.target.files[0])}
+                  />
                 </div>
               </div>
             </div>

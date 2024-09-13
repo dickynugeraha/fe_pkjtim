@@ -33,7 +33,10 @@ axios.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.log("response error", error);
+    if (error.toJSON().message === "Network Error") {
+      alert("No Internet Connection");
+      return;
+    }
 
     if (error.response.status === 401) {
       removeAuth();

@@ -2,78 +2,26 @@ import React, { useEffect, useMemo } from "react";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import usePlanetarium from "../../../modules/hooks/planetarium";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
+import usePesanTempat from "../../../modules/hooks/pesan-tempat";
+import globalVar from "../../../helper/globalVar";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   showModalPlanetarium: (data: any) => void;
 };
 
 const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
-  const { getAllReservationPlanetarium, allReservationPlanetarium } =
-    usePlanetarium();
+  const navigate = useNavigate();
+  const { allReservationPesanTempat, getAllReservationPesanTempat, loading } =
+    usePesanTempat();
 
   useEffect(() => {
-    getAllReservationPlanetarium(false);
+    getAllReservationPesanTempat(false);
   }, []);
 
-  const data = useMemo(
-    () => [
-      {
-        id: "1",
-        tipe_tempat: "Kim Parrish",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Proses",
-      },
-      {
-        id: "2",
-        tipe_tempat: "Michele Castillo",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Pending",
-      },
-      {
-        id: "3",
-        tipe_tempat: "Eric Ferris",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Selesai",
-      },
-      {
-        id: "4",
-        tipe_tempat: "Gloria Noble",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Proses",
-      },
-      {
-        id: "5",
-        tipe_tempat: "Darren Daniels",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        total_pembayaran: "Rp. 1.000.000",
-        status: "Pending",
-      },
-      {
-        id: "6",
-        tipe_tempat: "Ted McDonald",
-        tanggal_pesan: "07/11/2020",
-        tanggal_mulai_sewa: "07/07/2020",
-        tanggal_akhir_sewa: "07/07/2020",
-        status: "Selesai",
-        total_pembayaran: "Rp. 1.000.000",
-      },
-    ],
-    []
-  );
+  console.log("allReservationPesanTempat", allReservationPesanTempat);
+
+  const data = useMemo(() => allReservationPesanTempat, [loading]);
 
   const columns = useMemo(
     () => [
@@ -81,11 +29,19 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
         Header: "Tipe Tempat",
         accessor: "tipe_tempat",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return <>{singleData.tempat.name}</>;
+        },
       },
       {
         Header: "Tanggal Pesan",
         accessor: "tanggal_pesan",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return <>{globalVar.formatDate(singleData.createdAt)}</>;
+        },
       },
       {
         Header: "Tanggal Sewa",
@@ -93,15 +49,14 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-
           return (
             <>
-              <span className="badge badge-light-success fs-6">
-                {singleData.tanggal_mulai_sewa}
+              <span className="badge badge-light-success fs-base">
+                {globalVar.formatDate(singleData.startDate)}
               </span>
-              <span> - </span>
-              <span className="badge badge-light-danger fs-6">
-                {singleData.tanggal_akhir_sewa}
+              -
+              <span className="badge badge-light-danger fs-base">
+                {globalVar.formatDate(singleData.endDate)}
               </span>
             </>
           );
@@ -114,22 +69,32 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           let statusClass = "";
+          let statusDesc = "";
           switch (singleData.status) {
-            case "Selesai":
+            case "DONE":
               statusClass = "badge badge-light-success fs-6";
+              statusDesc = "Selesai";
               break;
-            case "Proses":
+            case "PENDING":
+              statusDesc = "Pesanan tertunda";
               statusClass = "badge badge-light-warning fs-6";
               break;
-            case "Ditolak":
+            case "REJECT":
+              statusDesc = "Ditolak";
               statusClass = "badge badge-light-danger fs-6";
               break;
-            case "Pending":
+            case "REQUEST":
+              statusDesc = "Menunggu persetujuan admin";
+              statusClass = "badge badge-light-info fs-6";
+              break;
+            case "EXPIRED":
+              statusDesc = "Kadaluarsa";
+
               statusClass = "badge badge-light-danger fs-6";
               break;
           }
 
-          return <span className={statusClass}>{singleData.status}</span>;
+          return <span className={statusClass}>{statusDesc}</span>;
         },
       },
       {
@@ -142,22 +107,26 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           let classes =
-            singleData.status !== "Pending"
+            singleData.status !== "PENDING"
               ? "btn btn-sm btn-success"
               : "btn btn-sm btn-warning";
           return (
             <button
               className={classes}
               onClick={() => {
-                if (singleData.status !== "Pending") {
+                if (singleData.status !== "PENDING") {
                   showModalPlanetarium({
                     show: true,
                     data: singleData,
                   });
+                } else {
+                  navigate(`/form-pesan-tempat/${singleData.id}`, {
+                    state: { reservationDate: singleData.expiredDateTime },
+                  });
                 }
               }}
             >
-              {singleData.status !== "Pending" ? "Detail" : "Lanjut Pesan"}
+              {singleData.status !== "PENDING" ? "Detail" : "Lanjut Pesan"}
             </button>
           );
         },
@@ -170,7 +139,7 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
       <h6>Pesan Tempat</h6>
       <Gap height={8} />
       <Table
-        loading={false}
+        loading={loading}
         data={data}
         columns={columns}
         addData={() => {}}

@@ -1,10 +1,10 @@
 import { Content } from "../../../_metronic/layout/components/content";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core/PageData";
 import { FC, useState } from "react";
-import ModalDetailPesanan from "./components/ModalPesananTempat";
 import TablePlanetarium from "./components/TablePlanetarium";
 import ModalDetailPesananPlanetarium from "../pesanan-planetarium/components/ModalDetailPesananPlanetarium";
 import TablePesanTempat from "./components/TablePesanTempat";
+import ModalDetailPesananTempat from "./components/ModalDetailPesananTempat";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -22,7 +22,11 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const PesananSaya: FC = () => {
-  const [modalDetail, setModalDetail] = useState({
+  const [modalDetailPlanet, setModalDetailPlanet] = useState({
+    show: false,
+    data: {},
+  });
+  const [modalDetailTempat, setModalDetailTempat] = useState({
     show: false,
     data: {},
   });
@@ -39,7 +43,7 @@ export const PesananSaya: FC = () => {
       <Content>
         <TablePlanetarium
           showModalPlanetarium={(val) =>
-            setModalDetail({
+            setModalDetailPlanet({
               show: val.show,
               data: val.data,
             })
@@ -47,17 +51,24 @@ export const PesananSaya: FC = () => {
         />
         <TablePesanTempat
           showModalPlanetarium={(val) =>
-            setModalDetail({
+            setModalDetailTempat({
               show: val.show,
               data: val.data,
             })
           }
         />
         <ModalDetailPesananPlanetarium
-          data={modalDetail.data}
-          show={modalDetail.show}
+          data={modalDetailPlanet.data}
+          show={modalDetailPlanet.show}
           handleClose={() => {
-            setModalDetail({ ...modalDetail, show: false });
+            setModalDetailPlanet({ ...modalDetailPlanet, show: false });
+          }}
+        />
+        <ModalDetailPesananTempat
+          data={modalDetailTempat.data}
+          show={modalDetailTempat.show}
+          handleClose={() => {
+            setModalDetailTempat({ ...modalDetailTempat, show: false });
           }}
         />
       </Content>

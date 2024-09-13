@@ -31,7 +31,7 @@ const ListViewItem: FC<PropsListItem> = ({
             <img
               src={item.file}
               className="rounded mb-3"
-              style={{ width: "100%", objectFit: "cover", height: 200 }}
+              style={{ width: "100%", objectFit: "contain", height: 200 }}
             />
             <h4>{item.title}</h4>
             <p>{item.desc}</p>

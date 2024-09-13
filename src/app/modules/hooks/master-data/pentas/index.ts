@@ -86,6 +86,7 @@ export default function usePentas() {
 
   const fetchAllPentas = async () => {
     setLoading(true);
+    console.log("kesini");
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
 

@@ -11,7 +11,6 @@ import useSeni from "../../../modules/hooks/master-data/seni";
 import usePentas from "../../../modules/hooks/master-data/pentas";
 import useSeniman from "../../../modules/hooks/master-data/seniman";
 import useTempat from "../../../modules/hooks/master-data/tempat";
-import LoadingInfo from "./components/LoadingInfo";
 import ListViewItem from "./components/ListViewItem";
 import ContentSekilasInfo from "./components/ContentSekilasInfo";
 
@@ -92,11 +91,6 @@ const DashboardPage: FC = () => {
       desc: pn.performanceDesc,
     });
   });
-
-  console.log("seni", seni);
-  console.log("pementasan", pementasan);
-  console.log("info", info);
-  console.log("seniman", seniman);
 
   return (
     <Content>
