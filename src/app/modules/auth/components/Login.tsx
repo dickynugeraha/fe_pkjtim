@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as Yup from 'yup';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { login } from '../core/_requests';
 import { useAuth } from '../core/Auth';
@@ -27,9 +27,13 @@ const loginSchema = Yup.object().shape({
 //   password: "",
 // };
 const initialValues = {
-  password: "##Admin@1234",
-  email: "admin@gmail.com",
+  email: "",
+  password: "",
 };
+// const initialValues = {
+//   password: "##Admin@1234",
+//   email: "admin@gmail.com",
+// };
 
 /*
   Formik+YUP+Typescript:
@@ -46,7 +50,7 @@ export function Login() {
     text: "",
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues,
