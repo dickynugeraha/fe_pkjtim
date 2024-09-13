@@ -29,6 +29,15 @@ export default function usePlanetarium() {
     outdoor: any,
     bookingDate: any
   ) => {
+    if (!currentUser?.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Silahkan login terlebih dahulu!",
+        showConfirmButton: false,
+      });
+      return;
+    }
     if (!indoor) {
       Swal.fire({
         icon: "error",

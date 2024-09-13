@@ -9,7 +9,7 @@ import Gap from "../../../_metronic/layout/components/content/Gap";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
-import Remining from "./components/Remining";
+import Remining from "../../../_metronic/layout/components/content/Remining";
 import Swal from "sweetalert2";
 
 const Breadcrumbs: Array<PageLink> = [
@@ -53,8 +53,6 @@ export const FormPlanetarium = () => {
   } = usePlanetarium();
   const [fileLembarPernyataan, setFileLembarPernyataan] = useState(null);
   const [fileSuratUndangan, setFileSuratUndangan] = useState(null);
-
-  console.log("singleReservationPlanetarium", singleReservationPlanetarium);
 
   const params = useParams();
   const formik = useFormik({
@@ -101,8 +99,6 @@ export const FormPlanetarium = () => {
     }).then(() => {
       navigate("/pesanan-saya");
     });
-
-    return;
   }
 
   const checkingNumber = expired.getTime();
@@ -127,7 +123,9 @@ export const FormPlanetarium = () => {
                   disabled
                   className="p-2 rounded form-control form-control-solid"
                   style={{ width: "200px" }}
-                  value={globalVar.formatInputDate(new Date())}
+                  value={globalVar.formatInputDateFromDB(
+                    singleReservationPlanetarium.createdAt
+                  )}
                 />
               </div>
               {!isNaN(checkingNumber) && (

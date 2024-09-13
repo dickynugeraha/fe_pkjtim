@@ -23,7 +23,7 @@ const ConfirmationDialog = async (
     confirmButtonText: "Ya",
     cancelButtonText: "Batal",
     reverseButtons: true,
-    showLoaderOnConfirm: !onConfirm,
+    showLoaderOnConfirm: true,
     preConfirm: () => {
       return new Promise((resolve) => {
         setTimeout(() => {

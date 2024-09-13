@@ -12,7 +12,7 @@ type Props = {
   handleClose: () => void;
 };
 
-const ModalDetailPesananPlanetarium: React.FC<Props> = ({
+const ModalDetailPesananTempat: React.FC<Props> = ({
   fromAdmin = false,
   show,
   data,
@@ -24,6 +24,8 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     show: false,
   });
   const [alasan, setAlasan] = useState<string>("");
+
+  console.log("dataaaa?.status", data?.status);
 
   const handleClickAlasan = () => {
     const payload = {
@@ -42,7 +44,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   };
 
   let statusKey = "";
-  switch (data.status) {
+  switch (data?.status) {
     case "DONE":
       statusKey = "Selesai";
       break;
@@ -62,13 +64,13 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
 
   return (
     <ModalWrapper
-      title="Detail Pesanan Planetarium"
+      title="Detail Pesanan Tempat"
       show={show}
       handleClose={handleClose}
       attribute={{ centered: true }}
       className="modal-lg"
       footerCustom={
-        data.status === "REQUEST" && fromAdmin ? (
+        data?.status === "REQUEST" && fromAdmin ? (
           <>
             <div
               role="button"
@@ -102,61 +104,80 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     >
       <>
         <div className="row row-cols-3">
-          <DetailIten
+          <DetailItem
+            iconName={"home"}
+            title={"Tipe tempat"}
+            desc={data?.tempat?.name}
+          />
+          <DetailItem
+            iconName={"mask"}
+            title={"Judul pentas"}
+            desc={data?.judulPentas}
+          />
+          <DetailItem
+            iconName={"home"}
+            title={"Nama sanggar"}
+            desc={data?.namaSanggar}
+          />
+          <DetailItem
+            iconName={"geolocation"}
+            title={"Alamat sanggar"}
+            desc={data?.alamatSanggar}
+          />
+          <DetailItem
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
             desc={globalVar.formatDate(data.createdAt)}
           />
-          <DetailIten
-            iconName={"home-2"}
-            title={"Nama sekolah"}
-            desc={data.namaSekolah}
+          <DetailItem
+            iconName={"notification"}
+            title={"Total pembayaran"}
+            desc={data?.alamatSanggar}
           />
-          <DetailIten
-            iconName={"geolocation"}
-            title={"Alamat sekolah"}
-            desc={data.alamatSekolah}
+          <DetailItem
+            iconName={"filter"}
+            title={"Status"}
+            desc={data?.status}
           />
-          <div className="col mb-6">
-            <div className="d-flex">
-              <div>
-                <KTIcon iconName={"book"} className="fs-3" />
-              </div>
-              <Gap width={18} />
-              <div>
-                <h6 className="m-0">{"Kegiatan"}</h6>
-                <Gap height={6} />
-                <ul className="text-gray-600">
-                  {data.isPertunjukan && <li>Pertunjukan Planetarium Mini</li>}
-                  {data.isDiskusi && <li>Diskusi Astronomi</li>}
-                  {data.isPeneropongan && <li>Peneropongan Matahari</li>}
-                  {data.isRoketAir && <li>Percobaan Roket Air</li>}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <DetailIten
-            iconName={"toggle-on-circle"}
-            title={"Tangal kunjungan"}
-            desc={globalVar.formatDate(data.tanggalKunjungan)}
+          <DetailItem
+            iconName={"toggle-on"}
+            title={"Tanggal mulai pentas"}
+            desc={globalVar.formatDate(data?.startDate)}
           />
-          <DetailIten iconName={"filter"} title={"Status"} desc={statusKey} />
-          <DetailIten
+          <DetailItem
+            iconName={"toggle-off"}
+            title={"Tanggal akhir pentas"}
+            desc={globalVar.formatDate(data?.endDate)}
+          />
+          <DetailItem
+            iconName={"barcode"}
+            title={"Kode booking"}
+            desc={data?.kodeBooking}
+          />
+
+          <DetailItem
             iconName={"some-files"}
-            title={"Surat Undangan"}
+            title={"Surat Permohonan"}
             desc={statusKey}
             isFile
-            urlFile={data.suratUndangan}
+            urlFile={data?.suratPermohonan}
           />
-          <DetailIten
+          <DetailItem
             iconName={"some-files"}
-            title={"Pernyataan Persetujuan"}
+            title={"Tanda Pengenal"}
             desc={statusKey}
             isFile
-            urlFile={data.pernyataanPersetujuan}
+            urlFile={data?.tandaPengenal}
+          />
+          <DetailItem
+            iconName={"some-files"}
+            title={"Proposal"}
+            desc={statusKey}
+            isFile
+            urlFile={data?.proposal}
           />
           {data.reason && (
-            <DetailIten
+            <DetailItem
               iconName={"pencil"}
               title={"Alasan"}
               desc={data.reason}
@@ -212,7 +233,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     isFile?: boolean;
     urlFile?: string;
   };
-  function DetailIten({
+  function DetailItem({
     iconName,
     title,
     desc,
@@ -247,4 +268,4 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   }
 };
 
-export default ModalDetailPesananPlanetarium;
+export default ModalDetailPesananTempat;

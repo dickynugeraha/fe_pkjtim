@@ -4,6 +4,7 @@ import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalDetailPemesananUser from "./ModalDetailPemesananUser";
 import ModalReasonReject from "./ModalReasonReject";
+import globalVar from "../../../helper/globalVar";
 
 type Props = {
   show: boolean;
@@ -16,6 +17,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
+  console.log("dataaaa", data);
+
   const [modalShow, setModalShow] = useState({
     detail: {
       show: false,
@@ -30,6 +33,25 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   });
   const [modalTolak, setModalTolak] = useState(false);
   const [modalSelesai, setModalSelesai] = useState(false);
+  let statusDesc = "";
+  switch (data?.status) {
+    case "DONE":
+      statusDesc = "Selesai";
+      break;
+    case "PENDING":
+      statusDesc = "Pesanan tertunda";
+      break;
+    case "REJECT":
+      statusDesc = "Ditolak";
+      break;
+    case "REQUEST":
+      statusDesc = "Menunggu persetujuan admin";
+      break;
+    case "EXPIRED":
+      statusDesc = "Kadaluarsa";
+
+      break;
+  }
 
   const HandlerShowComponent = () => {
     let OthersContent = (
@@ -59,10 +81,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       </>
     );
 
-    if (data.status === "Selesai" || data.status === "Ditolak") {
+    if (data?.status === "DONE" || data?.status === "REJECT") {
       ButtonShow = <></>;
     }
-    if (data.status === "Revisi") {
+    if (data?.status === "REVISION") {
       ButtonShow = (
         <>
           <div role="button" className="btn btn-sm btn-success">
@@ -81,7 +103,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         </>
       );
     }
-    if (data.status === "Pending") {
+    if (data?.status === "PENDING") {
       ButtonShow = (
         <>
           <div role="button" className="btn btn-sm btn-success">
@@ -98,10 +120,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       );
     }
 
-    if (data.status === "Proses" || data.status === "Pending") {
+    if (data?.status === "REQUEST" || data?.status === "PENDING") {
       OthersContent = <></>;
     }
-    if (data.status === "Ditolak") {
+    if (data?.status === "REJECT") {
       OthersContent = (
         <div>
           <h6 className="m-0 mb-4">Alasan Ditolak</h6>
@@ -112,7 +134,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           >
             Alasan Ditolak bla bla Alasan Ditolak bla bla Alasan Ditolak bla bla
             Alasan Ditolak bla bla Alasan Ditolak bla bla
-            {/* {data.alasanDitolak} */}
+            {/* {data?.alasanDitolak} */}
           </textarea>
         </div>
       );
@@ -135,57 +157,49 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailIten
             iconName={"home-2"}
             title={"Tipe Tempat"}
-            desc={data.tipe_tempat}
+            desc={data?.tempat?.name}
           />
           <DetailIten
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
-            desc={data.tipe_tempat}
-            // desc={data.tanggal pemesanan}
+            desc={globalVar.formatDate(data?.createdAt)}
           />
           <DetailIten
             iconName={"barcode"}
             title={"Kode booking"}
-            desc={data.tipe_tempat}
-            // desc={data.kode_booking}
+            desc={data?.kodeBooking}
           />
-          <DetailIten iconName={"watch"} title={"Status"} desc={data.status} />
+          <DetailIten iconName={"watch"} title={"Status"} desc={statusDesc} />
           <DetailIten
             iconName={"toggle-on-circle"}
             title={"Tangal mulai pentas"}
-            desc={data.tipe_tempat}
-            // desc={data.tanggal_mulai_pentas}
+            desc={globalVar.formatDate(data?.startDate)}
           />
           <DetailIten
             iconName={"toggle-off-circle"}
             title={"Tanggal akhir pentas"}
-            desc={data.tipe_tempat}
-            // desc={data.tanggal_akhir_pentas}
+            desc={globalVar.formatDate(data?.endDate)}
           />
           <DetailIten
             iconName={"mask"}
             title={"Judul Pentas"}
-            desc={data.tipe_tempat}
-            // desc={data.judul_pentas}
+            desc={data?.judulPentas}
           />
           <DetailIten
             iconName={"home-2"}
             title={"Nama sanggar"}
-            desc={data.tipe_tempat}
-            // desc={data.nama_sanggar}
+            desc={data?.namaSanggar}
           />
           <DetailIten
             iconName={"geolocation"}
             title={"Alamat sanggar"}
-            desc={data.tipe_tempat}
-            // desc={data.alamat_sangagr}
+            desc={data?.alamatSanggar}
           />
 
           <DetailIten
             iconName={"calculator"}
             title={"Total pembayaran"}
-            desc={data.tipe_tempat}
-            // desc={data.total_pembayaran}
+            desc={globalVar.rupiahFormat(data?.priceTotal)}
           />
         </div>
         <h4>Berkas</h4>
@@ -193,11 +207,19 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <div className="row row-cols-3">
           <DetailItemFile
             title="Surat permohonan"
-            url="http"
+            url={data?.suratPermohonan}
             withUpload={true}
           />
-          <DetailItemFile title="Tanda pengenal" url="http" withUpload={true} />
-          <DetailItemFile title="Proposal" url="http" withUpload={true} />
+          <DetailItemFile
+            title="Tanda pengenal"
+            url={data?.tandaPengenal}
+            withUpload={true}
+          />
+          <DetailItemFile
+            title="Proposal"
+            url={data?.proposal}
+            withUpload={true}
+          />
         </div>
         <Gap height={6} />
         <h4>Lainnya</h4>
@@ -273,7 +295,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              <a className="btn btn-sm btn-light-primary" href={url}>
+              <a
+                className="btn btn-sm btn-light-primary"
+                target="_blank"
+                href={url}
+              >
                 Lihat {title}
               </a>
             ) : (

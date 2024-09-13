@@ -1,12 +1,8 @@
-import { useIntl } from "react-intl";
 import { SidebarMenuItemWithSub } from "./SidebarMenuItemWithSub";
 import { SidebarMenuItem } from "./SidebarMenuItem";
-import SidebarModalKontak from "./SidebarModalKontak";
-import { useState } from "react";
+import { useAuth } from "../../../../../app/modules/auth";
 const SidebarMenuMain = () => {
-  const [isShow, setIsShow] = useState(false);
-
-  const intl = useIntl();
+  const { currentUser } = useAuth();
 
   const DashboardSideBar = () => {
     return (
@@ -78,25 +74,30 @@ const SidebarMenuMain = () => {
   return (
     <>
       <DashboardSideBar />
-      <MasterDataSidebar />
-      <SidebarMenuItem
-        to="pesanan-masuk"
-        icon="entrance-left"
-        title="Pesanan Masuk"
-        fontIcon="bi-layers"
-      />
-      <SidebarMenuItem
-        to="pesanan-planet"
-        icon="entrance-left"
-        title="Pesanan Planetarium"
-        fontIcon="bi-layers"
-      />
-      <SidebarMenuItem
-        to="kurasi-pentas"
-        icon="book"
-        title="Kurasi Pentas"
-        fontIcon="bi-layers"
-      />
+      {currentUser?.email && <MasterDataSidebar />}
+      {currentUser?.email && (
+        <>
+          <SidebarMenuItem
+            to="pesanan-masuk"
+            icon="entrance-left"
+            title="Pesanan Masuk"
+            fontIcon="bi-layers"
+          />
+
+          <SidebarMenuItem
+            to="kurasi-pentas"
+            icon="book"
+            title="Kurasi Pentas"
+            fontIcon="bi-layers"
+          />
+          <SidebarMenuItem
+            to="pesanan-planet"
+            icon="entrance-left"
+            title="Pesanan Planetarium"
+            fontIcon="bi-layers"
+          />
+        </>
+      )}
       <SidebarMenuItem
         to="pesan-tempat"
         icon="geolocation"

@@ -1,8 +1,17 @@
+import { DEFAULT_LIMIT } from "./../../../constants/PAGE";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getSingleReservation, initBooking } from "../../requests/pesan-tempat";
+import {
+  getAllReservation,
+  getSingleReservation,
+  initBooking,
+  submitReservation,
+} from "../../requests/pesan-tempat";
 import { useAuth } from "../../auth";
+import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
+import { INITIAL_PAGE } from "../../../constants/PAGE";
+import { API_URL, ENDPOINTS } from "../../../constants/API";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -11,13 +20,51 @@ export default function usePesanTempat() {
   const [singleReservationTempat, setSingleReservationTempat] = useState<any>(
     {}
   );
+  const [allReservationPesanTempat, SetAllReservationPesanTempat] = useState<
+    any[]
+  >([]);
+
+  const getAllReservationPesanTempat = async (fromAdmin: boolean) => {
+    setLoading(true);
+    try {
+      const res = await getAllReservation(
+        INITIAL_PAGE,
+        DEFAULT_LIMIT,
+        "",
+        !fromAdmin ? currentUser?.id : ""
+      );
+      let allReservation: any[] = res.data.data.data;
+
+      let allResrvationWithCorrectEmail: any[] = [];
+      allReservation.map((data) => {
+        const singleReserve = {
+          ...data,
+          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/SuratPermohonan`,
+          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Proposal`,
+          tandaPengenal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/TandaPengenal`,
+        };
+        allResrvationWithCorrectEmail.push(singleReserve);
+      });
+
+      SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
   const getSinglePesanTempat = async (id: any) => {
     setLoading(true);
     try {
       const res = await getSingleReservation(id);
       const reservation = res.data.data;
-      console.log("reservation", reservation);
 
       setSingleReservationTempat(reservation);
     } catch (error) {
@@ -38,6 +85,15 @@ export default function usePesanTempat() {
     startDate: any,
     endDate: any
   ) => {
+    if (!currentUser?.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Silahkan login terlebih dahulu",
+        showConfirmButton: false,
+      });
+      return;
+    }
     if (!choosenTempat || !startDate) {
       Swal.fire({
         icon: "error",
@@ -101,10 +157,42 @@ export default function usePesanTempat() {
     });
   };
 
+  const requestReservationPesanTempat = (payload: any) => {
+    ConfirmationDialog({
+      text: "Akan memesan reservasi pesan tempat?!",
+      onConfirm: async () => {
+        try {
+          await submitReservation({
+            ...payload,
+            actorId: currentUser?.id,
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Reservasi berhasil dipesan",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            navigate("/pesanan-saya");
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "ERROR",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+      },
+    });
+  };
+
   return {
     singleReservationTempat,
     loading,
+    allReservationPesanTempat,
     getSinglePesanTempat,
     nextStepHandler,
+    requestReservationPesanTempat,
+    getAllReservationPesanTempat,
   };
 }

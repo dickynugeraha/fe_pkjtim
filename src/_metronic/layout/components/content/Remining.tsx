@@ -29,13 +29,10 @@ const Remining: React.FC<Props> = ({ expired, onFinishTime }) => {
       }
     };
 
-    // Initial calculation
     calculateTimeLeft();
 
-    // Update countdown every second
     const intervalId = setInterval(calculateTimeLeft, 1000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, [expired]);
 
@@ -47,7 +44,6 @@ const Remining: React.FC<Props> = ({ expired, onFinishTime }) => {
         Selesaikan pesanan sebelum ({`0${timeLeft.minutes}:${timeLeft.seconds}`}
         )
       </p>
-      {/* <p className="p-0 m-0 fs-6 text-right">{`0${minutes}:${seconds}`}</p> */}
     </div>
   );
 };

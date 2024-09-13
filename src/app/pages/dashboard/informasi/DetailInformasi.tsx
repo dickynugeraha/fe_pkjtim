@@ -171,7 +171,11 @@ export const DetailInformasi = () => {
             <div className='p-8 pt-0 pe-lg-0'>
               <img
                 src={mainData.file}
-                style={{ width: '100%', borderRadius: '6px' }}
+                style={{
+                  width: "100%",
+                  borderRadius: "6px",
+                  objectFit: "contain",
+                }}
                 height={500}
                 className='mb-3'
               />
@@ -195,7 +199,11 @@ export const DetailInformasi = () => {
                     <img
                       src={itm.file}
                       height={100}
-                      style={{ width: '100%', borderRadius: '6px' }}
+                      style={{
+                        width: "100%",
+                        borderRadius: "6px",
+                        objectFit: "contain",
+                      }}
                     />
                   </div>
                   <div className='ms-4 col overflow-y-scroll' style={{ height: '100px' }}>

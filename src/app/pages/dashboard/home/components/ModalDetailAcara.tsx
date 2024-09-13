@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../../_metronic/helpers";
+import globalVar from "../../../../helper/globalVar";
 
 type Props = {
   show: boolean;
@@ -10,13 +11,6 @@ type Props = {
 };
 
 const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
-  function convertDate(str: any) {
-    var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
-  }
-
   return (
     <ModalWrapper
       title="Detail Acara"
@@ -45,7 +39,9 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
               className="fs-1 text-success me-3"
             />
             <p className="fs-4 m-0 fw-bold me-3">Mulai</p>
-            <p className="m-0 fs-4">{convertDate(data?.view?.activeStart)}</p>
+            <p className="m-0 fs-4">
+              {globalVar.formatDate(data?.view?.activeStart)}
+            </p>
           </div>
           <Gap height={8} />
           <div className="d-flex align-items-center">
@@ -54,7 +50,9 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
               className="fs-1 text-danger me-3"
             />
             <p className="fs-4 m-0 fw-bold me-3">Selesai</p>
-            <p className="m-0 fs-4">{convertDate(data?.view?.activeEnd)}</p>
+            <p className="m-0 fs-4">
+              {globalVar.formatDate(data?.view?.activeEnd)}
+            </p>
           </div>
           <Gap height={18} />
           <div className="d-flex align-items-center">
