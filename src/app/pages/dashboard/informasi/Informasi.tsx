@@ -1,50 +1,42 @@
-import { FC } from "react";
-import { useIntl } from "react-intl";
-import { Content } from "../../../../_metronic/layout/components/content";
-import { Link, useNavigate } from "react-router-dom";
-import { arrDataTempat } from "../../../helper/helper";
-import Gap from "../../../../_metronic/layout/components/content/Gap";
-import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
-import HeadCard from "../../../../_metronic/layout/components/content/HeadCard";
-import useInfo from "../../../modules/hooks/master-data/info";
-import useSeni from "../../../modules/hooks/master-data/seni";
-import usePentas from "../../../modules/hooks/master-data/pentas";
-import useSeniman from "../../../modules/hooks/master-data/seniman";
-import useTempat from "../../../modules/hooks/master-data/tempat";
-import LoadingInfo from "./components/LoadingInfo";
-import ListViewItem from "./components/ListViewItem";
-import ContentSekilasInfo from "./components/ContentSekilasInfo";
+import { FC } from 'react';
+import { useIntl } from 'react-intl';
+import { Content } from '../../../../_metronic/layout/components/content';
+import { useNavigate } from 'react-router-dom';
+import { dummyImage } from '../../../helper/helper';
+import { PageLink, PageTitle } from '../../../../_metronic/layout/core';
+import useInfo from '../../../modules/hooks/master-data/info';
+import useSeni from '../../../modules/hooks/master-data/seni';
+import usePentas from '../../../modules/hooks/master-data/pentas';
+import useSeniman from '../../../modules/hooks/master-data/seniman';
+import useTempat from '../../../modules/hooks/master-data/tempat';
+import ListViewItem from './components/ListViewItem';
+import ContentSekilasInfo from './components/ContentSekilasInfo';
+import { Card } from 'react-bootstrap';
 
 type PropsTempat = {
   data: any[];
 };
 const ContentTempat: FC<PropsTempat> = ({ data }) => {
   return (
-    <div>
-      <div className="p-8">
-        <div>
-          <div className="row row-cols-lg-4">
-            {arrDataTempat.map((item: any, index: number) => (
-              <div className="col" key={index.toString()}>
-                <img
-                  src={item.image}
-                  className="rounded mb-3"
-                  style={{ width: "100%", objectFit: "cover" }}
-                />
-                <h4>{item.title}</h4>
-                {/* <p>{item.description}</p> */}
-                <p className="text-truncate">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Maiores eos sit ab et veritatis, culpa necessitatibus quisquam
-                  temporibus officia sint? Pariatur facilis possimus ipsa
-                  adipisci hic, voluptatem quaerat suscipit at!
-                </p>
-              </div>
-            ))}
-          </div>
+    <Card>
+      <Card.Header className='d-flex align-items-center'>
+        <h3 className='m-0'>Tempat</h3>
+      </Card.Header>
+      <Card.Body>
+        <div className='row row-cols-lg-4'>
+          {data.map((item: any, index: number) => (
+            <div className='col' key={index.toString()}>
+              <img
+                src={dummyImage}
+                className='rounded mb-3'
+                style={{ width: '100%', objectFit: 'cover' }}
+              />
+              <div className='fs-2 text-gray-900 fw-bold'>{item.name}</div>
+            </div>
+          ))}
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 };
 
@@ -58,8 +50,10 @@ const DashboardPage: FC = () => {
 
   const newInfo: any[] = [];
   info.map((sn) => {
-    if (sn.status === "PUBLISHED") {
+    if (sn.status === 'PUBLISHED') {
       newInfo.push({
+        publishedAt: sn.publishedAt,
+        id: sn.id,
         file: sn.file,
         title: sn.title,
         desc: sn.content,
@@ -69,6 +63,8 @@ const DashboardPage: FC = () => {
   const newSeni: any[] = [];
   seni.map((sn) => {
     newSeni.push({
+      createdAt: sn.createdAt,
+      id: sn.id,
       file: sn.file,
       title: sn.title,
       desc: sn.desc,
@@ -76,8 +72,10 @@ const DashboardPage: FC = () => {
   });
   const newPementasan: any[] = [];
   pementasan.map((pn) => {
-    if (pn.status === "PUBLISHED") {
+    if (pn.status === 'PUBLISHED') {
       newPementasan.push({
+        createdAt: pn.createdAt,
+        id: pn.id,
         file: pn.file,
         title: pn.title,
         desc: pn.sinopsis,
@@ -87,27 +85,39 @@ const DashboardPage: FC = () => {
   const newSeniman: any[] = [];
   seniman.map((pn) => {
     newSeniman.push({
+      createdAt: pn.createdAt,
+      id: pn.id,
       file: pn.file,
       title: pn.name,
       desc: pn.performanceDesc,
     });
   });
 
-  console.log("seni", seni);
-  console.log("pementasan", pementasan);
-  console.log("info", info);
-  console.log("seniman", seniman);
+  const newTempat: any[] = [];
+  seniman.map((pn) => {
+    newSeniman.push({
+      createdAt: pn.createdAt,
+      id: pn.id,
+      // file: pn.file,
+      title: pn.name,
+    });
+  });
+
+  // console.log('seni', seni);
+  // console.log('pementasan', pementasan);
+  // console.log('info', info);
+  // console.log('seniman', seniman);
 
   return (
     <Content>
-      <div className="card mb-9">
+      <div className='card mb-9'>
         <ContentSekilasInfo data={newInfo} loading={loadingInfo} />
         <ListViewItem
-          title="Koleksi Seni UP PKJ TIM"
+          title='Koleksi Seni UP PKJ TIM'
           data={newSeni}
           loading={loadingSeni}
           onClickLink={() =>
-            navigate("/dashboard/informasi/seni", {
+            navigate('/dashboard/informasi/seni', {
               state: {
                 data: newSeni,
               },
@@ -115,9 +125,9 @@ const DashboardPage: FC = () => {
           }
         />
         <ListViewItem
-          title="Daftar Pementasan"
+          title='Daftar Pementasan'
           onClickLink={() =>
-            navigate("/dashboard/informasi/pementasan", {
+            navigate('/dashboard/informasi/pementasan', {
               state: {
                 data: newPementasan,
               },
@@ -127,9 +137,9 @@ const DashboardPage: FC = () => {
           loading={loadingPementasan}
         />
         <ListViewItem
-          title="Daftar Seniman"
+          title='Daftar Seniman'
           onClickLink={() =>
-            navigate("/dashboard/informasi/seniman", {
+            navigate('/dashboard/informasi/seniman', {
               state: {
                 data: newSeniman,
               },
@@ -139,10 +149,7 @@ const DashboardPage: FC = () => {
           loading={loadingSeniman}
         />
       </div>
-      <div className="card">
-        <HeadCard title="Jenis Tempat" />
-        <ContentTempat data={tempat} />
-      </div>
+      <ContentTempat data={tempat} />
     </Content>
   );
 };
@@ -152,14 +159,14 @@ export const Informasi: FC = () => {
 
   const Breadcrumbs: Array<PageLink> = [
     {
-      title: "Dashboard",
-      path: "/dashboard/informasi",
+      title: 'Dashboard',
+      path: '/dashboard/informasi',
       isSeparator: false,
       isActive: true,
     },
     {
-      title: "",
-      path: "",
+      title: '',
+      path: '',
       isSeparator: true,
       isActive: true,
     },
@@ -168,9 +175,9 @@ export const Informasi: FC = () => {
   return (
     <>
       <PageTitle
-        icon="information"
+        icon='information'
         breadcrumbs={Breadcrumbs}
-        description="Daftar pesanan saya"
+        description='Daftar pesanan saya'
       >
         Informasi
       </PageTitle>

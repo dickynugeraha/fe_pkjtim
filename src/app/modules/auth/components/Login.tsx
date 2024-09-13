@@ -1,31 +1,30 @@
-import { useState } from "react";
-import * as Yup from "yup";
-import clsx from "clsx";
-import { Link, useNavigate } from "react-router-dom";
-import { replace, useFormik } from "formik";
-import { getUserByToken, login } from "../core/_requests";
-import { toAbsoluteUrl } from "../../../../_metronic/helpers";
-import { useAuth } from "../core/Auth";
-import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
-import { Card } from "react-bootstrap";
-import Swal from "sweetalert2";
-import { jwtDecode } from "jwt-decode";
+import { useState } from 'react';
+import * as Yup from 'yup';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { login } from '../core/_requests';
+import { useAuth } from '../core/Auth';
+import ModalInformasi from '../../../../_metronic/layout/components/modal/ModalInformasi';
+import { Card } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import { jwtDecode } from 'jwt-decode';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Format email tidak benar")
-    .min(3, "Minimal 3 karakter")
-    .max(50, "Maksimal 50 karakter")
-    .required("Email harus diisi"),
+    .email('Format email tidak benar')
+    .min(3, 'Minimal 3 karakter')
+    .max(50, 'Maksimal 50 karakter')
+    .required('Email harus diisi'),
   password: Yup.string()
-    .min(3, "Minimal 3 karakter")
-    .max(50, "Maksimal 50 karakter")
-    .required("Password harus diisi"),
+    .min(3, 'Minimal 3 karakter')
+    .max(50, 'Maksimal 50 karakter')
+    .required('Password harus diisi'),
 });
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 // const initialValues = {
 //   password: "##Admin@1234",
@@ -42,10 +41,6 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
-  const [modalError, setModalError] = useState({
-    show: false,
-    text: "",
-  });
 
   // const navigate = useNavigate();
 
@@ -73,16 +68,15 @@ export function Login() {
         setLoading(false);
       } catch (error: any) {
         saveAuth(undefined);
-        setStatus("The login details are incorrect");
+        setStatus('The login details are incorrect');
         setSubmitting(false);
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Gagal melakukan login",
-        //   text: `${error.message}`,
-        // });
-        setModalError({
-          show: true,
+        Swal.fire({
+          heightAuto: false,
+          icon: 'error',
+          title: 'Gagal melakukan login',
           text: `${error.message}`,
+          showConfirmButton: false,
+          timer: 2000,
         });
 
         setLoading(false);
@@ -92,55 +86,47 @@ export function Login() {
 
   return (
     <Card>
-      <ModalInformasi
-        type="failed"
-        handleClose={() => setModalError({ show: false, text: "" })}
-        message={modalError.text}
-        isShow={modalError.show}
-        title="ERROR"
-        icon={""}
-      />
       <Card.Body>
         <form
           onSubmit={formik.handleSubmit}
           noValidate
-          id="kt_login_signin_form"
+          id='kt_login_signin_form'
         >
           {/* begin::Heading */}
-          <div className="text-center">
-            <h1 className="text-gray-900 fw-bolder">Masuk</h1>
+          <div className='text-center'>
+            <h1 className='text-gray-900 fw-bolder'>Masuk</h1>
           </div>
           {/* begin::Heading */}
 
           {/* begin::Separator */}
-          <div className="separator separator-content my-10">
-            <span className="w-lg-400px w-250px text-gray-500 fw-semibold fs-7">
+          <div className='separator separator-content my-10'>
+            <span className='w-lg-400px w-250px text-gray-500 fw-semibold fs-7'>
               Selamat Datang di PKJ TIM!
             </span>
           </div>
           {/* end::Separator */}
 
           {/* begin::Form group */}
-          <div className="fv-row mb-5">
+          <div className='fv-row mb-5'>
             {/* <label className="form-label fs-6 fw-bolder text-gray-900">Email</label> */}
             <input
-              placeholder="Email"
-              {...formik.getFieldProps("email")}
+              placeholder='Email'
+              {...formik.getFieldProps('email')}
               className={clsx(
-                "form-control bg-transparent",
-                { "is-invalid": formik.touched.email && formik.errors.email },
+                'form-control bg-transparent',
+                { 'is-invalid': formik.touched.email && formik.errors.email },
                 {
-                  "is-valid": formik.touched.email && !formik.errors.email,
+                  'is-valid': formik.touched.email && !formik.errors.email,
                 }
               )}
-              type="email"
-              name="email"
-              autoComplete="off"
+              type='email'
+              name='email'
+              autoComplete='off'
             />
             {formik.touched.email && formik.errors.email && (
-              <div className="fv-plugins-message-container">
-                <div className="fv-help-block">
-                  <span role="alert">{formik.errors.email}</span>
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>
+                  <span role='alert'>{formik.errors.email}</span>
                 </div>
               </div>
             )}
@@ -148,31 +134,31 @@ export function Login() {
           {/* end::Form group */}
 
           {/* begin::Form group */}
-          <div className="fv-row mb-5">
+          <div className='fv-row mb-5'>
             {/* <label className="form-label fw-bolder text-gray-900 fs-6 mb-0">
           Password
         </label> */}
             <input
-              placeholder="Password"
-              type="password"
-              autoComplete="off"
-              {...formik.getFieldProps("password")}
+              placeholder='Password'
+              type='password'
+              autoComplete='off'
+              {...formik.getFieldProps('password')}
               className={clsx(
-                "form-control bg-transparent",
+                'form-control bg-transparent',
                 {
-                  "is-invalid":
+                  'is-invalid':
                     formik.touched.password && formik.errors.password,
                 },
                 {
-                  "is-valid":
+                  'is-valid':
                     formik.touched.password && !formik.errors.password,
                 }
               )}
             />
             {formik.touched.password && formik.errors.password && (
-              <div className="fv-plugins-message-container">
-                <div className="fv-help-block">
-                  <span role="alert">{formik.errors.password}</span>
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>
+                  <span role='alert'>{formik.errors.password}</span>
                 </div>
               </div>
             )}
@@ -180,30 +166,30 @@ export function Login() {
           {/* end::Form group */}
 
           <a
-            className="btn btn-link btn-color-muted btn-active-color-primary ms-auto"
+            className='btn btn-link btn-color-muted btn-active-color-primary ms-auto'
             onClick={() => setShowModalLupaPassword(true)}
           >
             Lupa password?
           </a>
 
           {/* begin::Action */}
-          <div className="d-grid my-8">
+          <div className='d-grid my-8'>
             <button
-              type="submit"
-              id="kt_sign_in_submit"
-              className="btn btn-primary"
+              type='submit'
+              id='kt_sign_in_submit'
+              className='btn btn-primary'
               disabled={formik.isSubmitting || !formik.isValid}
             >
               {!loading && (
-                <span className="indicator-label text-white">Masuk</span>
+                <span className='indicator-label text-white'>Masuk</span>
               )}
               {loading && (
                 <span
-                  className="indicator-progress text-white"
-                  style={{ display: "block" }}
+                  className='indicator-progress text-white'
+                  style={{ display: 'block' }}
                 >
                   Loading...
-                  <span className="spinner-border spinner-border-sm align-middle ms-2 text-white"></span>
+                  <span className='spinner-border spinner-border-sm align-middle ms-2 text-white'></span>
                 </span>
               )}
             </button>
@@ -212,15 +198,15 @@ export function Login() {
           <ModalInformasi
             handleClose={async () => setShowModalLupaPassword(false)}
             isShow={showModalLupaPassword}
-            title="Lupa Password"
-            message="Silahkan menghubungi nomor ini wa.me"
-            type="info"
-            icon=""
+            title='Lupa Password'
+            message='Silahkan menghubungi nomor ini wa.me'
+            type='info'
+            icon=''
           />
 
-          <div className="text-gray-500 text-center fw-semibold fs-6">
-            Tidak memiliki akun?{" "}
-            <Link to="/auth/registration" className="link-primary">
+          <div className='text-gray-500 text-center fw-semibold fs-6'>
+            Tidak memiliki akun?{' '}
+            <Link to='/auth/registration' className='link-primary'>
               Daftar
             </Link>
           </div>
