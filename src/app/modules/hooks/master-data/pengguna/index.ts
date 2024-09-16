@@ -269,6 +269,7 @@ export default function usePengguna() {
             }).then(() => {
               fetchAllPengguna();
               closeModal();
+              window.location.reload();
             });
           }
         } catch (error: any) {

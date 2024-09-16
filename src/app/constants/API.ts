@@ -38,4 +38,7 @@ export const ENDPOINTS = {
   PESAN_TEMPAT: {
     LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT: "v1/Reservasi",
   },
+  CONTACT_PERSON: {
+    LIST_UPDATE_ADD_DELETE_CONTACT_PERSON: "v1/Utilities/ContactPerson",
+  },
 };

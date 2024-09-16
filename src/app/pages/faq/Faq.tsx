@@ -130,8 +130,11 @@ export const Faq = () => {
           </div>
           <div className="row row-cols-2 row-cols-lg-3 ps-8 pb-8">
             <div className="col">
-              <div className="card py-5 px-10 py-lg-20 px-lg-40 mb-5">
-                Video
+              <div className="card p-10 px-lg-40 mb-5">
+                <iframe
+                  height={200}
+                  src="https://www.youtube.com/watch?v=5OHPMyDsPNA"
+                ></iframe>
               </div>
               <p className="mb-1 fw-bold">Judul Video</p>
               <p>Deskripsi</p>

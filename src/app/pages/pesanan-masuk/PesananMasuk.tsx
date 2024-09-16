@@ -87,6 +87,14 @@ export const PesananMasuk = () => {
           let statusClass = "";
           let statusDesc = "";
           switch (singleData.status) {
+            case "WAITING_ANSWER_LETTER":
+              statusClass = "badge badge-light-success fs-6";
+              statusDesc = "Lolos review kurator";
+              break;
+            case "PROSES":
+              statusClass = "badge badge-light-warning fs-6";
+              statusDesc = "Pesanan sedang di proses";
+              break;
             case "DONE":
               statusClass = "badge badge-light-success fs-6";
               statusDesc = "Selesai";
@@ -115,8 +123,12 @@ export const PesananMasuk = () => {
       },
       {
         Header: "Total Pembayaran",
-        accessor: "total_pembayaran",
+        accessor: "priceTotal",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return <>{globalVar.formatRupiah(singleData.priceTotal)}</>;
+        },
       },
       {
         Header: "Aksi",

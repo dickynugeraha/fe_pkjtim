@@ -24,8 +24,10 @@ const LoadingInfo = () => {
             {[1, 1, 1, 1, 1].map((item, idx) => (
               <div key={idx.toString()}>
                 <div className="mb-3">
-                  <Skeleton width={100} height={16} />
-                  <Gap height={6} />
+                  <Skeleton width={"50%"} height={20} />
+                  <Gap height={12} />
+                  <Skeleton width={"100%"} height={16} />
+                  <Skeleton width={"100%"} height={16} />
                   <Skeleton width={"100%"} height={16} />
                   <Gap height={6} />
                   <Skeleton width={"100%"} height={16} />

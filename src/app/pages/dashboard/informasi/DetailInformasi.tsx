@@ -1,46 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { Content } from '../../../../_metronic/layout/components/content';
-import { useNavigate, useParams } from 'react-router-dom';
-import { convertRouteToTitle, dummyImage } from '../../../helper/helper';
-import { getAll as getAllInfo } from '../../../modules/requests/master-data/info';
-import { getAll as getAllSeniman } from '../../../modules/requests/master-data/seniman';
-import { getAll as getAllSeni } from '../../../modules/requests/master-data/seni';
-import { getAll as getAllPentas } from '../../../modules/requests/master-data/pentas';
-import { PageLink, PageTitle } from '../../../../_metronic/layout/core';
-import { KTIcon } from '../../../../_metronic/helpers';
-import { ENDPOINTS } from '../../../constants/API';
-import LoadingDetail from './components/LoadingDetail';
-import globalVar from '../../../helper/globalVar';
+import React, { useEffect, useState } from "react";
+import { Content } from "../../../../_metronic/layout/components/content";
+import { useParams } from "react-router-dom";
+import { getAll as getAllInfo } from "../../../modules/requests/master-data/info";
+import { getAll as getAllSeniman } from "../../../modules/requests/master-data/seniman";
+import { getAll as getAllSeni } from "../../../modules/requests/master-data/seni";
+import { getAll as getAllPentas } from "../../../modules/requests/master-data/pentas";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
+import { KTIcon } from "../../../../_metronic/helpers";
+import { ENDPOINTS } from "../../../constants/API";
+import LoadingDetail from "./components/LoadingDetail";
+import globalVar from "../../../helper/globalVar";
 
 export const DetailInformasi = () => {
-  const navigate = useNavigate();
   const params = useParams();
   const list = params.list;
   const detailId = params.id;
-  const title = convertRouteToTitle(params.list as string);
+  const title = globalVar.convertRouteToTitle(params.list as string);
 
   const Breadcrumbs: Array<PageLink> = [
     {
-      title: 'Dashboard',
-      path: '/dashboard',
+      title: "Dashboard",
+      path: "/dashboard",
       isSeparator: false,
       isActive: false,
     },
     {
-      title: '',
-      path: '',
+      title: "",
+      path: "",
       isSeparator: true,
       isActive: false,
     },
     {
-      title: 'Informasi',
-      path: '/dashboard/informasi',
+      title: "Informasi",
+      path: "/dashboard/informasi",
       isSeparator: false,
       isActive: false,
     },
     {
-      title: '',
-      path: '',
+      title: "",
+      path: "",
       isSeparator: true,
       isActive: false,
     },
@@ -51,8 +49,8 @@ export const DetailInformasi = () => {
       isActive: false,
     },
     {
-      title: '',
-      path: '',
+      title: "",
+      path: "",
       isSeparator: true,
       isActive: false,
     },
@@ -66,11 +64,11 @@ export const DetailInformasi = () => {
     let newData: any[] = [];
     setLoading(true);
     switch (params.list) {
-      case 'info':
-        res = await getAllInfo(1, -1, '');
+      case "info":
+        res = await getAllInfo(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          if (dt.status === 'PUBLISHED') {
+          if (dt.status === "PUBLISHED") {
             const imageUrl: any = `${ENDPOINTS.NEWS.NEWS_IMAGE}/${dt.id}/Image?isStream=true`;
             newData.push({
               id: dt.id,
@@ -83,8 +81,8 @@ export const DetailInformasi = () => {
         });
         setData(newData);
         break;
-      case 'seniman':
-        res = await getAllSeniman(1, -1, '');
+      case "seniman":
+        res = await getAllSeniman(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
           const imageUrl: any = `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${dt.id}/Image?isStream=true`;
@@ -98,8 +96,8 @@ export const DetailInformasi = () => {
         });
         setData(newData);
         break;
-      case 'seni':
-        res = await getAllSeni(1, -1, '');
+      case "seni":
+        res = await getAllSeni(1, -1, "");
         data = res.data.data.data;
 
         data.map((dt: any) => {
@@ -115,10 +113,10 @@ export const DetailInformasi = () => {
         setData(newData);
         break;
       default:
-        res = await getAllPentas(1, -1, '');
+        res = await getAllPentas(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          if (dt.status === 'PUBLISHED') {
+          if (dt.status === "PUBLISHED") {
             const imageUrl: any = `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${dt.id}/Image?isStream=true`;
             newData.push({
               id: dt.id,
@@ -167,9 +165,9 @@ export const DetailInformasi = () => {
                   </span>
                 </div>
               </div>
-              <h4 className='m-0 fs-2'>{mainData.title}</h4>
+              <h4 className="m-0 fs-2">{mainData.title}</h4>
             </div>
-            <div className='p-8 pt-0 pe-lg-0'>
+            <div className="p-8 pt-0 pe-lg-0">
               <img
                 src={mainData.file}
                 style={{
@@ -178,11 +176,11 @@ export const DetailInformasi = () => {
                   // objectFit: "",
                 }}
                 height={500}
-                className='mb-3'
+                className="mb-3"
               />
               <p
-                className='fs-5 fw-semibold text-gray-600'
-                style={{ textAlign: 'justify' }}
+                className="fs-5 fw-semibold text-gray-600"
+                style={{ textAlign: "justify" }}
               >
                 {mainData.desc}
               </p>
@@ -193,7 +191,7 @@ export const DetailInformasi = () => {
               <h4 className='m-0'>{title} terbaru</h4>
             </div>
 
-            <div className='p-8 ps-lg-0'>
+            <div className="p-8 ps-lg-0">
               {anotherData.map((itm) => (
                 <div className='row align-items-center mb-4'>
                   <div className='col'>
@@ -207,12 +205,11 @@ export const DetailInformasi = () => {
                       }}
                     />
                   </div>
-                  <div className='col' style={{ height: '100px' }}>
-                    <div
-                      role='button'
-                      onClick={() => navigate(`seni/${itm.id}`)}
-                      className='text-gray-900 fw-bold text-hover-primary fs-6'
-                    >
+                  <div
+                    className="ms-4 col overflow-y-scroll"
+                    style={{ height: "100px" }}
+                  >
+                    <div className="text-gray-900 fw-bold text-hover-primary fs-6">
                       {itm.title}
                     </div>
                     <div className='text-truncate-2 text-gray-600 fw-semibold pt-1 fs-7'>
@@ -231,15 +228,15 @@ export const DetailInformasi = () => {
   return (
     <Content>
       <PageTitle
-        icon='information'
+        icon="information"
         breadcrumbs={Breadcrumbs}
-        description='Detail Informasi'
+        description="Detail Informasi"
       >
         Detail Informasi
       </PageTitle>
 
-      <div className='card'>
-        <div className='row'>{content}</div>
+      <div className="card">
+        <div className="row">{content}</div>
       </div>
     </Content>
   );

@@ -9,6 +9,7 @@ import { KTIcon } from "../../../_metronic/helpers";
 import ImageAssets from "../../utils/image_assets";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -170,7 +171,9 @@ export const TentangKami = () => {
   function LokasiTerkini() {
     return (
       <div className="d-flex mb-3">
-        <img src={LokasiImage} />
+        <a href={"https://goo.gl/maps/ZYVB1EV8VGAWkasi9"} target="_blank">
+          <img src={LokasiImage} />
+        </a>
         <div className="ms-8">
           <h5>Kantor Kami</h5>
           <div className="d-flex">
@@ -269,13 +272,13 @@ export const TentangKami = () => {
         <h5>Sosial Media</h5>
         <Gap height={10} />
         <div className="d-flex">
-          <div>
+          <a href="https://www.instagram.com/uppkjtim/" target="_blank">
             <img src={Instagram} height={50} width={50} className="mb-3" />
-          </div>
+          </a>
           <Gap width={12} />
-          <div>
+          <a href="https://www.youtube.com/@uppkjtim" target="_blank">
             <img src={Youtube} height={50} width={70} className="mb-3" />
-          </div>
+          </a>
         </div>
       </div>
     );

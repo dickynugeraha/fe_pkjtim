@@ -14,6 +14,7 @@ const LoadingCard: FC<Props> = ({ array }) => {
           <Skeleton height={200} width={"100%"} />
           <Skeleton width={100} height={16} />
           <Skeleton width={"100%"} height={16} />
+          <Skeleton width={"100%"} height={16} />
         </div>
       ))}
     </>

@@ -5,11 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { FC, useState } from "react";
 import { Content } from "../../../../_metronic/layout/components/content";
 import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
-import { dummyImage } from "../../../helper/helper";
-import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
-import polygonImage from "../../../../../public/media/images/polygon.png";
-import { KTIcon } from "../../../../_metronic/helpers";
 import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import ModalDetailAcara from "./components/ModalDetailAcara";
 import { Card, Col, Row } from "react-bootstrap";
@@ -40,37 +36,22 @@ export const Home: FC = () => {
   });
   const { loading, pementasan } = usePentas();
 
-  console.log("pementasan", pementasan);
-
   const events: any[] = [];
 
   pementasan.map((itm) => {
     const data = {
       title: itm?.title,
       start: itm?.startDate,
+      startDate: itm?.startDate,
       end: itm?.endDate,
+      endDate: itm?.endDate,
       image: itm?.file,
       tempat: itm?.tempat?.name,
     };
     events.push(data);
   });
 
-  console.log("events", events);
-
-  // const events = [
-  //   {
-  //     title: "Orchestra",
-  //     start: "2024-07-24T10:00:00",
-  //     end: "2024-07-25T12:00:00",
-  //     image: dummyImage,
-  //     tempat: "Teater Besar",
-  //   },
-  // ];
-
   const handleEventClick = (arg: any) => {
-    console.log("arg.start", arg.view.activeStart);
-    console.log("arg.start", arg.view.activeEnd);
-
     setModalDetailEvent({
       show: true,
       data: arg,
@@ -143,6 +124,8 @@ export const Home: FC = () => {
     </>
   );
   function renderEventContent(eventInfo: any) {
+    console.log("eventInfo.event", eventInfo.event);
+
     return (
       <>
         <i role="button">{eventInfo.event.title}</i>

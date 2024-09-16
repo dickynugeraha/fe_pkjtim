@@ -6,15 +6,14 @@ import {
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditSekilasInfo from "./components/ModalAddEditSekilasInfo";
-import useInfo from "../../../modules/hooks/master-data/info";
-import useTempat from "../../../modules/hooks/master-data/tempat";
+import ModalAddEditKoleksiSeni from "./components/ModalAddEditKoleksiSeni";
+import useSeni from "../../../modules/hooks/master-data/seni";
 import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Sekilas Info",
-    path: "/master-data/sekilas-info",
+    title: "Kontak Person",
+    path: "/master-data/contact-person",
     isSeparator: false,
     isActive: true,
   },
@@ -26,15 +25,14 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-export const SekilasInfo = () => {
-  const { tempat } = useTempat();
+export const ContactPerson = () => {
   const {
-    addInfo,
-    deleteInfo,
-    info,
+    addSeni,
+    deleteSeni,
     loading,
-    searchInfo,
-    updateInfo,
+    searchSeni,
+    seni,
+    updateSeni,
     closeModal,
     formData,
     formFile,
@@ -44,13 +42,11 @@ export const SekilasInfo = () => {
     openModal,
     setFormFile,
     setQuery,
-    isValidated,
-    setIsValidated,
-  } = useInfo();
+  } = useSeni();
 
   const data = useMemo(
-    () => info,
-    [addInfo, updateInfo, deleteInfo, searchInfo]
+    () => seni,
+    [loading, addSeni, updateSeni, deleteSeni, searchSeni]
   );
 
   const columns = useMemo(
@@ -89,35 +85,15 @@ export const SekilasInfo = () => {
         },
       },
       {
-        Header: "Judul Info",
+        Header: "Nama Seni",
+        sortType: "alphanumeric",
         accessor: "title",
-        sortType: "alphanumeric",
       },
-
       {
-        Header: "Status",
-        accessor: "status",
+        Header: "Detail Seni",
         sortType: "alphanumeric",
-        Cell: (props: any) => {
-          let singleData = props.cell.row.original;
-          let className = "",
-            title = "";
-
-          switch (singleData.status) {
-            case "DRAFT":
-              className = "badge badge-light-danger fs-6";
-              title = "Draft";
-              break;
-            case "PUBLISHED":
-              className = "badge badge-light-success fs-6";
-              title = "Terbit";
-              break;
-          }
-
-          return <span className={className}>{title}</span>;
-        },
+        accessor: "desc",
       },
-
       {
         Header: "Aksi",
         Cell: (props: any) => {
@@ -147,7 +123,7 @@ export const SekilasInfo = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() => deleteInfo(singleData.id)}
+                      onClick={() => deleteSeni(singleData.id)}
                     >
                       <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
@@ -168,9 +144,9 @@ export const SekilasInfo = () => {
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
-        description="Sekilas Info"
+        description="Kontak Person"
       >
-        Sekilas Info
+        Kontak Person
       </PageTitle>
       <Content>
         <Table
@@ -180,28 +156,20 @@ export const SekilasInfo = () => {
           data={data}
           addData={() => openModal()}
         />
-        <ModalAddEditSekilasInfo
-          tempat={tempat}
-          fromAdd={!isEdit}
-          data={formData}
+        <ModalAddEditKoleksiSeni
           fileValue={formFile}
-          onChangeVal={(e: any) => handleChange(e)}
-          onChangeFile={(e) => setFormFile(e)}
+          handleChangeFile={(e: any) => setFormFile(e)}
+          handleChangeVal={(e: any) => handleChange(e)}
           show={isModalOpen}
-          handleClose={closeModal}
-          handleIsValidated={setIsValidated}
-          isValidated={isValidated}
+          data={formData}
+          fromAdd={!isEdit}
+          handleClose={() => closeModal()}
           handleSubmit={() => {
-            const formWithFile = {
-              ...formData,
-              file: formFile,
-              publishAt: new Date(),
-            };
-
+            const formWithFile = { ...formData, file: formFile };
             if (isEdit) {
-              updateInfo(formWithFile);
+              updateSeni(formWithFile);
             } else {
-              addInfo(formWithFile);
+              addSeni(formWithFile);
             }
           }}
         />

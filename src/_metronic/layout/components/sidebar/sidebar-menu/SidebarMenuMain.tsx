@@ -67,6 +67,11 @@ const SidebarMenuMain = () => {
           title="Tutup Tempat"
           hasBullet={true}
         />
+        <SidebarMenuItem
+          to="master-data/contact-person"
+          title="Kontak Person"
+          hasBullet={true}
+        />
       </SidebarMenuItemWithSub>
     );
   };

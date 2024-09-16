@@ -53,17 +53,18 @@ export const FormPesanTempat: FC = () => {
   const [fileTandaPengenal, setFileTandaPengenal] = useState<any>(null);
   const [startMainEventDate, setStartMainEventDate] = useState<any>(null);
   const [mainEventDay, setMainEventDay] = useState<any>(0);
+  const [tarifCalculation, setTarifCalculation] = useState<any>(0);
 
   const navigate = useNavigate();
   const params = useParams();
 
-  const bookingNow = globalVar.formatInputDateFromDB(
+  const bookingNow: any = globalVar.formatInputDateFromDB(
     singleReservationTempat.createdAt
   );
-  const endDate = globalVar.formatInputDateFromDB(
+  const endDate: any = globalVar.formatInputDateFromDB(
     singleReservationTempat.endDate
   );
-  const startDate = globalVar.formatInputDateFromDB(
+  const startDate: any = globalVar.formatInputDateFromDB(
     singleReservationTempat.startDate
   );
   useEffect(() => {
@@ -72,22 +73,7 @@ export const FormPesanTempat: FC = () => {
 
   const expired = new Date(singleReservationTempat?.expiredDateTime + "Z");
 
-  console.log("now > expired", now > expired);
-
-  if (now > expired) {
-    Swal.fire({
-      icon: "error",
-      title: "EROR",
-      text: "Pesanan anda sudah kadaluarsa",
-      showConfirmButton: false,
-    }).then(() => {
-      navigate("/pesanan-saya");
-    });
-  }
-
   const checkingNumber = expired.getTime();
-
-  console.log("checkingNumber", checkingNumber);
 
   const createBookingCode = () => {
     const bookingCode = globalVar.createCodeBooking(
@@ -110,7 +96,7 @@ export const FormPesanTempat: FC = () => {
         fileProposal,
         fileSuratPermohonan,
         fileTandaPengenal,
-        priceTotal: tarifCalculation().tarif,
+        priceTotal: tarifCalculation,
         startMainEventDate: startMainEventDate ?? startDate,
         days: mainEventDay,
       };
@@ -119,7 +105,7 @@ export const FormPesanTempat: FC = () => {
     },
   });
 
-  const tarifCalculation = () => {
+  const tarifCalculationNoPreEvent = () => {
     const start: any = new Date(startDate);
     const end: any = new Date(endDate);
 
@@ -131,85 +117,82 @@ export const FormPesanTempat: FC = () => {
       }
       start.setDate(start.getDate() + 1);
     }
+    const differenceDay = globalVar.differenceInDays(startDate, endDate);
+    setMainEventDay(differenceDay);
 
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-    const differenceInMilliseconds = start - end;
-    const differentDay =
-      Math.round(differenceInMilliseconds / oneDayInMilliseconds) + 1;
-    const dayWeekday = differentDay - dayWeekend;
+    const dayWeekday = differenceDay - dayWeekend;
 
-    // calculation
     let tarif =
       dayWeekend * singleReservationTempat?.tempat?.priceMainEventWeekEnd +
       dayWeekday * singleReservationTempat?.tempat?.priceMainEventWeekDay;
-
-    if (
-      singleReservationTempat?.tempat?.pricePreEventWeekDay !== 0 &&
-      singleReservationTempat?.tempat?.pricePreEventWeekEnd !== 0
-    ) {
-      if (mainEventDay != 0 && startMainEventDate) {
-        const startMainEvent: any = new Date(startMainEventDate);
-        console.log("startMainEvent", startMainEvent);
-
-        let futureDateMainEvent = new Date(
-          startMainEvent.setDate(
-            new Date(startMainEventDate).getDate() + mainEventDay
-          )
-        );
-        console.log("mainEventDay1111111111111", mainEventDay);
-
-        const cek = new Date(startMainEventDate).setDate(
-          startMainEvent.getDate() + 1
-        );
-        console.log("cek", cek);
-
-        // if (mainEventDay == 1) {
-        //   futureDateMainEvent = startMainEvent;
-        // }
-        console.log("startMainEvent", startMainEvent);
-        console.log("futureDateMainEvent", futureDateMainEvent);
-
-        let dayWeekendMain = 0;
-        // while (startMainEvent <= futureDateMainEvent) {
-        //   const day = startMainEvent.getDay();
-        //   if (day === 0 || day === 6) {
-        //     dayWeekendMain += 1;
-        //   }
-        //   startMainEvent.setDate(startMainEvent.getDate());
-        // }
-        console.log("dayWeekendMain", dayWeekendMain);
-
-        // const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-        // const differenceInMilliseconds = startMainEvent - futureDateMainEvent;
-        // const differentDay =
-        //   Math.round(differenceInMilliseconds / oneDayInMilliseconds) + 1;
-        // const dayWeekdayMain = differentDay - dayWeekendMain;
-
-        // let tarif =
-        //   dayWeekendMain *
-        //     singleReservationTempat?.tempat?.priceMainEventWeekEnd +
-        //   dayWeekdayMain *
-        //     singleReservationTempat?.tempat?.priceMainEventWeekDay;
-        // const calculationDayWeekday = dayWeekday - dayWeekdayMain;
-        // const calculationDayWeekend = dayWeekend - dayWeekendMain;
-        // tarif =
-        //   tarif +
-        //   (calculationDayWeekend *
-        //     singleReservationTempat?.tempat?.pricePreEventWeekEnd +
-        //     calculationDayWeekday *
-        //       singleReservationTempat?.tempat?.pricePreEventWeekDay);
-      } else {
-        tarif = 0;
-      }
-    }
-    return { tarif };
+    setTarifCalculation(tarif);
   };
 
-  // useEffect(() => {
-  //   tarifCalculation();
-  // }, [startMainEventDate, mainEventDay]);
+  const tarifCalculationWithPreEvent = () => {
+    if (!startMainEventDate || !mainEventDay) {
+      Swal.fire({
+        title: "Gagal",
+        text: "Tolong pilih tanggal mulai main event dan jumlah hari main event",
+      });
+      return;
+    }
+    const start: any = new Date(startDate);
+    const end: any = new Date(endDate);
 
-  console.log("tarifCalculation().tarif", tarifCalculation().tarif);
+    const mainEvent = new Date(startMainEventDate);
+    const targetDates: any = [];
+
+    for (let i = 0; i < mainEventDay; i++) {
+      if (mainEventDay == 1) {
+        targetDates.push(new Date(startMainEventDate));
+      } else {
+        const futureDate = new Date();
+        futureDate.setDate(mainEvent.getDate() + i);
+        const date = futureDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
+        targetDates.push(new Date(date));
+      }
+    }
+
+    let tarif = 0;
+    while (start <= end) {
+      for (let i = 0; i < targetDates.length; i++) {
+        console.log("kesini");
+
+        if (start.getTime() === targetDates[i].getTime()) {
+          let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
+          let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
+          let formattedDate = start.toISOString().split("T")[0]; // Format tanggal
+
+          if (isWeekend) {
+            tarif += singleReservationTempat?.tempat.priceMainEventWeekEnd;
+          } else {
+            tarif += singleReservationTempat?.tempat.priceMainEventWeekDay;
+          }
+
+          console.log(
+            `Tanggal ditemukan: ${formattedDate}, ${
+              isWeekend ? "Akhir pekan" : "Bukan akhir pekan"
+            }`
+          );
+        } else {
+          let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
+          let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
+
+          if (isWeekend) {
+            tarif += singleReservationTempat?.tempat.pricePreEventWeekEnd;
+          } else {
+            tarif += singleReservationTempat?.tempat.pricePreEventWeekDay;
+          }
+        }
+      }
+
+      // Increment tanggal
+      start.setDate(start.getDate() + 1);
+    }
+    console.log("tarif", tarif);
+
+    setTarifCalculation(tarif);
+  };
 
   return (
     <Content>
@@ -229,20 +212,21 @@ export const FormPesanTempat: FC = () => {
             />
           </div>
           {!isNaN(checkingNumber) && (
-            <Remining
-              expired={expired}
-              now={now}
-              onFinishTime={() => {
-                Swal.fire({
-                  icon: "error",
-                  title: "EROR",
-                  text: "Pesanan anda sudah kadaluarsa",
-                  showConfirmButton: false,
-                }).then(() => {
-                  navigate("/pesanan-saya");
-                });
-              }}
-            />
+            <></>
+            // <Remining
+            //   expired={expired}
+            //   now={now}
+            //   onFinishTime={() => {
+            //     Swal.fire({
+            //       icon: "error",
+            //       title: "EROR",
+            //       text: "Pesanan anda sudah kadaluarsa",
+            //       showConfirmButton: false,
+            //     }).then(() => {
+            //       navigate("/pesanan-saya");
+            //     });
+            //   }}
+            // />
           )}
         </div>
 
@@ -500,26 +484,35 @@ export const FormPesanTempat: FC = () => {
                     <div className="row row-cols-1">
                       <div className="col"></div>
                       <div className="col">
-                        <label htmlFor="tarif" className="fw-bold">
-                          Kalkulasi Tarif
-                        </label>
-                        <Gap height={10} />
-
-                        <h4>
-                          {globalVar.rupiahFormat(tarifCalculation().tarif)}
-                        </h4>
-                        <Gap height={10} />
-                        {/* <input
-                          readOnly
-                          disabled
-                          id="tarif"
-                          {...formik.getFieldProps("tarif")}
-                          className={clsx("form-control form-control-solid")}
-                          type="text"
-                          name="tarif"
-                          autoComplete="off"
-                          value={tarifCalculation().tarif}
-                        /> */}
+                        <div className="fv-row mb-5">
+                          <label htmlFor="totalTarif" className="fw-bold">
+                            Total tarif
+                          </label>
+                          <Gap height={10} />
+                          <div className="input-group mb-3">
+                            <input
+                              readOnly
+                              id="totalTarif"
+                              {...formik.getFieldProps("totalTarif")}
+                              className={clsx(
+                                "form-control form-control-solid"
+                              )}
+                              type="text"
+                              name="totalTarif"
+                              autoComplete="off"
+                              aria-describedby="button-addon2"
+                              value={tarifCalculation}
+                            />
+                            <button
+                              className="btn btn-light-primary"
+                              type="button"
+                              id="button-addon2"
+                              onClick={tarifCalculationNoPreEvent}
+                            >
+                              Lihat tarif
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -532,20 +525,32 @@ export const FormPesanTempat: FC = () => {
               <div className="row row-cols-1 row-cols-lg-2">
                 <div className="col"></div>
                 <div className="col">
-                  <label htmlFor="tarif" className="fw-bold">
-                    Kalkulasi Tarif
-                  </label>
-                  <Gap height={10} />
-                  <input
-                    readOnly
-                    disabled
-                    id="tarif"
-                    {...formik.getFieldProps("tarif")}
-                    className={clsx("form-control form-control-solid")}
-                    type="text"
-                    name="tarif"
-                    autoComplete="off"
-                  />
+                  <div className="fv-row mb-5">
+                    <label htmlFor="totalTarif" className="fw-bold">
+                      Total tarif
+                    </label>
+                    <Gap height={10} />
+                    <div className="input-group mb-3">
+                      <input
+                        readOnly
+                        id="totalTarif"
+                        className={clsx("form-control form-control-solid")}
+                        type="text"
+                        name="totalTarif"
+                        autoComplete="off"
+                        aria-describedby="button-addon2"
+                        value={tarifCalculation}
+                      />
+                      <button
+                        className="btn btn-light-primary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={tarifCalculationWithPreEvent}
+                      >
+                        Lihat tarif
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

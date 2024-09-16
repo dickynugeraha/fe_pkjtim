@@ -40,6 +40,7 @@ import {
 
 import { PesananMasuk, PesananPlanetarium } from "../pages";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
+import { ContactPerson } from "../pages/master-data/contact-person/ContactPerson";
 
 /**
  * Base URL of the website.
@@ -107,6 +108,10 @@ const AppRoutes: FC = () => {
                 <Route
                   path="master-data/tutup-tempat"
                   element={<TutupTempat />}
+                />
+                <Route
+                  path="master-data/contact-person"
+                  element={<ContactPerson />}
                 />
               </Route>
               <Route path="/*" element={<MainRoutes />} />

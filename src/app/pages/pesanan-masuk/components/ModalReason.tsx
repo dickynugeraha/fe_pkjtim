@@ -1,16 +1,18 @@
 import { useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 
-type ModalReasonRejectProps = {
+type ModalReasonProps = {
+  type: string;
   onSubmit: (reason: string) => void;
   show: boolean;
   handleClose: () => void;
 };
-const ModalReasonReject = ({
+const ModalReason = ({
   onSubmit,
   show,
+  type,
   handleClose,
-}: ModalReasonRejectProps) => {
+}: ModalReasonProps) => {
   const [textReason, setTextReason] = useState("");
 
   return (
@@ -24,7 +26,7 @@ const ModalReasonReject = ({
           role="button"
           onClick={() => onSubmit(textReason)}
         >
-          Selesai
+          Kirim
         </div>
       }
       handleClose={handleClose}
@@ -43,4 +45,4 @@ const ModalReasonReject = ({
   );
 };
 
-export default ModalReasonReject;
+export default ModalReason;

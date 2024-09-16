@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
+import globalVar from "../../../helper/globalVar";
+import usePesanTempat from "../../../modules/hooks/pesan-tempat";
 
 type Props = {
   show: boolean;
@@ -14,8 +16,10 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
+  const { changeStatus } = usePesanTempat();
   const [modalShowRevisi, setModalShowRevisi] = useState(false);
   const [modalShowTerima, setModalShowTerima] = useState(false);
+  const [reason, setReason] = useState("");
 
   return (
     <ModalWrapper
@@ -28,10 +32,10 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
         <>
           <div
             role="button"
-            className="btn btn-sm btn-danger mx-4"
+            className="btn btn-sm btn-warning mx-4"
             onClick={() => setModalShowRevisi(true)}
           >
-            Revisi
+            Rekomendasi
           </div>
           <div
             role="button"
@@ -48,39 +52,36 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           <DetailIten
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
-            desc={data.nama_sekolah}
-            // desc={data.tanggal pemesanan}
+            desc={globalVar.formatDate(data.createdAt)}
           />
           <DetailIten
             iconName={"home-2"}
-            title={"Nama sekolah"}
-            desc={data.nama_sekolah}
-            // desc={data.nama_sanggar}
+            title={"Nama Sanggar"}
+            desc={data.namaSanggar}
           />
           <DetailIten
             iconName={"geolocation"}
-            title={"Alamat sekolah"}
-            desc={data.nama_sekolah}
-            // desc={data.alamat_sangagr}
+            title={"Alamat Sanggar"}
+            desc={data.alamatSanggar}
           />
           <DetailIten
             iconName={"book"}
-            title={"Kegiatan"}
-            desc={data.nama_sekolah}
-            // desc={data.judul_pentas}
+            title={"Pentas"}
+            desc={data.judulPentas}
           />
           <DetailIten
             iconName={"toggle-on-circle"}
             title={"Tangal mulai kunjungan"}
-            desc={data.nama_sekolah}
-            // desc={data.tanggal_mulai_pentas}
+            desc={globalVar.formatDate(data.startDate)}
           />
           <DetailIten
             iconName={"toggle-off-circle"}
             title={"Tanggal akhir kunjungan"}
-            desc={data.nama_sekolah}
-            // desc={data.tanggal_akhir_pentas}
+            desc={globalVar.formatDate(data.endDate)}
           />
+          <DetailItemFile title="Surat Permohonan" url={data.suratPermohonan} />
+          <DetailItemFile title="Tanda Pengenal" url={data.tandaPengenal} />
+          <DetailItemFile title="proposal" url={data.proposal} />
         </div>
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
@@ -91,8 +92,18 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           attribute={{ centered: true }}
           className="modal-md"
           footerCustom={
-            <div role="button" className="btn btn-sm btn-danger mx-4">
-              Revisi
+            <div
+              role="button"
+              className="btn btn-sm btn-warning mx-4"
+              onClick={() => {
+                const payload = {
+                  id: data.id,
+                  note: reason,
+                };
+                changeStatus("Revise", payload);
+              }}
+            >
+              Rekomendasi
             </div>
           }
         >
@@ -102,7 +113,10 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
               id="alasan"
               className="form-control"
               rows={8}
-            ></textarea>
+              onChange={(e) => setReason(e.target.value)}
+            >
+              {reason}
+            </textarea>
           </>
         </ModalWrapper>
         <ModalWrapper
@@ -112,7 +126,17 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           attribute={{ centered: true }}
           className="modal-md"
           footerCustom={
-            <div role="button" className="btn btn-sm btn-success mx-4">
+            <div
+              role="button"
+              className="btn btn-sm btn-success mx-4"
+              onClick={() => {
+                const payload = {
+                  id: data.id,
+                  note: reason,
+                };
+                changeStatus("Answer-Letter", payload);
+              }}
+            >
               Terima
             </div>
           }
@@ -123,7 +147,10 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
               id="alasan"
               className="form-control"
               rows={8}
-            ></textarea>
+              onChange={(e) => setReason(e.target.value)}
+            >
+              {reason}
+            </textarea>
           </>
         </ModalWrapper>
       </>
@@ -161,9 +188,13 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
   type DetailItemFileProps = {
     title: string;
     url: string;
-    withUpload: boolean;
+    withUpload?: boolean;
   };
-  function DetailItemFile({ title, url, withUpload }: DetailItemFileProps) {
+  function DetailItemFile({
+    title,
+    url,
+    withUpload = false,
+  }: DetailItemFileProps) {
     return (
       <div className="col mb-6">
         <div className="d-flex align-items-center">
