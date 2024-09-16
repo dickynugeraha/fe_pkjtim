@@ -21,7 +21,7 @@ const LoadingDetail = () => {
           <Skeleton height={16} width={"100%"} />
         </div>
       </div>
-      <div className="col-12 col-lg-4">
+      <div className="col-12 col-lg-4 mt-8">
         <div className="d-flex align-items-center px-8 p-lg-0 pt-lg-8">
           <Skeleton height={16} width={180} />
         </div>
@@ -36,7 +36,6 @@ const LoadingDetail = () => {
                 style={{ height: "100px" }}
               >
                 <Skeleton height={16} width={80} />
-                <Skeleton height={16} width={"100%"} />
                 <Skeleton height={16} width={"100%"} />
                 <Skeleton height={16} width={"100%"} />
               </div>
