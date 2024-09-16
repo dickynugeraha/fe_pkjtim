@@ -9,6 +9,8 @@ const Table = ({
   data,
   columns,
   addData,
+  isExport = false,
+  onClickExport = () => {},
   showAddButton = true,
   searchData,
   loading,
@@ -88,6 +90,17 @@ const Table = ({
 
   return (
     <Card className="p-5">
+      {isExport && (
+        <>
+          <button
+            onClick={onClickExport}
+            className="ms-auto btn btn-warning btn-sm"
+          >
+            Export as excel
+          </button>
+          <Gap height={12} />
+        </>
+      )}
       <div className="d-flex align-items-end justify-content-between">
         <div className="d-flex align-items-end">
           <div className="d-flex align-items-center mb-4">

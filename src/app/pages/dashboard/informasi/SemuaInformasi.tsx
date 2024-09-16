@@ -1,37 +1,37 @@
-import { FC, useEffect, useState } from 'react';
-import { Content } from '../../../../_metronic/layout/components/content';
-import { useNavigate, useParams } from 'react-router-dom';
-import { convertRouteToTitle } from '../../../helper/helper';
-import { PageLink, PageTitle } from '../../../../_metronic/layout/core';
-import LoadingCard from './components/LoadingCard';
-import { ENDPOINTS } from '../../../constants/API';
-import { getAll as getAllInfo } from '../../../modules/requests/master-data/info';
-import { getAll as getAllSeniman } from '../../../modules/requests/master-data/seniman';
-import { getAll as getAllSeni } from '../../../modules/requests/master-data/seni';
-import { getAll as getAllPentas } from '../../../modules/requests/master-data/pentas';
+import { FC, useEffect, useState } from "react";
+import { Content } from "../../../../_metronic/layout/components/content";
+import { useNavigate, useParams } from "react-router-dom";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
+import LoadingCard from "./components/LoadingCard";
+import { ENDPOINTS } from "../../../constants/API";
+import { getAll as getAllInfo } from "../../../modules/requests/master-data/info";
+import { getAll as getAllSeniman } from "../../../modules/requests/master-data/seniman";
+import { getAll as getAllSeni } from "../../../modules/requests/master-data/seni";
+import { getAll as getAllPentas } from "../../../modules/requests/master-data/pentas";
+import globalVar from "../../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: 'Dashboard',
-    path: '/dashboard/informasi',
+    title: "Dashboard",
+    path: "/dashboard/informasi",
     isSeparator: false,
     isActive: false,
   },
   {
-    title: '',
-    path: '',
+    title: "",
+    path: "",
     isSeparator: true,
     isActive: false,
   },
   {
-    title: 'Informasi',
-    path: '/dashboard/informasi',
+    title: "Informasi",
+    path: "/dashboard/informasi",
     isSeparator: false,
     isActive: false,
   },
   {
-    title: '',
-    path: '',
+    title: "",
+    path: "",
     isSeparator: true,
     isActive: false,
   },
@@ -48,11 +48,11 @@ export const SemuaInformasi: FC = () => {
     let newData: any[] = [];
     setLoading(true);
     switch (params.list) {
-      case 'info':
-        res = await getAllInfo(1, -1, '');
+      case "info":
+        res = await getAllInfo(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          if (dt.status === 'PUBLISHED') {
+          if (dt.status === "PUBLISHED") {
             const imageUrl: any = `${ENDPOINTS.NEWS.NEWS_IMAGE}/${dt.id}/Image?isStream=true`;
             newData.push({
               id: dt.id,
@@ -64,8 +64,8 @@ export const SemuaInformasi: FC = () => {
         });
         setData(newData);
         break;
-      case 'seniman':
-        res = await getAllSeniman(1, -1, '');
+      case "seniman":
+        res = await getAllSeniman(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
           const imageUrl: any = `${ENDPOINTS.SENIMAN.SENIMAN_IMAGE}/${dt.id}/Image?isStream=true`;
@@ -78,8 +78,8 @@ export const SemuaInformasi: FC = () => {
         });
         setData(newData);
         break;
-      case 'seni':
-        res = await getAllSeni(1, -1, '');
+      case "seni":
+        res = await getAllSeni(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
           const imageUrl: any = `${ENDPOINTS.SENI.SENI_IMAGE}/${dt.id}/Image?isStream=true`;
@@ -93,10 +93,10 @@ export const SemuaInformasi: FC = () => {
         setData(newData);
         break;
       default:
-        res = await getAllPentas(1, -1, '');
+        res = await getAllPentas(1, -1, "");
         data = res.data.data.data;
         data.map((dt: any) => {
-          if (dt.status === 'PUBLISHED') {
+          if (dt.status === "PUBLISHED") {
             const imageUrl: any = `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${dt.id}/Image?isStream=true`;
             newData.push({
               id: dt.id,
@@ -133,20 +133,20 @@ export const SemuaInformasi: FC = () => {
         <>
           {data.map((item: any, index: number) => (
             <div
-              role='button'
+              role="button"
               onClick={() => navigate(`${item.id}`)}
-              className='col'
+              className="col"
             >
-              <div className='card p-4'>
+              <div className="card p-4">
                 <img
                   src={item.file}
                   height={200}
-                  loading='lazy'
-                  className='rounded mb-3'
-                  style={{ width: '100%', objectFit: 'cover' }}
+                  loading="lazy"
+                  className="rounded mb-3"
+                  style={{ width: "100%", objectFit: "cover" }}
                 />
                 <h4>{item.title}</h4>
-                <p className='text-truncate'>{item.desc}</p>
+                <p className="text-truncate">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -159,7 +159,7 @@ export const SemuaInformasi: FC = () => {
 
     return (
       <div>
-        <div className='row row-cols-2 row-cols-lg-4 g-3'>{content}</div>
+        <div className="row row-cols-2 row-cols-lg-4 g-3">{content}</div>
       </div>
     );
   };
@@ -167,10 +167,10 @@ export const SemuaInformasi: FC = () => {
   return (
     <>
       <PageTitle
-        icon='information'
+        icon="information"
         breadcrumbs={Breadcrumbs}
-        description={`${convertRouteToTitle(params.list as string)}`}
-      >{`${convertRouteToTitle(params.list as string)}`}</PageTitle>
+        description={`${globalVar.convertRouteToTitle(params.list as string)}`}
+      >{`${globalVar.convertRouteToTitle(params.list as string)}`}</PageTitle>
       <Content>
         <ListViewData data={data} loading={loading} />
       </Content>

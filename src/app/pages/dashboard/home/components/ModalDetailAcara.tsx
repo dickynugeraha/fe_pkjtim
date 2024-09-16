@@ -40,7 +40,7 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
             />
             <p className="fs-4 m-0 fw-bold me-3">Mulai</p>
             <p className="m-0 fs-4">
-              {globalVar.formatDate(data?.view?.activeStart)}
+              {globalVar.formatDate(data?.event?.extendedProps?.startDate)}
             </p>
           </div>
           <Gap height={8} />
@@ -51,7 +51,7 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
             />
             <p className="fs-4 m-0 fw-bold me-3">Selesai</p>
             <p className="m-0 fs-4">
-              {globalVar.formatDate(data?.view?.activeEnd)}
+              {globalVar.formatDate(data?.event?.extendedProps?.endDate)}
             </p>
           </div>
           <Gap height={18} />

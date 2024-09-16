@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
 import { getUserByToken, register } from "../core/_requests";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/components";
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
@@ -15,7 +15,6 @@ const initialValues = {
   phoneNumber: "",
   password: "",
   rePassword: "",
-  acceptTerms: true,
 };
 
 const registrationSchema = Yup.object().shape({
@@ -44,10 +43,10 @@ const registrationSchema = Yup.object().shape({
       [Yup.ref("password")],
       "Password dan Konfirmasi Password Tidak Sama"
     ),
-  acceptTerms: Yup.bool().required("You must accept the terms and conditions"),
 });
 
 export function Registration() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [modalError, setModalError] = useState({
     show: false,
@@ -65,8 +64,11 @@ export function Registration() {
         Swal.fire({
           icon: "success",
           title: "Berhasil melakukan registrasi!",
-          text: "Silahkan cek email anda untuk melakukan konfirmasi",
+          text: "Silahkan melakukan login untuk masuk kedalam aplikasi",
           showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          navigate("/auth/login");
         });
         setLoading(false);
       } catch (error: any) {
@@ -75,13 +77,10 @@ export function Registration() {
         setStatus("The registration details is incorrect");
         setSubmitting(false);
         setLoading(false);
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Gagal melakukan registrasi",
-        //   text: `${error.message}`,
-        // });
-        setModalError({
-          show: true,
+        Swal.fire({
+          heightAuto: false,
+          icon: "error",
+          title: "Gagal melakukan registrasi",
           text: `${error.message}`,
         });
       }
@@ -94,7 +93,7 @@ export function Registration() {
 
   return (
     <form
-      className="card p-8 form w-md-400px w-lg-500px h-650px m-6"
+      className="card p-8 form w-md-400px w-lg-500px m-6"
       noValidate
       id="kt_login_signup_form"
       onSubmit={formik.handleSubmit}
@@ -107,7 +106,7 @@ export function Registration() {
         title="ERROR"
         icon={""}
       />
-      <div className="">
+      <div>
         <div className="text-center">
           <h1 className="text-gray-900 fw-bolder">Daftar</h1>
         </div>
@@ -283,50 +282,12 @@ export function Registration() {
         {/* end::Form group */}
 
         {/* begin::Form group */}
-        <div className="fv-row mb-5">
-          <label
-            className="form-check form-check-inline"
-            htmlFor="kt_login_toc_agree"
-          >
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="kt_login_toc_agree"
-              {...formik.getFieldProps("acceptTerms")}
-            />
-            <span>
-              I Accept the{" "}
-              <a
-                href="https://keenthemes.com/metronic/?page=faq"
-                target="_blank"
-                className="ms-1 link-primary"
-              >
-                Terms
-              </a>
-              .
-            </span>
-          </label>
-          {formik.touched.acceptTerms && formik.errors.acceptTerms && (
-            <div className="fv-plugins-message-container">
-              <div className="fv-help-block">
-                <span role="alert">{formik.errors.acceptTerms}</span>
-              </div>
-            </div>
-          )}
-        </div>
-        {/* end::Form group */}
-
-        {/* begin::Form group */}
         <div className="text-center d-grid">
           <button
             type="submit"
             id="kt_sign_up_submit"
             className="btn btn-lg btn-primary mb-5"
-            disabled={
-              formik.isSubmitting ||
-              !formik.isValid ||
-              !formik.values.acceptTerms
-            }
+            disabled={formik.isSubmitting || !formik.isValid}
           >
             {!loading && (
               <span className="indicator-label text-white">Daftar</span>
@@ -348,6 +309,12 @@ export function Registration() {
           Sudah memiliki akun?{" "}
           <Link to="/auth/login" className="link-primary">
             Masuk
+          </Link>
+        </div>
+        <div className="text-gray-500 text-center fw-semibold fs-6">
+          Kembali ke{" "}
+          <Link to="/dashboard" className="link-primary">
+            Beranda
           </Link>
         </div>
       </div>

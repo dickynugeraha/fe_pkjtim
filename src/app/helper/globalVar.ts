@@ -8,7 +8,7 @@ function getThreeMonthsFromToday() {
   return threeMonthsLater.toISOString().split("T")[0];
 }
 
-function rupiahFormat(number: number) {
+function formatRupiah(number: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -58,13 +58,46 @@ function createCodeBooking(
   return `${initial}${booking}0${daysDifference}${threeCharId}`;
 }
 
+export const convertRouteToTitle = (route: string) => {
+  let title = "";
+  switch (route) {
+    case "seni":
+      title = "Koleksi Seni UP PKJ TIM";
+      break;
+    case "pementasan":
+      title = "Daftar Pementasan";
+      break;
+    case "seniman":
+      title = "Daftar Seniman";
+      break;
+    default:
+      title = "Sekilas Info";
+      break;
+  }
+
+  return title;
+};
+
+function differenceInDays(startDate: any, endDate: any) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  const diffTime = end.getTime() - start.getTime();
+
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays + 1;
+}
+
 export default {
   BASE_URL,
   today,
   createCodeBooking,
   getThreeMonthsFromToday,
   formatInputDateFromDB,
-  rupiahFormat,
+  differenceInDays,
+  formatRupiah,
   formatDate,
   formatInputDate,
+  convertRouteToTitle,
 };

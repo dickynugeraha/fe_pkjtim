@@ -71,6 +71,14 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
           let statusClass = "";
           let statusDesc = "";
           switch (singleData.status) {
+            case "KURASI":
+              statusClass = "badge badge-light-warning fs-6";
+              statusDesc = "Pesanan Sedang di proses";
+              break;
+            case "PROSES":
+              statusClass = "badge badge-light-warning fs-6";
+              statusDesc = "Pesanan Sedang di proses";
+              break;
             case "DONE":
               statusClass = "badge badge-light-success fs-6";
               statusDesc = "Selesai";
@@ -99,8 +107,12 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
       },
       {
         Header: "Total Pembayaran",
-        accessor: "total_pembayaran",
+        accessor: "priceTotal",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return <>{globalVar.formatRupiah(singleData.priceTotal)}</>;
+        },
       },
       {
         Header: "Aksi",

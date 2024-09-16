@@ -1,17 +1,17 @@
-import { FC } from 'react';
-import { useIntl } from 'react-intl';
-import { Content } from '../../../../_metronic/layout/components/content';
-import { useNavigate } from 'react-router-dom';
-import { dummyImage } from '../../../helper/helper';
-import { PageLink, PageTitle } from '../../../../_metronic/layout/core';
-import useInfo from '../../../modules/hooks/master-data/info';
-import useSeni from '../../../modules/hooks/master-data/seni';
-import usePentas from '../../../modules/hooks/master-data/pentas';
-import useSeniman from '../../../modules/hooks/master-data/seniman';
-import useTempat from '../../../modules/hooks/master-data/tempat';
-import ListViewItem from './components/ListViewItem';
-import ContentSekilasInfo from './components/ContentSekilasInfo';
-import { Card } from 'react-bootstrap';
+import { FC } from "react";
+import { useIntl } from "react-intl";
+import { Content } from "../../../../_metronic/layout/components/content";
+import { useNavigate } from "react-router-dom";
+import { dummyImage } from "../../../helper/helper";
+import { PageLink, PageTitle } from "../../../../_metronic/layout/core";
+import useInfo from "../../../modules/hooks/master-data/info";
+import useSeni from "../../../modules/hooks/master-data/seni";
+import usePentas from "../../../modules/hooks/master-data/pentas";
+import useSeniman from "../../../modules/hooks/master-data/seniman";
+import useTempat from "../../../modules/hooks/master-data/tempat";
+import ListViewItem from "./components/ListViewItem";
+import ContentSekilasInfo from "./components/ContentSekilasInfo";
+import { Card } from "react-bootstrap";
 
 type PropsTempat = {
   data: any[];
@@ -19,19 +19,19 @@ type PropsTempat = {
 const ContentTempat: FC<PropsTempat> = ({ data }) => {
   return (
     <Card>
-      <Card.Header className='d-flex align-items-center'>
-        <h3 className='m-0'>Tempat</h3>
+      <Card.Header className="d-flex align-items-center">
+        <h3 className="m-0">Tempat</h3>
       </Card.Header>
       <Card.Body>
-        <div className='row row-cols-lg-4'>
+        <div className="row row-cols-lg-4">
           {data.map((item: any, index: number) => (
-            <div className='col' key={index.toString()}>
+            <div className="col" key={index.toString()}>
               <img
                 src={dummyImage}
-                className='rounded mb-3'
-                style={{ width: '100%', objectFit: 'cover' }}
+                className="rounded mb-3"
+                style={{ width: "100%", objectFit: "cover" }}
               />
-              <div className='fs-2 text-gray-900 fw-bold'>{item.name}</div>
+              <div className="fs-2 text-gray-900 fw-bold">{item.name}</div>
             </div>
           ))}
         </div>
@@ -50,7 +50,7 @@ const DashboardPage: FC = () => {
 
   const newInfo: any[] = [];
   info.map((sn) => {
-    if (sn.status === 'PUBLISHED') {
+    if (sn.status === "PUBLISHED") {
       newInfo.push({
         publishedAt: sn.publishedAt,
         id: sn.id,
@@ -72,7 +72,7 @@ const DashboardPage: FC = () => {
   });
   const newPementasan: any[] = [];
   pementasan.map((pn) => {
-    if (pn.status === 'PUBLISHED') {
+    if (pn.status === "PUBLISHED") {
       newPementasan.push({
         createdAt: pn.createdAt,
         id: pn.id,
@@ -103,21 +103,17 @@ const DashboardPage: FC = () => {
     });
   });
 
-  // console.log('seni', seni);
-  // console.log('pementasan', pementasan);
-  // console.log('info', info);
-  // console.log('seniman', seniman);
-
   return (
     <Content>
-      <div className='card mb-9'>
+      <div className="card mb-9">
         <ContentSekilasInfo data={newInfo} loading={loadingInfo} />
         <ListViewItem
-          title='Koleksi Seni UP PKJ TIM'
+          title="Koleksi Seni UP PKJ TIM"
           data={newSeni}
           loading={loadingSeni}
+          fromContent="seni"
           onClickLink={() =>
-            navigate('/dashboard/informasi/seni', {
+            navigate("/dashboard/informasi/seni", {
               state: {
                 data: newSeni,
               },
@@ -125,9 +121,10 @@ const DashboardPage: FC = () => {
           }
         />
         <ListViewItem
-          title='Daftar Pementasan'
+          title="Daftar Pementasan"
+          fromContent="pementasan"
           onClickLink={() =>
-            navigate('/dashboard/informasi/pementasan', {
+            navigate("/dashboard/informasi/pementasan", {
               state: {
                 data: newPementasan,
               },
@@ -137,9 +134,10 @@ const DashboardPage: FC = () => {
           loading={loadingPementasan}
         />
         <ListViewItem
-          title='Daftar Seniman'
+          title="Daftar Seniman"
+          fromContent="seniman"
           onClickLink={() =>
-            navigate('/dashboard/informasi/seniman', {
+            navigate("/dashboard/informasi/seniman", {
               state: {
                 data: newSeniman,
               },
@@ -159,14 +157,14 @@ export const Informasi: FC = () => {
 
   const Breadcrumbs: Array<PageLink> = [
     {
-      title: 'Dashboard',
-      path: '/dashboard/informasi',
+      title: "Dashboard",
+      path: "/dashboard/informasi",
       isSeparator: false,
       isActive: true,
     },
     {
-      title: '',
-      path: '',
+      title: "",
+      path: "",
       isSeparator: true,
       isActive: true,
     },
@@ -175,9 +173,9 @@ export const Informasi: FC = () => {
   return (
     <>
       <PageTitle
-        icon='information'
+        icon="information"
         breadcrumbs={Breadcrumbs}
-        description='Daftar pesanan saya'
+        description="Daftar pesanan saya"
       >
         Informasi
       </PageTitle>

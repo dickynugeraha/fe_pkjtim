@@ -5,6 +5,7 @@ import Table from "../../../_metronic/layout/components/table/Table";
 import ModalDetailPesananPlanetarium from "./components/ModalDetailPesananPlanetarium";
 import usePlanetarium from "../../modules/hooks/planetarium";
 import globalVar from "../../helper/globalVar";
+import { downloadExcel } from "react-export-table-to-excel";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -108,6 +109,41 @@ export const PesananPlanetarium = () => {
     []
   );
 
+  console.log("allReservationPlanetarium", allReservationPlanetarium);
+
+  const header = [
+    "Pemesan",
+    "Nomor Pemesan",
+    "Email Pemesan",
+    "Nama Sekolah",
+    "Alamat Sekolah",
+    "Daerah",
+    "Status",
+  ];
+  let body: any[] = [];
+  allReservationPlanetarium?.map((data) => {
+    body.push([
+      data?.userCreator.fullName,
+      data?.userCreator.phoneNumber,
+      data?.userCreator.email,
+      data?.namaSekolah,
+      data?.alamatSekolah,
+      data?.daerah,
+      data?.status,
+    ]);
+  });
+
+  function handleDownloadExcel() {
+    downloadExcel({
+      fileName: "Pesanan Masuk Planetarium",
+      sheet: "sheet1",
+      tablePayload: {
+        header,
+        body: body,
+      },
+    });
+  }
+
   return (
     <>
       <PageTitle
@@ -119,6 +155,8 @@ export const PesananPlanetarium = () => {
       </PageTitle>
       <Content>
         <Table
+          isExport
+          onClickExport={handleDownloadExcel}
           loading={loading}
           searchData={() => {}}
           data={data}

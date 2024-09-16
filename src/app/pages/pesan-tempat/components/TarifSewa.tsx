@@ -78,25 +78,25 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
           <ol className="col-5">
             <ul className="mb-2">
               :{" "}
-              {globalVar.rupiahFormat(
+              {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
               :{" "}
-              {globalVar.rupiahFormat(
+              {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekEnd
               )}
             </ul>
             <ul className="mb-2">
               :{" "}
-              {globalVar.rupiahFormat(
+              {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
               :{" "}
-              {globalVar.rupiahFormat(
+              {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekEnd
               )}
             </ul>

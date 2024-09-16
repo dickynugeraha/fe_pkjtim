@@ -3,8 +3,9 @@ import ModalWrapper from "../../../../_metronic/layout/components/content/ModalW
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalDetailPemesananUser from "./ModalDetailPemesananUser";
-import ModalReasonReject from "./ModalReasonReject";
+import ModalReason from "./ModalReason";
 import globalVar from "../../../helper/globalVar";
+import usePesanTempat from "../../../modules/hooks/pesan-tempat";
 
 type Props = {
   show: boolean;
@@ -17,24 +18,31 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
-  console.log("dataaaa", data);
-
-  const [modalShow, setModalShow] = useState({
-    detail: {
-      show: false,
-      data: {},
-    },
-    revisi: { show: false },
-    tolak: { show: false },
-  });
+  const { changeStatus } = usePesanTempat();
   const [modalDetailPesananUser, setModalDetailPesananUser] = useState({
     show: false,
     data: {},
   });
-  const [modalTolak, setModalTolak] = useState(false);
-  const [modalSelesai, setModalSelesai] = useState(false);
+  const [modalTypeReason, setModalTypeReason] = useState({
+    show: false,
+    type: "",
+  });
+  const [fields, setFields] = useState<any>({});
+  const handleChange = (propertyId: string, value: any) => {
+    setFields((prevFields: any) => ({
+      ...prevFields,
+      [propertyId]: value,
+    }));
+  };
+
   let statusDesc = "";
   switch (data?.status) {
+    case "KURASI":
+      statusDesc = "Kurasi";
+      break;
+    case "PROSES":
+      statusDesc = "Proses";
+      break;
     case "DONE":
       statusDesc = "Selesai";
       break;
@@ -65,79 +73,52 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     );
     let ButtonShow = (
       <>
-        <div role="button" className="btn btn-sm btn-success">
+        <div
+          role="button"
+          className="btn btn-sm btn-success"
+          onClick={() => {
+            setModalTypeReason({
+              show: true,
+              type: "Done",
+            });
+          }}
+        >
           Selesai
         </div>
         <div
           role="button"
           className="btn btn-sm btn-danger mx-4"
-          onClick={() => setModalTolak(true)}
+          onClick={() => {
+            setModalTypeReason({
+              show: true,
+              type: "Reject",
+            });
+          }}
         >
           Tolak
         </div>
-        <div role="button" className="btn btn-sm btn-primary">
+        <div
+          role="button"
+          className="btn btn-sm btn-primary"
+          onClick={() => {
+            setModalTypeReason({
+              show: true,
+              type: "Kurasi",
+            });
+          }}
+        >
           Terima
         </div>
       </>
     );
 
-    if (data?.status === "DONE" || data?.status === "REJECT") {
+    if (
+      data?.status === "DONE" ||
+      data?.status === "REQUEST" ||
+      data?.status === "REJECT" ||
+      data?.status === "PENDING"
+    ) {
       ButtonShow = <></>;
-    }
-    if (data?.status === "REVISION") {
-      ButtonShow = (
-        <>
-          <div role="button" className="btn btn-sm btn-success">
-            Selesai
-          </div>
-          <div
-            role="button"
-            className="btn btn-sm btn-danger mx-4"
-            onClick={() => setModalTolak(true)}
-          >
-            Tolak
-          </div>
-          <div role="button" className="btn btn-sm btn-primary">
-            Revisi
-          </div>
-        </>
-      );
-    }
-    if (data?.status === "PENDING") {
-      ButtonShow = (
-        <>
-          <div role="button" className="btn btn-sm btn-success">
-            Selesai
-          </div>
-          <div
-            role="button"
-            className="btn btn-sm btn-danger mx-4"
-            onClick={() => setModalTolak(true)}
-          >
-            Tolak
-          </div>
-        </>
-      );
-    }
-
-    if (data?.status === "REQUEST" || data?.status === "PENDING") {
-      OthersContent = <></>;
-    }
-    if (data?.status === "REJECT") {
-      OthersContent = (
-        <div>
-          <h6 className="m-0 mb-4">Alasan Ditolak</h6>
-          <textarea
-            className="form-control fs-7"
-            disabled
-            style={{ minHeight: "120px" }}
-          >
-            Alasan Ditolak bla bla Alasan Ditolak bla bla Alasan Ditolak bla bla
-            Alasan Ditolak bla bla Alasan Ditolak bla bla
-            {/* {data?.alasanDitolak} */}
-          </textarea>
-        </div>
-      );
     }
 
     return { ButtonShow, OthersContent };
@@ -199,7 +180,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailIten
             iconName={"calculator"}
             title={"Total pembayaran"}
-            desc={globalVar.rupiahFormat(data?.priceTotal)}
+            desc={globalVar.formatRupiah(data?.priceTotal)}
           />
         </div>
         <h4>Berkas</h4>
@@ -207,18 +188,33 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <div className="row row-cols-3">
           <DetailItemFile
             title="Surat permohonan"
+            id={"fileSuratPermohonan"}
             url={data?.suratPermohonan}
             withUpload={true}
+            handleChangeFile={(value) =>
+              handleChange("fileSuratPermohonan", value)
+            }
+            fields={fields}
           />
           <DetailItemFile
             title="Tanda pengenal"
+            id={"fileTandaPengenal"}
             url={data?.tandaPengenal}
             withUpload={true}
+            handleChangeFile={(value) =>
+              handleChange("fileTandaPengenal", value)
+            }
+            fields={fields}
           />
           <DetailItemFile
             title="Proposal"
+            id={"fileSuratProposal"}
             url={data?.proposal}
             withUpload={true}
+            handleChangeFile={(value) =>
+              handleChange("fileSuratProposal", value)
+            }
+            fields={fields}
           />
         </div>
         <Gap height={6} />
@@ -237,7 +233,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           </div>
           {HandlerShowComponent().OthersContent}
         </div>
-        {(modalTolak || modalDetailPesananUser.show) && (
+        {(modalTypeReason.show || modalDetailPesananUser.show) && (
           <div className="overlay" />
         )}
 
@@ -248,10 +244,26 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             setModalDetailPesananUser({ show: false, data: {} })
           }
         />
-        <ModalReasonReject
-          show={modalTolak}
-          handleClose={() => setModalTolak(false)}
-          onSubmit={(reason) => {}}
+        <ModalReason
+          show={modalTypeReason.show}
+          handleClose={() =>
+            setModalTypeReason({
+              show: false,
+              type: modalTypeReason.type,
+            })
+          }
+          onSubmit={(reason) => {
+            const payload = {
+              id: data.id,
+              reason: reason,
+              note: reason,
+              ...fields,
+            };
+            changeStatus(modalTypeReason.type, payload);
+            handleChange("reason", reason);
+            console.log("reason", reason);
+          }}
+          type={modalTypeReason.type}
         />
       </>
     </ModalWrapper>
@@ -280,11 +292,21 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   }
 
   type DetailItemFileProps = {
+    id?: string;
     title: string;
+    handleChangeFile?: (value: any) => void;
+    fields?: any;
     url: string;
     withUpload: boolean;
   };
-  function DetailItemFile({ title, url, withUpload }: DetailItemFileProps) {
+  function DetailItemFile({
+    id,
+    title,
+    url,
+    withUpload,
+    fields,
+    handleChangeFile,
+  }: DetailItemFileProps) {
     return (
       <div className="col mb-6">
         <div className="d-flex align-items-center">
@@ -309,7 +331,18 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             {withUpload && (
               <>
                 <Gap height={12} />
-                <input type="file" className="form-control" />
+                <input
+                  type="file"
+                  className="form-control"
+                  id={id}
+                  name={id}
+                  onChange={(e: any) => {
+                    if (id && handleChangeFile) {
+                      console.log("kesini");
+                      handleChangeFile(e.target.files[0]);
+                    }
+                  }}
+                />
               </>
             )}
           </div>

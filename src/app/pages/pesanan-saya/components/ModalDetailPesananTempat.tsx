@@ -25,8 +25,6 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
   });
   const [alasan, setAlasan] = useState<string>("");
 
-  console.log("dataaaa?.status", data?.status);
-
   const handleClickAlasan = () => {
     const payload = {
       id: data.id,
@@ -45,6 +43,12 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
 
   let statusKey = "";
   switch (data?.status) {
+    case "PROSES":
+      statusKey = "Sedang dalam pengecekan";
+      break;
+    case "KURASI":
+      statusKey = "Sedang dalam pengecekan";
+      break;
     case "DONE":
       statusKey = "Selesai";
       break;
@@ -134,11 +138,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             title={"Total pembayaran"}
             desc={data?.alamatSanggar}
           />
-          <DetailItem
-            iconName={"filter"}
-            title={"Status"}
-            desc={data?.status}
-          />
+          <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
           <DetailItem
             iconName={"toggle-on"}
             title={"Tanggal mulai pentas"}

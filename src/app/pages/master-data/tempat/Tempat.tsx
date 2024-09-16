@@ -69,7 +69,7 @@ export const Tempat = () => {
 
           return (
             <span>
-              {globalVar.rupiahFormat(singleData.priceMainEventWeekDay)}
+              {globalVar.formatRupiah(singleData.priceMainEventWeekDay)}
             </span>
           );
         },
@@ -83,7 +83,7 @@ export const Tempat = () => {
 
           return (
             <span>
-              {globalVar.rupiahFormat(singleData.priceMainEventWeekEnd)}
+              {globalVar.formatRupiah(singleData.priceMainEventWeekEnd)}
             </span>
           );
         },
@@ -97,7 +97,7 @@ export const Tempat = () => {
 
           return (
             <span>
-              {globalVar.rupiahFormat(singleData.pricePreEventWeekDay)}
+              {globalVar.formatRupiah(singleData.pricePreEventWeekDay)}
             </span>
           );
         },
@@ -111,7 +111,7 @@ export const Tempat = () => {
 
           return (
             <span>
-              {globalVar.rupiahFormat(singleData.pricePreEventWeekEnd)}
+              {globalVar.formatRupiah(singleData.pricePreEventWeekEnd)}
             </span>
           );
         },

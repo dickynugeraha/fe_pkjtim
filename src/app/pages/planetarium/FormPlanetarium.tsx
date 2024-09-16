@@ -99,6 +99,7 @@ export const FormPlanetarium = () => {
     }).then(() => {
       navigate("/pesanan-saya");
     });
+    return;
   }
 
   const checkingNumber = expired.getTime();
@@ -124,7 +125,7 @@ export const FormPlanetarium = () => {
                   className="p-2 rounded form-control form-control-solid"
                   style={{ width: "200px" }}
                   value={globalVar.formatInputDateFromDB(
-                    singleReservationPlanetarium.createdAt
+                    singleReservationPlanetarium?.createdAt
                   )}
                 />
               </div>
@@ -227,7 +228,7 @@ export const FormPlanetarium = () => {
                         name="startDate"
                         type="date"
                         value={globalVar.formatInputDateFromDB(
-                          singleReservationPlanetarium.tanggalPemesanan
+                          singleReservationPlanetarium?.tanggalKunjungan
                         )}
                         readOnly
                         className="form-control form-control-solid"

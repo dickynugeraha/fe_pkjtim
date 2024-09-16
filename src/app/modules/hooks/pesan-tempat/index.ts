@@ -7,6 +7,7 @@ import {
   getSingleReservation,
   initBooking,
   submitReservation,
+  changeStatusReservation,
 } from "../../requests/pesan-tempat";
 import { useAuth } from "../../auth";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
@@ -24,14 +25,17 @@ export default function usePesanTempat() {
     any[]
   >([]);
 
-  const getAllReservationPesanTempat = async (fromAdmin: boolean) => {
+  const getAllReservationPesanTempat = async (
+    fromPengelola?: boolean,
+    fromKurasi?: boolean
+  ) => {
     setLoading(true);
     try {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
         "",
-        !fromAdmin ? currentUser?.id : ""
+        !fromPengelola ? currentUser?.id : ""
       );
       let allReservation: any[] = res.data.data.data;
 
@@ -39,12 +43,24 @@ export default function usePesanTempat() {
       allReservation.map((data) => {
         const singleReserve = {
           ...data,
-          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/SuratPermohonan`,
-          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Proposal`,
-          tandaPengenal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/TandaPengenal`,
+          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
+          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
+          tandaPengenal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/TandaPengenal`,
         };
+
         allResrvationWithCorrectEmail.push(singleReserve);
       });
+
+      if (fromPengelola) {
+        allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
+          (data) => data.status !== "KURASI"
+        );
+      }
+      if (fromKurasi) {
+        allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
+          (data) => data.status === "KURASI"
+        );
+      }
 
       SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
     } catch (error: any) {
@@ -186,6 +202,36 @@ export default function usePesanTempat() {
     });
   };
 
+  const changeStatus = async (status: string, data: any) => {
+    const newData = {
+      ...data,
+      actorId: currentUser?.id,
+    };
+    ConfirmationDialog({
+      text: "Akan mengubah status reservasi?!",
+      onConfirm: async () => {
+        try {
+          await changeStatusReservation({ ...newData }, status);
+          Swal.fire({
+            icon: "success",
+            title: "Status reservasi berhasil terubah",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "ERROR",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+      },
+    });
+  };
+
   return {
     singleReservationTempat,
     loading,
@@ -194,5 +240,6 @@ export default function usePesanTempat() {
     nextStepHandler,
     requestReservationPesanTempat,
     getAllReservationPesanTempat,
+    changeStatus,
   };
 }

@@ -77,7 +77,6 @@ const ModalEditProfil: FC<Props> = ({
       setCurrentUser(newCurrentUser as UserModel | undefined);
 
       const updatedData = Object.assign(data, values);
-      console.log("updateData", updatedData);
 
       setData(updatedData);
       onChangeProfile();

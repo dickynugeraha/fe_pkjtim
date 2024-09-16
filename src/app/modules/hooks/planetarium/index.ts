@@ -193,7 +193,10 @@ export default function usePlanetarium() {
 
       if (fromAdmin) {
         allReservation = allReservation.filter(
-          (val: any) => val.status == "REQUEST"
+          (val: any) =>
+            val.status == "REQUEST" ||
+            val.status == "REJECT" ||
+            val.status == "DONE"
         );
       }
 

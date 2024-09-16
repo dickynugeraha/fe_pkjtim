@@ -105,9 +105,7 @@ export const ProfilSaya = () => {
     },
   });
 
-  const setRefresh = () => {
-    getSinglePengguna(currentUser?.id as string);
-  };
+  const setRefresh = () => {};
 
   useEffect(() => {
     getSinglePengguna(currentUser?.id as string);
@@ -478,9 +476,7 @@ export const ProfilSaya = () => {
         <ModalEditProfil
           show={showModal}
           singlePengguna={singlePengguna}
-          onChangeProfile={() => {
-            setRefresh();
-          }}
+          onChangeProfile={setRefresh}
           hideModal={() => setShowModal(false)}
         />
       </Content>
