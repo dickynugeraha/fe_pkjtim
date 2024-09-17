@@ -69,12 +69,16 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
           let statusClass = "";
           let statusDesc = "";
           switch (singleData.status) {
+            case "WAITING_ANSWER_LETTER":
+              statusClass = "badge badge-light-success fs-6";
+              statusDesc = "Menunggu surat jawaban";
+              break;
             case "KURASI":
               statusClass = "badge badge-light-warning fs-6";
-              statusDesc = "Pesanan Sedang di proses";
+              statusDesc = "Kurasi";
               break;
             case "PROSES":
-              statusClass = "badge badge-light-warning fs-6";
+              statusClass = "badge badge-light-info fs-6";
               statusDesc = "Pesanan Sedang di proses";
               break;
             case "DONE":
@@ -95,7 +99,10 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
               break;
             case "EXPIRED":
               statusDesc = "Kadaluarsa";
-
+              statusClass = "badge badge-light-danger fs-6";
+              break;
+            case "REVISE":
+              statusDesc = "Revisi";
               statusClass = "badge badge-light-danger fs-6";
               break;
           }

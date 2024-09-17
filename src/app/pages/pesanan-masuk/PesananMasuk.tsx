@@ -87,7 +87,7 @@ export const PesananMasuk = () => {
           switch (singleData.status) {
             case "WAITING_ANSWER_LETTER":
               statusClass = "badge badge-light-success fs-6";
-              statusDesc = "Lolos review kurator";
+              statusDesc = "Menunggu surat jawaban";
               break;
             case "PROSES":
               statusClass = "badge badge-light-warning fs-6";
@@ -111,7 +111,10 @@ export const PesananMasuk = () => {
               break;
             case "EXPIRED":
               statusDesc = "Kadaluarsa";
-
+              statusClass = "badge badge-light-danger fs-6";
+              break;
+            case "REVISE":
+              statusDesc = "Revisi";
               statusClass = "badge badge-light-danger fs-6";
               break;
           }

@@ -43,11 +43,14 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
 
   let statusKey = "";
   switch (data?.status) {
+    case "WAITING_ANSWER_LETTER":
+      statusKey = "Menunggu surat jawaban";
+      break;
     case "PROSES":
-      statusKey = "Sedang dalam pengecekan";
+      statusKey = "Proses";
       break;
     case "KURASI":
-      statusKey = "Sedang dalam pengecekan";
+      statusKey = "Kurasi";
       break;
     case "DONE":
       statusKey = "Selesai";
@@ -56,7 +59,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
       statusKey = "Request";
       break;
     case "PENDING":
-      statusKey = "Menunggu pesanan selesai";
+      statusKey = "Pesanan tertunda";
       break;
     case "EXPIRED":
       statusKey = "Kadaluarsa";

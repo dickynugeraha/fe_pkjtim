@@ -37,6 +37,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
 
   let statusDesc = "";
   switch (data?.status) {
+    case "WAITING_ANSWER_LETTER":
+      statusDesc = "Menunggu surat jawaban";
+      break;
     case "KURASI":
       statusDesc = "Kurasi";
       break;
