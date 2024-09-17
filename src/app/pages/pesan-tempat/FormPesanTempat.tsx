@@ -209,9 +209,9 @@ export const FormPesanTempat: FC = () => {
 
       start.setDate(start.getDate() + 1);
     }
-    console.log("tarif", tarif);
+    // console.log("tarif", tarif);
 
-    // setTarifCalculation(tarif);
+    setTarifCalculation(tarif);
   };
 
   return (
