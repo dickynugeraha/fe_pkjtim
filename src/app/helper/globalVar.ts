@@ -45,12 +45,18 @@ function formatInputDateFromDB(dateStr: any) {
 }
 
 function createCodeBooking(
+  placeReserve: string,
   bookingNow: string,
   startDate: any,
   endDate: any,
   idBook: string
 ) {
-  const initial = "TB";
+  const getInitials = (name: any) => {
+    const initial = name.match(/(\b\S)?/g).join("");
+    return initial;
+  };
+
+  const initial = getInitials(placeReserve);
   let [year, month, day] = bookingNow.split("-");
   const booking = day + month + year.slice(-2);
 

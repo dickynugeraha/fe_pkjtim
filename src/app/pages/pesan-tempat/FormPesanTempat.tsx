@@ -77,6 +77,7 @@ export const FormPesanTempat: FC = () => {
 
   const createBookingCode = () => {
     const bookingCode = globalVar.createCodeBooking(
+      singleReservationTempat?.tempat?.name,
       bookingNow,
       startDate,
       endDate,
@@ -140,23 +141,48 @@ export const FormPesanTempat: FC = () => {
     const end: any = new Date(endDate);
 
     const mainEvent = new Date(startMainEventDate);
-    const targetDates: any = [];
+    const dateIncludeMain: any[] = [];
 
     for (let i = 0; i < mainEventDay; i++) {
       if (mainEventDay == 1) {
-        targetDates.push(new Date(startMainEventDate));
+        dateIncludeMain.push(new Date(startMainEventDate));
       } else {
-        const futureDate = new Date();
+        const futureDate = new Date(startMainEventDate);
         futureDate.setDate(mainEvent.getDate() + i);
-        const date = futureDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-        targetDates.push(new Date(date));
+        const date = futureDate.toISOString().split("T")[0];
+
+        dateIncludeMain.push(new Date(date));
       }
     }
 
+    const isExcluded = (date: any) => {
+      return dateIncludeMain.some(
+        (targetDate) => targetDate.getTime() === date.getTime()
+      );
+    };
+
+    const generateDateArray = (start: any, end: any) => {
+      const dates = [];
+      let currentDate = new Date(start);
+
+      while (currentDate <= end) {
+        if (!isExcluded(currentDate)) {
+          dates.push(new Date(currentDate));
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      return dates;
+    };
+
+    const dateExcludeMain = generateDateArray(start, end);
+    console.log("dateExcludeMain", dateExcludeMain);
+    console.log("dateIncludeMain", dateIncludeMain);
+
     let tarif = 0;
     while (start <= end) {
-      for (let i = 0; i < targetDates.length; i++) {
-        if (start.getTime() === targetDates[i].getTime()) {
+      for (let i = 0; i < dateIncludeMain.length; i++) {
+        if (start.getTime() == dateIncludeMain[i].getTime()) {
           let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
           let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
           let formattedDate = start.toISOString().split("T")[0]; // Format tanggal
@@ -166,10 +192,13 @@ export const FormPesanTempat: FC = () => {
           } else {
             tarif += singleReservationTempat?.tempat.priceMainEventWeekDay;
           }
-        } else {
+        }
+      }
+
+      for (let i = 0; i < dateExcludeMain.length; i++) {
+        if (start.getTime() == dateExcludeMain[i].getTime()) {
           let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
           let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
-
           if (isWeekend) {
             tarif += singleReservationTempat?.tempat.pricePreEventWeekEnd;
           } else {
@@ -178,11 +207,11 @@ export const FormPesanTempat: FC = () => {
         }
       }
 
-      // Increment tanggal
       start.setDate(start.getDate() + 1);
     }
+    console.log("tarif", tarif);
 
-    setTarifCalculation(tarif);
+    // setTarifCalculation(tarif);
   };
 
   return (
@@ -203,21 +232,21 @@ export const FormPesanTempat: FC = () => {
             />
           </div>
           {!isNaN(checkingNumber) && (
-            <></>
-            // <Remining
-            //   expired={expired}
-            //   now={now}
-            //   onFinishTime={() => {
-            //     Swal.fire({
-            //       icon: "error",
-            //       title: "EROR",
-            //       text: "Pesanan anda sudah kadaluarsa",
-            //       showConfirmButton: false,
-            //     }).then(() => {
-            //       navigate("/pesanan-saya");
-            //     });
-            //   }}
-            // />
+            // <></>
+            <Remining
+              expired={expired}
+              now={now}
+              onFinishTime={() => {
+                Swal.fire({
+                  icon: "error",
+                  title: "EROR",
+                  text: "Pesanan anda sudah kadaluarsa",
+                  showConfirmButton: false,
+                }).then(() => {
+                  navigate("/pesanan-saya");
+                });
+              }}
+            />
           )}
         </div>
 
