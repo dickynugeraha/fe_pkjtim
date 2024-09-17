@@ -152,12 +152,12 @@ export const DetailInformasi = () => {
     } else {
       content = (
         <>
-          <div className="col-12 col-lg-8">
-            <div className="p-8">
-              <div className="d-flex flex-wrap mb-6">
-                <div className="me-9 my-1">
-                  <KTIcon className="fs-1 text-primary" iconName="calendar" />
-                  <span className="fw-bold text-gray-500">
+          <div className='col-12 col-lg-8'>
+            <div className='p-8'>
+              <div className='d-flex flex-wrap mb-1'>
+                <div className='me-9 my-1'>
+                  <KTIcon className='fs-1 text-primary' iconName='calendar' />
+                  <span className='fw-bold text-gray-500'>
                     {globalVar.formatDate(mainData.createdAt)}
                   </span>
                 </div>
@@ -168,9 +168,9 @@ export const DetailInformasi = () => {
               <img
                 src={mainData.file}
                 style={{
-                  width: "100%",
-                  borderRadius: "6px",
-                  objectFit: "contain",
+                  width: '100%',
+                  borderRadius: '6px',
+                  // objectFit: "",
                 }}
                 height={500}
                 className="mb-3"
@@ -183,35 +183,35 @@ export const DetailInformasi = () => {
               </p>
             </div>
           </div>
-          <div className="col-12 col-lg-4">
-            <div className="d-flex align-items-center px-8 p-lg-0 pt-lg-8">
-              <h4 className="m-0">{title} terbaru</h4>
+          <div className='col-12 col-lg-4 mt-12'>
+            <div className='d-flex align-items-center px-8 p-lg-0 pt-lg-8'>
+              <h4 className='m-0'>{title} terbaru</h4>
             </div>
 
             <div className="p-8 ps-lg-0">
               {anotherData.map((itm) => (
-                <div className="row g-2 mb-4">
-                  <div className="col">
+                <div className='row align-items-center mb-4'>
+                  <div className='col'>
                     <img
                       src={itm.file}
                       height={100}
                       style={{
-                        width: "100%",
-                        borderRadius: "6px",
-                        objectFit: "contain",
+                        width: '100%',
+                        borderRadius: '6px',
+                        objectFit: 'contain',
                       }}
                     />
                   </div>
                   <div
-                    className="ms-4 col overflow-y-scroll"
+                    className="ms-4 col"
                     style={{ height: "100px" }}
                   >
                     <div className="text-gray-900 fw-bold text-hover-primary fs-6">
                       {itm.title}
                     </div>
-                    <span className="text-gray-600 fw-semibold d-block pt-1 fs-7">
+                    <div className='text-truncate-2 text-gray-600 fw-semibold pt-1 fs-7'>
                       {itm.desc}
-                    </span>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -14,6 +14,10 @@ const LoadingInfo = () => {
               <Skeleton width={100} height={16} />
               <Gap height={6} />
               <Skeleton width={"100%"} height={16} />
+              <Gap height={6} />
+              <Skeleton width={"100%"} height={16} />
+              <Gap height={6} />
+              <Skeleton width={100} height={16} />
             </>
           </div>
           <div className="col">
@@ -25,10 +29,11 @@ const LoadingInfo = () => {
                   <Skeleton width={"100%"} height={16} />
                   <Skeleton width={"100%"} height={16} />
                   <Skeleton width={"100%"} height={16} />
-                  <Gap height={12} />
-                  <Skeleton width={"25%"} height={16} />
+                  <Gap height={6} />
+                  <Skeleton width={"100%"} height={16} />
+                  <Gap height={6} />
+                  <Skeleton width={100} height={16} />
                 </div>
-                <Gap height={25} />
               </div>
             ))}
           </div>
