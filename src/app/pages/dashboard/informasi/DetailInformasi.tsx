@@ -206,7 +206,7 @@ export const DetailInformasi = () => {
                     />
                   </div>
                   <div
-                    className="ms-4 col overflow-y-scroll"
+                    className="ms-4 col"
                     style={{ height: "100px" }}
                   >
                     <div className="text-gray-900 fw-bold text-hover-primary fs-6">
