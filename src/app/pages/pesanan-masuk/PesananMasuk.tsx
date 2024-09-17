@@ -30,8 +30,6 @@ export const PesananMasuk = () => {
     getAllReservationPesanTempat(true);
   }, []);
 
-  console.log("allReservationPesanTempat", allReservationPesanTempat);
-
   const [modalDetail, setModalDetail] = useState({
     show: false,
     data: {},

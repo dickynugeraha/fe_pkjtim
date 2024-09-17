@@ -24,8 +24,14 @@ function formatDate(dateStr: string) {
 }
 
 function formatInputDate(dateStr: any) {
+  const date = new Date(dateStr);
+
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
   const formatted = new Date(dateStr).toISOString().split("T")[0];
-  return formatted;
+  return formattedDate;
 }
 
 function formatInputDateFromDB(dateStr: any) {

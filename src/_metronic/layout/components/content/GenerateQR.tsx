@@ -1,13 +1,11 @@
 import React, { FC } from "react";
 import { QRCode } from "react-qrcode-logo";
 
-interface Props{
-  data:string;
+interface Props {
+  data: string;
 }
 
 const GenerateQR: FC<Props> = ({ data }) => {
-  console.log(data);
-
   return (
     <div>
       <QRCode

@@ -109,6 +109,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
           <textarea
             name="sinopsis"
             id="sinopsis"
+            rows={10}
             className="form-control form-control-solid"
             value={data.sinopsis}
             onChange={(e) => onChangeVal(e)}
@@ -156,7 +157,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
               type="date"
               className="form-control"
               name="startDate"
-              defaultValue={data.startDate}
+              defaultValue={globalVar.formatInputDateFromDB(data.startDate)}
               onChange={(e) => onChangeVal(e)}
             />
             <p className="m-0 mx-3">s/d</p>
@@ -164,7 +165,7 @@ const ModalAddEditPementasan: FC<PropsModalAddEditPementasan> = ({
               type="date"
               className="form-control"
               name="endDate"
-              defaultValue={data.endDate}
+              defaultValue={globalVar.formatInputDateFromDB(data.endDate)}
               onChange={(e) => onChangeVal(e)}
             />
           </div>

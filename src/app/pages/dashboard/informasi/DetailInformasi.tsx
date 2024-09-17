@@ -139,9 +139,6 @@ export const DetailInformasi = () => {
     getAllData();
   }, []);
 
-  // console.log('dataaa', data);
-  // console.log('loading', loading);
-
   let content = <></>;
 
   const mainData = data.find((item) => item.id == params.id);

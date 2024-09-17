@@ -156,8 +156,6 @@ export const FormPesanTempat: FC = () => {
     let tarif = 0;
     while (start <= end) {
       for (let i = 0; i < targetDates.length; i++) {
-        console.log("kesini");
-
         if (start.getTime() === targetDates[i].getTime()) {
           let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
           let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
@@ -168,12 +166,6 @@ export const FormPesanTempat: FC = () => {
           } else {
             tarif += singleReservationTempat?.tempat.priceMainEventWeekDay;
           }
-
-          console.log(
-            `Tanggal ditemukan: ${formattedDate}, ${
-              isWeekend ? "Akhir pekan" : "Bukan akhir pekan"
-            }`
-          );
         } else {
           let dayOfWeek = start.getDay(); // Mendapatkan hari dalam seminggu (0 = Minggu, 6 = Sabtu)
           let isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Cek apakah hari Sabtu/Minggu
@@ -189,7 +181,6 @@ export const FormPesanTempat: FC = () => {
       // Increment tanggal
       start.setDate(start.getDate() + 1);
     }
-    console.log("tarif", tarif);
 
     setTarifCalculation(tarif);
   };

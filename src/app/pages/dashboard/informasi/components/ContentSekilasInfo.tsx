@@ -13,9 +13,6 @@ const ContentSekilasInfo: FC<PropsSekilasInfo> = ({ data, loading }) => {
   const navigate = useNavigate();
   const anotherData = data.slice(1);
 
-  console.log("anotherData", anotherData);
-  console.log("Data", data);
-
   let content = <></>;
 
   if (loading) {

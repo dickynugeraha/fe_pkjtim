@@ -261,7 +261,6 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             };
             changeStatus(modalTypeReason.type, payload);
             handleChange("reason", reason);
-            console.log("reason", reason);
           }}
           type={modalTypeReason.type}
         />
@@ -338,7 +337,6 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   name={id}
                   onChange={(e: any) => {
                     if (id && handleChangeFile) {
-                      console.log("kesini");
                       handleChangeFile(e.target.files[0]);
                     }
                   }}

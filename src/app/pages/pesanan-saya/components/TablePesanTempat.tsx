@@ -19,8 +19,6 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
     getAllReservationPesanTempat(false);
   }, []);
 
-  console.log("allReservationPesanTempat", allReservationPesanTempat);
-
   const data = useMemo(() => allReservationPesanTempat, [loading]);
 
   const columns = useMemo(

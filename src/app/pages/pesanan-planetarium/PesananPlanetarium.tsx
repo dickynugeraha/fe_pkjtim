@@ -109,8 +109,6 @@ export const PesananPlanetarium = () => {
     []
   );
 
-  console.log("allReservationPlanetarium", allReservationPlanetarium);
-
   const header = [
     "Pemesan",
     "Nomor Pemesan",

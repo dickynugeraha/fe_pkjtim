@@ -34,8 +34,6 @@ export const KurasiPentas = () => {
     data: {},
   });
 
-  console.log("allReservationPesanTempat", allReservationPesanTempat);
-
   const data = useMemo(() => allReservationPesanTempat, [loading]);
   const columns = useMemo(
     () => [

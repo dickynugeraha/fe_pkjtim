@@ -39,11 +39,14 @@ export const Home: FC = () => {
   const events: any[] = [];
 
   pementasan.map((itm) => {
+    const date = new Date(itm.endDate);
+    date.setDate(date.getDate() + 1);
+
     const data = {
       title: itm?.title,
       start: itm?.startDate,
       startDate: itm?.startDate,
-      end: itm?.endDate,
+      end: date.toISOString().split("T")[0],
       endDate: itm?.endDate,
       image: itm?.file,
       tempat: itm?.tempat?.name,
@@ -124,8 +127,6 @@ export const Home: FC = () => {
     </>
   );
   function renderEventContent(eventInfo: any) {
-    console.log("eventInfo.event", eventInfo.event);
-
     return (
       <>
         <i role="button">{eventInfo.event.title}</i>
