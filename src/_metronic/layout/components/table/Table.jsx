@@ -91,9 +91,12 @@ const Table = ({
 
   return (
     <Card>
-      <Card.Header className="d-flex align-items-center">
+      {cardTitle != "" && (
+        <Card.Header className="d-flex align-items-center">
           <h4 className="m-0">{cardTitle}</h4>
         </Card.Header>
+        )
+      }
         <div className="p-5">
           {isExport && (
             <>
