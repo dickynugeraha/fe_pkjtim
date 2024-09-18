@@ -79,7 +79,7 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
               break;
             case "PROSES":
               statusClass = "badge badge-light-info fs-6";
-              statusDesc = "Pesanan Sedang di proses";
+              statusDesc = "Pesanan sedang diproses";
               break;
             case "DONE":
               statusClass = "badge badge-light-success fs-6";

@@ -90,8 +90,8 @@ export const PesananMasuk = () => {
               statusDesc = "Menunggu surat jawaban";
               break;
             case "PROSES":
-              statusClass = "badge badge-light-warning fs-6";
-              statusDesc = "Pesanan sedang di proses";
+              statusClass = "badge badge-light-info fs-6";
+              statusDesc = "Pesanan baru perlu diproses";
               break;
             case "DONE":
               statusClass = "badge badge-light-success fs-6";
