@@ -114,9 +114,9 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
   );
   return (
     <>
-      <h6>Pesanan Planetarium</h6>
       <Gap height={8} />
       <Table
+        cardTitle="Pesanan Planetarium"
         loading={loading}
         data={data}
         columns={columns}
