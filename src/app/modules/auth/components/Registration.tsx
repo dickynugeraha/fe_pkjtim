@@ -313,7 +313,7 @@ export function Registration() {
         </div>
         <div className="text-gray-500 text-center fw-semibold fs-6">
           Kembali ke{" "}
-          <Link to="/dashboard" className="link-primary">
+          <Link to="/dashboard/home" className="link-primary">
             Beranda
           </Link>
         </div>

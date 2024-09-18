@@ -73,7 +73,7 @@ export function Login() {
           phoneNumber: userDecodeResult.phone_number,
         };
         setCurrentUser(user);
-        navigate("/dashboard");
+        navigate("/dashboard/home");
         setLoading(false);
       } catch (error: any) {
         saveAuth(undefined);
@@ -221,7 +221,7 @@ export function Login() {
           </div>
           <div className="text-gray-500 text-center fw-semibold fs-6">
             Kembali ke{" "}
-            <Link to="/dashboard" className="link-primary">
+            <Link to="/dashboard/home" className="link-primary">
               Beranda
             </Link>
           </div>
