@@ -41,14 +41,6 @@ export const PesananSaya: FC = () => {
         Daftar Pesanan Saya
       </PageTitle>
       <Content>
-        <TablePlanetarium
-          showModalPlanetarium={(val) =>
-            setModalDetailPlanet({
-              show: val.show,
-              data: val.data,
-            })
-          }
-        />
         <TablePesanTempat
           showModalPlanetarium={(val) =>
             setModalDetailTempat({
@@ -57,18 +49,26 @@ export const PesananSaya: FC = () => {
             })
           }
         />
+        <TablePlanetarium
+          showModalPlanetarium={(val) =>
+            setModalDetailPlanet({
+              show: val.show,
+              data: val.data,
+            })
+          }
+        />
+          <ModalDetailPesananTempat
+            data={modalDetailTempat.data}
+            show={modalDetailTempat.show}
+            handleClose={() => {
+              setModalDetailTempat({ ...modalDetailTempat, show: false });
+            }}
+          />
         <ModalDetailPesananPlanetarium
           data={modalDetailPlanet.data}
           show={modalDetailPlanet.show}
           handleClose={() => {
             setModalDetailPlanet({ ...modalDetailPlanet, show: false });
-          }}
-        />
-        <ModalDetailPesananTempat
-          data={modalDetailTempat.data}
-          show={modalDetailTempat.show}
-          handleClose={() => {
-            setModalDetailTempat({ ...modalDetailTempat, show: false });
           }}
         />
       </Content>
