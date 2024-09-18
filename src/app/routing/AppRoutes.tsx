@@ -59,7 +59,7 @@ const AppRoutes: FC = () => {
           <Route path="error/*" element={<ErrorsPage />} />
           <Route path="logout" element={<Logout />} />
           <Route element={<MasterLayout />}>
-            <Route path="dashboard" element={<Informasi />} />
+            <Route path="dashboard" element={<Home />} />
             <Route path="dashboard/informasi" element={<Informasi />} />
             <Route
               path="dashboard/informasi/:list"

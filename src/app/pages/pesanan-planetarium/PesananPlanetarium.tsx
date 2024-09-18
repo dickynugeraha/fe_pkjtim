@@ -85,7 +85,41 @@ export const PesananPlanetarium = () => {
           );
         },
       },
+      {
+        Header: "Status",
+        accessor: "status",
+        sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          let statusClass = "";
+          let statusDesc = "";
+          switch (singleData.status) {
+            case "DONE":
+              statusClass = "badge badge-light-success fs-6";
+              statusDesc = "Selesai";
+              break;
+            case "PENDING":
+              statusDesc = "Pesanan tertunda";
+              statusClass = "badge badge-light-warning fs-6";
+              break;
+            case "REJECT":
+              statusDesc = "Ditolak";
+              statusClass = "badge badge-light-danger fs-6";
+              break;
+            case "REQUEST":
+              statusDesc = "Menunggu persetujuan admin";
+              statusClass = "badge badge-light-info fs-6";
+              break;
+            case "EXPIRED":
+              statusDesc = "Kadaluarsa";
 
+              statusClass = "badge badge-light-danger fs-6";
+              break;
+          }
+
+          return <span className={statusClass}>{statusDesc}</span>;
+        },
+      },
       {
         Header: "Aksi",
         Cell: (props: any) => {

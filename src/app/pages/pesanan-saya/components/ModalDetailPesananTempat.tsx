@@ -157,6 +157,20 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             title={"Kode booking"}
             desc={data?.kodeBooking}
           />
+          {data?.kuratorNote && (
+            <DetailItem
+              iconName={"file"}
+              title={"Catatan Kurator (Disetujui)"}
+              desc={data?.kuratorNote}
+            />
+          )}
+          {data?.answerLetterNote && (
+            <DetailItem
+              iconName={"file"}
+              title={"Catatan Kurator (Revisi)"}
+              desc={data?.answerLetterNote}
+            />
+          )}
 
           <DetailItem
             iconName={"some-files"}

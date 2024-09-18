@@ -28,6 +28,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     type: "",
   });
   const [fields, setFields] = useState<any>({});
+  const [valueInput, setValueInput] = useState({
+    judulPentas: "",
+    alamatSanggar: "",
+    namaSanggar: "",
+  });
   const handleChange = (propertyId: string, value: any) => {
     setFields((prevFields: any) => ({
       ...prevFields,
@@ -64,16 +69,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       break;
   }
 
+  console.log("dataaa", data);
+
   const HandlerShowComponent = () => {
-    let OthersContent = (
-      <>
-        <DetailItemFile
-          title="Surat hasil kurasi"
-          url="http"
-          withUpload={false}
-        />
-      </>
-    );
+    let OthersContent = <></>;
     let ButtonShow = (
       <>
         <div
@@ -123,6 +122,57 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     ) {
       ButtonShow = <></>;
     }
+    if (data?.status === "REVISE") {
+      OthersContent = (
+        <>
+          <DetailItem
+            title="Surat hasil kurasi (Revisi)"
+            desc={data?.answerLetterNote}
+            iconName="file"
+          />
+        </>
+      );
+    }
+    if (data?.status === "WAITING_ANSWER_LETTER") {
+      ButtonShow = (
+        <>
+          <div
+            role="button"
+            className="btn btn-sm btn-success"
+            onClick={() => {
+              setModalTypeReason({
+                show: true,
+                type: "Done",
+              });
+            }}
+          >
+            Selesai
+          </div>
+          <div
+            role="button"
+            className="btn btn-sm btn-danger mx-4"
+            onClick={() => {
+              setModalTypeReason({
+                show: true,
+                type: "Reject",
+              });
+            }}
+          >
+            Tolak
+          </div>
+        </>
+      );
+
+      OthersContent = (
+        <>
+          <DetailItem
+            title="Surat hasil kurasi (Disetujui)"
+            desc={data?.kuratorNote}
+            iconName="file"
+          />
+        </>
+      );
+    }
 
     return { ButtonShow, OthersContent };
   };
@@ -138,49 +188,88 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     >
       <>
         <div className="row row-cols-3">
-          <DetailIten
+          <DetailItem
             iconName={"home-2"}
             title={"Tipe Tempat"}
             desc={data?.tempat?.name}
           />
-          <DetailIten
+          <DetailItem
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
             desc={globalVar.formatDate(data?.createdAt)}
           />
-          <DetailIten
+          <DetailItem
             iconName={"barcode"}
             title={"Kode booking"}
             desc={data?.kodeBooking}
           />
-          <DetailIten iconName={"watch"} title={"Status"} desc={statusDesc} />
-          <DetailIten
+          <DetailItem iconName={"watch"} title={"Status"} desc={statusDesc} />
+          <DetailItem
             iconName={"toggle-on-circle"}
             title={"Tangal mulai pentas"}
             desc={globalVar.formatDate(data?.startDate)}
           />
-          <DetailIten
+          <DetailItem
             iconName={"toggle-off-circle"}
             title={"Tanggal akhir pentas"}
             desc={globalVar.formatDate(data?.endDate)}
           />
-          <DetailIten
+          <DetailItemWithEdit
             iconName={"mask"}
             title={"Judul Pentas"}
-            desc={data?.judulPentas}
+            withEdit={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
+            desc={
+              valueInput?.judulPentas !== ""
+                ? valueInput.judulPentas
+                : data?.judulPentas
+            }
+            changeText={(val) =>
+              setValueInput({ ...valueInput, judulPentas: val })
+            }
           />
-          <DetailIten
+          <DetailItemWithEdit
             iconName={"home-2"}
             title={"Nama sanggar"}
-            desc={data?.namaSanggar}
+            withEdit={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
+            desc={
+              valueInput?.namaSanggar !== ""
+                ? valueInput?.namaSanggar
+                : data?.namaSanggar
+            }
+            changeText={(val) =>
+              setValueInput({ ...valueInput, namaSanggar: val })
+            }
           />
-          <DetailIten
+          <DetailItemWithEdit
             iconName={"geolocation"}
             title={"Alamat sanggar"}
-            desc={data?.alamatSanggar}
+            withEdit={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
+            desc={
+              valueInput?.alamatSanggar !== ""
+                ? valueInput.alamatSanggar
+                : data?.alamatSanggar
+            }
+            changeText={(val) =>
+              setValueInput({ ...valueInput, alamatSanggar: val })
+            }
           />
 
-          <DetailIten
+          <DetailItem
             iconName={"calculator"}
             title={"Total pembayaran"}
             desc={globalVar.formatRupiah(data?.priceTotal)}
@@ -193,7 +282,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title="Surat permohonan"
             id={"fileSuratPermohonan"}
             url={data?.suratPermohonan}
-            withUpload={true}
+            withUpload={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
             handleChangeFile={(value) =>
               handleChange("fileSuratPermohonan", value)
             }
@@ -203,7 +297,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title="Tanda pengenal"
             id={"fileTandaPengenal"}
             url={data?.tandaPengenal}
-            withUpload={true}
+            withUpload={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
             handleChangeFile={(value) =>
               handleChange("fileTandaPengenal", value)
             }
@@ -213,7 +312,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title="Proposal"
             id={"fileSuratProposal"}
             url={data?.proposal}
-            withUpload={true}
+            withUpload={
+              data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "DONE"
+                ? false
+                : true
+            }
             handleChangeFile={(value) =>
               handleChange("fileSuratProposal", value)
             }
@@ -257,13 +361,17 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           }
           onSubmit={(reason) => {
             const payload = {
+              ...fields,
               id: data.id,
+              judulPentas: valueInput.judulPentas,
+              namaSanggar: valueInput.namaSanggar,
+              alamatSanggar: valueInput.alamatSanggar,
               reason: reason,
               note: reason,
-              ...fields,
             };
-            changeStatus(modalTypeReason.type, payload);
             handleChange("reason", reason);
+
+            changeStatus(modalTypeReason?.type, payload);
           }}
           type={modalTypeReason.type}
         />
@@ -276,7 +384,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     title: string;
     desc: string;
   };
-  function DetailIten({ iconName, title, desc }: DetailItemProps) {
+  function DetailItem({ iconName, title, desc }: DetailItemProps) {
     return (
       <div className="col mb-6">
         <div className="d-flex align-items-center">
@@ -287,6 +395,68 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <p className="m-0">{desc}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  type DetailItemWithEditProps = {
+    iconName: string;
+    title: string;
+    desc: string;
+    withEdit: boolean;
+    changeText: (val: string) => void;
+  };
+  function DetailItemWithEdit({
+    iconName,
+    title,
+    desc,
+    withEdit,
+    changeText,
+  }: DetailItemWithEditProps) {
+    const [isEdit, setIsEdit] = useState(false);
+    const [textChange, setTextChange] = useState("");
+    return (
+      <div className="col mb-6">
+        <div className="d-flex align-items-center">
+          <div>
+            <KTIcon iconName={iconName} className="fs-3" />
+          </div>
+          <Gap width={18} />
+          <div>
+            <h6 className="m-0">{title}</h6>
+            <Gap height={8} />
+            <div className="d-flex">
+              {isEdit ? (
+                <input
+                  type="text"
+                  value={textChange}
+                  className="form-control"
+                  onChange={(e) => setTextChange(e.target.value)}
+                />
+              ) : (
+                <p className="m-0">{desc}</p>
+              )}
+              <Gap width={8} />
+
+              {!isEdit && withEdit && (
+                <span role="button" onClick={() => setIsEdit(true)}>
+                  <KTIcon iconName="pencil" />
+                </span>
+              )}
+              {isEdit && withEdit && (
+                <span
+                  role="button"
+                  onClick={() => {
+                    // setIsEdit(false);
+                    changeText(textChange);
+                  }}
+                >
+                  <KTIcon iconName="file" />
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -339,7 +509,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   id={id}
                   name={id}
                   onChange={(e: any) => {
-                    if (id && handleChangeFile) {
+                    if (handleChangeFile) {
                       handleChangeFile(e.target.files[0]);
                     }
                   }}

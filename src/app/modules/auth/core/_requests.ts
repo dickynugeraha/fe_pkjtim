@@ -23,12 +23,17 @@ export function login(email: string, password: string) {
 }
 
 export function register(data: any) {
-  return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, {
-    email: data.email,
-    fullName: data.fullName,
-    phoneNumber: `0${data.phoneNumber}`,
-    password: data.password,
-    rePassword: data.rePassword,
+  const formData = new FormData();
+  formData.append("ktp", data.ktp);
+  formData.append("email", data.email);
+  formData.append("fullName", data.fullname);
+  formData.append("phoneNumber", data.phoneNumber);
+  formData.append("pasword", data.password);
+  formData.append("rePassword", data.rePassword);
+  return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, formData, {
+    headers: {
+      "Content-Type": "multipart-form/data",
+    },
   });
 }
 

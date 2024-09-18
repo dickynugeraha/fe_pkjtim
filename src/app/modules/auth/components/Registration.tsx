@@ -8,6 +8,7 @@ import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/componen
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
 import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
+import Gap from "../../../../_metronic/layout/components/content/Gap";
 
 const initialValues = {
   fullname: "",
@@ -52,14 +53,22 @@ export function Registration() {
     show: false,
     text: "",
   });
+  const [fileKtp, setFileKtp] = useState<any>(null);
   const { saveAuth } = useAuth();
+
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
       try {
-        const res = await register(values);
+        const payload = {
+          ...values,
+          ktp: fileKtp,
+        };
+        console.log("payload: ", payload);
+
+        const res = await register(payload);
 
         Swal.fire({
           icon: "success",
@@ -151,7 +160,26 @@ export function Registration() {
             </div>
           )}
         </div>
-
+        {/* ktp */}
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="fv-row mb-5">
+            <input
+              id="ktp"
+              type="file"
+              className="form-control"
+              required
+              onChange={(e: any) => setFileKtp(e.target.files[0])}
+              title="Foto ktp"
+            />
+          </div>
+          <Gap width={10} />
+          <div style={{ borderWidth: 1, borderColor: "#333" }}>
+            <button disabled className="btn btn-primary px-5 py-3 mb-5">
+              Foto ktp
+            </button>
+          </div>
+        </div>
+        {/* end ktp */}
         <div className="fv-row mb-5">
           <input
             placeholder="Nomor Handphone"

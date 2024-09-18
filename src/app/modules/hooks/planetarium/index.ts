@@ -204,8 +204,8 @@ export default function usePlanetarium() {
       allReservation.map((data) => {
         const singlePlanet = {
           ...data,
-          pernyataanPersetujuan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/PernyataanPersetujuan`,
-          suratUndangan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/SuratUndangan`,
+          pernyataanPersetujuan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/PernyataanPersetujuan`,
+          suratUndangan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/SuratUndangan`,
         };
         allResrvationWithCorrectEmail.push(singlePlanet);
       });

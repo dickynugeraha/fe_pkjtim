@@ -209,7 +209,6 @@ export const FormPesanTempat: FC = () => {
 
       start.setDate(start.getDate() + 1);
     }
-    // console.log("tarif", tarif);
 
     setTarifCalculation(tarif);
   };
@@ -457,11 +456,12 @@ export const FormPesanTempat: FC = () => {
                               className={clsx(
                                 "form-control form-control-solid form-control-solid"
                               )}
-                              // min={new Date(
-                              //   singleReservationTempat?.startDate
-                              // )?.toISOString()}
-                              min={globalVar.getThreeMonthsFromToday()}
-                              // max={singleReservationTempat?.endDate?.toISOString()}
+                              min={globalVar.formatInputDateFromDB(
+                                singleReservationTempat?.startDate
+                              )}
+                              max={globalVar.formatInputDateFromDB(
+                                singleReservationTempat?.endDate
+                              )}
                               type="date"
                               name="tanggalMainEvent"
                               autoComplete="off"

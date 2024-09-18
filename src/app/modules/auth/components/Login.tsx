@@ -45,10 +45,6 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
-  const [modalError, setModalError] = useState({
-    show: false,
-    text: "",
-  });
 
   const navigate = useNavigate();
 
@@ -65,6 +61,8 @@ export function Login() {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
         };
+        // console.log("userDecodeResult", auth);
+
         saveAuth(authData);
         const user = {
           id: userDecodeResult.Id,

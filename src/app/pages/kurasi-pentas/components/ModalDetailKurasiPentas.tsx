@@ -21,6 +21,8 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
   const [modalShowTerima, setModalShowTerima] = useState(false);
   const [reason, setReason] = useState("");
 
+  console.log("data", data);
+
   return (
     <ModalWrapper
       title="Detail Pesanan"
@@ -79,9 +81,15 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             title={"Tanggal akhir kunjungan"}
             desc={globalVar.formatDate(data.endDate)}
           />
+
           <DetailItemFile title="Surat Permohonan" url={data.suratPermohonan} />
           <DetailItemFile title="Tanda Pengenal" url={data.tandaPengenal} />
           <DetailItemFile title="proposal" url={data.proposal} />
+          {/* <DetailIten
+            iconName={"toggle-off-circle"}
+            title={"Alasan Pengelola"}
+            desc={"alasan"}
+          /> */}
         </div>
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
@@ -205,7 +213,11 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              <a className="btn btn-sm btn-light-primary" href={url}>
+              <a
+                className="btn btn-sm btn-light-primary"
+                href={url}
+                target="_blank"
+              >
                 Lihat {title}
               </a>
             ) : (

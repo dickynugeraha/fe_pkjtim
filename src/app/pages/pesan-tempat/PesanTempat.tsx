@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import { Link, useNavigate } from "react-router-dom";
 import Peraturan from "./components/Peraturan";
@@ -28,6 +28,8 @@ export const PesanTempat: FC = () => {
   const [choosenTempat, setChoosenTempat] = useState<any>();
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
+  const startDateRef = useRef<any>(null);
+  const endDateRef = useRef<any>(null);
 
   const { tempat, loading } = useTempat();
   const { nextStepHandler } = usePesanTempat();
@@ -98,21 +100,28 @@ export const PesanTempat: FC = () => {
             <h6>Pilih tanggal</h6>
             <div className="d-flex align-items-center">
               <input
+                ref={startDateRef}
+                id="startPesantempat"
+                name="startPesantempat"
                 type="date"
                 className="form-control form-control-solid"
                 value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                // onChange={(e) => setStartDate(e.target.value)}
                 min={globalVar.getThreeMonthsFromToday()}
                 onKeyDown={(e) => e.preventDefault()}
               />
+
               <div>
                 <p className="m-0 mx-3">s/d</p>
               </div>
               <input
+                ref={endDateRef}
+                id="endPesantempat"
+                name="endPesantempat"
                 type="date"
                 className="form-control form-control-solid"
                 value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
+                // onChange={(e) => setEndDate(e.target.value)}
                 min={globalVar.getThreeMonthsFromToday()}
                 onKeyDown={(e) => e.preventDefault()}
               />
@@ -122,7 +131,13 @@ export const PesanTempat: FC = () => {
               type="button"
               className="btn btn-primary"
               style={{ width: "150px" }}
-              onClick={() => nextStepHandler(choosenTempat, startDate, endDate)}
+              onClick={() =>
+                nextStepHandler(
+                  choosenTempat,
+                  startDateRef.current.value,
+                  endDateRef.current.value
+                )
+              }
             >
               Selanjutnya
             </button>

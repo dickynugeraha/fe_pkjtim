@@ -211,7 +211,9 @@ export default function usePesanTempat() {
       text: "Akan mengubah status reservasi?!",
       onConfirm: async () => {
         try {
-          await changeStatusReservation({ ...newData }, status);
+          const res = await changeStatusReservation({ ...newData }, status);
+          console.log("resss", res);
+
           Swal.fire({
             icon: "success",
             title: "Status reservasi berhasil terubah",

@@ -39,7 +39,10 @@ export const getSingleReservation = (id: any) => {
 };
 
 export const changeStatusReservation = (data: any, status: string) => {
-  if (status === "Kurasi") {
+  console.log("statuse", status);
+  console.log("datate", data);
+
+  if (status == "Kurasi") {
     const formData = new FormData();
     formData.append("id", data.id);
     formData.append("actorId", data.actorId);
@@ -48,6 +51,9 @@ export const changeStatusReservation = (data: any, status: string) => {
     formData.append("fileSuratPermohonan", data.fileSuratPermohonan);
     formData.append("fileProposal", data.fileProposal);
     formData.append("fileTandaPengenal", data.fileTandaPengenal);
+    formData.append("judulPentas", data.judulPentas);
+    formData.append("alamatSanggar", data.alamatSanggar);
+    formData.append("namaSanggar", data.namaSanggar);
 
     return axiosConfig.put(
       `${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/${status}`,
