@@ -120,7 +120,7 @@ const AppRoutes: FC = () => {
           ) : (
             <>
               <Route path="auth/*" element={<AuthPage />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="*" element={<Navigate to="/dashboard/home" />} />
             </>
           )}
         </Route>
