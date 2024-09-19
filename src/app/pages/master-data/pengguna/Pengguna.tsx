@@ -46,12 +46,12 @@ export const Pengguna = () => {
     setIsValidated,
   } = usePengguna();
 
+  const [ktpValue, setKtpValue] = useState();
+
   const data = useMemo(
     () => pengguna,
     [updatePengguna, addPengguna, deletePengguna, fetchAllPengguna]
   );
-
-  console.log('dataaa', formData);
 
   useEffect(() => {
     fetchAllPengguna();
@@ -92,7 +92,7 @@ export const Pengguna = () => {
           } else if (singleData.roles === "KURATOR") {
             className = "badge badge-light-warning fs-6";
             title = "Kurator";
-          } else if (singleData.roles === "USER"){
+          } else if (singleData.roles === "USER") {
             className = "badge badge-light-primary fs-6";
             title = "User";
           }
@@ -210,6 +210,7 @@ export const Pengguna = () => {
           isLockedCheck={isLockedCheck}
           handleIsCheckLocked={() => setIsLockedCheck(!isLockedCheck)}
           handleChange={(e) => handleChange(e)}
+          handleChangeKTP={(val) => setKtpValue(val)}
           show={isModalOpen}
           data={formData}
           formAdd={!isEdit}
@@ -217,7 +218,11 @@ export const Pengguna = () => {
           isValidated={isValidated}
           handleIsValidated={setIsValidated}
           handleSubmit={() => {
-            const formWithLocked = { ...formData, isLocked: isLockedCheck };
+            const formWithLocked = {
+              ...formData,
+              isLocked: isLockedCheck,
+              ktp: ktpValue,
+            };
             if (isEdit) {
               updatePengguna(formWithLocked);
             } else {

@@ -41,6 +41,7 @@ import {
 import { PesananMasuk, PesananPlanetarium } from "../pages";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import { ContactPerson } from "../pages/master-data/contact-person/ContactPerson";
+import { ROLE } from "../constants/ROLE";
 
 /**
  * Base URL of the website.
@@ -75,24 +76,13 @@ const AppRoutes: FC = () => {
             <Route path="planetarium" element={<Planetarium />} />
             <Route path="tentang-kami" element={<TentangKami />} />
           </Route>
-          {currentUser ? (
+
+          {/* Pengelola */}
+          {currentUser?.role === ROLE.PENGELOLA ? (
             <>
               <Route element={<MasterLayout />}>
-                <Route path="error/*" element={<ErrorsPage />} />
-                <Route path="profil-saya" element={<ProfilSaya />} />
-                <Route path="pesanan-saya" element={<PesananSaya />} />
-                <Route
-                  path="form-pesan-tempat/:id"
-                  element={<FormPesanTempat />}
-                />
-                <Route
-                  path="form-planetarium/:id"
-                  element={<FormPlanetarium />}
-                />
-                <Route path="kurasi-pentas" element={<KurasiPentas />} />
                 <Route path="pesanan-masuk" element={<PesananMasuk />} />
                 <Route path="pesanan-planet" element={<PesananPlanetarium />} />
-                {/* Pengelola */}
                 <Route path="master-data/pengguna" element={<Pengguna />} />
                 <Route
                   path="master-data/sekilas-info"
@@ -112,6 +102,41 @@ const AppRoutes: FC = () => {
                 <Route
                   path="master-data/contact-person"
                   element={<ContactPerson />}
+                />
+              </Route>
+            </>
+          ) : (
+            <>
+              <Route path="auth/*" element={<AuthPage />} />
+              <Route path="*" element={<Navigate to="/dashboard/home" />} />
+            </>
+          )}
+
+          {/* Kurator */}
+          {currentUser?.role === ROLE.KURATOR ? (
+            <Route element={<MasterLayout />}>
+              <Route path="kurasi-pentas" element={<KurasiPentas />} />
+            </Route>
+          ) : (
+            <>
+              <Route path="auth/*" element={<AuthPage />} />
+              <Route path="*" element={<Navigate to="/dashboard/home" />} />
+            </>
+          )}
+
+          {currentUser?.role === ROLE.USER ? (
+            <>
+              <Route element={<MasterLayout />}>
+                <Route path="error/*" element={<ErrorsPage />} />
+                <Route path="profil-saya" element={<ProfilSaya />} />
+                <Route path="pesanan-saya" element={<PesananSaya />} />
+                <Route
+                  path="form-pesan-tempat/:id"
+                  element={<FormPesanTempat />}
+                />
+                <Route
+                  path="form-planetarium/:id"
+                  element={<FormPlanetarium />}
                 />
               </Route>
               <Route path="/*" element={<MainRoutes />} />

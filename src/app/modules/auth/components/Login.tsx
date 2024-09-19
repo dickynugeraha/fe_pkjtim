@@ -61,7 +61,7 @@ export function Login() {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
         };
-        // console.log("userDecodeResult", auth);
+        console.log("userDecodeResult", userDecodeResult);
 
         saveAuth(authData);
         const user = {
@@ -69,6 +69,7 @@ export function Login() {
           email: userDecodeResult.email,
           name: userDecodeResult.name,
           phoneNumber: userDecodeResult.phone_number,
+          role: userDecodeResult.role,
         };
         setCurrentUser(user);
         navigate("/dashboard/home");

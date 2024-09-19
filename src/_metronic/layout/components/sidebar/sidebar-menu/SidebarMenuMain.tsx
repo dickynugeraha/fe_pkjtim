@@ -1,6 +1,7 @@
 import { SidebarMenuItemWithSub } from "./SidebarMenuItemWithSub";
 import { SidebarMenuItem } from "./SidebarMenuItem";
 import { useAuth } from "../../../../../app/modules/auth";
+import { ROLE } from "../../../../../app/constants/ROLE";
 const SidebarMenuMain = () => {
   const { currentUser } = useAuth();
 
@@ -79,20 +80,15 @@ const SidebarMenuMain = () => {
   return (
     <>
       <DashboardSideBar />
-      {currentUser?.email && <MasterDataSidebar />}
-      {currentUser?.email && (
+      {currentUser?.email && currentUser?.role === ROLE.PENGELOLA && (
+        <MasterDataSidebar />
+      )}
+      {currentUser?.email && currentUser?.role === ROLE.PENGELOLA && (
         <>
           <SidebarMenuItem
             to="pesanan-masuk"
             icon="entrance-left"
             title="Pesanan Masuk"
-            fontIcon="bi-layers"
-          />
-
-          <SidebarMenuItem
-            to="kurasi-pentas"
-            icon="book"
-            title="Kurasi Pentas"
             fontIcon="bi-layers"
           />
           <SidebarMenuItem
@@ -102,6 +98,14 @@ const SidebarMenuMain = () => {
             fontIcon="bi-layers"
           />
         </>
+      )}
+      {currentUser?.email && currentUser?.role === ROLE.KURATOR && (
+        <SidebarMenuItem
+          to="kurasi-pentas"
+          icon="book"
+          title="Kurasi Pentas"
+          fontIcon="bi-layers"
+        />
       )}
       <SidebarMenuItem
         to="pesan-tempat"

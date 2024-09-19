@@ -84,6 +84,7 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
             id: userDecodeResult.Id,
             email: userDecodeResult.email,
             name: userDecodeResult.name,
+            role: userDecodeResult.role,
             phoneNumber: userDecodeResult.phone_number,
           };
           if (res.data.data) {

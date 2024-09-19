@@ -3,23 +3,20 @@ import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
   const formData = new FormData();
-    formData.append("fullName", data.fullName);
-    formData.append("email", data.email);
-    formData.append("phoneNumber", data.phoneNumber);
-    formData.append("status", data.status);
-    formData.append("role", data.role);
-    formData.append("isLocked", data.isLocked);
-    formData.append("password", data.password);
+  formData.append("fullName", data.fullName);
+  formData.append("email", data.email);
+  formData.append("ktp", data.ktp);
+  formData.append("phoneNumber", data.phoneNumber);
+  formData.append("status", data.status);
+  formData.append("role", data.role);
+  formData.append("isLocked", data.isLocked);
+  formData.append("password", data.password);
 
-  return axiosConfig.post(
-    ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  return axiosConfig.post(ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export const getSinglePhoto = (id: number) => {
@@ -55,7 +52,7 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
   });
 };
 
-export const remove = (id: number) => {
+export const remove = (id: any) => {
   return axiosConfig.delete(`${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}`);
 };
 
@@ -78,16 +75,23 @@ export const unlockAccount = (id: any) => {
 };
 
 export const update = (data: any) => {
+  const formData = new FormData();
+  formData.append("fullName", data.fullName);
+  formData.append("email", data.email);
+  formData.append("ktp", data.ktp);
+  formData.append("phoneNumber", data.phoneNumber);
+  formData.append("status", data.status);
+  formData.append("role", data.role);
+  formData.append("isLocked", data.isLocked);
+  formData.append("password", data.password);
+
   return axiosConfig.put(
     `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}`,
+    formData,
     {
-      fullName: data.fullName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      status: data.status,
-      isLocked: data.isLocked,
-      role: data.role,
-      password: data.password,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
 
