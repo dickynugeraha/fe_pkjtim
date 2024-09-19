@@ -163,15 +163,17 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         </>
       );
 
-      OthersContent = (
-        <>
-          <DetailItem
-            title="Surat hasil kurasi (Disetujui)"
-            desc={data?.kuratorNote}
-            iconName="file"
-          />
-        </>
-      );
+        if (data?.userC === "REVISE") {
+        OthersContent = (
+          <>
+            <DetailItem
+              title="Surat hasil kurasi (Disetujui)"
+              desc={data?.kuratorNote}
+              iconName="file"
+            />
+          </>
+        );
+      }
     }
 
     return { ButtonShow, OthersContent };

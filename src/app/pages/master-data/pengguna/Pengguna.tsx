@@ -51,6 +51,8 @@ export const Pengguna = () => {
     [updatePengguna, addPengguna, deletePengguna, fetchAllPengguna]
   );
 
+  console.log('dataaa', formData);
+
   useEffect(() => {
     fetchAllPengguna();
   }, []);
@@ -74,8 +76,28 @@ export const Pengguna = () => {
       },
       {
         Header: "Role",
-        accessor: "role",
+        accessor: "roles",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          let className = "";
+          let title = "";
+
+          if (singleData.roles === "SUPER_ADMIN") {
+            className = "badge badge-light-success fs-6";
+            title = "Super Admin";
+          } else if (singleData.roles === "PENGELOLA") {
+            className = "badge badge-light-info fs-6";
+            title = "Pengelola";
+          } else if (singleData.roles === "KURATOR") {
+            className = "badge badge-light-warning fs-6";
+            title = "Kurator";
+          } else if (singleData.roles === "USER"){
+            className = "badge badge-light-primary fs-6";
+            title = "User";
+          }
+          return <span className={className}>{title}</span>;
+        },
       },
       {
         Header: "Status",

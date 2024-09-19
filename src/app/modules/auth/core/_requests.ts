@@ -28,7 +28,7 @@ export function register(data: any) {
   formData.append("email", data.email);
   formData.append("fullName", data.fullname);
   formData.append("phoneNumber", data.phoneNumber);
-  formData.append("pasword", data.password);
+  formData.append("password", data.password);
   formData.append("rePassword", data.rePassword);
   return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, formData, {
     headers: {

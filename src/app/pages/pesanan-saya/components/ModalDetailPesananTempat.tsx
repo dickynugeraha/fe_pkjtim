@@ -171,36 +171,37 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
               desc={data?.answerLetterNote}
             />
           )}
-
-          <DetailItem
-            iconName={"some-files"}
-            title={"Surat Permohonan"}
-            desc={statusKey}
-            isFile
-            urlFile={data?.suratPermohonan}
-          />
-          <DetailItem
-            iconName={"some-files"}
-            title={"Tanda Pengenal"}
-            desc={statusKey}
-            isFile
-            urlFile={data?.tandaPengenal}
-          />
-          <DetailItem
-            iconName={"some-files"}
-            title={"Proposal"}
-            desc={statusKey}
-            isFile
-            urlFile={data?.proposal}
-          />
-          {data.reason && (
+          </div>
+          <div className="row row-cols-3">
             <DetailItem
-              iconName={"pencil"}
-              title={"Alasan"}
-              desc={data.reason}
+              iconName={"some-files"}
+              title={"Surat Permohonan"}
+              desc={statusKey}
+              isFile
+              urlFile={data?.suratPermohonan}
             />
-          )}
-        </div>
+            <DetailItem
+              iconName={"some-files"}
+              title={"Tanda Pengenal"}
+              desc={statusKey}
+              isFile
+              urlFile={data?.tandaPengenal}
+            />
+            <DetailItem
+              iconName={"some-files"}
+              title={"Proposal"}
+              desc={statusKey}
+              isFile
+              urlFile={data?.proposal}
+            />
+            {data.reason && (
+              <DetailItem
+                iconName={"pencil"}
+                title={"Alasan"}
+                desc={data.reason}
+              />
+            )}
+          </div>
         {modalAlasan.show && <div className="overlay" />}
         <ModalWrapper
           title="Tulis alasan"

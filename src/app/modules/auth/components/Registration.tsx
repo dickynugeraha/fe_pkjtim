@@ -8,10 +8,10 @@ import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/componen
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
 import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
-import Gap from "../../../../_metronic/layout/components/content/Gap";
 
 const initialValues = {
   fullname: "",
+  ktp: "",
   email: "",
   phoneNumber: "",
   password: "",
@@ -23,15 +23,29 @@ const registrationSchema = Yup.object().shape({
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Nama lengkap harus diisi"),
+  ktp: Yup.mixed().required('Foto ktp harus diupload').test('fileFormat', 'File wajib gambar dengan format png|jpg|jpeg', (value:any) => {
+    if (value) {
+        const supportedFormats = ['png','jpg','jpeg'];
+        return supportedFormats.includes(value.name.split('.').pop());
+      }
+      return true;
+    })
+    .test('fileSize', 'Ukuran file maksimal 3mb',
+    (value:any) => {
+      if (value) {
+        return value.size <= 3145728;
+      }
+      return true;
+    }),
   email: Yup.string()
-    .email("Wrong email format")
+    .email("Format email salah")
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Email harus diisi"),
   phoneNumber: Yup.string()
     .min(11, "Minimal 11 nomor")
     .max(13, "Maksimal 13 nomor")
-    .required("Nomor handphone garus diisi"),
+    .required("Nomor handphone harus diisi"),
   password: Yup.string()
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
@@ -53,7 +67,10 @@ export function Registration() {
     show: false,
     text: "",
   });
-  const [fileKtp, setFileKtp] = useState<any>(null);
+  const handleChangeKTP = (e:any) => {
+    formik.setFieldValue('ktp', e.target.files[0]);
+  };
+
   const { saveAuth } = useAuth();
 
   const formik = useFormik({
@@ -64,16 +81,16 @@ export function Registration() {
       try {
         const payload = {
           ...values,
-          ktp: fileKtp,
+          // ktp: fileKtp,
         };
         console.log("payload: ", payload);
 
-        const res = await register(payload);
+        await register(payload);
 
         Swal.fire({
           icon: "success",
           title: "Berhasil melakukan registrasi!",
-          text: "Silahkan melakukan login untuk masuk kedalam aplikasi",
+          text: "Admin akan memverifikasi data kamu, Mohon menunggu info selanjutnya",
           showConfirmButton: false,
           timer: 2000,
         }).then(() => {
@@ -125,7 +142,6 @@ export function Registration() {
             Selamat Datang di PKJ TIM!
           </span>
         </div>
-
         {formik.status && (
           <div className="mb-lg-15 alert alert-danger">
             <div className="alert-text font-weight-bold">{formik.status}</div>
@@ -163,20 +179,30 @@ export function Registration() {
         {/* ktp */}
         <div className="d-flex align-items-center justify-content-between">
           <div className="fv-row mb-5">
-            <input
-              id="ktp"
-              type="file"
-              className="form-control"
-              required
-              onChange={(e: any) => setFileKtp(e.target.files[0])}
-              title="Foto ktp"
-            />
-          </div>
-          <Gap width={10} />
-          <div style={{ borderWidth: 1, borderColor: "#333" }}>
-            <button disabled className="btn btn-primary px-5 py-3 mb-5">
-              Foto ktp
-            </button>
+            <div className="input-group">
+              <label className="input-group-text bg-primary text-white">Upload KTP</label>
+              <input
+                id="ktp"
+                type="file"
+                required
+                // onChange={(e: any) => setFileKtp(e.target.files[0])}
+                onChange={handleChangeKTP}
+                title="Foto ktp"
+                className={clsx(
+                  "form-control bg-transparent",
+                  {
+                    "is-invalid": formik.errors.ktp,
+                  }
+                )}
+              />
+            </div>
+              {formik.errors.ktp && (
+                <div className="fv-plugins-message-container">
+                  <div className="fv-help-block">
+                    <span role="alert">{formik.errors.ktp}</span>
+                  </div>
+                </div>
+              )}
           </div>
         </div>
         {/* end ktp */}
@@ -275,7 +301,7 @@ export function Registration() {
             {/* end::Meter */}
           </div>
           <div className="text-muted">
-            Use 8 or more characters with a mix of letters, numbers & symbols.
+            Gunakan 8 karakter atau lebih dengan huruf, angka, & simbol.
           </div>
         </div>
         {/* end::Form group */}

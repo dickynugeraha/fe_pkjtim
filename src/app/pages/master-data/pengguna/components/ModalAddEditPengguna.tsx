@@ -198,12 +198,14 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             id='role'
             className='form-select'
             onChange={(e) => handleChange(e)}
+            value={data.role}
             // required
           >
-            <option value=''>-- Pilih satu --</option>
-            <option value='User'>User</option>
-            <option value='Pengelola'>Pengelola</option>
-            <option value='Kurator'>Kurator</option>
+            <option value=''>-- Pilih role --</option>
+            <option selected={data.roles === 'SUPER_ADMIN'} value='SUPER_ADMIN'>Super Admin</option>
+            <option selected={data.roles === 'PENGELOLA'} value='PENGELOLA'>Pengelola</option>
+            <option selected={data.roles === 'KURATOR'} value='KURATOR'>Kurator</option>
+            <option selected={data.roles === 'USER'} value='USER'>User</option>
           </Form.Select>
         </Form.Group>
 
