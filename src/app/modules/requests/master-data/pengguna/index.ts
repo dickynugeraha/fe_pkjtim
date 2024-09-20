@@ -83,7 +83,10 @@ export const update = (data: any) => {
   formData.append("status", data.status);
   formData.append("role", data.role);
   formData.append("isLocked", data.isLocked);
-  formData.append("password", data.password);
+
+  if(data.password != undefined){
+    formData.append("password", data.password);
+  }
 
   return axiosConfig.put(
     `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}`,
