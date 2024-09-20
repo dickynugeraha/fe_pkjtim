@@ -223,7 +223,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             className="form-select"
             onChange={(e) => handleChange(e)}
             value={data.role}
-            // required
+            required
           >
             <option value="">-- Pilih role --</option>
             <option selected={data.roles === "SUPER_ADMIN"} value="SUPER_ADMIN">
