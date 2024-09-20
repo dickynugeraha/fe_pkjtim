@@ -78,7 +78,8 @@ const AppRoutes: FC = () => {
           </Route>
 
           {/* Pengelola */}
-          {currentUser?.role === ROLE.PENGELOLA ? (
+          {currentUser?.role === ROLE.PENGELOLA ||
+          currentUser?.role === ROLE.SUPER_ADMIN ? (
             <>
               <Route element={<MasterLayout />}>
                 <Route path="pesanan-masuk" element={<PesananMasuk />} />
@@ -113,7 +114,8 @@ const AppRoutes: FC = () => {
           )}
 
           {/* Kurator */}
-          {currentUser?.role === ROLE.KURATOR ? (
+          {currentUser?.role === ROLE.KURATOR ||
+          currentUser?.role === ROLE.SUPER_ADMIN ? (
             <Route element={<MasterLayout />}>
               <Route path="kurasi-pentas" element={<KurasiPentas />} />
             </Route>
@@ -124,7 +126,8 @@ const AppRoutes: FC = () => {
             </>
           )}
 
-          {currentUser?.role === ROLE.USER ? (
+          {currentUser?.role === ROLE.USER ||
+          currentUser?.role === ROLE.SUPER_ADMIN ? (
             <>
               <Route element={<MasterLayout />}>
                 <Route path="error/*" element={<ErrorsPage />} />

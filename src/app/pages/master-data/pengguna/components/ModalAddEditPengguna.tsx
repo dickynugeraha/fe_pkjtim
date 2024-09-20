@@ -55,6 +55,8 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
     }
   };
 
+  console.log("loggg", data);
+
   return (
     <ModalWrapper
       title={formAdd ? "Tambah Pengguna" : "Ubah Pengguna"}
@@ -222,7 +224,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             id="role"
             className="form-select"
             onChange={(e) => handleChange(e)}
-            value={data.role}
+            value={data.roles}
             // required
           >
             <option value="">-- Pilih role --</option>

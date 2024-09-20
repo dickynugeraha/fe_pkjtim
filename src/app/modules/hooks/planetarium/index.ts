@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
+import { ROLE } from "../../../constants/ROLE";
 
 export default function usePlanetarium() {
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,15 @@ export default function usePlanetarium() {
         icon: "error",
         title: "Gagal",
         text: "Silahkan login terlebih dahulu!",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    if (currentUser?.role !== ROLE.USER) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Anda adalah admin, silahkan login sebagai user",
         showConfirmButton: false,
       });
       return;

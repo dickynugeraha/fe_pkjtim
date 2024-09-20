@@ -13,6 +13,7 @@ import { useAuth } from "../../auth";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
 import { INITIAL_PAGE } from "../../../constants/PAGE";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
+import { ROLE } from "../../../constants/ROLE";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -106,6 +107,15 @@ export default function usePesanTempat() {
         icon: "error",
         title: "Gagal",
         text: "Silahkan login terlebih dahulu",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    if (currentUser?.role !== ROLE.USER) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Anda adalah admin, silahkan login sebagai user",
         showConfirmButton: false,
       });
       return;

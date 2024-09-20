@@ -80,10 +80,10 @@ const SidebarMenuMain = () => {
   return (
     <>
       <DashboardSideBar />
-      {currentUser?.email && currentUser?.role === ROLE.PENGELOLA && (
-        <MasterDataSidebar />
-      )}
-      {currentUser?.email && currentUser?.role === ROLE.PENGELOLA && (
+      {(currentUser?.role === ROLE.PENGELOLA ||
+        currentUser?.role === ROLE.SUPER_ADMIN) && <MasterDataSidebar />}
+      {(currentUser?.role === ROLE.PENGELOLA ||
+        currentUser?.role === ROLE.SUPER_ADMIN) && (
         <>
           <SidebarMenuItem
             to="pesanan-masuk"
@@ -99,7 +99,8 @@ const SidebarMenuMain = () => {
           />
         </>
       )}
-      {currentUser?.email && currentUser?.role === ROLE.KURATOR && (
+      {(currentUser?.role === ROLE.KURATOR ||
+        currentUser?.role === ROLE.SUPER_ADMIN) && (
         <SidebarMenuItem
           to="kurasi-pentas"
           icon="book"

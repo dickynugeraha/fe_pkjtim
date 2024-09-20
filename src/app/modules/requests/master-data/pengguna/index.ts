@@ -81,7 +81,7 @@ export const update = (data: any) => {
   formData.append("ktp", data.ktp);
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("status", data.status);
-  formData.append("role", data.role);
+  formData.append("roles", data.roles);
   formData.append("isLocked", data.isLocked);
   formData.append("password", data.password);
 

@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../app/modules/auth";
 import { toAbsoluteUrl } from "../../../helpers";
+import { ROLE } from "../../../../app/constants/ROLE";
 
 const HeaderUserMenu: FC = () => {
   const { currentUser, logout } = useAuth();
@@ -37,12 +38,13 @@ const HeaderUserMenu: FC = () => {
           Profil Saya
         </Link>
       </div>
-
-      <div className="menu-item px-5">
-        <Link to="/pesanan-saya" className="menu-link px-5">
-          Pesanan Saya
-        </Link>
-      </div>
+      {currentUser?.role === ROLE.USER && (
+        <div className="menu-item px-5">
+          <Link to="/pesanan-saya" className="menu-link px-5">
+            Pesanan Saya
+          </Link>
+        </div>
+      )}
 
       <div className="separator my-2"></div>
 
