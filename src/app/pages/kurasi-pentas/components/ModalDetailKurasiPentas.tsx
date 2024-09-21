@@ -21,8 +21,6 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
   const [modalShowTerima, setModalShowTerima] = useState(false);
   const [reason, setReason] = useState("");
 
-  console.log("data", data);
-
   return (
     <ModalWrapper
       title="Detail Pesanan"

@@ -60,7 +60,7 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
         title={`Tarif Sewa ${modalDetailTarif?.data?.name}`}
         handleClose={() =>
           setModalDetailTarif({
-            data: null,
+            ...modalDetailTarif,
             show: false,
           })
         }

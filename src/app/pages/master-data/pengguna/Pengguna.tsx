@@ -63,8 +63,6 @@ export const Pengguna = () => {
     fetchAllPengguna();
   }, []);
 
-  console.log("pengguna: ", pengguna);
-
   const columns = useMemo(
     () => [
       // {

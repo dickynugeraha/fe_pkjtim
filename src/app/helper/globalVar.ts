@@ -90,6 +90,54 @@ export const convertRouteToTitle = (route: string) => {
   return title;
 };
 
+const exportStatusPesanTempatToTitle = (status: string) => {
+  let statusClass = "";
+  let statusDesc = "";
+  switch (status) {
+    case "WAITING_ANSWER_LETTER":
+      statusClass = "badge badge-light-success fs-6";
+      statusDesc = "Menunggu surat jawaban";
+      break;
+    case "PROSES":
+      statusClass = "badge badge-light-info fs-6";
+      statusDesc = "Pesanan baru perlu diproses";
+      break;
+    case "KURASI":
+      statusClass = "badge badge-light-warning fs-6";
+      statusDesc = "Kurasi";
+      break;
+    case "DONE":
+      statusClass = "badge badge-light-success fs-6";
+      statusDesc = "Selesai";
+      break;
+    case "PENDING":
+      statusDesc = "Pesanan tertunda";
+      statusClass = "badge badge-light-warning fs-6";
+      break;
+    case "REJECT":
+      statusDesc = "Ditolak";
+      statusClass = "badge badge-light-danger fs-6";
+      break;
+    case "REQUEST":
+      statusDesc = "Menunggu persetujuan admin";
+      statusClass = "badge badge-light-info fs-6";
+      break;
+    case "EXPIRED":
+      statusDesc = "Kadaluarsa";
+      statusClass = "badge badge-light-danger fs-6";
+      break;
+    case "REVISE":
+      statusDesc = "Revisi";
+      statusClass = "badge badge-light-danger fs-6";
+      break;
+  }
+
+  return {
+    statusDesc,
+    statusClass,
+  };
+};
+
 function differenceInDays(startDate: any, endDate: any) {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -112,4 +160,5 @@ export default {
   formatDate,
   formatInputDate,
   convertRouteToTitle,
+  exportStatusPesanTempatToTitle,
 };

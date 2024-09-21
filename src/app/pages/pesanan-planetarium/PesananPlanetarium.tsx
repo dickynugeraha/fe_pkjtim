@@ -23,8 +23,12 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const PesananPlanetarium = () => {
-  const { getAllReservationPlanetarium, allReservationPlanetarium, loading } =
-    usePlanetarium();
+  const {
+    getAllReservationPlanetarium,
+    setQuery,
+    allReservationPlanetarium,
+    loading,
+  } = usePlanetarium();
   const [modalDetail, setModalDetail] = useState<{
     show: boolean;
     data: any;
@@ -34,10 +38,13 @@ export const PesananPlanetarium = () => {
   });
 
   useEffect(() => {
-    getAllReservationPlanetarium(true);
+    getAllReservationPlanetarium();
   }, []);
 
-  const data = useMemo(() => allReservationPlanetarium, [loading]);
+  const data = useMemo(
+    () => allReservationPlanetarium,
+    [loading, allReservationPlanetarium]
+  );
 
   const columns = useMemo(
     () => [
@@ -190,7 +197,9 @@ export const PesananPlanetarium = () => {
           isExport
           onClickExport={handleDownloadExcel}
           loading={loading}
-          searchData={() => {}}
+          searchData={(val: string) => {
+            setQuery(val);
+          }}
           data={data}
           columns={columns}
           addData={() => {}}

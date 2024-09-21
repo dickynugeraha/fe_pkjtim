@@ -55,8 +55,6 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
     }
   };
 
-  console.log("loggg", data);
-
   return (
     <ModalWrapper
       title={formAdd ? "Tambah Pengguna" : "Ubah Pengguna"}

@@ -11,14 +11,17 @@ type Props = {
 
 const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
   const navigate = useNavigate();
-  const { getAllReservationPlanetarium, allReservationPlanetarium, loading } =
-    usePlanetarium();
+  const {
+    getAllReservationPlanetariumByUserId,
+    allReservationPlanetariumByUserId,
+    loading,
+  } = usePlanetarium();
 
   useEffect(() => {
-    getAllReservationPlanetarium(false);
+    getAllReservationPlanetariumByUserId();
   }, []);
 
-  const data = useMemo(() => allReservationPlanetarium, [loading]);
+  const data = useMemo(() => allReservationPlanetariumByUserId, [loading]);
 
   const columns = useMemo(
     () => [
@@ -122,6 +125,7 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
         columns={columns}
         addData={() => {}}
         showAddButton={false}
+        isSearch={false}
         searchData={() => {}}
       />
       <Gap height={32} />

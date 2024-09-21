@@ -23,15 +23,20 @@ const registrationSchema = Yup.object().shape({
     .min(3, "Minimal 3 karakter")
     .max(50, "Maksimal 50 karakter")
     .required("Nama lengkap harus diisi"),
-  ktp: Yup.mixed().required('Foto ktp harus diupload').test('fileFormat', 'File wajib gambar dengan format png|jpg|jpeg', (value:any) => {
-    if (value) {
-        const supportedFormats = ['png','jpg','jpeg'];
-        return supportedFormats.includes(value.name.split('.').pop());
+  ktp: Yup.mixed()
+    .required("Foto ktp harus diupload")
+    .test(
+      "fileFormat",
+      "File wajib gambar dengan format png|jpg|jpeg",
+      (value: any) => {
+        if (value) {
+          const supportedFormats = ["png", "jpg", "jpeg"];
+          return supportedFormats.includes(value.name.split(".").pop());
+        }
+        return true;
       }
-      return true;
-    })
-    .test('fileSize', 'Ukuran file maksimal 3mb',
-    (value:any) => {
+    )
+    .test("fileSize", "Ukuran file maksimal 3mb", (value: any) => {
       if (value) {
         return value.size <= 3145728;
       }
@@ -67,8 +72,8 @@ export function Registration() {
     show: false,
     text: "",
   });
-  const handleChangeKTP = (e:any) => {
-    formik.setFieldValue('ktp', e.target.files[0]);
+  const handleChangeKTP = (e: any) => {
+    formik.setFieldValue("ktp", e.target.files[0]);
   };
 
   const { saveAuth } = useAuth();
@@ -83,7 +88,6 @@ export function Registration() {
           ...values,
           // ktp: fileKtp,
         };
-        console.log("payload: ", payload);
 
         await register(payload);
 
@@ -180,7 +184,9 @@ export function Registration() {
         <div className="d-flex align-items-center justify-content-between">
           <div className="fv-row mb-5">
             <div className="input-group">
-              <label className="input-group-text bg-primary text-white">Upload KTP</label>
+              <label className="input-group-text bg-primary text-white">
+                Upload KTP
+              </label>
               <input
                 id="ktp"
                 type="file"
@@ -188,21 +194,18 @@ export function Registration() {
                 // onChange={(e: any) => setFileKtp(e.target.files[0])}
                 onChange={handleChangeKTP}
                 title="Foto ktp"
-                className={clsx(
-                  "form-control bg-transparent",
-                  {
-                    "is-invalid": formik.errors.ktp,
-                  }
-                )}
+                className={clsx("form-control bg-transparent", {
+                  "is-invalid": formik.errors.ktp,
+                })}
               />
             </div>
-              {formik.errors.ktp && (
-                <div className="fv-plugins-message-container">
-                  <div className="fv-help-block">
-                    <span role="alert">{formik.errors.ktp}</span>
-                  </div>
+            {formik.errors.ktp && (
+              <div className="fv-plugins-message-container">
+                <div className="fv-help-block">
+                  <span role="alert">{formik.errors.ktp}</span>
                 </div>
-              )}
+              </div>
+            )}
           </div>
         </div>
         {/* end ktp */}

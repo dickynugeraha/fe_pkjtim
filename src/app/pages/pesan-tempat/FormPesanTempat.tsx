@@ -174,8 +174,6 @@ export const FormPesanTempat: FC = () => {
     };
 
     const dateExcludeMain = generateDateArray(start, end);
-    console.log("dateExcludeMain", dateExcludeMain);
-    console.log("dateIncludeMain", dateIncludeMain);
 
     let tarif = 0;
     while (start <= end) {
@@ -579,7 +577,8 @@ export const FormPesanTempat: FC = () => {
             <div className="col">
               <p className="fw-bold mb-1 fs-3">Unggah berkas</p>
               <span className="text-danger">
-                *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran maks 3MB
+                *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran maks
+                3MB
               </span>
               <Gap height={20} />
               <div className="d-flex flex-wrap">

@@ -27,21 +27,37 @@ const ModalDetailPemesananUser = ({
             <KTIcon iconName="user" className="fs-3 me-3" />
             <div>
               <h6 className="m-0">Nama lengkap</h6>
-              <p className="m-0">Kale Pramono</p>
+              <Gap height={5} />
+              <div style={{ width: "120px" }}>
+                <p
+                  className="m-0"
+                  style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {data.creatorName}
+                </p>
+              </div>
             </div>
           </div>
           <div className="d-flex align-items-center">
             <KTIcon iconName="message-notif" className="fs-3 me-3" />
             <div>
               <h6 className="m-0">Email</h6>
-              <p className="m-0">kale@gmail.com</p>
+              <Gap height={5} />
+              <div style={{ width: "120px" }}>
+                <p
+                  style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                  className="m-0"
+                >
+                  {data.creatorEmail}
+                </p>
+              </div>
             </div>
           </div>
           <div className="d-flex align-items-center">
             <KTIcon iconName="user" className="fs-3 me-3" />
             <div>
               <h6 className="m-0">Nomor hp</h6>
-              <p className="m-0">08962125148616</p>
+              <p className="m-0">{data.creatorPhone}</p>
             </div>
           </div>
         </div>

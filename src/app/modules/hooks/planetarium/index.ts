@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import {
   initReservation,
@@ -21,8 +21,15 @@ export default function usePlanetarium() {
   const [allReservationPlanetarium, setAllReservationPlanetarium] = useState<
     any[]
   >([]);
+  const [
+    allReservationPlanetariumByUserId,
+    setAllReservationPlanetariumByUserId,
+  ] = useState<any[]>([]);
   const [singleReservationPlanetarium, setSingleReservationPlanetarium] =
     useState<any>({});
+
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
   const navigate = useNavigate();
 
   const nextStepHandler = async (
@@ -193,37 +200,63 @@ export default function usePlanetarium() {
     setLoading(false);
   };
 
-  const getAllReservationPlanetarium = async (fromAdmin: boolean) => {
+  const getAllReservationPlanetariumByUserId = async (search = "") => {
     setLoading(true);
     try {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
-        "",
-        !fromAdmin ? currentUser?.id : ""
+        search,
+        currentUser?.id
       );
       let allReservation: any[] = res.data.data.data;
 
-      if (fromAdmin) {
-        allReservation = allReservation.filter(
-          (val: any) =>
-            val.status == "REQUEST" ||
-            val.status == "REJECT" ||
-            val.status == "DONE"
-        );
-      }
-
-      let allResrvationWithCorrectEmail: any[] = [];
+      let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {
         const singlePlanet = {
           ...data,
           pernyataanPersetujuan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/PernyataanPersetujuan`,
           suratUndangan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/SuratUndangan`,
         };
-        allResrvationWithCorrectEmail.push(singlePlanet);
+        allResrvationWithFile.push(singlePlanet);
       });
 
-      setAllReservationPlanetarium(allResrvationWithCorrectEmail);
+      setAllReservationPlanetariumByUserId(allResrvationWithFile);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const getAllReservationPlanetarium = async (search = "") => {
+    setLoading(true);
+    try {
+      const res = await getAllReservation(
+        INITIAL_PAGE,
+        DEFAULT_LIMIT,
+        search,
+        ""
+      );
+      let allReservation: any[] = res.data.data.data;
+
+      let allResrvationWithFile: any[] = [];
+      allReservation.map((data) => {
+        const singlePlanet = {
+          ...data,
+          pernyataanPersetujuan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/PernyataanPersetujuan`,
+          suratUndangan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/SuratUndangan`,
+        };
+        allResrvationWithFile.push(singlePlanet);
+      });
+
+      setAllReservationPlanetarium(allResrvationWithFile);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -297,15 +330,32 @@ export default function usePlanetarium() {
     });
   };
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    getAllReservationPlanetarium(debouncedQuery);
+  }, [debouncedQuery]);
+
   return {
     loading,
     singleReservationPlanetarium,
     allReservationPlanetarium,
+    allReservationPlanetariumByUserId,
     nextStepHandler,
     requestReservationPlanetarium,
     getSingleReservationPlanetarium,
     getAllReservationPlanetarium,
+    getAllReservationPlanetariumByUserId,
     rejectReservation,
     approveReservation,
+    setQuery,
   };
 }

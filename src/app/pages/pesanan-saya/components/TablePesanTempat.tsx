@@ -12,14 +12,20 @@ type Props = {
 
 const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
   const navigate = useNavigate();
-  const { allReservationPesanTempat, getAllReservationPesanTempat, loading } =
-    usePesanTempat();
+  const {
+    allReservationPesanTempatByUserId,
+    getAllReservationByUserId,
+    loading,
+  } = usePesanTempat();
 
   useEffect(() => {
-    getAllReservationPesanTempat(false);
+    getAllReservationByUserId();
   }, []);
 
-  const data = useMemo(() => allReservationPesanTempat, [loading]);
+  const data = useMemo(
+    () => allReservationPesanTempatByUserId,
+    [loading, allReservationPesanTempatByUserId]
+  );
 
   const columns = useMemo(
     () => [
@@ -161,6 +167,7 @@ const TablePesanTempat: React.FC<Props> = ({ showModalPlanetarium }) => {
         columns={columns}
         addData={() => {}}
         showAddButton={false}
+        isSearch={false}
         searchData={() => {}}
       />
       <Gap height={8} />

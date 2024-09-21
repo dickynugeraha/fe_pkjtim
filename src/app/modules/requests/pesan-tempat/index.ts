@@ -28,6 +28,7 @@ export const getAllReservation = (
       UserId,
       IsIncludeTempat: true,
       IsIncludeUser: true,
+      IsIncludeExpired: true,
     }
   );
 };
@@ -39,9 +40,6 @@ export const getSingleReservation = (id: any) => {
 };
 
 export const changeStatusReservation = (data: any, status: string) => {
-  console.log("statuse", status);
-  console.log("datate", data);
-
   if (status == "Kurasi") {
     const formData = new FormData();
     formData.append("id", data.id);

@@ -6,6 +6,7 @@ import { ROLE } from "../../../../app/constants/ROLE";
 
 const HeaderUserMenu: FC = () => {
   const { currentUser, logout } = useAuth();
+
   return (
     <div
       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -38,14 +39,14 @@ const HeaderUserMenu: FC = () => {
           Profil Saya
         </Link>
       </div>
-      {currentUser?.role === ROLE.USER ||
-        (currentUser?.role === ROLE.SUPER_ADMIN && (
-          <div className="menu-item px-5">
-            <Link to="/pesanan-saya" className="menu-link px-5">
-              Pesanan Saya
-            </Link>
-          </div>
-        ))}
+      {(currentUser?.role === ROLE.USER ||
+        currentUser?.role === ROLE.SUPER_ADMIN) && (
+        <div className="menu-item px-5">
+          <Link to="/pesanan-saya" className="menu-link px-5">
+            Pesanan Saya
+          </Link>
+        </div>
+      )}
 
       <div className="separator my-2"></div>
 

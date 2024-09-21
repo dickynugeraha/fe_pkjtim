@@ -36,8 +36,6 @@ const Remining: React.FC<Props> = ({ expired, onFinishTime }) => {
     return () => clearInterval(intervalId);
   }, [expired]);
 
-  console.log(`0${timeLeft.minutes}:${timeLeft.seconds}`);
-
   return (
     <div className="d-block badge badge-light-warning p-6 ">
       <p className="fs-6 p-0 m-0">

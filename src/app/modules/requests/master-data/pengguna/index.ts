@@ -78,13 +78,16 @@ export const update = (data: any) => {
   const formData = new FormData();
   formData.append("fullName", data.fullName);
   formData.append("email", data.email);
-  formData.append("ktp", data.ktp);
+  formData.append("role", data.role);
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("status", data.status);
-  formData.append("role", data.role);
   formData.append("isLocked", data.isLocked);
 
-  if(data.password != undefined){
+  if (data.password != undefined) {
+    formData.append("password", data.password);
+  }
+
+  if (data.ktp != undefined) {
     formData.append("password", data.password);
   }
 

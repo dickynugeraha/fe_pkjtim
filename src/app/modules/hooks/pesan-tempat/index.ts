@@ -1,5 +1,5 @@
 import { DEFAULT_LIMIT } from "./../../../constants/PAGE";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -14,6 +14,7 @@ import ConfirmationDialog from "../../../../_metronic/layout/components/content/
 import { INITIAL_PAGE } from "../../../constants/PAGE";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 import { ROLE } from "../../../constants/ROLE";
+import globalVar from "../../../helper/globalVar";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -25,20 +26,25 @@ export default function usePesanTempat() {
   const [allReservationPesanTempat, SetAllReservationPesanTempat] = useState<
     any[]
   >([]);
+  const [
+    allReservationPesanTempatByUserId,
+    SetAllReservationPesanTempatByUserId,
+  ] = useState<any[]>([]);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  const getAllReservationPesanTempat = async (
-    // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
-    //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
-  ) => {
+  const getAllReservationByUserId = async () => {
     setLoading(true);
     try {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
-        "", //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         "",
+        currentUser?.id
       );
       let allReservation: any[] = res.data.data.data;
+
+      console.log("allReservation", allReservation);
 
       let allResrvationWithCorrectEmail: any[] = [];
       allReservation.map((data) => {
@@ -50,19 +56,8 @@ export default function usePesanTempat() {
 
         allResrvationWithCorrectEmail.push(singleReserve);
       });
-      //update ariko reservasi status kurasi dapat dilihat oleh pengelola
-      // if (fromPengelola) {
-      //   allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
-      //     (data) => data.status !== "KURASI"
-      //   );
-      // }
-      // if (fromKurasi) {
-      //   allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
-      //     (data) => data.status === "KURASI"
-      //   );
-      // }
 
-      SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
+      SetAllReservationPesanTempatByUserId(allResrvationWithCorrectEmail);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -76,16 +71,71 @@ export default function usePesanTempat() {
     }, 1000);
   };
 
+  const getAllReservationPesanTempat = async (search = "") =>
+    // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
+    //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
+    {
+      console.log("search", search);
+
+      setLoading(true);
+      try {
+        const res = await getAllReservation(
+          INITIAL_PAGE,
+          DEFAULT_LIMIT,
+          search,
+          "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
+        );
+
+        console.log("ress", res.data.data);
+
+        let allReservation: any[] = res.data.data.data;
+
+        let allResrvationWithFile: any[] = [];
+        allReservation.map((data) => {
+          const singleReserve = {
+            ...data,
+            suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
+            proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
+            statusDesc: globalVar.exportStatusPesanTempatToTitle(data.status),
+          };
+
+          allResrvationWithFile.push(singleReserve);
+        });
+        //update ariko reservasi status kurasi dapat dilihat oleh pengelola
+        // if (fromPengelola) {
+        //   allResrvationWithFile = allResrvationWithFile.filter(
+        //     (data) => data.status !== "KURASI"
+        //   );
+        // }
+        // if (fromKurasi) {
+        //   allResrvationWithFile = allResrvationWithFile.filter(
+        //     (data) => data.status === "KURASI"
+        //   );
+        // }
+
+        SetAllReservationPesanTempat(allResrvationWithFile);
+      } catch (error: any) {
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: error.message,
+          showConfirmButton: false,
+        });
+      }
+      setInterval(() => {
+        setLoading(false);
+      }, 1000);
+    };
+
   //update ariko buat repo baru untuk get all reservasi by status kurasi
-  const getAllReservationPesanTempatStatusKurasi = async (
-  ) => {
+  const getAllReservationPesanTempatStatusKurasi = async () => {
     setLoading(true);
     try {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
         "KURASI",
-        "",
+        ""
       );
       let allReservation: any[] = res.data.data.data;
 
@@ -262,7 +312,6 @@ export default function usePesanTempat() {
       onConfirm: async () => {
         try {
           const res = await changeStatusReservation({ ...newData }, status);
-          console.log("resss", res);
 
           Swal.fire({
             icon: "success",
@@ -284,15 +333,32 @@ export default function usePesanTempat() {
     });
   };
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    getAllReservationPesanTempat(debouncedQuery);
+  }, [debouncedQuery]);
+
   return {
     singleReservationTempat,
     loading,
     allReservationPesanTempat,
+    allReservationPesanTempatByUserId,
     getSinglePesanTempat,
     nextStepHandler,
     requestReservationPesanTempat,
     getAllReservationPesanTempat,
+    getAllReservationByUserId,
     getAllReservationPesanTempatStatusKurasi,
     changeStatus,
+    setQuery,
   };
 }

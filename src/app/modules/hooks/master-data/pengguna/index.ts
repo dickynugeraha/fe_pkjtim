@@ -348,7 +348,6 @@ export default function usePengguna() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          console.log("idddd", id);
           const res = await remove(id);
 
           if (res) {

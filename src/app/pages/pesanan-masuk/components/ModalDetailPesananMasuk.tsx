@@ -6,6 +6,7 @@ import ModalDetailPemesananUser from "./ModalDetailPemesananUser";
 import ModalReason from "./ModalReason";
 import globalVar from "../../../helper/globalVar";
 import usePesanTempat from "../../../modules/hooks/pesan-tempat";
+import Swal from "sweetalert2";
 
 type Props = {
   show: boolean;
@@ -40,39 +41,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     }));
   };
 
-  let statusDesc = "";
-  switch (data?.status) {
-    case "WAITING_ANSWER_LETTER":
-      statusDesc = "Menunggu surat jawaban";
-      break;
-    case "REVISE":
-      statusDesc = "Revisi";
-      break;
-    case "KURASI":
-      statusDesc = "Kurasi";
-      break;
-    case "PROSES":
-      statusDesc = "Proses";
-      break;
-    case "DONE":
-      statusDesc = "Selesai";
-      break;
-    case "PENDING":
-      statusDesc = "Pesanan tertunda";
-      break;
-    case "REJECT":
-      statusDesc = "Ditolak";
-      break;
-    case "REQUEST":
-      statusDesc = "Menunggu persetujuan admin";
-      break;
-    case "EXPIRED":
-      statusDesc = "Kadaluarsa";
-
-      break;
-  }
-
-  // console.log("dataaa", data);
+  const { statusDesc } = globalVar.exportStatusPesanTempatToTitle(data?.status);
 
   const HandlerShowComponent = () => {
     let OthersContent = <></>;
@@ -106,13 +75,46 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           role="button"
           className="btn btn-sm btn-primary"
           onClick={() => {
-            setModalTypeReason({
-              show: true,
-              type: "Kurasi",
+            Swal.fire({
+              title: "Apakah anda yakin",
+              text: "Akan melanjutkan reservasi menuju Kurasi?!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Ya",
+              cancelButtonText: "Tidak",
+              showLoaderOnConfirm: true,
+              preConfirm: () => {
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve("Confirmed");
+                  }, 1000);
+                });
+              },
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const payload = {
+                  ...fields,
+                  id: data.id,
+                  judulPentas: valueInput.judulPentas,
+                  namaSanggar: valueInput.namaSanggar,
+                  alamatSanggar: valueInput.alamatSanggar,
+                  reason: "",
+                  note: "",
+                };
+
+                changeStatus(modalTypeReason?.type, payload);
+              }
             });
+            // setModalTypeReason({
+            //   show: true,
+
+            //   type: "Kurasi",
+            // });
           }}
         >
-          {data?.status === "PROSES" || data?.status === "REVISE" ? 'Menuju Kurasi' : 'Terima'}
+          {data?.status === "PROSES" || data?.status === "REVISE"
+            ? "Menuju Kurasi"
+            : "Terima"}
         </div>
       </>
     );
@@ -129,41 +131,41 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     }
     if (data?.status === "REVISE") {
       OthersContent = (
+        <DetailItemFile
+          title="Surat hasil kurasi (Revisi)"
+          //endpoint surat kurasi menyusul
+          url={data?.suratPermohonan}
+          withUpload={false}
+        />
+      );
+    }
+
+    if (data?.status === "DONE") {
+      if (data?.kurasiNumber == undefined) {
+        OthersContent = (
           <DetailItemFile
-              title="Surat hasil kurasi (Revisi)"
+            title="Surat jawaban"
+            //endpoint surat jawaban menyusul
+            url={data?.suratPermohonan}
+            withUpload={false}
+          />
+        );
+      } else {
+        OthersContent = (
+          <>
+            <DetailItemFile
+              title="Surat hasil kurasi (Disetujui)"
               //endpoint surat kurasi menyusul
               url={data?.suratPermohonan}
               withUpload={false}
             />
-      );
-    }
-
-    if(data?.status === "DONE"){
-      if(data?.kurasiNumber == undefined){
-            OthersContent = (
-                <DetailItemFile
-                  title="Surat jawaban"
-                  //endpoint surat jawaban menyusul
-                  url={data?.suratPermohonan}
-                  withUpload={false}
-                  />
-        );
-      }else{
-        OthersContent = (
-              <>
-                <DetailItemFile
-                  title="Surat hasil kurasi (Disetujui)"
-                  //endpoint surat kurasi menyusul
-                  url={data?.suratPermohonan}
-                  withUpload={false}
-                />
-                <DetailItemFile
-                  title="Surat jawaban"
-                  //endpoint surat jawaban menyusul
-                  url={data?.suratPermohonan}
-                  withUpload={false}
-                  />
-              </>
+            <DetailItemFile
+              title="Surat jawaban"
+              //endpoint surat jawaban menyusul
+              url={data?.suratPermohonan}
+              withUpload={false}
+            />
+          </>
         );
       }
     }
@@ -197,15 +199,15 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         </>
       );
 
-        OthersContent = (
-            <DetailItemFile
-              title="Surat hasil kurasi (Disetujui)"
-              //endpoint surat kurasi menyusul
-              url={data?.suratPermohonan}
-              withUpload={false}
-              />
-        );
-      }
+      OthersContent = (
+        <DetailItemFile
+          title="Surat hasil kurasi (Disetujui)"
+          //endpoint surat kurasi menyusul
+          url={data?.suratPermohonan}
+          withUpload={false}
+        />
+      );
+    }
 
     return { ButtonShow, OthersContent };
   };
@@ -261,7 +263,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.judulPentas !== ""
                 ? valueInput.judulPentas
-                : data?.judulPentas == undefined ? "-" : data?.judulPentas
+                : data?.judulPentas == undefined
+                ? "-"
+                : data?.judulPentas
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, judulPentas: val })
@@ -282,7 +286,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.namaSanggar !== ""
                 ? valueInput?.namaSanggar
-                : data?.namaSanggar == undefined ? "-" : data?.namaSanggar
+                : data?.namaSanggar == undefined
+                ? "-"
+                : data?.namaSanggar
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, namaSanggar: val })
@@ -303,7 +309,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.alamatSanggar !== ""
                 ? valueInput.alamatSanggar
-                : data?.alamatSanggar == undefined ? "-" : data?.alamatSanggar
+                : data?.alamatSanggar == undefined
+                ? "-"
+                : data?.alamatSanggar
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, alamatSanggar: val })
@@ -367,13 +375,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <div className="row row-cols-3">
           <div
             role="button"
-            onClick={() => setModalDetailPesananUser({ show: true, data: {} })}
+            onClick={() =>
+              setModalDetailPesananUser({ show: true, data: data })
+            }
           >
-            <DetailItemFile
-              title="Detail pemesan"
-              url=""
-              withUpload={false}
-            />
+            <DetailItemFile title="Detail pemesan" url="" withUpload={false} />
           </div>
           {HandlerShowComponent().OthersContent}
         </div>
@@ -385,7 +391,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           data={modalDetailPesananUser.data}
           show={modalDetailPesananUser.show}
           handleClose={() =>
-            setModalDetailPesananUser({ show: false, data: {} })
+            setModalDetailPesananUser({
+              ...modalDetailPesananUser,
+              show: false,
+            })
           }
         />
         <ModalReason
@@ -526,16 +535,17 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              url != "" ?
-              <a
-                className="btn btn-sm btn-light-primary"
-                target="_blank"
-                href={url}
-              >
-                Lihat {title}
-              </a>
-              :
-              "-"
+              url != "" ? (
+                <a
+                  className="btn btn-sm btn-light-primary"
+                  target="_blank"
+                  href={url}
+                >
+                  Lihat {title}
+                </a>
+              ) : (
+                "-"
+              )
             ) : (
               <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
             )}

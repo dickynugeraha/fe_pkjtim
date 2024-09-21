@@ -5,6 +5,7 @@ import Table from "../../../_metronic/layout/components/table/Table";
 import ModalDetailPesananMasuk from "./components/ModalDetailPesananMasuk";
 import usePesanTempat from "../../modules/hooks/pesan-tempat";
 import globalVar from "../../helper/globalVar";
+import { downloadExcel } from "react-export-table-to-excel";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -22,8 +23,12 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const PesananMasuk = () => {
-  const { getAllReservationPesanTempat, loading, allReservationPesanTempat } =
-    usePesanTempat();
+  const {
+    getAllReservationPesanTempat,
+    loading,
+    allReservationPesanTempat,
+    setQuery,
+  } = usePesanTempat();
 
   useEffect(() => {
     getAllReservationPesanTempat();
@@ -34,7 +39,12 @@ export const PesananMasuk = () => {
     data: {},
   });
 
-  const data = useMemo(() => allReservationPesanTempat, [loading]);
+  console.log("allReservationPesanTempat", allReservationPesanTempat);
+
+  const data = useMemo(
+    () => allReservationPesanTempat,
+    [loading, allReservationPesanTempat]
+  );
   const columns = useMemo(
     () => [
       {
@@ -81,46 +91,8 @@ export const PesananMasuk = () => {
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
-          let statusClass = "";
-          let statusDesc = "";
-          switch (singleData.status) {
-            case "WAITING_ANSWER_LETTER":
-              statusClass = "badge badge-light-success fs-6";
-              statusDesc = "Menunggu surat jawaban";
-              break;
-            case "PROSES":
-              statusClass = "badge badge-light-info fs-6";
-              statusDesc = "Pesanan baru perlu diproses";
-              break;
-            case "KURASI":
-              statusClass = "badge badge-light-warning fs-6";
-              statusDesc = "Kurasi";
-              break;
-            case "DONE":
-              statusClass = "badge badge-light-success fs-6";
-              statusDesc = "Selesai";
-              break;
-            case "PENDING":
-              statusDesc = "Pesanan tertunda";
-              statusClass = "badge badge-light-warning fs-6";
-              break;
-            case "REJECT":
-              statusDesc = "Ditolak";
-              statusClass = "badge badge-light-danger fs-6";
-              break;
-            case "REQUEST":
-              statusDesc = "Menunggu persetujuan admin";
-              statusClass = "badge badge-light-info fs-6";
-              break;
-            case "EXPIRED":
-              statusDesc = "Kadaluarsa";
-              statusClass = "badge badge-light-danger fs-6";
-              break;
-            case "REVISE":
-              statusDesc = "Revisi";
-              statusClass = "badge badge-light-danger fs-6";
-              break;
-          }
+          const { statusClass, statusDesc } =
+            globalVar.exportStatusPesanTempatToTitle(singleData.status);
 
           return <span className={statusClass}>{statusDesc}</span>;
         },
@@ -157,6 +129,47 @@ export const PesananMasuk = () => {
     []
   );
 
+  const header = [
+    "Kode Booking",
+    "Tempat",
+    "Pemesan",
+    "Nomor Handphone",
+    "Email Pemesan",
+    "Judul Pentas",
+    "Nama Sanggar",
+    "Alamat Sanggar",
+    "Total Harga",
+    "Mulai Acara",
+    "Akhir Acara",
+  ];
+  let body: any[] = [];
+  allReservationPesanTempat?.map((data) => {
+    body.push([
+      data?.kodeBooking,
+      data?.tempat?.name,
+      data?.creatorName,
+      data?.creatorPhone,
+      data?.creatorEmail,
+      data?.judulPentas,
+      data?.namaSanggar,
+      data?.alamatSanggar,
+      data?.priceTotal,
+      globalVar.formatInputDate(data?.startDate),
+      globalVar.formatInputDate(data?.endDate),
+    ]);
+  });
+
+  function handleDownloadExcel() {
+    downloadExcel({
+      fileName: "Pesanan Masuk Tempat",
+      sheet: "sheet1",
+      tablePayload: {
+        header,
+        body: body,
+      },
+    });
+  }
+
   return (
     <>
       <PageTitle
@@ -169,16 +182,18 @@ export const PesananMasuk = () => {
       <Content>
         <Table
           loading={loading}
-          searchData={() => {}}
+          searchData={(val: string) => setQuery(val)}
           data={data}
           columns={columns}
           addData={() => {}}
           showAddButton={false}
+          isExport
+          onClickExport={handleDownloadExcel}
         />
         <ModalDetailPesananMasuk
           show={modalDetail.show}
           data={modalDetail.data}
-          handleClose={() => setModalDetail({ show: false, data: {} })}
+          handleClose={() => setModalDetail({ ...modalDetail, show: false })}
         />
       </Content>
     </>
