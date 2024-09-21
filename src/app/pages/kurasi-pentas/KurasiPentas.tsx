@@ -22,11 +22,11 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const KurasiPentas = () => {
-  const { getAllReservationPesanTempat, loading, allReservationPesanTempat } =
+  const { getAllReservationPesanTempatStatusKurasi, loading, allReservationPesanTempat } =
     usePesanTempat();
 
   useEffect(() => {
-    getAllReservationPesanTempat(false, true);
+    getAllReservationPesanTempatStatusKurasi();
   }, []);
 
   const [modalDetail, setModalDetail] = useState({

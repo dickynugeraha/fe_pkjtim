@@ -50,7 +50,6 @@ export const FormPesanTempat: FC = () => {
   const [codeBooking, setCodeBooking] = useState<string>("");
   const [fileProposal, setFileProposal] = useState<any>(null);
   const [fileSuratPermohonan, setFileSuratPermohonan] = useState<any>(null);
-  const [fileTandaPengenal, setFileTandaPengenal] = useState<any>(null);
   const [startMainEventDate, setStartMainEventDate] = useState<any>(null);
   const [mainEventDay, setMainEventDay] = useState<any>(0);
   const [tarifCalculation, setTarifCalculation] = useState<any>(0);
@@ -96,7 +95,6 @@ export const FormPesanTempat: FC = () => {
         kodeBooking: codeBooking,
         fileProposal,
         fileSuratPermohonan,
-        fileTandaPengenal,
         priceTotal: tarifCalculation,
         startMainEventDate: startMainEventDate ?? startDate,
         days: mainEventDay,
@@ -581,8 +579,7 @@ export const FormPesanTempat: FC = () => {
             <div className="col">
               <p className="fw-bold mb-1 fs-3">Unggah berkas</p>
               <span className="text-danger">
-                *) Ekstensi yang diperbolehkan png/jpg/jpeg, dengan ukuran maks
-                1MB
+                *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran maks 3MB
               </span>
               <Gap height={20} />
               <div className="d-flex flex-wrap">
@@ -593,16 +590,6 @@ export const FormPesanTempat: FC = () => {
                     className="form-control bg-transparant"
                     onChange={(e: any) =>
                       setFileSuratPermohonan(e.target.files[0])
-                    }
-                  />
-                </div>
-                <div className="mb-5 me-5">
-                  <p className="fw-bold mb-1">Tanda pengenal</p>
-                  <input
-                    type="file"
-                    className="form-control bg-transparant"
-                    onChange={(e: any) =>
-                      setFileTandaPengenal(e.target.files[0])
                     }
                   />
                 </div>

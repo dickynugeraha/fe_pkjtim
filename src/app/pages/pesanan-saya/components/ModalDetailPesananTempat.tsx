@@ -157,49 +157,48 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             title={"Kode booking"}
             desc={data?.kodeBooking}
           />
-          {data?.kuratorNote && (
-            <DetailItem
-              iconName={"file"}
-              title={"Catatan Kurator (Disetujui)"}
-              desc={data?.kuratorNote}
-            />
-          )}
-          {data?.answerLetterNote && (
-            <DetailItem
-              iconName={"file"}
-              title={"Catatan Kurator (Revisi)"}
-              desc={data?.answerLetterNote}
-            />
-          )}
+          {data.rejectNote && (
+              <DetailItem
+                iconName={"pencil"}
+                title={"Alasan"}
+                desc={data.rejectNote}
+              />
+            )}
           </div>
           <div className="row row-cols-3">
             <DetailItem
-              iconName={"some-files"}
+              iconName={"file"}
               title={"Surat Permohonan"}
               desc={statusKey}
               isFile
               urlFile={data?.suratPermohonan}
             />
             <DetailItem
-              iconName={"some-files"}
-              title={"Tanda Pengenal"}
-              desc={statusKey}
-              isFile
-              urlFile={data?.tandaPengenal}
-            />
-            <DetailItem
-              iconName={"some-files"}
+              iconName={"file"}
               title={"Proposal"}
               desc={statusKey}
               isFile
               urlFile={data?.proposal}
             />
-            {data.reason && (
-              <DetailItem
-                iconName={"pencil"}
-                title={"Alasan"}
-                desc={data.reason}
-              />
+            {data?.kuratorName && (
+                <DetailItem
+                  iconName={"file"}
+                  title={"Surat Hasil Kurasi"}
+                  desc={statusKey}
+                  isFile
+                  //api surat hasil kurasi menyusul
+                  urlFile={data?.proposal}
+                />
+              )}
+            {data?.pengelolaName && (
+                <DetailItem
+                  iconName={"file"}
+                  title={"Surat Jawaban"}
+                  desc={statusKey}
+                  isFile
+                  //api surat jawaban menyusul
+                  urlFile={data?.proposal}
+                />
             )}
           </div>
         {modalAlasan.show && <div className="overlay" />}

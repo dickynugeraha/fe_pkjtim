@@ -27,16 +27,16 @@ export default function usePesanTempat() {
   >([]);
 
   const getAllReservationPesanTempat = async (
-    fromPengelola?: boolean,
-    fromKurasi?: boolean
+    // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
+    //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
   ) => {
     setLoading(true);
     try {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
+        "", //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         "",
-        !fromPengelola ? currentUser?.id : ""
       );
       let allReservation: any[] = res.data.data.data;
 
@@ -46,22 +46,59 @@ export default function usePesanTempat() {
           ...data,
           suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
           proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
-          tandaPengenal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/TandaPengenal`,
         };
 
         allResrvationWithCorrectEmail.push(singleReserve);
       });
+      //update ariko reservasi status kurasi dapat dilihat oleh pengelola
+      // if (fromPengelola) {
+      //   allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
+      //     (data) => data.status !== "KURASI"
+      //   );
+      // }
+      // if (fromKurasi) {
+      //   allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
+      //     (data) => data.status === "KURASI"
+      //   );
+      // }
 
-      if (fromPengelola) {
-        allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
-          (data) => data.status !== "KURASI"
-        );
-      }
-      if (fromKurasi) {
-        allResrvationWithCorrectEmail = allResrvationWithCorrectEmail.filter(
-          (data) => data.status === "KURASI"
-        );
-      }
+      SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  //update ariko buat repo baru untuk get all reservasi by status kurasi
+  const getAllReservationPesanTempatStatusKurasi = async (
+  ) => {
+    setLoading(true);
+    try {
+      const res = await getAllReservation(
+        INITIAL_PAGE,
+        DEFAULT_LIMIT,
+        "KURASI",
+        "",
+      );
+      let allReservation: any[] = res.data.data.data;
+
+      let allResrvationWithCorrectEmail: any[] = [];
+      allReservation.map((data) => {
+        const singleReserve = {
+          ...data,
+          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
+          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
+        };
+
+        allResrvationWithCorrectEmail.push(singleReserve);
+      });
 
       SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
     } catch (error: any) {
@@ -255,6 +292,7 @@ export default function usePesanTempat() {
     nextStepHandler,
     requestReservationPesanTempat,
     getAllReservationPesanTempat,
+    getAllReservationPesanTempatStatusKurasi,
     changeStatus,
   };
 }

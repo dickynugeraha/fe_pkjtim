@@ -83,7 +83,6 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           />
 
           <DetailItemFile title="Surat Permohonan" url={data.suratPermohonan} />
-          <DetailItemFile title="Tanda Pengenal" url={data.tandaPengenal} />
           <DetailItemFile title="proposal" url={data.proposal} />
           {/* <DetailIten
             iconName={"toggle-off-circle"}

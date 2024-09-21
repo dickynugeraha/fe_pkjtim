@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import { PageTitle, PageLink } from "../../../_metronic/layout/core/PageData";
-import { Card } from "react-bootstrap";
 import Table from "../../../_metronic/layout/components/table/Table";
 import ModalDetailPesananMasuk from "./components/ModalDetailPesananMasuk";
 import usePesanTempat from "../../modules/hooks/pesan-tempat";
@@ -27,7 +26,7 @@ export const PesananMasuk = () => {
     usePesanTempat();
 
   useEffect(() => {
-    getAllReservationPesanTempat(true);
+    getAllReservationPesanTempat();
   }, []);
 
   const [modalDetail, setModalDetail] = useState({
@@ -92,6 +91,10 @@ export const PesananMasuk = () => {
             case "PROSES":
               statusClass = "badge badge-light-info fs-6";
               statusDesc = "Pesanan baru perlu diproses";
+              break;
+            case "KURASI":
+              statusClass = "badge badge-light-warning fs-6";
+              statusDesc = "Kurasi";
               break;
             case "DONE":
               statusClass = "badge badge-light-success fs-6";
