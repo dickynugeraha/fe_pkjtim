@@ -19,7 +19,7 @@ const ModalDetailPemesananUser = ({
       footerCustom={<></>}
       handleClose={handleClose}
       show={show}
-      title="Detail Pemesanan User"
+      title="Detail Pemesan User"
     >
       <>
         <div className="row row-cols-3">

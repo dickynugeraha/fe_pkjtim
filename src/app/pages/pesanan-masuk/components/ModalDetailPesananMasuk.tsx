@@ -45,6 +45,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     case "WAITING_ANSWER_LETTER":
       statusDesc = "Menunggu surat jawaban";
       break;
+    case "REVISE":
+      statusDesc = "Revisi";
+      break;
     case "KURASI":
       statusDesc = "Kurasi";
       break;
@@ -69,7 +72,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       break;
   }
 
-  console.log("dataaa", data);
+  // console.log("dataaa", data);
 
   const HandlerShowComponent = () => {
     let OthersContent = <></>;
@@ -109,7 +112,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             });
           }}
         >
-          Terima
+          {data?.status === "PROSES" || data?.status === "REVISE" ? 'Menuju Kurasi' : 'Terima'}
         </div>
       </>
     );
@@ -118,20 +121,51 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       data?.status === "DONE" ||
       data?.status === "REQUEST" ||
       data?.status === "REJECT" ||
-      data?.status === "PENDING"
+      data?.status === "PENDING" ||
+      data?.status === "KURASI" ||
+      data?.status === "EXPIRED"
     ) {
       ButtonShow = <></>;
     }
     if (data?.status === "REVISE") {
       OthersContent = (
-        <>
-          <DetailItem
-            title="Surat hasil kurasi (Revisi)"
-            desc={data?.answerLetterNote}
-            iconName="file"
-          />
-        </>
+          <DetailItemFile
+              title="Surat hasil kurasi (Revisi)"
+              //endpoint surat kurasi menyusul
+              url={data?.suratPermohonan}
+              withUpload={false}
+            />
       );
+    }
+
+    if(data?.status === "DONE"){
+      if(data?.kurasiNumber == undefined){
+            OthersContent = (
+                <DetailItemFile
+                  title="Surat jawaban"
+                  //endpoint surat jawaban menyusul
+                  url={data?.suratPermohonan}
+                  withUpload={false}
+                  />
+        );
+      }else{
+        OthersContent = (
+              <>
+                <DetailItemFile
+                  title="Surat hasil kurasi (Disetujui)"
+                  //endpoint surat kurasi menyusul
+                  url={data?.suratPermohonan}
+                  withUpload={false}
+                />
+                <DetailItemFile
+                  title="Surat jawaban"
+                  //endpoint surat jawaban menyusul
+                  url={data?.suratPermohonan}
+                  withUpload={false}
+                  />
+              </>
+        );
+      }
     }
     if (data?.status === "WAITING_ANSWER_LETTER") {
       ButtonShow = (
@@ -163,22 +197,18 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         </>
       );
 
-        if (data?.userC === "REVISE") {
         OthersContent = (
-          <>
-            <DetailItem
+            <DetailItemFile
               title="Surat hasil kurasi (Disetujui)"
-              desc={data?.kuratorNote}
-              iconName="file"
-            />
-          </>
+              //endpoint surat kurasi menyusul
+              url={data?.suratPermohonan}
+              withUpload={false}
+              />
         );
       }
-    }
 
     return { ButtonShow, OthersContent };
   };
-
   return (
     <ModalWrapper
       title="Detail Pesanan"
@@ -221,6 +251,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title={"Judul Pentas"}
             withEdit={
               data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "KURASI" ||
+              data?.status === "REJECT" ||
+              data?.status === "EXPIRED" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -228,7 +261,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.judulPentas !== ""
                 ? valueInput.judulPentas
-                : data?.judulPentas
+                : data?.judulPentas == undefined ? "-" : data?.judulPentas
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, judulPentas: val })
@@ -239,6 +272,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title={"Nama sanggar"}
             withEdit={
               data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "KURASI" ||
+              data?.status === "REJECT" ||
+              data?.status === "EXPIRED" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -246,7 +282,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.namaSanggar !== ""
                 ? valueInput?.namaSanggar
-                : data?.namaSanggar
+                : data?.namaSanggar == undefined ? "-" : data?.namaSanggar
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, namaSanggar: val })
@@ -257,6 +293,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title={"Alamat sanggar"}
             withEdit={
               data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "KURASI" ||
+              data?.status === "REJECT" ||
+              data?.status === "EXPIRED" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -264,7 +303,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             desc={
               valueInput?.alamatSanggar !== ""
                 ? valueInput.alamatSanggar
-                : data?.alamatSanggar
+                : data?.alamatSanggar == undefined ? "-" : data?.alamatSanggar
             }
             changeText={(val) =>
               setValueInput({ ...valueInput, alamatSanggar: val })
@@ -286,6 +325,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             url={data?.suratPermohonan}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "KURASI" ||
+              data?.status === "REJECT" ||
+              data?.status === "EXPIRED" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -296,26 +338,14 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             fields={fields}
           />
           <DetailItemFile
-            title="Tanda pengenal"
-            id={"fileTandaPengenal"}
-            url={data?.tandaPengenal}
-            withUpload={
-              data?.status === "WAITING_ANSWER_LETTER" ||
-              data?.status === "DONE"
-                ? false
-                : true
-            }
-            handleChangeFile={(value) =>
-              handleChange("fileTandaPengenal", value)
-            }
-            fields={fields}
-          />
-          <DetailItemFile
-            title="Proposal"
+            title="Surat proposal"
             id={"fileSuratProposal"}
             url={data?.proposal}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
+              data?.status === "KURASI" ||
+              data?.status === "REJECT" ||
+              data?.status === "EXPIRED" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -335,7 +365,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             onClick={() => setModalDetailPesananUser({ show: true, data: {} })}
           >
             <DetailItemFile
-              title="Detail pemesanan"
+              title="Detail pemesan"
               url=""
               withUpload={false}
             />
@@ -491,6 +521,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
+              url != "" ?
               <a
                 className="btn btn-sm btn-light-primary"
                 target="_blank"
@@ -498,6 +529,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               >
                 Lihat {title}
               </a>
+              :
+              "-"
             ) : (
               <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
             )}

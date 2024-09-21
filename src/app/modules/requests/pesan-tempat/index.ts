@@ -50,7 +50,6 @@ export const changeStatusReservation = (data: any, status: string) => {
     formData.append("reason", data.reason);
     formData.append("fileSuratPermohonan", data.fileSuratPermohonan);
     formData.append("fileProposal", data.fileProposal);
-    formData.append("fileTandaPengenal", data.fileTandaPengenal);
     formData.append("judulPentas", data.judulPentas);
     formData.append("alamatSanggar", data.alamatSanggar);
     formData.append("namaSanggar", data.namaSanggar);
@@ -78,7 +77,6 @@ export const submitReservation = (data: any) => {
   formData.append("actorId", data.actorId);
   formData.append("fileSuratPermohonan", data.fileSuratPermohonan);
   formData.append("fileProposal", data.fileProposal);
-  formData.append("fileTandaPengenal", data.fileTandaPengenal);
   formData.append("startMainEventDate", data.startMainEventDate);
   formData.append("namaSanggar", data.namaSanggar);
   formData.append("judulPentas", data.judulPentas);

@@ -182,13 +182,6 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             />
             <DetailItem
               iconName={"some-files"}
-              title={"Tanda Pengenal"}
-              desc={statusKey}
-              isFile
-              urlFile={data?.tandaPengenal}
-            />
-            <DetailItem
-              iconName={"some-files"}
               title={"Proposal"}
               desc={statusKey}
               isFile
