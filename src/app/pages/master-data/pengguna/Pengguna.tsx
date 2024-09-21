@@ -8,6 +8,8 @@ import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
 import usePengguna from "../../../modules/hooks/master-data/pengguna";
+import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
+import Skeleton from "react-loading-skeleton";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -47,6 +49,10 @@ export const Pengguna = () => {
   } = usePengguna();
 
   const [ktpValue, setKtpValue] = useState();
+  const [modalKtp, setModalKtp] = useState<{ url: string; show: boolean }>({
+    url: "",
+    show: false,
+  });
 
   const data = useMemo(
     () => pengguna,
@@ -57,8 +63,43 @@ export const Pengguna = () => {
     fetchAllPengguna();
   }, []);
 
+  console.log("pengguna: ", pengguna);
+
   const columns = useMemo(
     () => [
+      // {
+      //   Header: "Gambar",
+      //   accessor: "gambar",
+      //   sortType: "alphanumeric",
+      //   Cell: (props: any) => {
+      //     const [loading, setLoading] = useState(true);
+      //     let singleData = props.cell.row.original;
+
+      //     const handleImageLoad = () => {
+      //       setLoading(false);
+      //     };
+
+      //     let content = <Skeleton height={80} width={150} />;
+      //     setTimeout(() => {
+      //       setLoading(false);
+      //     }, 1000);
+
+      //     if (!loading) {
+      //       content = (
+      //         <div style={{ width: "150px" }}>
+      //           <img
+      //             src={singleData.file}
+      //             className="rounded"
+      //             style={{ width: "100%" }}
+      //             onLoad={handleImageLoad}
+      //           />
+      //         </div>
+      //       );
+      //     }
+
+      //     return content;
+      //   },
+      // },
       {
         Header: "Nama Lengkap",
         accessor: "fullName",
@@ -206,6 +247,16 @@ export const Pengguna = () => {
           data={data}
           addData={() => openModal()}
         />
+        <ModalWrapper
+          handleClose={() => setModalKtp({ show: false, url: "" })}
+          title="Foto KTP"
+          className="modal-md"
+          attribute={{ centered: true }}
+          footerCustom={<></>}
+          show={modalKtp.show}
+        >
+          <img src={modalKtp.url} />
+        </ModalWrapper>
         <ModalAddEditPengguna
           isLockedCheck={isLockedCheck}
           handleIsCheckLocked={() => setIsLockedCheck(!isLockedCheck)}

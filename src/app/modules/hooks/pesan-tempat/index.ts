@@ -111,7 +111,10 @@ export default function usePesanTempat() {
       });
       return;
     }
-    if (currentUser?.role !== ROLE.USER) {
+    if (
+      currentUser?.role !== ROLE.USER ||
+      currentUser?.role === ROLE.SUPER_ADMIN
+    ) {
       Swal.fire({
         icon: "error",
         title: "Gagal",

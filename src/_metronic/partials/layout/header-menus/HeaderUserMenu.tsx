@@ -38,13 +38,14 @@ const HeaderUserMenu: FC = () => {
           Profil Saya
         </Link>
       </div>
-      {currentUser?.role === ROLE.USER && (
-        <div className="menu-item px-5">
-          <Link to="/pesanan-saya" className="menu-link px-5">
-            Pesanan Saya
-          </Link>
-        </div>
-      )}
+      {currentUser?.role === ROLE.USER ||
+        (currentUser?.role === ROLE.SUPER_ADMIN && (
+          <div className="menu-item px-5">
+            <Link to="/pesanan-saya" className="menu-link px-5">
+              Pesanan Saya
+            </Link>
+          </div>
+        ))}
 
       <div className="separator my-2"></div>
 
