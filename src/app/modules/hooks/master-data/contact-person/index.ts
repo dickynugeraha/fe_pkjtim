@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import { useAuth } from "../../../auth";
 
-export default function useTempat() {
+export default function useContactPerson() {
   const { currentUser } = useAuth();
   const actor = currentUser?.email ?? "Admin";
 
@@ -17,17 +17,11 @@ export default function useTempat() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    id: null,
-    actor: "",
     name: "",
-    priceMainEventWeekEnd: 0,
-    priceMainEventWeekDay: 0,
-    pricePreEventWeekEnd: 0,
-    pricePreEventWeekDay: 0,
+    phone: "",
+    forContent: "",
   });
-  const [isPreEvent, setIsPreEvent] = useState(
-    formData.pricePreEventWeekDay !== 0
-  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -37,13 +31,9 @@ export default function useTempat() {
       setIsEdit(true);
     } else {
       setFormData({
-        id: null,
-        actor: "",
         name: "",
-        priceMainEventWeekEnd: 0,
-        priceMainEventWeekDay: 0,
-        pricePreEventWeekEnd: 0,
-        pricePreEventWeekDay: 0,
+        phone: "",
+        forContent: "",
       });
       setIsEdit(false);
     }
@@ -60,8 +50,7 @@ export default function useTempat() {
     setLoading(true);
     try {
       const res = await getAll();
-
-      setContact(res.data.data.data);
+      console.log("resss", res);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -168,7 +157,7 @@ export default function useTempat() {
     });
   };
 
-  const deleteContact = async () => {
+  const deleteContact = async (id: any) => {
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan hapus data?!",
@@ -215,7 +204,6 @@ export default function useTempat() {
   return {
     contact,
     loading,
-    isPreEvent,
     isModalOpen,
     formData,
     isEdit,
@@ -224,7 +212,6 @@ export default function useTempat() {
     deleteContact,
     fetchAllContact,
     openModal,
-    setIsPreEvent,
     handleChange,
     closeModal,
   };

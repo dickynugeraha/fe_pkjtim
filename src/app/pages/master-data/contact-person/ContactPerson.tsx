@@ -6,9 +6,9 @@ import {
 import { Content } from "../../../../_metronic/layout/components/content";
 import Table from "../../../../_metronic/layout/components/table/Table";
 import { KTIcon } from "../../../../_metronic/helpers";
-import ModalAddEditKoleksiSeni from "./components/ModalAddEditKoleksiSeni";
-import useSeni from "../../../modules/hooks/master-data/seni";
+import ModalAddEditContactPerson from "./components/ModalAddEditContactPerson";
 import Skeleton from "react-loading-skeleton";
+import useContactPerson from "../../../modules/hooks/master-data/contact-person";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -27,70 +27,38 @@ const Breadcrumbs: Array<PageLink> = [
 
 export const ContactPerson = () => {
   const {
-    addSeni,
-    deleteSeni,
     loading,
-    searchSeni,
-    seni,
-    updateSeni,
     closeModal,
     formData,
-    formFile,
     handleChange,
     isEdit,
     isModalOpen,
     openModal,
-    setFormFile,
-    setQuery,
-  } = useSeni();
+    addContact,
+    contact,
+    deleteContact,
+    fetchAllContact,
+    updateContact,
+  } = useContactPerson();
 
   const data = useMemo(
-    () => seni,
-    [loading, addSeni, updateSeni, deleteSeni, searchSeni]
+    () => contact,
+    [loading, addContact, updateContact, deleteContact]
   );
+
+  useEffect(() => {
+    fetchAllContact();
+  }, []);
 
   const columns = useMemo(
     () => [
       {
-        Header: "Gambar",
-        accessor: "gambar",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          const [loading, setLoading] = useState(true);
-          let singleData = props.cell.row.original;
-
-          const handleImageLoad = () => {
-            setLoading(false);
-          };
-
-          let content = <Skeleton height={80} width={150} />;
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
-
-          if (!loading) {
-            content = (
-              <div style={{ width: "150px" }}>
-                <img
-                  src={singleData.file}
-                  className="rounded"
-                  style={{ width: "100%" }}
-                  onLoad={handleImageLoad}
-                />
-              </div>
-            );
-          }
-
-          return content;
-        },
-      },
-      {
-        Header: "Nama Seni",
+        Header: "Nama Kontak",
         sortType: "alphanumeric",
         accessor: "title",
       },
       {
-        Header: "Detail Seni",
+        Header: "Nomor handphone",
         sortType: "alphanumeric",
         accessor: "desc",
       },
@@ -123,7 +91,7 @@ export const ContactPerson = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() => deleteSeni(singleData.id)}
+                      onClick={() => deleteContact(singleData.id)}
                     >
                       <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
@@ -139,6 +107,8 @@ export const ContactPerson = () => {
     []
   );
 
+  console.log("contact", contact);
+
   return (
     <>
       <PageTitle
@@ -151,25 +121,23 @@ export const ContactPerson = () => {
       <Content>
         <Table
           loading={loading}
-          searchData={(val: string) => setQuery(val)}
+          searchData={() => {}}
           columns={columns}
-          data={data}
+          data={[]}
           addData={() => openModal()}
         />
-        <ModalAddEditKoleksiSeni
-          fileValue={formFile}
-          handleChangeFile={(e: any) => setFormFile(e)}
+        <ModalAddEditContactPerson
+          fileValue={formData}
           handleChangeVal={(e: any) => handleChange(e)}
           show={isModalOpen}
           data={formData}
           fromAdd={!isEdit}
           handleClose={() => closeModal()}
           handleSubmit={() => {
-            const formWithFile = { ...formData, file: formFile };
             if (isEdit) {
-              updateSeni(formWithFile);
+              updateContact(formData);
             } else {
-              addSeni(formWithFile);
+              addContact(formData);
             }
           }}
         />

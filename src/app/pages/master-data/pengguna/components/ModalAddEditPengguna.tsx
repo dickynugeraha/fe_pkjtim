@@ -225,16 +225,16 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             required
           >
             <option value="">-- Pilih role --</option>
-            <option selected={data.roles === "SUPER_ADMIN"} value="SUPER_ADMIN">
+            <option selected={data.role === "SUPER_ADMIN"} value="SUPER_ADMIN">
               Super Admin
             </option>
-            <option selected={data.roles === "PENGELOLA"} value="PENGELOLA">
+            <option selected={data.role === "PENGELOLA"} value="PENGELOLA">
               Pengelola
             </option>
-            <option selected={data.roles === "KURATOR"} value="KURATOR">
+            <option selected={data.role === "KURATOR"} value="KURATOR">
               Kurator
             </option>
-            <option selected={data.roles === "USER"} value="USER">
+            <option selected={data.role === "USER"} value="USER">
               User
             </option>
           </Form.Select>

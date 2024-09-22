@@ -115,23 +115,23 @@ export const Pengguna = () => {
       },
       {
         Header: "Role",
-        accessor: "roles",
+        accessor: "role",
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           let className = "";
           let title = "";
 
-          if (singleData.roles === "SUPER_ADMIN") {
+          if (singleData.role === "SUPER_ADMIN") {
             className = "badge badge-light-success fs-6";
             title = "Super Admin";
-          } else if (singleData.roles === "PENGELOLA") {
+          } else if (singleData.role === "PENGELOLA") {
             className = "badge badge-light-info fs-6";
             title = "Pengelola";
-          } else if (singleData.roles === "KURATOR") {
+          } else if (singleData.role === "KURATOR") {
             className = "badge badge-light-warning fs-6";
             title = "Kurator";
-          } else if (singleData.roles === "USER") {
+          } else if (singleData.role === "USER") {
             className = "badge badge-light-primary fs-6";
             title = "User";
           }
@@ -231,6 +231,7 @@ export const Pengguna = () => {
     ],
     []
   );
+  console.log("pengguna", pengguna);
 
   return (
     <>
