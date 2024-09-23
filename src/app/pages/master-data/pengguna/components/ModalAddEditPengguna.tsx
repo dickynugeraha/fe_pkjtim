@@ -187,7 +187,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
                 value={data.ktp}
                 onChange={(e: any) => handleChangeKTP(e.target.files[0])}
                 className="form-control"
-                required={formAdd ? true : false}
+                // required={formAdd ? true : false}
               ></Form.Control>
             </Form.Group>
           </Col>
