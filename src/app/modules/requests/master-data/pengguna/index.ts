@@ -88,7 +88,7 @@ export const update = (data: any) => {
   }
 
   if (data.ktp != undefined) {
-    formData.append("password", data.password);
+    formData.append("ktp", data.ktp);
   }
 
   return axiosConfig.put(

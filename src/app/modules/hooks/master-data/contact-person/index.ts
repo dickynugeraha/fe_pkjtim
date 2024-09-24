@@ -50,7 +50,7 @@ export default function useContactPerson() {
     setLoading(true);
     try {
       const res = await getAll();
-      console.log("resss", res);
+      // console.log('dataaaa', JSON.parse(res.data.data));
     } catch (error: any) {
       Swal.fire({
         icon: "error",

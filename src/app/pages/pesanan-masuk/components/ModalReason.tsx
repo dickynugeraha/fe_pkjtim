@@ -20,7 +20,7 @@ const ModalReason = ({
     <ModalWrapper
       title={`Tulis Alasan ${type === "Reject" ? "Penolakan" : "Diterima"}`}
       attribute={{ centered: true }}
-      className="modal-md z-3"
+      className="modal-md z-5"
       footerCustom={
         <div
           className={`btn btn-sm btn-${
