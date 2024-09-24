@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^9.2.0",
     "@formatjs/intl-pluralrules": "5.2.4",
     "@formatjs/intl-relativetimeformat": "11.2.4",
     "@fortawesome/fontawesome-free": "6.1.1",
@@ -29,6 +30,8 @@
     "bootstrap": "5",
     "bootstrap-icons": "^1.5.0",
     "chart.js": "4.3.0",
+    "ckeditor5": "^43.1.0",
+    "ckeditor5-premium-features": "^43.1.0",
     "clsx": "2.1.0",
     "crypto-js": "^4.2.0",
     "formik": "2.2.9",
@@ -60,7 +63,6 @@
     "react-query": "3.38.0",
     "react-router-dom": "6.3.0",
     "react-select": "^5.8.0",
-    "react-summernote": "^2.0.2",
     "react-table": "^7.7.0",
     "react-topbar-progress-indicator": "4.1.1",
     "socicon": "3.0.5",

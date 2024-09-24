@@ -107,7 +107,7 @@ export const ContactPerson = () => {
     []
   );
 
-  console.log("contact", contact);
+  // console.log("contact", contact);
 
   return (
     <>

@@ -301,11 +301,13 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title={"Total pembayaran"}
             desc={globalVar.formatRupiah(data?.priceTotal)}
           />
-          <DetailItem
-            iconName={"message-text"}
-            title={"Alasan ditolak"}
-            desc={data?.rejectNote}
-          />
+          {data?.status === "REJECT" && (
+            <DetailItem
+              iconName={"message-text"}
+              title={"Alasan ditolak"}
+              desc={data?.rejectNote}
+            />
+          )}
         </div>
         <h4>Berkas</h4>
         <Gap height={8} />

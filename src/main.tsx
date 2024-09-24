@@ -12,7 +12,6 @@ import "./_metronic/assets/keenicons/duotone/style.css";
 import "./_metronic/assets/keenicons/outline/style.css";
 import "./_metronic/assets/keenicons/solid/style.css";
 import "bootstrap/dist/css/bootstrap.css";
-import "react-summernote/dist/react-summernote.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 /**

@@ -2,8 +2,6 @@ import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
-  console.log("data", data);
-
   return axiosConfig.post(
     ENDPOINTS.CONTACT_PERSON.LIST_UPDATE_ADD_DELETE_CONTACT_PERSON,
     JSON.stringify(data)

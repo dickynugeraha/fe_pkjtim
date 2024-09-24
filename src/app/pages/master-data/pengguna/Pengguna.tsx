@@ -231,7 +231,7 @@ export const Pengguna = () => {
     ],
     []
   );
-  console.log("pengguna", pengguna);
+  // console.log("pengguna", pengguna);
 
   return (
     <>
