@@ -15,7 +15,7 @@ const ModalDetailPemesananUser = ({
   return (
     <ModalWrapper
       attribute={{ centered: true }}
-      className="modal-md z-2"
+      className="modal-md z-5"
       footerCustom={<></>}
       handleClose={handleClose}
       show={show}

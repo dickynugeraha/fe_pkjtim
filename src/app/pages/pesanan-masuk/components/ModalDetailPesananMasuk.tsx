@@ -43,6 +43,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
 
   const { statusDesc } = globalVar.exportStatusPesanTempatToTitle(data?.status);
 
+  console.log("modalTypeReason", modalTypeReason);
+
   const HandlerShowComponent = () => {
     let OthersContent = <></>;
     let ButtonShow = (
@@ -75,41 +77,17 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           role="button"
           className="btn btn-sm btn-primary"
           onClick={() => {
-            Swal.fire({
-              title: "Apakah anda yakin",
-              text: "Akan melanjutkan reservasi menuju Kurasi?!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Ya",
-              cancelButtonText: "Tidak",
-              showLoaderOnConfirm: true,
-              preConfirm: () => {
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve("Confirmed");
-                  }, 1000);
-                });
-              },
-            }).then((result) => {
-              if (result.isConfirmed) {
-                const payload = {
-                  ...fields,
-                  id: data.id,
-                  judulPentas: valueInput.judulPentas,
-                  namaSanggar: valueInput.namaSanggar,
-                  alamatSanggar: valueInput.alamatSanggar,
-                  reason: "",
-                  note: "",
-                };
+            const payload = {
+              ...fields,
+              id: data.id,
+              judulPentas: valueInput.judulPentas,
+              namaSanggar: valueInput.namaSanggar,
+              alamatSanggar: valueInput.alamatSanggar,
+              reason: "",
+              note: "",
+            };
 
-                changeStatus(modalTypeReason?.type, payload);
-              }
-            });
-            // setModalTypeReason({
-            //   show: true,
-
-            //   type: "Kurasi",
-            // });
+            changeStatus(modalTypeReason?.type, payload);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"

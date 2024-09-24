@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
-// import ReactSummernote from "react-summernote";
 
 type ModalReasonProps = {
   type: string;
@@ -15,12 +14,13 @@ const ModalReason = ({
   handleClose,
 }: ModalReasonProps) => {
   const [textReason, setTextReason] = useState("");
+  console.log("show", show);
 
   return (
     <ModalWrapper
       title={`Tulis Alasan ${type === "Reject" ? "Penolakan" : "Diterima"}`}
       attribute={{ centered: true }}
-      className="modal-md z-3"
+      className="modal-md z-5"
       footerCustom={
         <div
           className={`btn btn-sm btn-${
@@ -36,22 +36,6 @@ const ModalReason = ({
       show={show}
     >
       <>
-        {/* <ReactSummernote
-          options={{
-            height: 200,
-            dialogsInBody: true,
-            toolbar: [
-              ["style", ["style"]],
-              ["font", ["bold", "underline", "clear"]],
-              ["color", ["color"]],
-              ["para", ["ul", "ol", "paragraph"]],
-              ["table", ["table"]],
-              ["insert", ["link", "picture", "video"]],
-              ["view", ["fullscreen", "codeview"]],
-            ],
-          }}
-          onChange={(value: any) => setTextReason(value)}
-        /> */}
         <textarea
           className="form-control"
           style={{ minHeight: "200px" }}

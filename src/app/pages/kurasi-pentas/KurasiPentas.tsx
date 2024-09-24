@@ -5,6 +5,10 @@ import Table from "../../../_metronic/layout/components/table/Table";
 import ModalDetailKurasiPentas from "./components/ModalDetailKurasiPentas";
 import usePesanTempat from "../../modules/hooks/pesan-tempat";
 import globalVar from "../../helper/globalVar";
+import { getAllReservation } from "../../modules/requests/pesan-tempat";
+import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../constants/PAGE";
+import { API_URL, ENDPOINTS } from "../../constants/API";
+import Swal from "sweetalert2";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -22,8 +26,46 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const KurasiPentas = () => {
-  const { getAllReservationPesanTempatStatusKurasi, loading, allReservationPesanTempat } =
-    usePesanTempat();
+  const [loading, setLoading] = useState(false);
+  const [allReservationPesanTempat, setAllReservationPesanTempat] = useState<
+    any[]
+  >([]);
+
+  const getAllReservationPesanTempatStatusKurasi = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllReservation(
+        INITIAL_PAGE,
+        DEFAULT_LIMIT,
+        "kurasi",
+        ""
+      );
+      let allReservation: any[] = res.data.data.data;
+
+      let allResrvationWithCorrectEmail: any[] = [];
+      allReservation.map((data) => {
+        const singleReserve = {
+          ...data,
+          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
+          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
+        };
+
+        allResrvationWithCorrectEmail.push(singleReserve);
+      });
+
+      setAllReservationPesanTempat(allResrvationWithCorrectEmail);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     getAllReservationPesanTempatStatusKurasi();

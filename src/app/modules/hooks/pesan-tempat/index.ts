@@ -127,43 +127,6 @@ export default function usePesanTempat() {
       }, 1000);
     };
 
-  //update ariko buat repo baru untuk get all reservasi by status kurasi
-  const getAllReservationPesanTempatStatusKurasi = async () => {
-    setLoading(true);
-    try {
-      const res = await getAllReservation(
-        INITIAL_PAGE,
-        DEFAULT_LIMIT,
-        "KURASI",
-        ""
-      );
-      let allReservation: any[] = res.data.data.data;
-
-      let allResrvationWithCorrectEmail: any[] = [];
-      allReservation.map((data) => {
-        const singleReserve = {
-          ...data,
-          suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
-          proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
-        };
-
-        allResrvationWithCorrectEmail.push(singleReserve);
-      });
-
-      SetAllReservationPesanTempat(allResrvationWithCorrectEmail);
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
-    setInterval(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
   const getSinglePesanTempat = async (id: any) => {
     setLoading(true);
     try {
@@ -357,7 +320,6 @@ export default function usePesanTempat() {
     requestReservationPesanTempat,
     getAllReservationPesanTempat,
     getAllReservationByUserId,
-    getAllReservationPesanTempatStatusKurasi,
     changeStatus,
     setQuery,
   };
