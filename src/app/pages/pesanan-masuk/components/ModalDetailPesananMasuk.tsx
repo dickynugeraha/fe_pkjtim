@@ -43,8 +43,6 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
 
   const { statusDesc } = globalVar.exportStatusPesanTempatToTitle(data?.status);
 
-  console.log("modalTypeReason", modalTypeReason);
-
   const HandlerShowComponent = () => {
     let OthersContent = <></>;
     let ButtonShow = (
@@ -314,7 +312,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailItemFile
             title="Surat permohonan"
             id={"fileSuratPermohonan"}
-            url={data?.suratPermohonan}
+            url={`Pdf/File/SuratPermohonan/${data.id}`}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
               data?.status === "KURASI" ||
@@ -332,7 +330,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailItemFile
             title="Surat proposal"
             id={"fileSuratProposal"}
-            url={data?.proposal}
+            url={`Pdf/File/Proposal/${data.id}`}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
               data?.status === "KURASI" ||
@@ -515,13 +513,13 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             <Gap height={12} />
             {url ? (
               url != "" ? (
-                <a
-                  className="btn btn-sm btn-light-primary"
-                  target="_blank"
-                  href={url}
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  onClick={() => window.open(url, "_blank")}
                 >
-                  Lihat {title}
-                </a>
+                  Lihat
+                </button>
               ) : (
                 "-"
               )

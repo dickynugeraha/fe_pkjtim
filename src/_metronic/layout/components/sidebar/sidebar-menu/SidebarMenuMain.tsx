@@ -109,7 +109,8 @@ const SidebarMenuMain = () => {
         />
       )}
       {(currentUser?.role === ROLE.USER ||
-        currentUser?.role === ROLE.SUPER_ADMIN) && (
+        currentUser?.role === ROLE.SUPER_ADMIN ||
+        currentUser?.role === undefined) && (
         <>
           <SidebarMenuItem
             to="pesan-tempat"

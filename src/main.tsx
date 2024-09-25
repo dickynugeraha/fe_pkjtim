@@ -13,7 +13,10 @@ import "./_metronic/assets/keenicons/outline/style.css";
 import "./_metronic/assets/keenicons/solid/style.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
+import "jquery";
+import "bootstrap/js/dist/modal";
+import "bootstrap/js/dist/dropdown";
+import "bootstrap/js/dist/tooltip";
 /**
  * TIP: Replace this style import with rtl styles to enable rtl mode
  *

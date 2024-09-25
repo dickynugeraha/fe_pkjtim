@@ -9,6 +9,7 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditContactPerson from "./components/ModalAddEditContactPerson";
 import Skeleton from "react-loading-skeleton";
 import useContactPerson from "../../../modules/hooks/master-data/contact-person";
+import globalVar from "../../../helper/globalVar";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -55,12 +56,17 @@ export const ContactPerson = () => {
       {
         Header: "Nama Kontak",
         sortType: "alphanumeric",
-        accessor: "title",
+        accessor: "name",
       },
       {
         Header: "Nomor handphone",
         sortType: "alphanumeric",
-        accessor: "desc",
+        accessor: "phone",
+      },
+      {
+        Header: "Untuk Kontent",
+        sortType: "alphanumeric",
+        accessor: "forContent",
       },
       {
         Header: "Aksi",
@@ -107,8 +113,6 @@ export const ContactPerson = () => {
     []
   );
 
-  // console.log("contact", contact);
-
   return (
     <>
       <PageTitle
@@ -123,7 +127,7 @@ export const ContactPerson = () => {
           loading={loading}
           searchData={() => {}}
           columns={columns}
-          data={[]}
+          data={data}
           addData={() => openModal()}
         />
         <ModalAddEditContactPerson
@@ -137,7 +141,11 @@ export const ContactPerson = () => {
             if (isEdit) {
               updateContact(formData);
             } else {
-              addContact(formData);
+              const data = {
+                ...formData,
+                id: globalVar.generateRandomId(),
+              };
+              addContact(data);
             }
           }}
         />

@@ -149,6 +149,10 @@ function differenceInDays(startDate: any, endDate: any) {
   return diffDays + 1;
 }
 
+const generateRandomId = (): string => {
+  return Math.random().toString(36).substr(2, 9); // Generate a random string with 9 characters
+};
+
 export default {
   BASE_URL,
   today,
@@ -161,4 +165,5 @@ export default {
   formatInputDate,
   convertRouteToTitle,
   exportStatusPesanTempatToTitle,
+  generateRandomId,
 };

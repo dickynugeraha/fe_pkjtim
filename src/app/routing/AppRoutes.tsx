@@ -42,6 +42,10 @@ import { PesananMasuk, PesananPlanetarium } from "../pages";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import { ContactPerson } from "../pages/master-data/contact-person/ContactPerson";
 import { ROLE } from "../constants/ROLE";
+import PDFPernyataanPersetujuan from "../../_metronic/layout/components/content/Pdf/PDFPernyataanPersetujuan";
+import PDFSuratUndangan from "../../_metronic/layout/components/content/Pdf/PDFSuratUndangan";
+import PDFSuratProposal from "../../_metronic/layout/components/content/Pdf/PDFSuratProposal";
+import PDFSuratPermohonan from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonan";
 
 /**
  * Base URL of the website.
@@ -77,6 +81,21 @@ const AppRoutes: FC = () => {
             <Route path="planetarium" element={<Planetarium />} />
             <Route path="tentang-kami" element={<TentangKami />} />
           </Route>
+
+          {/* fake route pdf */}
+          <Route
+            path="Pdf/File/PernyataanPersetujuan/:id"
+            element={<PDFPernyataanPersetujuan />}
+          />
+          <Route
+            path="Pdf/File/SuratUndangan/:id"
+            element={<PDFSuratUndangan />}
+          />
+          <Route path="Pdf/File/Proposal/:id" element={<PDFSuratProposal />} />
+          <Route
+            path="Pdf/File/SuratPermohonan/:id"
+            element={<PDFSuratPermohonan />}
+          />
 
           {/* Pengelola */}
           {currentUser?.role === ROLE.PENGELOLA ||

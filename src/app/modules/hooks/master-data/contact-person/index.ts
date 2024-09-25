@@ -50,7 +50,8 @@ export default function useContactPerson() {
     setLoading(true);
     try {
       const res = await getAll();
-      // console.log('dataaaa', JSON.parse(res.data.data));
+      // setContact(res.data);
+      setContact(JSON.parse(res.data.data));
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -85,7 +86,12 @@ export default function useContactPerson() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await add(data);
+          const newData = [...contact, data];
+          setContact(newData);
+          const res = await add({
+            actor: currentUser?.email,
+            value: JSON.stringify(newData),
+          });
           if (res) {
             Swal.fire({
               icon: "success",
@@ -157,10 +163,10 @@ export default function useContactPerson() {
     });
   };
 
-  const deleteContact = async (id: any) => {
+  const deleteContact = async (contactId: any) => {
     Swal.fire({
       title: "Apakah anda yakin",
-      text: "Akan melakukan hapus data?!",
+      text: "Akan melakukan menghapus kontak?!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Ya",
@@ -177,7 +183,21 @@ export default function useContactPerson() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await remove(actor);
+          console.log("contact", contact);
+          console.log("contactId", contactId);
+
+          const newArr = contact.filter((ctc) => {
+            return ctc.id !== contactId;
+          });
+
+          console.log("newArr", newArr);
+          return;
+
+          setContact(newArr);
+          const res = await add({
+            actor: currentUser?.email,
+            value: JSON.stringify(newArr),
+          });
           if (res) {
             Swal.fire({
               icon: "success",
@@ -185,6 +205,7 @@ export default function useContactPerson() {
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
+              closeModal();
               fetchAllContact();
             });
           }

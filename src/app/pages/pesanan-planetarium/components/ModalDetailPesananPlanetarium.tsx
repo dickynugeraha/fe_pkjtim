@@ -102,17 +102,17 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     >
       <>
         <div className="row row-cols-3">
-          <DetailIten
+          <DetailItem
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
             desc={globalVar.formatDate(data.createdAt)}
           />
-          <DetailIten
+          <DetailItem
             iconName={"home-2"}
             title={"Nama sekolah"}
             desc={data.namaSekolah}
           />
-          <DetailIten
+          <DetailItem
             iconName={"geolocation"}
             title={"Alamat sekolah"}
             desc={data.alamatSekolah}
@@ -135,28 +135,28 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
               </div>
             </div>
           </div>
-          <DetailIten
+          <DetailItem
             iconName={"toggle-on-circle"}
             title={"Tangal kunjungan"}
             desc={globalVar.formatDate(data.tanggalKunjungan)}
           />
-          <DetailIten iconName={"filter"} title={"Status"} desc={statusKey} />
-          <DetailIten
+          <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
+          <DetailItem
             iconName={"some-files"}
             title={"Surat Undangan"}
             desc={statusKey}
             isFile
-            urlFile={data.suratUndangan}
+            urlFile={`Pdf/File/SuratUndangan/${data.id}`}
           />
-          <DetailIten
+          <DetailItem
             iconName={"some-files"}
             title={"Pernyataan Persetujuan"}
             desc={statusKey}
             isFile
-            urlFile={data.pernyataanPersetujuan}
+            urlFile={`Pdf/File/PernyataanPersetujuan/${data.id}`}
           />
           {data.reason && (
-            <DetailIten
+            <DetailItem
               iconName={"pencil"}
               title={"Alasan"}
               desc={data.reason}
@@ -212,7 +212,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     isFile?: boolean;
     urlFile?: string;
   };
-  function DetailIten({
+  function DetailItem({
     iconName,
     title,
     desc,
@@ -231,14 +231,13 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             <Gap height={6} />
             {!isFile && <p className="m-0 text-gray-600">{desc}</p>}
             {isFile && (
-              <a
+              <button
                 role="button"
-                className="badge badge-light-primary p-3"
-                href={urlFile}
-                target="_blank"
+                className="btn btn-light-primary py-2"
+                onClick={() => window.open(urlFile, "_blank")}
               >
                 Lihat
-              </a>
+              </button>
             )}
           </div>
         </div>
