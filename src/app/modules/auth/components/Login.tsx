@@ -172,7 +172,7 @@ export function Login() {
             <a className="btn btn-secondary btn-outline"
             onClick={() => setShowPassword(!showPassword)}
             >
-             <KTIcon iconName="eye" className="fs-1" iconType="solid"></KTIcon>
+             <KTIcon iconName={showPassword ? "eye-slash" : "eye"} className="fs-1" iconType="solid"></KTIcon>
             </a>
           </div>
             {formik.touched.password && formik.errors.password && (
