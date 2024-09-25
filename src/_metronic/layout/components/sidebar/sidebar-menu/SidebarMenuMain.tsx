@@ -108,18 +108,23 @@ const SidebarMenuMain = () => {
           fontIcon="bi-layers"
         />
       )}
-      <SidebarMenuItem
-        to="pesan-tempat"
-        icon="geolocation"
-        title="Pesan Tempat"
-        fontIcon="bi-layers"
-      />
-      <SidebarMenuItem
-        to="planetarium"
-        icon="moon"
-        title="Planetarium G2S"
-        fontIcon="bi-layers"
-      />
+      {(currentUser?.role === ROLE.USER ||
+        currentUser?.role === ROLE.SUPER_ADMIN) && (
+        <>
+          <SidebarMenuItem
+            to="pesan-tempat"
+            icon="geolocation"
+            title="Pesan Tempat"
+            fontIcon="bi-layers"
+          />
+          <SidebarMenuItem
+            to="planetarium"
+            icon="moon"
+            title="Planetarium G2S"
+            fontIcon="bi-layers"
+          />
+        </>
+      )}
       <SidebarMenuItem
         to="faq"
         icon="question-2"

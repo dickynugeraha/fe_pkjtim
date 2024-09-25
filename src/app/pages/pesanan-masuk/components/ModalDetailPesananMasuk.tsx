@@ -385,7 +385,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               type: modalTypeReason.type,
             })
           }
-          onSubmit={(reason) => {
+          onSubmit={(reason: any) => {
             const payload = {
               ...fields,
               id: data.id,

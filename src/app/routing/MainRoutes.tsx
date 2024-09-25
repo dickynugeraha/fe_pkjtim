@@ -61,7 +61,6 @@ const MainRoutes = () => {
         <Route path="pesan-tempat" element={<PesanTempat />} />
         <Route path="faq" element={<Faq />} />
         <Route path="planetarium" element={<Planetarium />} />
-        <Route path="tentang-kami" element={<TentangKami />} />
         <Route path="builder" element={<BuilderPageWrapper />} />
         <Route path="profil-saya" element={<ProfilSaya />} />
         <Route path="pesanan-saya" element={<PesananSaya />} />
@@ -71,6 +70,7 @@ const MainRoutes = () => {
         <Route path="pesanan-masuk" element={<PesananMasuk />} />
         <Route path="pesanan-planet" element={<PesananPlanetarium />} />
         {/* Pengelola */}
+        <Route path="profil-saya" element={<ProfilSaya />} />
         <Route path="master-data/pengguna" element={<Pengguna />} />
         <Route path="master-data/sekilas-info" element={<SekilasInfo />} />
         <Route path="master-data/pementasan" element={<Pementasan />} />

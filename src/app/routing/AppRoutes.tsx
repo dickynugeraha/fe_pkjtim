@@ -66,6 +66,7 @@ const AppRoutes: FC = () => {
               path="dashboard/informasi/:list"
               element={<SemuaInformasi />}
             />
+            <Route path="profil-saya" element={<ProfilSaya />} />
             <Route
               path="dashboard/informasi/:list/:id"
               element={<DetailInformasi />}
@@ -131,7 +132,6 @@ const AppRoutes: FC = () => {
             <>
               <Route element={<MasterLayout />}>
                 <Route path="error/*" element={<ErrorsPage />} />
-                <Route path="profil-saya" element={<ProfilSaya />} />
                 <Route path="pesanan-saya" element={<PesananSaya />} />
                 <Route
                   path="form-pesan-tempat/:id"

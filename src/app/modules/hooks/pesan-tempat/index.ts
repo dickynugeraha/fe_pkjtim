@@ -266,12 +266,25 @@ export default function usePesanTempat() {
   };
 
   const changeStatus = async (status: string, data: any) => {
+    let label = "";
+    switch (status) {
+      case "Done":
+        label = "Apakah anda yakin ingin menyelesaikan pesanan?";
+        break;
+      case "Reject":
+        label = "Apakah anda yakin ingin menolak pesanan?";
+        break;
+      case "Kurasi":
+        label = "Apakah anda yakin ingin melanjutkan pesanan ke kurator?";
+        break;
+    }
+
     const newData = {
       ...data,
       actorId: currentUser?.id,
     };
     ConfirmationDialog({
-      text: "Akan mengubah status reservasi?!",
+      text: "Akan mengubah status reservasi dari ${status}?!",
       onConfirm: async () => {
         try {
           const res = await changeStatusReservation({ ...newData }, status);
