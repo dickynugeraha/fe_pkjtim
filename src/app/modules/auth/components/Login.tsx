@@ -9,6 +9,7 @@ import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalI
 import { Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
+import { KTIcon } from "../../../../_metronic/helpers";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,18 +23,10 @@ const loginSchema = Yup.object().shape({
     .required("Password harus diisi"),
 });
 
-// const initialValues = {
-//   email: "",
-//   password: "",
-// };
 const initialValues = {
   email: "",
   password: "",
 };
-// const initialValues = {
-//   password: "##Admin@1234",
-//   email: "admin@gmail.com",
-// };
 
 /*
   Formik+YUP+Typescript:
@@ -43,10 +36,23 @@ const initialValues = {
 
 export function Login() {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
 
   const navigate = useNavigate();
+
+  const forgotPassword = () => {
+    Swal.fire(
+      {
+        title: "Jika lupa password silahkan hubungi admin!",
+        text: "Hubungan Pak Didin melalui WA berikut",
+        icon: "warning",
+        showCloseButton: true,
+        heightAuto : false
+      }
+    );
+  }
 
   const formik = useFormik({
     initialValues,
@@ -145,9 +151,10 @@ export function Login() {
             {/* <label className="form-label fw-bolder text-gray-900 fs-6 mb-0">
           Password
         </label> */}
+          <div className="input-group">
             <input
               placeholder="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="off"
               {...formik.getFieldProps("password")}
               className={clsx(
@@ -158,23 +165,29 @@ export function Login() {
                 },
                 {
                   "is-valid":
-                    formik.touched.password && !formik.errors.password,
+                  formik.touched.password && !formik.errors.password,
                 }
               )}
-            />
+              />
+            <a className="btn btn-secondary btn-outline"
+            onClick={() => setShowPassword(!showPassword)}
+            >
+             <KTIcon iconName="eye" className="fs-1" iconType="solid"></KTIcon>
+            </a>
+          </div>
             {formik.touched.password && formik.errors.password && (
               <div className="fv-plugins-message-container">
                 <div className="fv-help-block">
                   <span role="alert">{formik.errors.password}</span>
                 </div>
               </div>
-            )}
-          </div>
+              )}
+        </div>
           {/* end::Form group */}
 
           <a
             className="btn btn-link btn-color-muted btn-active-color-primary ms-auto"
-            onClick={() => setShowModalLupaPassword(true)}
+            onClick={() => forgotPassword()}
           >
             Lupa password?
           </a>

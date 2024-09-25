@@ -40,7 +40,8 @@ export default function usePesanTempat() {
         INITIAL_PAGE,
         DEFAULT_LIMIT,
         "",
-        currentUser?.id
+        currentUser?.id,
+        ""
       );
       let allReservation: any[] = res.data.data.data;
 
@@ -75,18 +76,15 @@ export default function usePesanTempat() {
     // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
     //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
     {
-      console.log("search", search);
-
       setLoading(true);
       try {
         const res = await getAllReservation(
           INITIAL_PAGE,
           DEFAULT_LIMIT,
           search,
-          "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
+          "",
+          ""//update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         );
-
-        console.log("ress", res.data.data);
 
         let allReservation: any[] = res.data.data.data;
 
@@ -266,25 +264,16 @@ export default function usePesanTempat() {
   };
 
   const changeStatus = async (status: string, data: any) => {
-    let label = "";
-    switch (status) {
-      case "Done":
-        label = "Apakah anda yakin ingin menyelesaikan pesanan?";
-        break;
-      case "Reject":
-        label = "Apakah anda yakin ingin menolak pesanan?";
-        break;
-      case "Kurasi":
-        label = "Apakah anda yakin ingin melanjutkan pesanan ke kurator?";
-        break;
-    }
-
     const newData = {
       ...data,
       actorId: currentUser?.id,
     };
     ConfirmationDialog({
-      text: "Akan mengubah status reservasi dari ${status}?!",
+      text: status == "Done" ? "Apakah anda yakin ingin menyelesaikan pesanan?" :
+      status == "Reject" ? "Apakah anda yakin ingin menolak pesanan?" :
+      status == "Kurasi" ? "Apakah anda yakin ingin melanjutkan pesanan ke kurator?" :
+      status == "Answer-Letter" ? "Apakah anda yakin ingin menerima kurasi reservasi?" :
+      status == "Revise" ? "Apakah anda yakin ingin merekomendasikan revisi?" : "",
       onConfirm: async () => {
         try {
           const res = await changeStatusReservation({ ...newData }, status);

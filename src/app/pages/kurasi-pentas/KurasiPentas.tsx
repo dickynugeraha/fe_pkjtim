@@ -37,8 +37,9 @@ export const KurasiPentas = () => {
       const res = await getAllReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
-        "kurasi",
-        ""
+        "",
+        "",
+        "KURASI"
       );
       let allReservation: any[] = res.data.data.data;
 

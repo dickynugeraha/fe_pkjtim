@@ -8,6 +8,7 @@ import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/componen
 import { useAuth } from "../core/Auth";
 import Swal from "sweetalert2";
 import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalInformasi";
+import { KTIcon } from "../../../../_metronic/helpers";
 
 const initialValues = {
   fullname: "",
@@ -67,6 +68,8 @@ const registrationSchema = Yup.object().shape({
 
 export function Registration() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalError, setModalError] = useState({
     show: false,
@@ -266,8 +269,10 @@ export function Registration() {
         <div className="fv-row mb-5" data-kt-password-meter="true">
           <div className="mb-1">
             <div className="position-relative mb-5">
+              <div className="input-group">
+
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 autoComplete="off"
                 {...formik.getFieldProps("password")}
@@ -283,6 +288,12 @@ export function Registration() {
                   }
                 )}
               />
+              <a className="btn btn-secondary btn-outline"
+              onClick={() => setShowPassword(!showPassword)}
+              >
+                <KTIcon iconName="eye" className="fs-1" iconType="solid"></KTIcon>
+              </a>
+              </div>
               {formik.touched.password && formik.errors.password && (
                 <div className="fv-plugins-message-container">
                   <div className="fv-help-block">
@@ -311,9 +322,10 @@ export function Registration() {
 
         {/* begin::Form group Confirm password */}
         <div className="fv-row mb-5">
+          <div className="input-group">
           <input
-            type="password"
-            placeholder="Konfirmasi password  "
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Konfirmasi password"
             autoComplete="off"
             {...formik.getFieldProps("rePassword")}
             className={clsx(
@@ -328,6 +340,12 @@ export function Registration() {
               }
             )}
           />
+            <a className="btn btn-secondary btn-outline"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              <KTIcon iconName="eye" className="fs-1" iconType="solid"></KTIcon>
+            </a>
+          </div>
           {formik.touched.rePassword && formik.errors.rePassword && (
             <div className="fv-plugins-message-container">
               <div className="fv-help-block">

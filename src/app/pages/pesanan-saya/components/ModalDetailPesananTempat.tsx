@@ -18,6 +18,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
+  // console.log(data);
   const { rejectReservation, approveReservation } = usePlanetarium();
   const [modalAlasan, setModalAlasan] = useState({
     type: "",
@@ -119,17 +120,17 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"mask"}
             title={"Judul pentas"}
-            desc={data?.judulPentas}
+            desc={data?.judulPentas == undefined ? "-" : data?.judulPentas}
           />
           <DetailItem
             iconName={"home"}
             title={"Nama sanggar"}
-            desc={data?.namaSanggar}
+            desc={data?.namaSanggar == undefined ? "-" : data?.namaSanggar}
           />
           <DetailItem
             iconName={"geolocation"}
             title={"Alamat sanggar"}
-            desc={data?.alamatSanggar}
+            desc={data?.alamatSanggar == undefined ? "-" : data?.alamatSanggar}
           />
           <DetailItem
             iconName={"calendar-2"}
@@ -139,7 +140,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"notification"}
             title={"Total pembayaran"}
-            desc={data?.alamatSanggar}
+            desc={data?.priceTotal}
           />
           <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
           <DetailItem
@@ -155,7 +156,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"barcode"}
             title={"Kode booking"}
-            desc={data?.kodeBooking}
+            desc={data?.kodeBooking == undefined ? "-" : data?.kodeBooking}
           />
           {data.rejectNote && (
               <DetailItem
@@ -180,10 +181,27 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
               isFile
               urlFile={data?.proposal}
             />
-            {data?.kuratorName && (
+            {data?.kuratorName != undefined &&
+            data?.status == "WAITING_ANSWER_LETTER" ||
+            data?.status == "REJECT" ||
+            data?.status == "DONE"
+            && (
                 <DetailItem
                   iconName={"file"}
                   title={"Surat Hasil Kurasi"}
+                  desc={statusKey}
+                  isFile
+                  //api surat hasil kurasi menyusul
+                  urlFile={data?.proposal}
+                />
+              )}
+                {data?.kuratorName != undefined &&
+                data?.status == "REVISE" ||
+                data?.status == "REJECT"
+                && (
+                <DetailItem
+                  iconName={"file"}
+                  title={"Surat Hasil Kurasi (Revisi)"}
                   desc={statusKey}
                   isFile
                   //api surat hasil kurasi menyusul
@@ -271,11 +289,11 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             {isFile && (
               <a
                 role="button"
-                className="badge badge-light-primary p-3"
+                className="btn btn-sm btn-light-primary"
                 href={urlFile}
                 target="_blank"
               >
-                Lihat
+                Lihat {title}
               </a>
             )}
           </div>

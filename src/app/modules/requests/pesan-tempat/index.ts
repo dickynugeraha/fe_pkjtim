@@ -17,7 +17,8 @@ export const getAllReservation = (
   Page: number,
   Limit: number,
   Search: any,
-  UserId: any
+  UserId: any,
+  Status: any,
 ) => {
   return axiosConfig.get(
     ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT,
@@ -26,6 +27,7 @@ export const getAllReservation = (
       Limit,
       Search,
       UserId,
+      Status,
       IsIncludeTempat: true,
       IsIncludeUser: true,
       IsIncludeExpired: true,

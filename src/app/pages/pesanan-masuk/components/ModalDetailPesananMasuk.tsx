@@ -86,8 +86,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               reason: "",
               note: "",
             };
-
-            changeStatus(modalTypeReason?.type, payload);
+            changeStatus("Kurasi", payload);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -119,7 +118,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     }
 
     if (data?.status === "DONE") {
-      if (data?.kurasiNumber == undefined) {
+      if (data?.kuratorName == undefined) {
         OthersContent = (
           <DetailItemFile
             title="Surat jawaban"

@@ -63,12 +63,15 @@ class APIClient {
 
     if (params) {
       Object.keys(params).map((key) => {
+        if(params[key] == "")
+          return;
+
         paramKeys.push(key + "=" + params[key]);
         return paramKeys;
       });
 
       const queryString =
-        paramKeys && paramKeys.length ? paramKeys.join("&") : "";
+      paramKeys && paramKeys.length ? paramKeys.join("&") : "";
       response = axios.get(`${API_URL}/${url}?${queryString}`, params);
     } else {
       response = axios.get(`${url}`, params);
