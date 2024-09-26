@@ -130,6 +130,7 @@ const Table = ({
               <button
                 onClick={addData}
                 className="btn btn-sm btn-primary d-flex align-items-center w-50 justify-content-center"
+                style={{ minWidth: "120px" }}
               >
                 <KTIcon iconName="plus" className="fs-lg-2" />
                 <p className="m-0">Tambah</p>

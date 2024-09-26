@@ -128,6 +128,7 @@ export const ContactPerson = () => {
           searchData={() => {}}
           columns={columns}
           data={data}
+          isSearch={false}
           addData={() => openModal()}
         />
         <ModalAddEditContactPerson
