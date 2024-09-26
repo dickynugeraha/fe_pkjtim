@@ -17,6 +17,7 @@ export default function useContactPerson() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
+    id: "",
     name: "",
     phone: "",
     forContent: "",
@@ -31,6 +32,7 @@ export default function useContactPerson() {
       setIsEdit(true);
     } else {
       setFormData({
+        id: "",
         name: "",
         phone: "",
         forContent: "",
@@ -116,12 +118,12 @@ export default function useContactPerson() {
     });
   };
 
-  const updateContact = async (data: any) => {
+  const updateContact = async (data: any, currentContact: any[]) => {
     // const validate = validateForm(data);
     // if (!validate) return;
     Swal.fire({
       title: "Apakah anda yakin",
-      text: "Akan melakukan perubahan data?!",
+      text: "Akan melakukan perubahan data kontak?!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Ya",
@@ -138,7 +140,16 @@ export default function useContactPerson() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          const res = await update(data);
+          const arrayContactAfterSelecting: any[] = currentContact.filter(
+            (ctc) => ctc.id !== data.id
+          );
+          arrayContactAfterSelecting.push(data);
+
+          setContact(arrayContactAfterSelecting);
+          const res = await add({
+            actor: currentUser?.email,
+            value: JSON.stringify(arrayContactAfterSelecting),
+          });
           if (res) {
             Swal.fire({
               icon: "success",
@@ -163,7 +174,7 @@ export default function useContactPerson() {
     });
   };
 
-  const deleteContact = async (contactId: any) => {
+  const deleteContact = async (contactId: any, currectContact: any[]) => {
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan menghapus kontak?!",
@@ -183,15 +194,7 @@ export default function useContactPerson() {
       setLoading(true);
       if (result.isConfirmed) {
         try {
-          console.log("contact", contact);
-          console.log("contactId", contactId);
-
-          const newArr = contact.filter((ctc) => {
-            return ctc.id !== contactId;
-          });
-
-          console.log("newArr", newArr);
-          return;
+          const newArr = currectContact.filter((ctc) => ctc.id !== contactId);
 
           setContact(newArr);
           const res = await add({

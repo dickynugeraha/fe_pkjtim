@@ -76,8 +76,18 @@ const ModalAddEditContactPerson: FC<PropsModalAddEditSeniman> = ({
             onChange={(e) => handleChangeVal(e)}
           >
             <option value="">--- Pilih satu ---</option>
-            <option value="dashboard">Dashbord</option>
-            <option value="reservation">Reservasi</option>
+            <option
+              value="dashboard"
+              selected={data.forContent === "dashboard"}
+            >
+              Dashbord
+            </option>
+            <option
+              value="reservation"
+              selected={data.forContent === "reservation"}
+            >
+              Reservasi
+            </option>
           </select>
         </div>
       </>

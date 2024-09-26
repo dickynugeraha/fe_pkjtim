@@ -97,7 +97,7 @@ export const ContactPerson = () => {
                   <li>
                     <button
                       className="dropdown-item d-flex align-items-center"
-                      onClick={() => deleteContact(singleData.id)}
+                      onClick={() => deleteContact(singleData.id, contact)}
                     >
                       <KTIcon iconName="trash" className="me-3 fs-3" />
                       <p className="m-0">Hapus</p>
@@ -139,7 +139,7 @@ export const ContactPerson = () => {
           handleClose={() => closeModal()}
           handleSubmit={() => {
             if (isEdit) {
-              updateContact(formData);
+              updateContact(formData, contact);
             } else {
               const data = {
                 ...formData,
