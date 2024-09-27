@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 
 type Props = {
   now: any;
@@ -39,7 +38,7 @@ const Remining: React.FC<Props> = ({ expired, onFinishTime }) => {
   return (
     <div className="d-block badge badge-light-warning p-6 ">
       <p className="fs-6 p-0 m-0">
-        Selesaikan pesanan sebelum ({`0${timeLeft.minutes}:${timeLeft.seconds}`}
+        Selesaikan pesanan sebelum ({`${timeLeft.minutes < 10 ? "0" + timeLeft.minutes : timeLeft.minutes}:${timeLeft.seconds < 10 ? "0" + timeLeft.seconds : timeLeft.seconds}`}
         )
       </p>
     </div>

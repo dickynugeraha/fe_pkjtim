@@ -98,17 +98,6 @@ const Table = ({
         </Card.Header>
       )}
       <div className="p-5">
-        {isExport && (
-          <>
-            <button
-              onClick={onClickExport}
-              className="ms-auto btn btn-warning btn-sm"
-            >
-              Export as excel
-            </button>
-            <Gap height={12} />
-          </>
-        )}
         <div className="d-flex align-items-end justify-content-between">
           <div className="d-flex align-items-end">
             <div className="d-flex align-items-center mb-4">
@@ -125,11 +114,23 @@ const Table = ({
               </select>
             </div>
           </div>
-          <div className="d-flex flex-column align-items-end justify-content-end">
+          <div className="d-flex flex-column align-items-end">
+          {isExport && (
+          <div className="">
+            <button
+              onClick={onClickExport}
+              className="ms-auto btn btn-info btn-sm"
+            >
+            <KTIcon iconName="file-down" className="fs-lg-2"/>
+              Export as excel
+            </button>
+            <Gap height={12} />
+          </div>
+        )}
             {showAddButton && (
               <button
                 onClick={addData}
-                className="btn btn-sm btn-primary d-flex align-items-center w-50 justify-content-center"
+                className="btn btn-sm btn-primary d-flex align-items-center"
               >
                 <KTIcon iconName="plus" className="fs-lg-2" />
                 <p className="m-0">Tambah</p>

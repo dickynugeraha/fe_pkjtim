@@ -159,18 +159,6 @@ export default function usePesanTempat() {
       });
       return;
     }
-    if (
-      currentUser?.role !== ROLE.USER ||
-      currentUser?.role === ROLE.SUPER_ADMIN
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Anda adalah admin, silahkan login sebagai user",
-        showConfirmButton: false,
-      });
-      return;
-    }
     if (!choosenTempat || !startDate) {
       Swal.fire({
         icon: "error",

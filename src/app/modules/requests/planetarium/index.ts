@@ -9,7 +9,7 @@ export const initReservation = (data: any) => {
       TanggalKunjungan: data.TanggalKunjungan,
       IsPertunjukan: data.IsPertunjukan,
       IsDiskusi: data.IsDiskusi,
-      IsPenerpongan: data.IsPenerpongan,
+      IsPeneropongan: data.IsPeneropongan,
       IsRoketAir: data.IsRoketAir,
     }
   );

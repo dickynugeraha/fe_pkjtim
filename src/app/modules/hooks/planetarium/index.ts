@@ -46,18 +46,6 @@ export default function usePlanetarium() {
       });
       return;
     }
-    if (
-      currentUser?.role !== ROLE.USER ||
-      currentUser?.role === ROLE.SUPER_ADMIN
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Anda adalah admin, silahkan login sebagai user",
-        showConfirmButton: false,
-      });
-      return;
-    }
     if (!indoor) {
       Swal.fire({
         icon: "error",
@@ -109,9 +97,10 @@ export default function usePlanetarium() {
             TanggalKunjungan: bookingDate,
             IsPertunjukan: indoor === "planetarium_mini" ? true : false,
             IsDiskusi: indoor === "diskusi_astronomi" ? true : false,
-            IsPenerpongan: outdoor.peneropongan_matahari ? true : false,
+            IsPeneropongan: outdoor.peneropongan_matahari ? true : false,
             IsRoketAir: outdoor.percobaan_roket_air ? true : false,
           };
+          console.log(payload);
           const res = await initReservation(payload);
           const dataReservation: any = res.data.data;
 

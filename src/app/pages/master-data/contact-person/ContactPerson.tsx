@@ -64,7 +64,7 @@ export const ContactPerson = () => {
         accessor: "phone",
       },
       {
-        Header: "Untuk Kontent",
+        Header: "Untuk Konten",
         sortType: "alphanumeric",
         accessor: "forContent",
       },

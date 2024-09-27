@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import clsx from "clsx";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 import { KTIcon } from "../../../../_metronic/helpers";
+import useContactPerson from "../../hooks/master-data/contact-person";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,14 +40,17 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
-
+  const { contact, fetchAllContact } = useContactPerson();
   const navigate = useNavigate();
+  useEffect(() => {
+    fetchAllContact();
+  }, []);
 
   const forgotPassword = () => {
     Swal.fire(
       {
         title: "Jika lupa password silahkan hubungi admin!",
-        text: "Hubungan Pak Didin melalui WA berikut",
+        text: `Hubungi ${contact.find(b => b.forContent == "forgotPassword").name} melalui WA berikut ${contact.find(b => b.forContent == "forgotPassword").phone}`,
         icon: "warning",
         showCloseButton: true,
         heightAuto : false

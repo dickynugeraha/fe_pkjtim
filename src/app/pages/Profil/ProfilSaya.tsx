@@ -111,6 +111,8 @@ export const ProfilSaya = () => {
     getSinglePengguna(currentUser?.id as string);
   }, [currentUser]);
 
+  console.log(currentUser);
+  
   return (
     <>
       <PageTitle
