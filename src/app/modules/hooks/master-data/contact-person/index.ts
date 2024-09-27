@@ -199,7 +199,7 @@ export default function useContactPerson() {
           setContact(newArr);
           const res = await add({
             actor: currentUser?.email,
-            value: JSON.stringify(newArr),
+            value: JSON.stringify([newArr]),
           });
           if (res) {
             Swal.fire({

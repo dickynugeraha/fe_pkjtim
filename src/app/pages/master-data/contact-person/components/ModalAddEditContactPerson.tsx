@@ -77,14 +77,14 @@ const ModalAddEditContactPerson: FC<PropsModalAddEditSeniman> = ({
           >
             <option value="">--- Pilih satu ---</option>
             <option
-              value="dashboard"
-              selected={data.forContent === "dashboard"}
+              value="Dashboard"
+              selected={data.forContent === "Dashboard"}
             >
               Dashboard
             </option>
             <option
-              value="reservation"
-              selected={data.forContent === "reservation"}
+              value="Reservasi"
+              selected={data.forContent === "Reservasi"}
             >
               Reservasi
             </option>
