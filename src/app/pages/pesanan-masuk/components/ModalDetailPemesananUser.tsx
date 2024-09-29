@@ -1,6 +1,7 @@
 import { KTIcon } from "../../../../_metronic/helpers";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
+import { API_URL, ENDPOINTS } from "../../../constants/API";
 
 type ModalDetailPemesananUserProps = {
   data: any;
@@ -67,10 +68,13 @@ const ModalDetailPemesananUser = ({
           <Gap height={6} />
           <div className="row row-cols-lg-2 ">
             <div className="col">
-              <div
-                className="bg-gray-200 rounded"
-                style={{ height: "100px" }}
-              ></div>
+              <img
+                src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data?.creatorId}/Attachment/TandaPengenal`}
+                style={{
+                  width: "100%",
+                  borderRadius: "10px",
+                }}
+              />
             </div>
             <div className="col"></div>
           </div>

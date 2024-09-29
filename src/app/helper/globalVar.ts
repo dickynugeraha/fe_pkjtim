@@ -153,6 +153,15 @@ const generateRandomId = (): string => {
   return Math.random().toString(36).substr(2, 9); // Generate a random string with 9 characters
 };
 
+const checkUrlAccessible = async (url: string): Promise<boolean> => {
+  try {
+    const response = await fetch(url, { method: "HEAD" });
+    return response.ok; // Returns true if the status is in the 200 range
+  } catch (error) {
+    return false; // Returns false if there was an error (e.g., network issues)
+  }
+};
+
 export default {
   BASE_URL,
   today,
@@ -166,4 +175,5 @@ export default {
   convertRouteToTitle,
   exportStatusPesanTempatToTitle,
   generateRandomId,
+  checkUrlAccessible,
 };

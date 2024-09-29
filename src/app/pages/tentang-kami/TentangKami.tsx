@@ -10,6 +10,8 @@ import ImageAssets from "../../utils/image_assets";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import useContactPerson from "../../modules/hooks/master-data/contact-person";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -27,6 +29,18 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const TentangKami = () => {
+  const { fetchAllContact, contact } = useContactPerson();
+  useEffect(() => {
+    fetchAllContact();
+  }, []);
+
+  const contactDashboard: any[] = [];
+  contact.map((ctc, idx) => {
+    if (ctc.forContent === "Dashboard") {
+      contactDashboard.push(ctc);
+    }
+  });
+
   return (
     <>
       <PageTitle
@@ -216,46 +230,23 @@ export const TentangKami = () => {
                   <div>
                     <h5 className="mb-0">Kontak person</h5>
                     <Gap height={10} />
-                    <div>
-                      <div>
-                        <div className="d-flex align-items-center">
-                          <KTIcon
-                            iconName="whatsapp"
-                            className="text-success fs-1 me-4"
-                          />
-                          <div>
-                            <p className="fw-bolder m-0">Bapak Didin</p>
-                            <p className="m-0">wa.me/..</p>
+                    {contactDashboard.map((ctc, idx) => (
+                      <div key={idx.toString()}>
+                        <div>
+                          <div className="d-flex align-items-center">
+                            <KTIcon
+                              iconName="whatsapp"
+                              className="text-success fs-1 me-4"
+                            />
+                            <div>
+                              <p className="fw-bolder m-0">{ctc.name}</p>
+                              <p className="m-0">wa.me/{ctc.phone}</p>
+                            </div>
                           </div>
                         </div>
+                        <Gap width={10} />
                       </div>
-                      <Gap width={10} />
-                      <div>
-                        <div className="d-flex align-items-center">
-                          <KTIcon
-                            iconName="whatsapp"
-                            className="text-success fs-1 me-4"
-                          />
-                          <div>
-                            <p className="fw-bolder m-0">Bapak Sularto</p>
-                            <p className="m-0">wa.me/..</p>
-                          </div>
-                        </div>
-                      </div>
-                      <Gap width={20} />
-                      <div>
-                        <div className="d-flex align-items-center">
-                          <KTIcon
-                            iconName="whatsapp"
-                            className="text-success fs-1 me-4"
-                          />
-                          <div>
-                            <p className="fw-bolder m-0">Kantor UP PKJ TIM</p>
-                            <p className="m-0">wa.me/..</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>

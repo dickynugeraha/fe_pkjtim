@@ -47,16 +47,17 @@ export function Login() {
   }, []);
 
   const forgotPassword = () => {
-    Swal.fire(
-      {
-        title: "Jika lupa password silahkan hubungi admin!",
-        text: `Hubungi ${contact.find(b => b.forContent == "forgotPassword").name} melalui WA berikut ${contact.find(b => b.forContent == "forgotPassword").phone}`,
-        icon: "warning",
-        showCloseButton: true,
-        heightAuto : false
-      }
+    const specificContact = contact.find(
+      (b) => b.forContent == "Lupa Password"
     );
-  }
+    Swal.fire({
+      title: "Jika lupa password silahkan hubungi " + specificContact.name,
+      text: `Hubungi ${specificContact.name} melalui WA berikut ${specificContact.phone}`,
+      icon: "warning",
+      showCloseButton: true,
+      heightAuto: false,
+    });
+  };
 
   const formik = useFormik({
     initialValues,
@@ -71,6 +72,7 @@ export function Login() {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
         };
+        console.log("userDecodeResult", userDecodeResult);
 
         saveAuth(authData);
         const user = {
@@ -79,6 +81,8 @@ export function Login() {
           name: userDecodeResult.name,
           phoneNumber: userDecodeResult.phone_number,
           role: userDecodeResult.role,
+          isEmailConfirm:
+            userDecodeResult.IsEmailConfirmed === "False" ? false : true,
         };
         setCurrentUser(user);
         navigate("/dashboard/home");
@@ -155,38 +159,43 @@ export function Login() {
             {/* <label className="form-label fw-bolder text-gray-900 fs-6 mb-0">
           Password
         </label> */}
-          <div className="input-group">
-            <input
-              placeholder="Password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="off"
-              {...formik.getFieldProps("password")}
-              className={clsx(
-                "form-control bg-transparent",
-                {
-                  "is-invalid":
-                    formik.touched.password && formik.errors.password,
-                },
-                {
-                  "is-valid":
-                  formik.touched.password && !formik.errors.password,
-                }
-              )}
+            <div className="input-group">
+              <input
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="off"
+                {...formik.getFieldProps("password")}
+                className={clsx(
+                  "form-control bg-transparent",
+                  {
+                    "is-invalid":
+                      formik.touched.password && formik.errors.password,
+                  },
+                  {
+                    "is-valid":
+                      formik.touched.password && !formik.errors.password,
+                  }
+                )}
               />
-            <a className="btn btn-secondary btn-outline"
-            onClick={() => setShowPassword(!showPassword)}
-            >
-             <KTIcon iconName={showPassword ? "eye-slash" : "eye"} className="fs-1" iconType="solid"></KTIcon>
-            </a>
-          </div>
+              <a
+                className="btn btn-secondary btn-outline"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <KTIcon
+                  iconName={showPassword ? "eye-slash" : "eye"}
+                  className="fs-1"
+                  iconType="solid"
+                ></KTIcon>
+              </a>
+            </div>
             {formik.touched.password && formik.errors.password && (
               <div className="fv-plugins-message-container">
                 <div className="fv-help-block">
                   <span role="alert">{formik.errors.password}</span>
                 </div>
               </div>
-              )}
-        </div>
+            )}
+          </div>
           {/* end::Form group */}
 
           <a

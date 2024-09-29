@@ -89,8 +89,8 @@ const ModalAddEditContactPerson: FC<PropsModalAddEditSeniman> = ({
               Reservasi
             </option>
             <option
-              value="forgotPassword"
-              selected={data.forContent === "forgotPassword"}
+              value="Lupa Password"
+              selected={data.forContent === "Lupa Password"}
             >
               Lupa Password
             </option>

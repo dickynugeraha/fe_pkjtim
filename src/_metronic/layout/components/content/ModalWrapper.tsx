@@ -6,10 +6,10 @@ import Gap from "./Gap";
 type Props = {
   show: boolean;
   title: string;
-  className: string;
+  className?: string;
   children: ReactElement;
-  footerCustom: ReactElement;
-  attribute: any;
+  footerCustom?: ReactElement;
+  attribute?: any;
   handleClose: () => void;
 };
 

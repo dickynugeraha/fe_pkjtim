@@ -84,7 +84,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               reason: "",
               note: "",
             };
-            changeStatus("Kurasi", payload);
+            setModalTypeReason({ ...modalTypeReason, show: false });
+            setTimeout(() => {
+              changeStatus("Kurasi", payload);
+            }, 200);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -312,6 +315,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailItemFile
             title="Surat permohonan"
             id={"fileSuratPermohonan"}
+            isShowButton={data.suratPermohonan !== null}
             url={`Pdf/File/SuratPermohonan/${data.id}`}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
@@ -331,6 +335,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title="Surat proposal"
             id={"fileSuratProposal"}
             url={`Pdf/File/Proposal/${data.id}`}
+            isShowButton={data.proposal !== null}
             withUpload={
               data?.status === "WAITING_ANSWER_LETTER" ||
               data?.status === "KURASI" ||
@@ -393,8 +398,14 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               note: reason,
             };
             handleChange("reason", reason);
-
-            changeStatus(modalTypeReason?.type, payload);
+            setModalTypeReason({
+              show: false,
+              type: modalTypeReason.type,
+            });
+            handleClose();
+            setTimeout(() => {
+              changeStatus(modalTypeReason?.type, payload);
+            }, 200);
           }}
           type={modalTypeReason.type}
         />
@@ -487,6 +498,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   }
 
   type DetailItemFileProps = {
+    isShowButton?: boolean;
     id?: string;
     title: string;
     handleChangeFile?: (value: any) => void;
@@ -499,6 +511,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     title,
     url,
     withUpload,
+    isShowButton,
     fields,
     handleChangeFile,
   }: DetailItemFileProps) {
@@ -512,7 +525,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              url != "" ? (
+              url != "" && isShowButton ? (
                 <button
                   role="button"
                   className="btn btn-light-primary py-2"

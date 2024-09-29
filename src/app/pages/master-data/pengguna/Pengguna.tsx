@@ -37,6 +37,8 @@ export const Pengguna = () => {
     approveRequestRegisterFromAdmin,
     closeModal,
     formData,
+    formFile,
+    setFormFile,
     handleChange,
     isEdit,
     isLockedCheck,
@@ -65,39 +67,39 @@ export const Pengguna = () => {
 
   const columns = useMemo(
     () => [
-      // {
-      //   Header: "Gambar",
-      //   accessor: "gambar",
-      //   sortType: "alphanumeric",
-      //   Cell: (props: any) => {
-      //     const [loading, setLoading] = useState(true);
-      //     let singleData = props.cell.row.original;
+      {
+        Header: "Gambar",
+        accessor: "file",
+        sortType: "alphanumeric",
+        Cell: (props: any) => {
+          const [loading, setLoading] = useState(true);
+          let singleData = props.cell.row.original;
 
-      //     const handleImageLoad = () => {
-      //       setLoading(false);
-      //     };
+          const handleImageLoad = () => {
+            setLoading(false);
+          };
 
-      //     let content = <Skeleton height={80} width={150} />;
-      //     setTimeout(() => {
-      //       setLoading(false);
-      //     }, 1000);
+          let content = <Skeleton height={80} width={150} />;
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
 
-      //     if (!loading) {
-      //       content = (
-      //         <div style={{ width: "150px" }}>
-      //           <img
-      //             src={singleData.file}
-      //             className="rounded"
-      //             style={{ width: "100%" }}
-      //             onLoad={handleImageLoad}
-      //           />
-      //         </div>
-      //       );
-      //     }
+          if (!loading) {
+            content = (
+              <div style={{ width: "150px" }}>
+                <img
+                  src={singleData.file}
+                  className="rounded"
+                  style={{ width: "100%" }}
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            );
+          }
 
-      //     return content;
-      //   },
-      // },
+          return content;
+        },
+      },
       {
         Header: "Nama Lengkap",
         accessor: "fullName",
@@ -264,19 +266,21 @@ export const Pengguna = () => {
           show={isModalOpen}
           data={formData}
           formAdd={!isEdit}
+          fileValue={formFile}
+          onChangeFile={(e) => setFormFile(e)}
           handleClose={() => closeModal()}
           isValidated={isValidated}
           handleIsValidated={setIsValidated}
           handleSubmit={() => {
-            const formWithLocked = {
+            const formAll = {
               ...formData,
+              ktp: formFile,
               isLocked: isLockedCheck,
-              ktp: ktpValue,
             };
             if (isEdit) {
-              updatePengguna(formWithLocked);
+              updatePengguna(formAll);
             } else {
-              addPengguna(formWithLocked);
+              addPengguna(formAll);
             }
           }}
         />

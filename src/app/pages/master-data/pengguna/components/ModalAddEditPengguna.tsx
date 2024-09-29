@@ -10,6 +10,8 @@ type PropsModalAddEditSekilasInfo = {
   show: boolean;
   isLockedCheck: boolean;
   isValidated: boolean;
+  fileValue: any;
+  onChangeFile: (e: any) => void;
   handleIsValidated: (e: any) => void;
   handleIsCheckLocked: (e: any) => void;
   handleChange: (e: any) => void;
@@ -30,6 +32,8 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
   handleClose,
   handleSubmit,
   handleChangeKTP,
+  fileValue,
+  onChangeFile,
   data,
 }) => {
   const valueSelectOption = [
@@ -44,6 +48,18 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
     { value: "komisi_arsip", text: "Komisi Arsip dan Riset" },
   ];
 
+  const [imagePreview, setImagePreview] = useState();
+
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleValidate = (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -54,7 +70,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
       handleSubmit({});
     }
   };
-
+  handleImageChange(fileValue);
   return (
     <ModalWrapper
       title={formAdd ? "Tambah Pengguna" : "Ubah Pengguna"}
@@ -80,6 +96,40 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
         validated={isValidated}
         onSubmit={handleValidate}
       >
+        <Row className="mb-3">
+          <Form.Group>
+            <Form.Label htmlFor="" className="fw-bold mb-2">
+              Identitas pengguna <span className="text-danger">*</span>
+            </Form.Label>
+            <Row>
+              <Col md={6}>
+                {!formAdd && !fileValue && (
+                  <img
+                    className="rounded"
+                    style={{ height: "150px", width: "100%" }}
+                    src={data.file}
+                  />
+                )}
+                {fileValue && (
+                  <img
+                    className="rounded"
+                    style={{ height: "150px", width: "100%" }}
+                    src={imagePreview}
+                  />
+                )}
+                <Gap height={10} />
+              </Col>
+            </Row>
+            <Row>
+              <Form.Group>
+                <Form.Control
+                  type="file"
+                  onChange={(e: any) => onChangeFile(e.target.files[0])}
+                />
+              </Form.Group>
+            </Row>
+          </Form.Group>
+        </Row>
         <Row className="mb-3">
           <Form.Group as={Col} md={6}>
             <Form.Label htmlFor="fullName" className="fw-bold">
@@ -175,7 +225,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
               </Form.Select>
             </Form.Group>
           </Col>
-          <Col>
+          {/* <Col>
             <Form.Group className="form-group">
               <Form.Label htmlFor="status" className="fw-bold">
                 KTP <span className="text-danger">*</span>
@@ -187,10 +237,9 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
                 value={data.ktp}
                 onChange={(e: any) => handleChangeKTP(e.target.files[0])}
                 className="form-control"
-                // required={formAdd ? true : false}
-              ></Form.Control>
+              />
             </Form.Group>
-          </Col>
+          </Col> */}
         </Row>
 
         <Form.Group className="form-group my-6">

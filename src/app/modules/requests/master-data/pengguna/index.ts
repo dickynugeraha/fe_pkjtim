@@ -1,4 +1,4 @@
-import { ENDPOINTS } from "../../../../constants/API";
+import { API_URL, ENDPOINTS, WEB_LOCAL_URL } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any) => {
@@ -39,7 +39,28 @@ export const changePassword = (data: any) => {
 
 export const resendEmailVerif = (id: any) => {
   return axiosConfig.put(
-    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}/Email/Resend`
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}/Email/Resend`,
+    {
+      url: `${WEB_LOCAL_URL}/verify/email/{userid}/{token}`,
+    }
+  );
+};
+
+export const confirmEmailVerif = (id: any, token: any, newEmail?: string) => {
+  let params = {};
+  if (newEmail) {
+    params = {
+      code: token,
+      newEmail,
+    };
+  } else {
+    params = {
+      code: token,
+    };
+  }
+  return axiosConfig.put(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}/Email/Confirm`,
+    params
   );
 };
 
@@ -100,26 +121,19 @@ export const update = (data: any) => {
       },
     }
   );
+};
 
-  // const formData = new FormData();
-  //   formData.append("fullName", data.fullName);
-  //   formData.append("email", data.email);
-  //   formData.append("phoneNumber", data.phoneNumber);
-  //   formData.append("status", data.status);
-  //   formData.append("role", data.role);
-  //   formData.append("isLocked", data.isLocked);
-
-  //   if(data.password != ''){
-  //     formData.append("password", data.password);
-  //   }
-
-  // return axiosConfig.put(
-  //   `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}`,
-  //   formData,
-  //   {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   }
-  // );
+export const reqUpdateEmail = (
+  userId: string,
+  newEmail: string,
+  password: string
+) => {
+  return axiosConfig.post(
+    `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${userId}/email/change/token`,
+    {
+      url: `${WEB_LOCAL_URL}/verify/{userid}/email/{newemail}/{token}`,
+      email: newEmail,
+      password: password,
+    }
+  );
 };

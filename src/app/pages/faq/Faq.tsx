@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
-import HeadPage from "../../modules/widgets/components/HeadPage";
 import Gap from "../../../_metronic/layout/components/content/Gap";
-import iconPlus from "../../../../public/media/icons/plus.png";
-import iconMinus from "../../../../public/media/icons/minus.png";
+import ReactPlayer from "react-player";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import { Accordion } from "../../../_metronic/layout/components/content/Accordion";
 
@@ -55,28 +53,19 @@ export const Faq = () => {
                   show={true}
                   id="faq-1"
                   title="Lihat tanggal kosong di Kalender Jadwal"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="Anda dapat memastikan tanggal kosong pada menu dashboard untuk melanjutkan pesanan"
                 />
                 <Accordion
                   show={false}
                   id="faq-2"
                   title="Pemesanan tempat pagelaran ada dua cara"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="Menghubungi nomor berikut 085777773040. Dan yang kedua dengan memesan melalui website www.pkjtim.com atau website ini"
                 />
                 <Accordion
                   show={false}
                   id="faq-3"
                   title="Apakah perlu login?"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="Jika hanya ingin melihat pagelaran yang tersedia, anda tidak perlu melakukan pendaftaran akun. Jika anda ingin melakukan pemesanan tempat ke kami, anda dapat melanjutkan proses pendaftaran akun dengan mengikuti perintah yang tersedia."
                 />
               </div>
               {/* masuk */}
@@ -86,28 +75,19 @@ export const Faq = () => {
                   show={true}
                   id="faq-4"
                   title="Apakah masuk Ke Taman Ismail Marzuki perlu membayar?"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="kawasan Taman Ismail Marzuki merupakan kawasan publik yang dapat diakses oleh siapapun dengan gratis."
                 />
                 <Accordion
                   show={false}
                   id="faq-5"
                   title="Bagaimana cara membeli tiket?"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="Untuk membeli tiket diatur oleh masing-masing penyelenggara."
                 />
                 <Accordion
                   show={false}
                   id="faq-6"
                   title="Apakah menonton perlu bayar?"
-                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nulla deleniti eos sapiente a debitis. Quasi similique
-                        ducimus officiis minus commodi nisi cupiditate dolor
-                        alias sint cumque recusandae magnam, dolores blanditiis."
+                  description="Untuk menonton pementasan bersifat opsional, ada yang gratis ada yang perlu membeli tiket."
                 />
               </div>
             </div>
@@ -130,14 +110,18 @@ export const Faq = () => {
           </div>
           <div className="row row-cols-2 row-cols-lg-3 ps-8 pb-8">
             <div className="col">
-              <div className="card p-10 px-lg-40 mb-5">
-                <iframe
-                  height={200}
-                  src="https://www.youtube.com/watch?v=5OHPMyDsPNA"
-                ></iframe>
+              <div className="card px-lg-40 mb-5">
+                <ReactPlayer
+                  url="https://www.youtube.com/watch?v=ykmXHR8jFn4"
+                  controls
+                  width="100%"
+                  height="250px"
+                />
               </div>
-              <p className="mb-1 fw-bold">Judul Video</p>
-              <p>Deskripsi</p>
+              <p className="mb-1 fw-bold"></p>
+              <p>
+                Anda dapat melihat panduan cara pesan tempat pagelaran di sini
+              </p>
             </div>
           </div>
         </div>

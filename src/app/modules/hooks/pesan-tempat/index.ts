@@ -83,17 +83,23 @@ export default function usePesanTempat() {
           DEFAULT_LIMIT,
           search,
           "",
-          ""//update ariko reservasi status kurasi dapat dilihat semua oleh kurator
+          "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         );
 
         let allReservation: any[] = res.data.data.data;
+
+        console.log("allReservation", allReservation);
 
         let allResrvationWithFile: any[] = [];
         allReservation.map((data) => {
           const singleReserve = {
             ...data,
-            suratPermohonan: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`,
-            proposal: `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`,
+            suratPermohonan: data.suratPermohonan
+              ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`
+              : null,
+            proposal: data.proposal
+              ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`
+              : null,
             statusDesc: globalVar.exportStatusPesanTempatToTitle(data.status),
           };
 
@@ -257,11 +263,18 @@ export default function usePesanTempat() {
       actorId: currentUser?.id,
     };
     ConfirmationDialog({
-      text: status == "Done" ? "Apakah anda yakin ingin menyelesaikan pesanan?" :
-      status == "Reject" ? "Apakah anda yakin ingin menolak pesanan?" :
-      status == "Kurasi" ? "Apakah anda yakin ingin melanjutkan pesanan ke kurator?" :
-      status == "Answer-Letter" ? "Apakah anda yakin ingin menerima kurasi reservasi?" :
-      status == "Revise" ? "Apakah anda yakin ingin merekomendasikan revisi?" : "",
+      text:
+        status == "Done"
+          ? "Apakah anda yakin ingin menyelesaikan pesanan?"
+          : status == "Reject"
+          ? "Apakah anda yakin ingin menolak pesanan?"
+          : status == "Kurasi"
+          ? "Apakah anda yakin ingin melanjutkan pesanan ke kurator?"
+          : status == "Answer-Letter"
+          ? "Apakah anda yakin ingin menerima kurasi reservasi?"
+          : status == "Revise"
+          ? "Apakah anda yakin ingin merekomendasikan revisi?"
+          : "",
       onConfirm: async () => {
         try {
           const res = await changeStatusReservation({ ...newData }, status);
@@ -272,7 +285,7 @@ export default function usePesanTempat() {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.reload();
+            getAllReservationPesanTempat();
           });
         } catch (error: any) {
           Swal.fire({

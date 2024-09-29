@@ -146,6 +146,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             title={"Surat Undangan"}
             desc={statusKey}
             isFile
+            isShowButton={data.suratUndangan !== null}
             urlFile={`Pdf/File/SuratUndangan/${data.id}`}
           />
           <DetailItem
@@ -153,6 +154,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             title={"Pernyataan Persetujuan"}
             desc={statusKey}
             isFile
+            isShowButton={data.pernyataanPersetujuan !== null}
             urlFile={`Pdf/File/PernyataanPersetujuan/${data.id}`}
           />
           {data.reason && (
@@ -210,6 +212,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     title: string;
     desc: string;
     isFile?: boolean;
+    isShowButton?: boolean;
     urlFile?: string;
   };
   function DetailItem({
@@ -217,6 +220,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     title,
     desc,
     isFile = false,
+    isShowButton = false,
     urlFile,
   }: DetailItemProps) {
     return (
@@ -230,7 +234,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
             {!isFile && <p className="m-0 text-gray-600">{desc}</p>}
-            {isFile && (
+            {isFile && isShowButton && (
               <button
                 role="button"
                 className="btn btn-light-primary py-2"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
@@ -18,14 +18,19 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
   data,
   handleClose,
 }) => {
-  // console.log(data);
   const { rejectReservation, approveReservation } = usePlanetarium();
   const [modalAlasan, setModalAlasan] = useState({
     type: "",
     show: false,
   });
   const [alasan, setAlasan] = useState<string>("");
-
+  const [validateUrl, setValidateUrl] = useState<{
+    permohonan: boolean;
+    proposal: boolean;
+  }>({
+    proposal: false,
+    permohonan: false,
+  });
   const handleClickAlasan = () => {
     const payload = {
       id: data.id,
@@ -159,14 +164,15 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             desc={data?.kodeBooking == undefined ? "-" : data?.kodeBooking}
           />
           {data.rejectNote && (
-              <DetailItem
-                iconName={"pencil"}
-                title={"Alasan"}
-                desc={data.rejectNote}
-              />
-            )}
-          </div>
-          <div className="row row-cols-3">
+            <DetailItem
+              iconName={"pencil"}
+              title={"Alasan"}
+              desc={data.rejectNote}
+            />
+          )}
+        </div>
+        <div className="row row-cols-3">
+          {data.suratpermohonan && (
             <DetailItem
               iconName={"file"}
               title={"Surat Permohonan"}
@@ -174,6 +180,8 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
               isFile
               urlFile={data?.suratPermohonan}
             />
+          )}
+          {data.proposal && (
             <DetailItem
               iconName={"file"}
               title={"Proposal"}
@@ -181,44 +189,42 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
               isFile
               urlFile={data?.proposal}
             />
-            {data?.kuratorName != undefined &&
-            data?.status == "WAITING_ANSWER_LETTER" ||
+          )}
+          {(data?.kuratorName != undefined &&
+            data?.status == "WAITING_ANSWER_LETTER") ||
             data?.status == "REJECT" ||
-            data?.status == "DONE"
-            && (
-                <DetailItem
-                  iconName={"file"}
-                  title={"Surat Hasil Kurasi"}
-                  desc={statusKey}
-                  isFile
-                  //api surat hasil kurasi menyusul
-                  urlFile={data?.proposal}
-                />
-              )}
-                {data?.kuratorName != undefined &&
-                data?.status == "REVISE" ||
-                data?.status == "REJECT"
-                && (
-                <DetailItem
-                  iconName={"file"}
-                  title={"Surat Hasil Kurasi (Revisi)"}
-                  desc={statusKey}
-                  isFile
-                  //api surat hasil kurasi menyusul
-                  urlFile={data?.proposal}
-                />
-              )}
-            {data?.pengelolaName && (
-                <DetailItem
-                  iconName={"file"}
-                  title={"Surat Jawaban"}
-                  desc={statusKey}
-                  isFile
-                  //api surat jawaban menyusul
-                  urlFile={data?.proposal}
-                />
-            )}
-          </div>
+            (data?.status == "DONE" && (
+              <DetailItem
+                iconName={"file"}
+                title={"Surat Hasil Kurasi"}
+                desc={statusKey}
+                isFile
+                //api surat hasil kurasi menyusul
+                urlFile={data?.proposal}
+              />
+            ))}
+          {(data?.kuratorName != undefined && data?.status == "REVISE") ||
+            (data?.status == "REJECT" && (
+              <DetailItem
+                iconName={"file"}
+                title={"Surat Hasil Kurasi (Revisi)"}
+                desc={statusKey}
+                isFile
+                //api surat hasil kurasi menyusul
+                urlFile={data?.proposal}
+              />
+            ))}
+          {data?.pengelolaName && (
+            <DetailItem
+              iconName={"file"}
+              title={"Surat Jawaban"}
+              desc={statusKey}
+              isFile
+              //api surat jawaban menyusul
+              urlFile={data?.proposal}
+            />
+          )}
+        </div>
         {modalAlasan.show && <div className="overlay" />}
         <ModalWrapper
           title="Tulis alasan"

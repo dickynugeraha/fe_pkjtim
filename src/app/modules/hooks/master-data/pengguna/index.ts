@@ -4,6 +4,8 @@ import {
   approve,
   changePassword,
   resendEmailVerif,
+  confirmEmailVerif as confirmEmail,
+  reqUpdateEmail,
   getAll,
   getSingle,
   remove,
@@ -11,11 +13,16 @@ import {
 } from "../../../requests/master-data/pengguna";
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
+import { API_URL, ENDPOINTS } from "../../../../constants/API";
+import axiosConfig from "../../../../utils/services/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 export default function usePengguna() {
   const [pengguna, setPengguna] = useState<any[]>([]);
   const [singlePengguna, setSinglePengguna] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [formFile, setFormFile] = useState(null);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -56,6 +63,7 @@ export default function usePengguna() {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsValidated(false);
+    setFormFile(null);
   };
 
   const handleChange = (e: any) => {
@@ -177,8 +185,26 @@ export default function usePengguna() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
+      const users: any[] = res.data.data.data;
+      const usersWithFile: any[] = [];
 
-      setPengguna(res.data.data.data);
+      for (let index = 0; index < users.length; index++) {
+        const usr = users[index];
+        const imageUrl: any = `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${usr.id}/Attachment/TandaPengenal?isStream=false`;
+        const resBase64 = await axiosConfig.get(imageUrl);
+        const base64 = `data:image/png;base64,${resBase64.data.data.fileContents}`;
+
+        const data = {
+          ...usr,
+          file: base64,
+          // file: `${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${usr.id}/Attachment/TandaPengenal`,
+        };
+        usersWithFile.push(data);
+      }
+      console.log("usersWithFile", usersWithFile);
+
+      setPengguna(usersWithFile);
+      setLoading(false);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -187,9 +213,32 @@ export default function usePengguna() {
         showConfirmButton: false,
       });
     }
-    setInterval(() => {
-      setLoading(false);
-    }, 1000);
+  };
+
+  const confirmEmailVerif = async (id: any, token: any, newEmail?: string) => {
+    setLoading(true);
+    try {
+      await confirmEmail(id, token, newEmail);
+      Swal.fire({
+        icon: "success",
+        title: "Email berhasil terverifikasi",
+        text: "Anda sudah bisa memesan tempat dan dapat akses penuh terhadap aplikasi!",
+        showConfirmButton: false,
+        timer: 5000,
+      }).then(() => {
+        window.location.href = "/dashboard";
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Email gagal terverifikasi",
+        text: error.message,
+        showConfirmButton: false,
+      }).then(() => {
+        window.location.href = "/dashboard";
+      });
+    }
+    setLoading(false);
   };
 
   const addPengguna = async (data: any) => {
@@ -374,6 +423,32 @@ export default function usePengguna() {
     setLoading(false);
   };
 
+  const reqChangeEmail = async (
+    userId: string,
+    email: string,
+    password: string
+  ) => {
+    setLoading(true);
+    try {
+      await reqUpdateEmail(userId, email, password);
+      Swal.fire({
+        icon: "success",
+        title: "Email terkirim",
+        text: "Silahkan periksa email saat ini.",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Email gagal terkirim",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setLoading(false);
+  };
+
   return {
     addPengguna,
     updatePengguna,
@@ -389,11 +464,15 @@ export default function usePengguna() {
     profileChangePassword,
     sendEmailVerif,
     setIsValidated,
+    setFormFile,
+    confirmEmailVerif,
+    reqChangeEmail,
     pengguna,
     singlePengguna,
     loading,
     isModalOpen,
     isEdit,
+    formFile,
     formData,
     isLockedCheck,
     isValidated,

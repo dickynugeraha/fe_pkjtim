@@ -49,4 +49,5 @@ export interface UserModel {
   name: string;
   role: string;
   phoneNumber: string;
+  isEmailConfirm: boolean;
 }

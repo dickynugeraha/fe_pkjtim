@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { getUserByToken, register } from "../core/_requests";
+import { register } from "../core/_requests";
 import { Link, useNavigate } from "react-router-dom";
 import { PasswordMeterComponent } from "../../../../_metronic/assets/ts/components";
 import { useAuth } from "../core/Auth";
@@ -97,9 +97,10 @@ export function Registration() {
         Swal.fire({
           icon: "success",
           title: "Berhasil melakukan registrasi!",
-          text: "Admin akan memverifikasi data kamu, Mohon menunggu info selanjutnya",
+          text: "Silahkan cek email anda untuk melakukan verifikasi, dan tunggu admin untuk mengecek kecocokan data",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 4000,
+          heightAuto: false,
         }).then(() => {
           navigate("/auth/login");
         });
@@ -215,7 +216,6 @@ export function Registration() {
         <div className="fv-row mb-5">
           <input
             placeholder="Nomor Handphone"
-            type="number"
             autoComplete="off"
             {...formik.getFieldProps("phoneNumber")}
             className={clsx(
@@ -270,29 +270,33 @@ export function Registration() {
           <div className="mb-1">
             <div className="position-relative mb-5">
               <div className="input-group">
-
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                autoComplete="off"
-                {...formik.getFieldProps("password")}
-                className={clsx(
-                  "form-control bg-transparent",
-                  {
-                    "is-invalid":
-                      formik.touched.password && formik.errors.password,
-                  },
-                  {
-                    "is-valid":
-                      formik.touched.password && !formik.errors.password,
-                  }
-                )}
-              />
-              <a className="btn btn-secondary btn-outline"
-              onClick={() => setShowPassword(!showPassword)}
-              >
-                <KTIcon iconName={showPassword ? "eye-slash" : "eye"} className="fs-1" iconType="solid"></KTIcon>
-              </a>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  autoComplete="off"
+                  {...formik.getFieldProps("password")}
+                  className={clsx(
+                    "form-control bg-transparent",
+                    {
+                      "is-invalid":
+                        formik.touched.password && formik.errors.password,
+                    },
+                    {
+                      "is-valid":
+                        formik.touched.password && !formik.errors.password,
+                    }
+                  )}
+                />
+                <a
+                  className="btn btn-secondary btn-outline"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <KTIcon
+                    iconName={showPassword ? "eye-slash" : "eye"}
+                    className="fs-1"
+                    iconType="solid"
+                  ></KTIcon>
+                </a>
               </div>
               {formik.touched.password && formik.errors.password && (
                 <div className="fv-plugins-message-container">
@@ -323,27 +327,32 @@ export function Registration() {
         {/* begin::Form group Confirm password */}
         <div className="fv-row mb-5">
           <div className="input-group">
-          <input
-            type={showConfirmPassword ? "text" : "password"}
-            placeholder="Konfirmasi password"
-            autoComplete="off"
-            {...formik.getFieldProps("rePassword")}
-            className={clsx(
-              "form-control bg-transparent",
-              {
-                "is-invalid":
-                  formik.touched.rePassword && formik.errors.rePassword,
-              },
-              {
-                "is-valid":
-                  formik.touched.rePassword && !formik.errors.rePassword,
-              }
-            )}
-          />
-            <a className="btn btn-secondary btn-outline"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Konfirmasi password"
+              autoComplete="off"
+              {...formik.getFieldProps("rePassword")}
+              className={clsx(
+                "form-control bg-transparent",
+                {
+                  "is-invalid":
+                    formik.touched.rePassword && formik.errors.rePassword,
+                },
+                {
+                  "is-valid":
+                    formik.touched.rePassword && !formik.errors.rePassword,
+                }
+              )}
+            />
+            <a
+              className="btn btn-secondary btn-outline"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              <KTIcon iconName={showConfirmPassword ? "eye-slash" : "eye"} className="fs-1" iconType="solid"></KTIcon>
+              <KTIcon
+                iconName={showConfirmPassword ? "eye-slash" : "eye"}
+                className="fs-1"
+                iconType="solid"
+              ></KTIcon>
             </a>
           </div>
           {formik.touched.rePassword && formik.errors.rePassword && (

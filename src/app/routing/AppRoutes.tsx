@@ -46,6 +46,8 @@ import PDFPernyataanPersetujuan from "../../_metronic/layout/components/content/
 import PDFSuratUndangan from "../../_metronic/layout/components/content/Pdf/PDFSuratUndangan";
 import PDFSuratProposal from "../../_metronic/layout/components/content/Pdf/PDFSuratProposal";
 import PDFSuratPermohonan from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonan";
+import VerifyNewAccount from "../pages/others/VerifyNewAccount";
+import VerifyChangeEmail from "../pages/others/VerifyChangeEmail";
 
 /**
  * Base URL of the website.
@@ -62,6 +64,14 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route element={<App />}>
           <Route path="error/*" element={<ErrorsPage />} />
+          {/* <Route
+            path="verify/:userid/email/:newemail/:token"
+            element={<VerifyChangeEmail />}
+          /> */}
+          <Route
+            path="verify/email/:userid/:token"
+            element={<VerifyNewAccount />}
+          />
           <Route path="logout" element={<Logout />} />
           <Route element={<MasterLayout />}>
             <Route path="dashboard" element={<Home />} />

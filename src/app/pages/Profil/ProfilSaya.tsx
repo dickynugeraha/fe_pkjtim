@@ -15,6 +15,8 @@ import { useFormik } from "formik";
 import usePengguna from "../../modules/hooks/master-data/pengguna";
 import { useAuth } from "../../modules/auth";
 import { Spinner } from "react-bootstrap";
+import { API_URL, ENDPOINTS } from "../../constants/API";
+import ModalWrapper from "../../../_metronic/layout/components/content/ModalWrapper";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -66,8 +68,9 @@ export const ProfilSaya = () => {
     loading,
     profileChangePassword,
     sendEmailVerif,
+    reqChangeEmail,
   } = usePengguna();
-  const { currentUser } = useAuth();
+  const { currentUser, auth } = useAuth();
   const [showModal, setShowModal] = useState<boolean>(false);
   const updateEmailVal = {
     newEmail: singlePengguna?.email,
@@ -79,7 +82,7 @@ export const ProfilSaya = () => {
 
   const [showEmailForm, setShowEmailForm] = useState<boolean>(false);
   const [showPasswordForm, setPasswordForm] = useState<boolean>(false);
-  const [fetchLoading, setFetchLoading] = useState(true);
+  const [modalPreviewImage, setModalPreviewImage] = useState<boolean>(false);
 
   const formik1 = useFormik<IUpdateEmail>({
     initialValues: {
@@ -87,8 +90,8 @@ export const ProfilSaya = () => {
     },
     validationSchema: emailFormValidationSchema,
     onSubmit: (values) => {
-      setEmailUpdateData(values);
-      setShowEmailForm(false);
+      const userId = currentUser ? currentUser.id : "";
+      reqChangeEmail(userId, values.newEmail, values.confirmPassword);
     },
   });
 
@@ -111,8 +114,6 @@ export const ProfilSaya = () => {
     getSinglePengguna(currentUser?.id as string);
   }, [currentUser]);
 
-  console.log(currentUser);
-  
   return (
     <>
       <PageTitle
@@ -124,33 +125,32 @@ export const ProfilSaya = () => {
       </PageTitle>
       <Content>
         {/* alert jika email belum terverifikasi */}
-        {singlePengguna?.status !== "ACTIVE" &&
-          singlePengguna?.status !== undefined && (
-            <div className="alert alert-dismissible bg-light-warning border border-warning p-5">
-              <div className="d-flex flex-column flex-md-row justify-content-between ">
-                <div className="d-flex align-items-center">
-                  <KTIcon
-                    iconName="information-2"
-                    className="fs-2x text-warning justify-content-center me-4"
-                  />
-                  <div>
-                    <h5 className="mb-1">Email anda belum terverifikasi!</h5>
-                    <span className="text-warning">
-                      Silahkan melakukan verifikasi email untuk dapat melakukan
-                      pemesanan tempat
-                    </span>
-                  </div>
+        {currentUser?.isEmailConfirm === false && (
+          <div className="alert alert-dismissible bg-light-warning border border-warning p-5">
+            <div className="d-flex flex-column flex-md-row justify-content-between ">
+              <div className="d-flex align-items-center">
+                <KTIcon
+                  iconName="information-2"
+                  className="fs-2x text-warning justify-content-center me-4"
+                />
+                <div>
+                  <h5 className="mb-1">Email anda belum terverifikasi!</h5>
+                  <span className="text-warning">
+                    Silahkan melakukan verifikasi email untuk dapat melakukan
+                    pemesanan tempat
+                  </span>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-warning m-2"
-                  onClick={() => sendEmailVerif(singlePengguna?.id)}
-                >
-                  Kirim email verifikasi
-                </button>
               </div>
+              <button
+                type="button"
+                className="btn btn-sm btn-warning m-2"
+                onClick={() => sendEmailVerif(singlePengguna?.id)}
+              >
+                Kirim email verifikasi
+              </button>
             </div>
-          )}
+          </div>
+        )}
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
             <h4 className="m-0">Detail Profil Saya</h4>
@@ -164,30 +164,63 @@ export const ProfilSaya = () => {
           </div>
           <div className="p-8">
             <div className="row mb-7">
-              <label className="col-lg-4 fw-bold text-gray-600">
+              <label className="col-lg-3 fw-bold text-gray-600">
                 Nama Lengkap
               </label>
 
-              <div className="col-lg-8 fv-row">
+              <div className="col-lg-9 fv-row">
                 <span className="fs-6">{singlePengguna?.fullName}</span>
               </div>
             </div>
             <div className="row mb-7">
-              <label className="col-lg-4 fw-bold text-gray-600">
-                Nomor handphone
+              <label className="col-lg-3 fw-bold text-gray-600">
+                Nomor Handphone
               </label>
-
-              <div className="col-lg-8 fv-row">
+              <div className="col-lg-9 fv-row">
                 <span className="fs-6">{singlePengguna?.phoneNumber}</span>
               </div>
             </div>
             <div className="row mb-7">
-              <label className="col-lg-4 fw-bold text-gray-600">Email</label>
+              <label className="col-lg-3 fw-bold text-gray-600">
+                Foto Identitas
+              </label>
+              <div className="col-lg-9 fv-row">
+                <img
+                  onClick={() => {
+                    setModalPreviewImage(true);
+                  }}
+                  src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${singlePengguna?.id}/Attachment/TandaPengenal`}
+                  style={{
+                    width: "300px",
+                    height: "200px",
+                    borderRadius: "10px",
+                  }}
+                />
+              </div>
+              <ModalWrapper
+                title="Foto Identitas"
+                show={modalPreviewImage}
+                handleClose={() => setModalPreviewImage(false)}
+                attribute={{ centered: true }}
+                className="modal-lg"
+                footerCustom={<></>}
+              >
+                <img
+                  src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${singlePengguna?.id}/Attachment/TandaPengenal`}
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+              </ModalWrapper>
+            </div>
+            <div className="row mb-7">
+              <label className="col-lg-3 fw-bold text-gray-600">Email</label>
 
-              <div className="col-lg-8 d-flex align-items-center">
+              <div className="col-lg-9 d-flex align-items-center">
                 <span className="fs-6">{singlePengguna?.email}</span>
                 <Gap width={5} />
-                {singlePengguna?.status === "ACTIVE" ? (
+                {currentUser?.isEmailConfirm ? (
                   <span className="badge badge-success">Verified</span>
                 ) : (
                   <span className="badge badge-danger">Not Verified</span>

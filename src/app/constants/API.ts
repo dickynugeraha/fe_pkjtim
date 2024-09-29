@@ -1,4 +1,5 @@
 export const API_URL = "http://49.50.9.223:10029/api";
+export const WEB_LOCAL_URL = "http://localhost:5173";
 export const ENDPOINTS = {
   AUTH: {
     LOGIN: `v1/Authentication/SignIn`,

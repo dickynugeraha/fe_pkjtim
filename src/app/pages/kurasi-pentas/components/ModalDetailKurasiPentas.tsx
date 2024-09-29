@@ -4,6 +4,22 @@ import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
 import globalVar from "../../../helper/globalVar";
 import usePesanTempat from "../../../modules/hooks/pesan-tempat";
+import {
+  ClassicEditor,
+  Undo,
+  Mention,
+  Context,
+  Bold,
+  Essentials,
+  Italic,
+  Paragraph,
+  ContextWatchdog,
+} from "ckeditor5";
+import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
+
+import "ckeditor5/ckeditor5.css";
+import "ckeditor5/ckeditor5.css";
+import "ckeditor5-premium-features/ckeditor5-premium-features.css";
 
 type Props = {
   show: boolean;
@@ -80,13 +96,15 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             desc={globalVar.formatDate(data.endDate)}
           />
 
-          <DetailItemFile title="Surat Permohonan" url={data.suratPermohonan} />
-          <DetailItemFile title="proposal" url={data.proposal} />
-          {/* <DetailIten
-            iconName={"toggle-off-circle"}
-            title={"Alasan Pengelola"}
-            desc={"alasan"}
-          /> */}
+          {data.suratPermohonan && (
+            <DetailItemFile
+              title="Surat Permohonan"
+              url={data.suratPermohonan}
+            />
+          )}
+          {data.proposal && (
+            <DetailItemFile title="proposal" url={data.proposal} />
+          )}
         </div>
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
@@ -105,7 +123,11 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                changeStatus("Revise", payload);
+                setModalShowRevisi(false);
+                handleClose();
+                setTimeout(() => {
+                  changeStatus("Revise", payload);
+                }, 200);
               }}
             >
               Rekomendasi
@@ -113,7 +135,44 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           }
         >
           <>
-            <textarea
+            <CKEditorContext
+              context={Context}
+              contextWatchdog={ContextWatchdog}
+              onChangeInitializedEditors={(editors) => {
+                console.info(editors.editor1?.instance);
+              }}
+            >
+              <CKEditor
+                editor={ClassicEditor}
+                config={{
+                  plugins: [Essentials, Bold, Italic, Paragraph],
+                  toolbar: [
+                    "undo",
+                    "redo",
+                    "|",
+                    "bold",
+                    "italic",
+                    "|",
+                    "heading",
+                  ],
+                }}
+                data="<p></p>"
+                contextItemMetadata={{
+                  name: "editor1",
+                  yourAdditionalData: 2,
+                }}
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor 1 is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+
+                  setReason(data);
+                }}
+              />
+            </CKEditorContext>
+            {/* <textarea
               name="alasan"
               id="alasan"
               className="form-control"
@@ -121,7 +180,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
               onChange={(e) => setReason(e.target.value)}
             >
               {reason}
-            </textarea>
+            </textarea> */}
           </>
         </ModalWrapper>
         <ModalWrapper
@@ -139,7 +198,11 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                changeStatus("Answer-Letter", payload);
+                setModalShowTerima(false);
+                handleClose();
+                setTimeout(() => {
+                  changeStatus("Answer-Letter", payload);
+                }, 200);
               }}
             >
               Terima
@@ -147,7 +210,44 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           }
         >
           <>
-            <textarea
+            <CKEditorContext
+              context={Context}
+              contextWatchdog={ContextWatchdog}
+              onChangeInitializedEditors={(editors) => {
+                console.info(editors.editor1?.instance);
+              }}
+            >
+              <CKEditor
+                editor={ClassicEditor}
+                config={{
+                  plugins: [Essentials, Bold, Italic, Paragraph],
+                  toolbar: [
+                    "undo",
+                    "redo",
+                    "|",
+                    "bold",
+                    "italic",
+                    "|",
+                    "heading",
+                  ],
+                }}
+                data="<p></p>"
+                contextItemMetadata={{
+                  name: "editor1",
+                  yourAdditionalData: 2,
+                }}
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor 1 is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+
+                  setReason(data);
+                }}
+              />
+            </CKEditorContext>
+            {/* <textarea
               name="alasan"
               id="alasan"
               className="form-control"
@@ -155,7 +255,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
               onChange={(e) => setReason(e.target.value)}
             >
               {reason}
-            </textarea>
+            </textarea> */}
           </>
         </ModalWrapper>
       </>

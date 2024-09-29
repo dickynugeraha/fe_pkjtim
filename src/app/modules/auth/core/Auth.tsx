@@ -11,7 +11,7 @@ import {
 import { LayoutSplashScreen } from "../../../../_metronic/layout/core";
 import { AuthModel, UserModel } from "./_models";
 import * as authHelper from "./AuthHelpers";
-import { getUserByToken, refresToken } from "./_requests";
+import { refresToken } from "./_requests";
 import { WithChildren } from "../../../../_metronic/helpers";
 import { jwtDecode } from "jwt-decode";
 
@@ -86,6 +86,8 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
             name: userDecodeResult.name,
             role: userDecodeResult.role,
             phoneNumber: userDecodeResult.phone_number,
+            isEmailConfirm:
+              userDecodeResult.IsEmailConfirmed === "False" ? false : true,
           };
           if (res.data.data) {
             setCurrentUser(user);

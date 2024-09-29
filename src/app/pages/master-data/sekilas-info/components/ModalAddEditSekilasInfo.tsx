@@ -30,7 +30,6 @@ const ModalAddEditSekilasInfo: FC<PropsModalAddEditSekilasInfo> = ({
   isValidated,
   data,
 }) => {
-  // const [placeIsClose, setPlaceIsClose] = useState(false);
   const [imagePreview, setImagePreview] = useState();
 
   const handleImageChange = (file: any) => {
