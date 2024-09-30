@@ -28,6 +28,7 @@ export const PesananMasuk = () => {
     loading,
     allReservationPesanTempat,
     setQuery,
+    changeStatus,
   } = usePesanTempat();
 
   useEffect(() => {
@@ -41,7 +42,12 @@ export const PesananMasuk = () => {
 
   const data = useMemo(
     () => allReservationPesanTempat,
-    [loading, allReservationPesanTempat]
+    [
+      loading,
+      allReservationPesanTempat,
+      getAllReservationPesanTempat,
+      changeStatus,
+    ]
   );
   const columns = useMemo(
     () => [
@@ -191,6 +197,12 @@ export const PesananMasuk = () => {
         <ModalDetailPesananMasuk
           show={modalDetail.show}
           data={modalDetail.data}
+          changeStatus={(status: any, payload: any) =>
+            changeStatus(status, payload)
+          }
+          onChangeStatus={() => {
+            getAllReservationPesanTempat();
+          }}
           handleClose={() => setModalDetail({ ...modalDetail, show: false })}
         />
       </Content>

@@ -41,10 +41,12 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
     } else {
       approveReservation(payload);
     }
-    setModalAlasan({
-      show: false,
-      type: "",
-    });
+    setTimeout(() => {
+      setModalAlasan({
+        show: false,
+        type: "",
+      });
+    }, 1000);
   };
 
   let statusKey = "";
@@ -199,8 +201,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
                 title={"Surat Hasil Kurasi"}
                 desc={statusKey}
                 isFile
-                //api surat hasil kurasi menyusul
-                urlFile={data?.proposal}
+                urlFile={`Pdf/File/SuratHasilKurasi/${data.id}`}
               />
             ))}
           {(data?.kuratorName != undefined && data?.status == "REVISE") ||
@@ -210,18 +211,17 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
                 title={"Surat Hasil Kurasi (Revisi)"}
                 desc={statusKey}
                 isFile
-                //api surat hasil kurasi menyusul
-                urlFile={data?.proposal}
+                urlFile={`Pdf/File/SuratHasilKurasi/${data.id}`}
               />
             ))}
           {data?.pengelolaName && (
             <DetailItem
               iconName={"file"}
-              title={"Surat Jawaban"}
+              title={"Surat Jawaban (Revisi)"}
               desc={statusKey}
               isFile
               //api surat jawaban menyusul
-              urlFile={data?.proposal}
+              urlFile={`Pdf/File/SuratJawaban/${data.id}`}
             />
           )}
         </div>
@@ -292,7 +292,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
             {!isFile && <p className="m-0 text-gray-600">{desc}</p>}
-            {isFile && (
+            {isFile ? (
               <a
                 role="button"
                 className="btn btn-sm btn-light-primary"
@@ -301,6 +301,8 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
               >
                 Lihat {title}
               </a>
+            ) : (
+              <p className="text-muted">Data tidak tersedia</p>
             )}
           </div>
         </div>

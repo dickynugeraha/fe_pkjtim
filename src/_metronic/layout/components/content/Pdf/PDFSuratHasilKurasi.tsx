@@ -1,17 +1,17 @@
-// components/PDFPernyataanPersetujuan.tsx
+// components/PDFSuratHasilKurasi.tsx
 import React from "react";
 import { useParams } from "react-router-dom";
 import { API_URL, ENDPOINTS } from "../../../../../app/constants/API";
 
-const PDFPernyataanPersetujuan: React.FC = () => {
+const PDFSuratHasilKurasi: React.FC = () => {
   const params = useParams();
   const pdfUrl =
     API_URL +
     "/" +
-    ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM +
+    ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT +
     "/" +
     params.id +
-    "/Attachment/PernyataanPersetujuan"; // PDF file path
+    "/Letter/Kurasi"; // PDF file path
 
   console.log("pdf", pdfUrl);
 
@@ -28,4 +28,4 @@ const PDFPernyataanPersetujuan: React.FC = () => {
   );
 };
 
-export default PDFPernyataanPersetujuan;
+export default PDFSuratHasilKurasi;

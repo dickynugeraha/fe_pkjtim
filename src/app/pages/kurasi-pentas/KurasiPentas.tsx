@@ -27,6 +27,7 @@ const Breadcrumbs: Array<PageLink> = [
 
 export const KurasiPentas = () => {
   const [loading, setLoading] = useState(false);
+  const { changeStatus } = usePesanTempat();
   const [allReservationPesanTempat, setAllReservationPesanTempat] = useState<
     any[]
   >([]);
@@ -77,7 +78,15 @@ export const KurasiPentas = () => {
     data: {},
   });
 
-  const data = useMemo(() => allReservationPesanTempat, [loading]);
+  const data = useMemo(
+    () => allReservationPesanTempat,
+    [
+      loading,
+      allReservationPesanTempat,
+      getAllReservationPesanTempatStatusKurasi,
+      changeStatus,
+    ]
+  );
   const columns = useMemo(
     () => [
       {
@@ -171,6 +180,12 @@ export const KurasiPentas = () => {
         />
         <ModalDetailKurasiPentas
           show={modalDetail.show}
+          changeStatus={(status: any, payload: any) =>
+            changeStatus(status, payload)
+          }
+          onChangeStatus={() => {
+            getAllReservationPesanTempatStatusKurasi();
+          }}
           handleClose={() => setModalDetail({ data: {}, show: false })}
           data={modalDetail.data}
         />

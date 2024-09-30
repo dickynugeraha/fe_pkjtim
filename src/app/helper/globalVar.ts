@@ -162,6 +162,45 @@ const checkUrlAccessible = async (url: string): Promise<boolean> => {
   }
 };
 
+function htmlToText(htmlString: string) {
+  const tempElement = document.createElement("div");
+  tempElement.innerHTML = htmlString;
+
+  return tempElement.textContent || tempElement.innerText || "";
+}
+
+function htmlToTextWithTags(htmlString: any) {
+  // Create a temporary DOM element to parse the HTML string
+  const tempElement = document.createElement("div");
+  tempElement.innerHTML = htmlString;
+
+  // Define the tags you want to preserve
+  const allowedTags = ["strong", "em", "b", "i"];
+
+  // Recursively process child nodes and remove unwanted tags
+  function processNode(node: any): any {
+    // If it's a text node, return the text
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.textContent;
+    }
+    // If it's an element and its tag is allowed, keep the tag and process children
+    if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      allowedTags.includes(node.tagName.toLowerCase())
+    ) {
+      const tagName = node.tagName.toLowerCase();
+      return `<${tagName}>${Array.from(node.childNodes)
+        .map(processNode)
+        .join("")}</${tagName}>`;
+    }
+    // Otherwise, just process its children (strip the tag)
+    return Array.from(node.childNodes).map(processNode).join("");
+  }
+
+  // Process the DOM and return the result as a string
+  return processNode(tempElement);
+}
+
 export default {
   BASE_URL,
   today,
@@ -176,4 +215,6 @@ export default {
   exportStatusPesanTempatToTitle,
   generateRandomId,
   checkUrlAccessible,
+  htmlToText,
+  htmlToTextWithTags,
 };

@@ -10,6 +10,8 @@ import ModalAddEditPengguna from "./components/ModalAddEditPengguna";
 import usePengguna from "../../../modules/hooks/master-data/pengguna";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Skeleton from "react-loading-skeleton";
+import { API_URL, ENDPOINTS } from "../../../constants/API";
+import Gap from "../../../../_metronic/layout/components/content/Gap";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -55,6 +57,10 @@ export const Pengguna = () => {
     url: "",
     show: false,
   });
+  const [modalDetailPengguna, setModalDetailPengguna] = useState<{
+    data: any;
+    show: boolean;
+  }>({ data: {}, show: false });
 
   const data = useMemo(
     () => pengguna,
@@ -67,39 +73,6 @@ export const Pengguna = () => {
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Gambar",
-        accessor: "file",
-        sortType: "alphanumeric",
-        Cell: (props: any) => {
-          const [loading, setLoading] = useState(true);
-          let singleData = props.cell.row.original;
-
-          const handleImageLoad = () => {
-            setLoading(false);
-          };
-
-          let content = <Skeleton height={80} width={150} />;
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
-
-          if (!loading) {
-            content = (
-              <div style={{ width: "150px" }}>
-                <img
-                  src={singleData.file}
-                  className="rounded"
-                  style={{ width: "100%" }}
-                  onLoad={handleImageLoad}
-                />
-              </div>
-            );
-          }
-
-          return content;
-        },
-      },
       {
         Header: "Nama Lengkap",
         accessor: "fullName",
@@ -220,7 +193,18 @@ export const Pengguna = () => {
                 >
                   <KTIcon
                     iconName="delete-folder"
-                    className="fs-1 text-danger"
+                    className="fs-1 text-danger me-3"
+                  />
+                </div>
+                <div
+                  role="button"
+                  onClick={() => {
+                    setModalDetailPengguna({ data: singleData, show: true });
+                  }}
+                >
+                  <KTIcon
+                    iconName="burger-menu"
+                    className="fs-1 text-warning"
                   />
                 </div>
               </div>
@@ -233,7 +217,6 @@ export const Pengguna = () => {
     ],
     []
   );
-  // console.log("pengguna", pengguna);
 
   return (
     <>
@@ -284,6 +267,40 @@ export const Pengguna = () => {
             }
           }}
         />
+        <ModalWrapper
+          title={"Detail Pengguna"}
+          className="modal-lg"
+          attribute={{ centered: true }}
+          show={modalDetailPengguna.show}
+          handleClose={() => {
+            setModalDetailPengguna({ ...modalDetailPengguna, show: false });
+          }}
+          footerCustom={<></>}
+        >
+          <>
+            <h5>Foto Identitas</h5>
+            <Gap height={8} />
+            <img
+              src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${modalDetailPengguna.data.id}/Attachment/TandaPengenal`}
+              style={{ width: "100%", borderRadius: 8 }}
+            />
+            <Gap height={16} />
+            <div className="d-flex justify-content-between">
+              <div>
+                <h5>Nama Lengkap</h5>
+                <p>{modalDetailPengguna.data.fullName}</p>
+              </div>
+              <div>
+                <h5>Nomor Handphone</h5>
+                <p>{modalDetailPengguna.data.phoneNumber}</p>
+              </div>
+              <div>
+                <h5>Email</h5>
+                <p>{modalDetailPengguna.data.email}</p>
+              </div>
+            </div>
+          </>
+        </ModalWrapper>
       </Content>
     </>
   );

@@ -25,14 +25,18 @@ type Props = {
   show: boolean;
   data: any;
   handleClose: () => void;
+  changeStatus: (status: any, payload: any) => void;
+  onChangeStatus: () => void;
 };
 
 const ModalDetailKurasiPentas: React.FC<Props> = ({
   show,
   data,
+  changeStatus,
   handleClose,
+  onChangeStatus,
 }) => {
-  const { changeStatus } = usePesanTempat();
+  // const { changeStatus } = usePesanTempat();
   const [modalShowRevisi, setModalShowRevisi] = useState(false);
   const [modalShowTerima, setModalShowTerima] = useState(false);
   const [reason, setReason] = useState("");
@@ -85,6 +89,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             title={"Pentas"}
             desc={data.judulPentas}
           />
+
           <DetailIten
             iconName={"toggle-on-circle"}
             title={"Tangal mulai kunjungan"}
@@ -99,11 +104,14 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           {data.suratPermohonan && (
             <DetailItemFile
               title="Surat Permohonan"
-              url={data.suratPermohonan}
+              url={`Pdf/File/SuratPermohonan/${data.id}`}
             />
           )}
           {data.proposal && (
-            <DetailItemFile title="proposal" url={data.proposal} />
+            <DetailItemFile
+              title="proposal"
+              url={`Pdf/File/Proposal/${data.id}`}
+            />
           )}
         </div>
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
@@ -123,11 +131,12 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                setModalShowRevisi(false);
-                handleClose();
+                changeStatus("Revise", payload);
                 setTimeout(() => {
-                  changeStatus("Revise", payload);
-                }, 200);
+                  setModalShowRevisi(false);
+                  handleClose();
+                  onChangeStatus();
+                }, 1000);
               }}
             >
               Rekomendasi
@@ -198,11 +207,12 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                setModalShowTerima(false);
-                handleClose();
+                changeStatus("Answer-Letter", payload);
                 setTimeout(() => {
-                  changeStatus("Answer-Letter", payload);
-                }, 200);
+                  setModalShowTerima(false);
+                  handleClose();
+                  onChangeStatus();
+                }, 1000);
               }}
             >
               Terima

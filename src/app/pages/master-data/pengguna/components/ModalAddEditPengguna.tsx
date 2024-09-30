@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 import { Form, Col, InputGroup, Row, Button } from "react-bootstrap";
+import { API_URL, ENDPOINTS } from "../../../../constants/API";
 
 type PropsModalAddEditSekilasInfo = {
   formAdd: boolean;
@@ -37,15 +38,18 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
   data,
 }) => {
   const valueSelectOption = [
-    { value: "komite_seni_rupa", text: "Komite Seni Rupa" },
-    { value: "komite_tari", text: "Komite Tari" },
-    { value: "komite_musik", text: "Komite Musik" },
-    { value: "komite_sastra", text: "Komite Sastra" },
-    { value: "komite_film", text: "Komite Film" },
-    { value: "komite_teater", text: "Komite Teater" },
-    { value: "lintas_komite", text: "Lintas Komite (komite bersama)" },
-    { value: "komisi_filantropi", text: "Komisi Filantropi dan Simpul Seni" },
-    { value: "komisi_arsip", text: "Komisi Arsip dan Riset" },
+    { value: "KOMITE_SENI_RUPA", text: "Komite Seni Rupa" },
+    { value: "KOMITE_TARI", text: "Komite Tari" },
+    { value: "KOMITE_MUSIK", text: "Komite Musik" },
+    { value: "KOMITE_SASTRA", text: "Komite Sastra" },
+    { value: "KOMITE_FILM", text: "Komite Film" },
+    { value: "KOMITE_TEATER", text: "Komite Teater" },
+    { value: "LINTAS_KOMITE", text: "Lintas Komite (komite bersama)" },
+    {
+      value: "KOMISI_FILANTROPI_DAN_SIMPUL_SENI",
+      text: "Komisi Filantropi dan Simpul Seni",
+    },
+    { value: "KOMISI_ARSIP_DAN_RISET", text: "Komisi Arsip dan Riset" },
   ];
 
   const [imagePreview, setImagePreview] = useState();
@@ -107,7 +111,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
                   <img
                     className="rounded"
                     style={{ height: "150px", width: "100%" }}
-                    src={data.file}
+                    src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}/Attachment/TandaPengenal`}
                   />
                 )}
                 {fileValue && (
@@ -225,21 +229,6 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
               </Form.Select>
             </Form.Group>
           </Col>
-          {/* <Col>
-            <Form.Group className="form-group">
-              <Form.Label htmlFor="status" className="fw-bold">
-                KTP <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Control
-                type="file"
-                name="ktp"
-                id="ktp"
-                value={data.ktp}
-                onChange={(e: any) => handleChangeKTP(e.target.files[0])}
-                className="form-control"
-              />
-            </Form.Group>
-          </Col> */}
         </Row>
 
         <Form.Group className="form-group my-6">
@@ -289,18 +278,25 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
           </Form.Select>
         </Form.Group>
 
-        {!formAdd && isRoleKurator && (
-          <div className="form-group mb-3">
-            <label htmlFor="komite" className="fw-bold">
+        {data.role === "KURATOR" && (
+          <Form.Group className="form-group mb-3">
+            <Form.Label htmlFor="role" className="fw-bold">
               Komite <span className="text-danger">*</span>
-            </label>
-            <Gap height={10} />
-            <select name="komite" id="komite" className="form-select">
-              {valueSelectOption.map((data) => (
-                <option value={data.value}>{data.text}</option>
+            </Form.Label>
+            <select
+              name="komite"
+              id="komite"
+              className="form-select"
+              onChange={(e) => handleChange(e)}
+            >
+              <option value="">-- Pilih komite --</option>
+              {valueSelectOption.map((item) => (
+                <option selected={data.role === item.value} value={item.value}>
+                  {item.text}
+                </option>
               ))}
             </select>
-          </div>
+          </Form.Group>
         )}
       </Form>
     </ModalWrapper>

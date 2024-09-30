@@ -11,6 +11,7 @@ export const add = (data: any) => {
   formData.append("role", data.role);
   formData.append("isLocked", data.isLocked);
   formData.append("password", data.password);
+  formData.append("komite", data.komite);
 
   return axiosConfig.post(ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA, formData, {
     headers: {
@@ -103,6 +104,7 @@ export const update = (data: any) => {
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("status", data.status);
   formData.append("isLocked", data.isLocked);
+  formData.append("komite", data.komite);
 
   if (data.password != undefined) {
     formData.append("password", data.password);

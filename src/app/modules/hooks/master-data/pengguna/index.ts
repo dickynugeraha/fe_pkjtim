@@ -31,6 +31,7 @@ export default function usePengguna() {
     isLocked: false,
     phoneNumber: "",
     status: "",
+    komite: "",
     role: "",
   });
   const [isLockedCheck, setIsLockedCheck] = useState(false);
@@ -53,6 +54,7 @@ export default function usePengguna() {
         isLocked: false,
         phoneNumber: "",
         status: "",
+        komite: "",
         role: "",
       });
       setIsEdit(false);
@@ -188,22 +190,7 @@ export default function usePengguna() {
       const users: any[] = res.data.data.data;
       const usersWithFile: any[] = [];
 
-      for (let index = 0; index < users.length; index++) {
-        const usr = users[index];
-        const imageUrl: any = `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${usr.id}/Attachment/TandaPengenal?isStream=false`;
-        const resBase64 = await axiosConfig.get(imageUrl);
-        const base64 = `data:image/png;base64,${resBase64.data.data.fileContents}`;
-
-        const data = {
-          ...usr,
-          file: base64,
-          // file: `${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${usr.id}/Attachment/TandaPengenal`,
-        };
-        usersWithFile.push(data);
-      }
-      console.log("usersWithFile", usersWithFile);
-
-      setPengguna(usersWithFile);
+      setPengguna(users);
       setLoading(false);
     } catch (error: any) {
       Swal.fire({

@@ -200,12 +200,18 @@ export default function usePlanetarium() {
       );
       let allReservation: any[] = res.data.data.data;
 
+      console.log("allReservationnn", allReservation);
+
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {
         const singlePlanet = {
           ...data,
-          pernyataanPersetujuan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/PernyataanPersetujuan`,
-          suratUndangan: `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/SuratUndangan`,
+          pernyataanPersetujuan: data.pernyataanPersetujuan
+            ? `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/PernyataanPersetujuan`
+            : null,
+          suratUndangan: data.suratUndangan
+            ? `${API_URL}/${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/Attachment/SuratUndangan`
+            : null,
         };
         allResrvationWithFile.push(singlePlanet);
       });
@@ -280,7 +286,7 @@ export default function usePlanetarium() {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.reload();
+            getAllReservationPlanetarium();
           });
         } catch (error: any) {
           Swal.fire({
@@ -310,7 +316,7 @@ export default function usePlanetarium() {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.reload();
+            getAllReservationPlanetarium();
           });
         } catch (error: any) {
           Swal.fire({

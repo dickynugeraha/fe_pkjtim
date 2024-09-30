@@ -48,6 +48,8 @@ import PDFSuratProposal from "../../_metronic/layout/components/content/Pdf/PDFS
 import PDFSuratPermohonan from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonan";
 import VerifyNewAccount from "../pages/others/VerifyNewAccount";
 import VerifyChangeEmail from "../pages/others/VerifyChangeEmail";
+import PDFSuratHasilKurasi from "../../_metronic/layout/components/content/Pdf/PDFSuratHasilKurasi";
+import PDFSuratJawaban from "../../_metronic/layout/components/content/Pdf/PDFSuratJawaban";
 
 /**
  * Base URL of the website.
@@ -64,10 +66,10 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route element={<App />}>
           <Route path="error/*" element={<ErrorsPage />} />
-          {/* <Route
+          <Route
             path="verify/:userid/email/:newemail/:token"
             element={<VerifyChangeEmail />}
-          /> */}
+          />
           <Route
             path="verify/email/:userid/:token"
             element={<VerifyNewAccount />}
@@ -105,6 +107,14 @@ const AppRoutes: FC = () => {
           <Route
             path="Pdf/File/SuratPermohonan/:id"
             element={<PDFSuratPermohonan />}
+          />
+          <Route
+            path="Pdf/File/SuratHasilKurasi/:id"
+            element={<PDFSuratHasilKurasi />}
+          />
+          <Route
+            path="Pdf/File/SuratJawaban/:id"
+            element={<PDFSuratJawaban />}
           />
 
           {/* Pengelola */}

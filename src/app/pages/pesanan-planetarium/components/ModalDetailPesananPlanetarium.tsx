@@ -35,10 +35,12 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     } else {
       approveReservation(payload);
     }
-    setModalAlasan({
-      show: false,
-      type: "",
-    });
+    setTimeout(() => {
+      setModalAlasan({
+        show: false,
+        type: "",
+      });
+    }, 1000);
   };
 
   let statusKey = "";
@@ -110,12 +112,12 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <DetailItem
             iconName={"home-2"}
             title={"Nama sekolah"}
-            desc={data.namaSekolah}
+            desc={data.namaSekolah ?? "Data tidak tersedia"}
           />
           <DetailItem
             iconName={"geolocation"}
             title={"Alamat sekolah"}
-            desc={data.alamatSekolah}
+            desc={data.alamatSekolah ?? "Data tidak tersedia"}
           />
           <div className="col mb-6">
             <div className="d-flex">
@@ -220,7 +222,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     title,
     desc,
     isFile = false,
-    isShowButton = false,
+    isShowButton = true,
     urlFile,
   }: DetailItemProps) {
     return (
@@ -243,6 +245,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
                 Lihat
               </button>
             )}
+            {!isShowButton && <p className="text-muted">Data tidak tersedia</p>}
           </div>
         </div>
       </div>

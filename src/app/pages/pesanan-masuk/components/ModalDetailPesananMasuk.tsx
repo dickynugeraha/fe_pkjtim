@@ -7,19 +7,24 @@ import ModalReason from "./ModalReason";
 import globalVar from "../../../helper/globalVar";
 import usePesanTempat from "../../../modules/hooks/pesan-tempat";
 import Swal from "sweetalert2";
+import { API_URL, ENDPOINTS } from "../../../constants/API";
 
 type Props = {
   show: boolean;
   data: any;
   handleClose: () => void;
+  changeStatus: (status: any, payload: any) => void;
+  onChangeStatus: () => void;
 };
 
 const ModalDetailPesananMasuk: React.FC<Props> = ({
   show,
   data,
   handleClose,
+  changeStatus,
+  onChangeStatus,
 }) => {
-  const { changeStatus } = usePesanTempat();
+  // const { changeStatus } = usePesanTempat();
   const [modalDetailPesananUser, setModalDetailPesananUser] = useState({
     show: false,
     data: {},
@@ -84,10 +89,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               reason: "",
               note: "",
             };
-            setModalTypeReason({ ...modalTypeReason, show: false });
+            changeStatus("Kurasi", payload);
             setTimeout(() => {
-              changeStatus("Kurasi", payload);
-            }, 200);
+              setModalTypeReason({ ...modalTypeReason, show: false });
+              handleClose();
+              onChangeStatus();
+            }, 1000);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -111,8 +118,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       OthersContent = (
         <DetailItemFile
           title="Surat hasil kurasi (Revisi)"
-          //endpoint surat kurasi menyusul
-          url={data?.suratPermohonan}
+          isShowButton={true}
+          url={`Pdf/File/SuratHasilKurasi/${data.id}`}
           withUpload={false}
         />
       );
@@ -123,8 +130,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         OthersContent = (
           <DetailItemFile
             title="Surat jawaban"
-            //endpoint surat jawaban menyusul
-            url={data?.suratPermohonan}
+            isShowButton={true}
+            url={`Pdf/File/SuratJawaban/${data.id}`}
             withUpload={false}
           />
         );
@@ -133,14 +140,14 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <>
             <DetailItemFile
               title="Surat hasil kurasi (Disetujui)"
-              //endpoint surat kurasi menyusul
-              url={data?.suratPermohonan}
+              isShowButton={true}
+              url={`Pdf/File/SuratHasilKurasi/${data.id}`}
               withUpload={false}
             />
             <DetailItemFile
               title="Surat jawaban"
-              //endpoint surat jawaban menyusul
-              url={data?.suratPermohonan}
+              isShowButton={true}
+              url={`Pdf/File/SuratJawaban/${data.id}`}
               withUpload={false}
             />
           </>
@@ -180,8 +187,8 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       OthersContent = (
         <DetailItemFile
           title="Surat hasil kurasi (Disetujui)"
-          //endpoint surat kurasi menyusul
-          url={data?.suratPermohonan}
+          isShowButton={true}
+          url={`Pdf/File/SuratHasilKurasi/${data.id}`}
           withUpload={false}
         />
       );
@@ -305,7 +312,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             <DetailItem
               iconName={"message-text"}
               title={"Alasan ditolak"}
-              desc={data?.rejectNote}
+              // desc={data?.rejectNote}
+              descTag={globalVar.htmlToTextWithTags(data?.rejectNote)}
+              desc={globalVar.htmlToText(data?.rejectNote)}
             />
           )}
         </div>
@@ -398,14 +407,16 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               note: reason,
             };
             handleChange("reason", reason);
-            setModalTypeReason({
-              show: false,
-              type: modalTypeReason.type,
-            });
-            handleClose();
+
+            changeStatus(modalTypeReason?.type, payload);
             setTimeout(() => {
-              changeStatus(modalTypeReason?.type, payload);
-            }, 200);
+              setModalTypeReason({
+                show: false,
+                type: modalTypeReason.type,
+              });
+              handleClose();
+              onChangeStatus();
+            }, 1000);
           }}
           type={modalTypeReason.type}
         />
@@ -416,9 +427,10 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   type DetailItemProps = {
     iconName: string;
     title: string;
+    descTag?: string;
     desc: string;
   };
-  function DetailItem({ iconName, title, desc }: DetailItemProps) {
+  function DetailItem({ iconName, title, desc, descTag }: DetailItemProps) {
     return (
       <div className="col mb-6">
         <div className="d-flex align-items-center">
@@ -428,7 +440,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <Gap width={18} />
           <div>
             <h6 className="m-0">{title}</h6>
-            <p className="m-0">{desc}</p>
+            {descTag ? (
+              <div dangerouslySetInnerHTML={{ __html: descTag }} />
+            ) : (
+              <div className="m-0">{desc}</div>
+            )}
           </div>
         </div>
       </div>
@@ -534,7 +550,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   Lihat
                 </button>
               ) : (
-                "-"
+                "Data tidak tersedia"
               )
             ) : (
               <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
