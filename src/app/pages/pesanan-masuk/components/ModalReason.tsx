@@ -66,7 +66,18 @@ const ModalReason = ({
             editor={ClassicEditor}
             config={{
               plugins: [Essentials, Bold, Italic, Paragraph],
-              toolbar: ["undo", "redo", "|", "bold", "italic", "|", "heading"],
+              toolbar: [
+                "undo",
+                "redo",
+                "|",
+                "bold",
+                "italic",
+                "|",
+                "heading",
+                "|",
+                "bulletedList",
+                "numberedList",
+              ],
             }}
             data="<p></p>"
             contextItemMetadata={{

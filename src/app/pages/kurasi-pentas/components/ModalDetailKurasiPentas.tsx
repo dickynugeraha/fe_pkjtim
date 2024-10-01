@@ -163,6 +163,9 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                     "italic",
                     "|",
                     "heading",
+                    "|",
+                    "bulletedList",
+                    "numberedList",
                   ],
                 }}
                 data="<p></p>"
@@ -239,6 +242,9 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                     "italic",
                     "|",
                     "heading",
+                    "|",
+                    "bulletedList",
+                    "numberedList",
                   ],
                 }}
                 data="<p></p>"
