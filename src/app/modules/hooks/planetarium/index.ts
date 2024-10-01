@@ -200,8 +200,6 @@ export default function usePlanetarium() {
       );
       let allReservation: any[] = res.data.data.data;
 
-      console.log("allReservationnn", allReservation);
-
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {
         const singlePlanet = {

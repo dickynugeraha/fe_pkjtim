@@ -57,6 +57,9 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
     case "PROSES":
       statusKey = "Proses";
       break;
+    case "REVISE":
+      statusKey = "Revisi";
+      break;
     case "KURASI":
       statusKey = "Kurasi";
       break;
@@ -76,7 +79,6 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
       statusKey = "Ditolak";
       break;
   }
-
   return (
     <ModalWrapper
       title="Detail Pesanan Tempat"
@@ -127,17 +129,17 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"mask"}
             title={"Judul pentas"}
-            desc={data?.judulPentas == undefined ? "-" : data?.judulPentas}
+            desc={data?.judulPentas}
           />
           <DetailItem
             iconName={"home"}
             title={"Nama sanggar"}
-            desc={data?.namaSanggar == undefined ? "-" : data?.namaSanggar}
+            desc={data?.namaSanggar}
           />
           <DetailItem
             iconName={"geolocation"}
             title={"Alamat sanggar"}
-            desc={data?.alamatSanggar == undefined ? "-" : data?.alamatSanggar}
+            desc={data?.alamatSanggar}
           />
           <DetailItem
             iconName={"calendar-2"}
@@ -147,7 +149,7 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"notification"}
             title={"Total pembayaran"}
-            desc={data?.priceTotal}
+            desc={globalVar.formatRupiah(data?.priceTotal)}
           />
           <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
           <DetailItem
@@ -163,64 +165,63 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <DetailItem
             iconName={"barcode"}
             title={"Kode booking"}
-            desc={data?.kodeBooking == undefined ? "-" : data?.kodeBooking}
+            desc={data?.kodeBooking}
           />
           {data.rejectNote && (
             <DetailItem
               iconName={"pencil"}
               title={"Alasan"}
-              desc={data.rejectNote}
+              descTag={globalVar.htmlToTextWithTags(data?.rejectNote)}
+              desc={globalVar.htmlToText(data?.rejectNote)}
+            />
+          )}
+          {data.answerLetterNote && (
+            <DetailItem
+              iconName={"pencil"}
+              title={"Catatan"}
+              descTag={globalVar.htmlToTextWithTags(data?.answerLetterNote)}
+              desc={globalVar.htmlToText(data?.answerLetterNote)}
             />
           )}
         </div>
         <div className="row row-cols-3">
-          {data.suratpermohonan && (
             <DetailItem
               iconName={"file"}
               title={"Surat Permohonan"}
               desc={statusKey}
               isFile
-              urlFile={data?.suratPermohonan}
+              isShowButton={data?.suratPermohonan !== null}
+              urlFile={`Pdf/File/SuratPermohonan/${data.id}`}
             />
-          )}
-          {data.proposal && (
             <DetailItem
               iconName={"file"}
               title={"Proposal"}
               desc={statusKey}
               isFile
-              urlFile={data?.proposal}
+              isShowButton={data?.proposal !== null}
+              urlFile={`Pdf/File/Proposal/${data.id}`}
             />
-          )}
-          {(data?.kuratorName != undefined &&
-            data?.status == "WAITING_ANSWER_LETTER") ||
+          {data?.kuratorName != undefined && (
+            (data?.status == "WAITING_ANSWER_LETTER" ||
             data?.status == "REJECT" ||
-            (data?.status == "DONE" && (
+            data?.status == "REVISE" ||
+            data?.status == "DONE") &&
               <DetailItem
                 iconName={"file"}
                 title={"Surat Hasil Kurasi"}
                 desc={statusKey}
+                isShowButton={true}
                 isFile
                 urlFile={`Pdf/File/SuratHasilKurasi/${data.id}`}
               />
-            ))}
-          {(data?.kuratorName != undefined && data?.status == "REVISE") ||
-            (data?.status == "REJECT" && (
-              <DetailItem
-                iconName={"file"}
-                title={"Surat Hasil Kurasi (Revisi)"}
-                desc={statusKey}
-                isFile
-                urlFile={`Pdf/File/SuratHasilKurasi/${data.id}`}
-              />
-            ))}
+            )}
           {data?.pengelolaName && (
             <DetailItem
               iconName={"file"}
-              title={"Surat Jawaban (Revisi)"}
+              title={"Surat Jawaban"}
               desc={statusKey}
               isFile
-              //api surat jawaban menyusul
+              isShowButton={true}
               urlFile={`Pdf/File/SuratJawaban/${data.id}`}
             />
           )}
@@ -271,14 +272,18 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
     iconName: string;
     title: string;
     desc: string;
+    descTag?: string;
     isFile?: boolean;
+    isShowButton?: boolean;
     urlFile?: string;
   };
   function DetailItem({
     iconName,
     title,
     desc,
+    descTag,
     isFile = false,
+    isShowButton = false,
     urlFile,
   }: DetailItemProps) {
     return (
@@ -291,19 +296,35 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
-            {!isFile && <p className="m-0 text-gray-600">{desc}</p>}
-            {isFile ? (
-              <a
-                role="button"
-                className="btn btn-sm btn-light-primary"
-                href={urlFile}
-                target="_blank"
-              >
-                Lihat {title}
-              </a>
-            ) : (
-              <p className="text-muted">Data tidak tersedia</p>
+            {!isFile && (desc != undefined ? (
+              descTag ? (
+                <div dangerouslySetInnerHTML={{ __html: descTag }} />
+              ) : (
+                <div className="m-0 text-gray-600">{desc}</div>
+              )
+            )
+            : <p className="m-0 text-gray-600">-</p>
             )}
+            {isFile && (isShowButton ?
+              <button
+                role="button"
+                className="btn btn-light-primary py-2"
+                onClick={() => window.open(urlFile, "_blank")}
+              >
+                Lihat
+              </button>
+             :
+
+            <button
+                role="button"
+                className="btn btn-light-primary py-2"
+                disabled
+              >
+                Tidak ada file
+              </button>
+
+          )
+          }
           </div>
         </div>
       </div>

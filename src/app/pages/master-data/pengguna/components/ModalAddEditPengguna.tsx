@@ -75,6 +75,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
     }
   };
   handleImageChange(fileValue);
+
   return (
     <ModalWrapper
       title={formAdd ? "Tambah Pengguna" : "Ubah Pengguna"}
@@ -291,7 +292,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
             >
               <option value="">-- Pilih komite --</option>
               {valueSelectOption.map((item) => (
-                <option selected={data.role === item.value} value={item.value}>
+                <option selected={data.komite === item.value} value={item.value}>
                   {item.text}
                 </option>
               ))}

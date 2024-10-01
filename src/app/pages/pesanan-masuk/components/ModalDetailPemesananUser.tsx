@@ -16,14 +16,15 @@ const ModalDetailPemesananUser = ({
   return (
     <ModalWrapper
       attribute={{ centered: true }}
-      className="modal-md z-5"
+      className="modal-lg"
       footerCustom={<></>}
       handleClose={handleClose}
       show={show}
       title="Detail Pemesan User"
     >
       <>
-        <div className="row row-cols-3">
+        <div className="row">
+          <div className="col">
           <div className="d-flex align-items-center">
             <KTIcon iconName="user" className="fs-3 me-3" />
             <div>
@@ -39,27 +40,30 @@ const ModalDetailPemesananUser = ({
               </div>
             </div>
           </div>
+          </div>
+          <div className="col">
           <div className="d-flex align-items-center">
             <KTIcon iconName="message-notif" className="fs-3 me-3" />
             <div>
               <h6 className="m-0">Email</h6>
               <Gap height={5} />
-              <div style={{ width: "120px" }}>
                 <p
-                  style={{ textOverflow: "ellipsis", overflow: "hidden" }}
                   className="m-0"
                 >
                   {data.creatorEmail}
                 </p>
-              </div>
             </div>
           </div>
+          </div>
+          <div className="col">
           <div className="d-flex align-items-center">
             <KTIcon iconName="user" className="fs-3 me-3" />
             <div>
               <h6 className="m-0">Nomor hp</h6>
+              <Gap height={5} />
               <p className="m-0">{data.creatorPhone}</p>
             </div>
+          </div>
           </div>
         </div>
         <Gap height={32} />

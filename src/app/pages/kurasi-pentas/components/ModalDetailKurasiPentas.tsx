@@ -108,7 +108,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           )}
           {data.proposal && (
             <DetailItemFile
-              title="proposal"
+              title="Proposal"
               url={`Pdf/File/Proposal/${data.id}`}
             />
           )}
@@ -325,13 +325,12 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              <a
-                className="btn btn-sm btn-light-primary"
-                href={url}
-                target="_blank"
+              <button
+                className="btn btn-light-primary py-2"
+                onClick={() => window.open(url, "_blank")}
               >
-                Lihat {title}
-              </a>
+                Lihat
+              </button>
             ) : (
               <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
             )}

@@ -139,7 +139,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         OthersContent = (
           <>
             <DetailItemFile
-              title="Surat hasil kurasi (Disetujui)"
+              title="Surat hasil kurasi"
               isShowButton={true}
               url={`Pdf/File/SuratHasilKurasi/${data.id}`}
               withUpload={false}
@@ -220,7 +220,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
           <DetailItem
             iconName={"barcode"}
             title={"Kode booking"}
-            desc={data?.kodeBooking}
+            desc={data?.kodeBooking != undefined ? data?.kodeBooking : "-"}
           />
           <DetailItem iconName={"watch"} title={"Status"} desc={statusDesc} />
           <DetailItem
@@ -241,6 +241,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               data?.status === "KURASI" ||
               data?.status === "REJECT" ||
               data?.status === "EXPIRED" ||
+              data?.status === "PENDING" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -264,6 +265,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               data?.status === "KURASI" ||
               data?.status === "REJECT" ||
               data?.status === "EXPIRED" ||
+              data?.status === "PENDING" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -287,6 +289,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               data?.status === "KURASI" ||
               data?.status === "REJECT" ||
               data?.status === "EXPIRED" ||
+              data?.status === "PENDING" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -308,13 +311,20 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             title={"Total pembayaran"}
             desc={globalVar.formatRupiah(data?.priceTotal)}
           />
-          {data?.status === "REJECT" && (
+          {data.rejectNote && (
             <DetailItem
               iconName={"message-text"}
               title={"Alasan ditolak"}
-              // desc={data?.rejectNote}
               descTag={globalVar.htmlToTextWithTags(data?.rejectNote)}
               desc={globalVar.htmlToText(data?.rejectNote)}
+            />
+          )}
+          {data.answerLetterNote && (
+            <DetailItem
+              iconName={"pencil"}
+              title={"Catatan"}
+              descTag={globalVar.htmlToTextWithTags(data?.answerLetterNote)}
+              desc={globalVar.htmlToText(data?.answerLetterNote)}
             />
           )}
         </div>
@@ -331,6 +341,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               data?.status === "KURASI" ||
               data?.status === "REJECT" ||
               data?.status === "EXPIRED" ||
+              data?.status === "PENDING" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -350,6 +361,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               data?.status === "KURASI" ||
               data?.status === "REJECT" ||
               data?.status === "EXPIRED" ||
+              data?.status === "PENDING" ||
               data?.status === "DONE"
                 ? false
                 : true
@@ -433,17 +445,18 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
   function DetailItem({ iconName, title, desc, descTag }: DetailItemProps) {
     return (
       <div className="col mb-6">
-        <div className="d-flex align-items-center">
+        <div className="d-flex">
           <div>
             <KTIcon iconName={iconName} className="fs-3" />
           </div>
           <Gap width={18} />
           <div>
             <h6 className="m-0">{title}</h6>
+            <Gap height={6} />
             {descTag ? (
               <div dangerouslySetInnerHTML={{ __html: descTag }} />
             ) : (
-              <div className="m-0">{desc}</div>
+              <div className="m-0 text-gray-600">{desc}</div>
             )}
           </div>
         </div>
@@ -486,7 +499,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   onChange={(e) => setTextChange(e.target.value)}
                 />
               ) : (
-                <p className="m-0">{desc}</p>
+                <p className="m-0 text-gray-600">{desc}</p>
               )}
               <Gap width={8} />
 
@@ -550,10 +563,16 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   Lihat
                 </button>
               ) : (
-                "Data tidak tersedia"
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  disabled
+                >
+                  Tidak ada file
+                </button>
               )
             ) : (
-              <p className="m-0 btn btn-sm btn-light-primary">Lihat {title}</p>
+              <p className="m-0 btn btn-light-primary py-2">Lihat</p>
             )}
 
             {withUpload && (

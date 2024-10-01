@@ -112,12 +112,12 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <DetailItem
             iconName={"home-2"}
             title={"Nama sekolah"}
-            desc={data.namaSekolah ?? "Data tidak tersedia"}
+            desc={data.namaSekolah}
           />
           <DetailItem
             iconName={"geolocation"}
             title={"Alamat sekolah"}
-            desc={data.alamatSekolah ?? "Data tidak tersedia"}
+            desc={data.alamatSekolah}
           />
           <div className="col mb-6">
             <div className="d-flex">
@@ -235,8 +235,11 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
-            {!isFile && <p className="m-0 text-gray-600">{desc}</p>}
-            {isFile && isShowButton && (
+            {!isFile && (desc != undefined ? <p className="m-0 text-gray-600">{desc}</p>
+            : <p className="m-0 text-gray-600">-</p>
+            )
+            }
+            {isFile && ( isShowButton ?
               <button
                 role="button"
                 className="btn btn-light-primary py-2"
@@ -244,8 +247,15 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
               >
                 Lihat
               </button>
+              :
+              <button
+                role="button"
+                className="btn btn-light-primary py-2"
+                disabled
+              >
+                File tidak ada
+              </button>
             )}
-            {!isShowButton && <p className="text-muted">Data tidak tersedia</p>}
           </div>
         </div>
       </div>

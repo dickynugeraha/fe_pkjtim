@@ -52,6 +52,10 @@ export const PesananPlanetarium = () => {
         Header: "Nama Sekolah",
         accessor: "namaSekolah",
         sortType: "alphanumeric",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+          return <div>{singleData.namaSekolah ?? "-"}</div>;
+        },
       },
       {
         Header: "Jumlah Siswa",
@@ -159,12 +163,13 @@ export const PesananPlanetarium = () => {
     "Daerah",
     "Status",
   ];
+  console.log("dataplanet",allReservationPlanetarium);
   let body: any[] = [];
   allReservationPlanetarium?.map((data) => {
     body.push([
-      data?.userCreator.fullName,
-      data?.userCreator.phoneNumber,
-      data?.userCreator.email,
+      data?.creatorName,
+      data?.contact,
+      data?.creatorEmail,
       data?.namaSekolah,
       data?.alamatSekolah,
       data?.daerah,
@@ -182,6 +187,7 @@ export const PesananPlanetarium = () => {
       },
     });
   }
+
 
   return (
     <>
