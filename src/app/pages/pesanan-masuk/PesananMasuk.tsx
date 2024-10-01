@@ -42,12 +42,7 @@ export const PesananMasuk = () => {
 
   const data = useMemo(
     () => allReservationPesanTempat,
-    [
-      loading,
-      allReservationPesanTempat,
-      getAllReservationPesanTempat,
-      changeStatus,
-    ]
+    [loading, allReservationPesanTempat, changeStatus]
   );
   const columns = useMemo(
     () => [
@@ -201,7 +196,7 @@ export const PesananMasuk = () => {
             changeStatus(status, payload)
           }
           onChangeStatus={() => {
-            getAllReservationPesanTempat();
+            // getAllReservationPesanTempat();
           }}
           handleClose={() => setModalDetail({ ...modalDetail, show: false })}
         />

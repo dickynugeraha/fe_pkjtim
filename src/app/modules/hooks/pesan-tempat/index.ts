@@ -50,11 +50,11 @@ export default function usePesanTempat() {
         const singleReserve = {
           ...data,
           suratPermohonan: data.suratPermohonan
-              ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`
-              : null,
-            proposal: data.proposal
-              ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`
-              : null,
+            ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`
+            : null,
+          proposal: data.proposal
+            ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`
+            : null,
         };
 
         allResrvationWithCorrectEmail.push(singleReserve);
@@ -279,7 +279,7 @@ export default function usePesanTempat() {
           : "",
       onConfirm: async () => {
         try {
-          const res = await changeStatusReservation({ ...newData }, status);
+          await changeStatusReservation({ ...newData }, status);
 
           Swal.fire({
             icon: "success",

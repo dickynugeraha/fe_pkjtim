@@ -1,5 +1,9 @@
 export const API_URL = "http://49.50.9.223:10029/api";
-export const WEB_LOCAL_URL = "http://localhost:5173";
+export const WEB_LOCAL_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5173"
+    : "http://49.50.9.223:10030";
+
 export const ENDPOINTS = {
   AUTH: {
     LOGIN: `v1/Authentication/SignIn`,
@@ -41,5 +45,9 @@ export const ENDPOINTS = {
   },
   CONTACT_PERSON: {
     LIST_UPDATE_ADD_DELETE_CONTACT_PERSON: "v1/Utilities/ContactPerson",
+  },
+  DASHBOARD: {
+    GET_STATUS_USER: "v1/Dashboard/Status/User",
+    GET_EVERY_RESERVATION: "v1/Dashboard/Tempat/Reservasi",
   },
 };

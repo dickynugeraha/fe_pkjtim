@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FC, useEffect, useRef } from 'react';
-import { KTIcon } from '../../../../../_metronic/helpers';
-import { getCSSVariableValue } from '../../../../../_metronic/assets/ts/_utils';
-import { useThemeMode } from '../../../../../_metronic/partials/layout/theme-mode/ThemeModeProvider';
+import { FC, useEffect, useRef } from "react";
+import { KTIcon } from "../../../../../_metronic/helpers";
+import { getCSSVariableValue } from "../../../../../_metronic/assets/ts/_utils";
+import { useThemeMode } from "../../../../../_metronic/partials/layout/theme-mode/ThemeModeProvider";
 
 type Props = {
   className: string;
   chartSize?: number;
   chartLine?: number;
   chartRotate?: number;
+  dataReservasi: any;
 };
 
 const CardJumlahAcara: FC<Props> = ({
   className,
+  dataReservasi,
   chartSize = 70,
   chartLine = 11,
   chartRotate = 124,
@@ -34,56 +36,61 @@ const CardJumlahAcara: FC<Props> = ({
     }, 10);
   };
 
+  let totalReservation = 0;
+
+  dataReservasi?.map((item: any) => {
+    totalReservation += Number(item.count);
+  });
+
   return (
     <div className={`card card-flush ${className}`}>
-      <div className='card-header pt-4'>
-        <div className='card-title d-flex flex-column'>
-          <div className='d-flex align-items-center'>
-            <span className='fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2'>
-              124
+      <div className="card-header pt-4">
+        <div className="card-title d-flex flex-column">
+          <div className="d-flex align-items-center">
+            <span className="fs-2hx fw-bold text-gray-900 me-2 lh-1 ls-n2">
+              {totalReservation}
             </span>
           </div>
-          <span className='text-gray-500 pt-1 fw-semibold fs-6'>
+          <span className="text-gray-500 pt-1 fw-semibold fs-6">
             Pementasan
           </span>
         </div>
       </div>
 
-      <div className='card-body pt-2 pb-4 d-flex flex-wrap align-items-center'>
-        <div className='d-flex flex-center me-5 pt-2'>
+      <div className="card-body pt-2 pb-4 d-flex flex-wrap align-items-center">
+        <div className="d-flex flex-center me-5 pt-2">
           <div
-            id='kt_card_widget_17_chart'
+            id="kt_card_widget_17_chart"
             ref={chartRef}
-            style={{ minWidth: chartSize + 'px', minHeight: chartSize + 'px' }}
+            style={{ minWidth: chartSize + "px", minHeight: chartSize + "px" }}
             data-kt-size={chartSize}
             data-kt-line={chartLine}
           ></div>
         </div>
 
-        <div className='d-flex flex-column content-justify-center flex-row-fluid'>
-          <div className='d-flex fw-semibold align-items-center'>
-            <div className='bullet w-8px h-3px rounded-2 bg-success me-3'></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Teater Kecil</div>
-            <div className='fw-bolder text-gray-700 text-xxl-end'>15</div>
-          </div>
-          <div className='d-flex fw-semibold align-items-center my-3'>
-            <div className='bullet w-8px h-3px rounded-2 bg-primary me-3'></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Teater Besar</div>
-            <div className='fw-bolder text-gray-700 text-xxl-end'>30</div>
-          </div>
-          <div className='d-flex fw-semibold align-items-center mb-3'>
-            <div className='bullet w-8px h-3px rounded-2 bg-warning me-3'></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Teater Besar</div>
-            <div className='fw-bolder text-gray-700 text-xxl-end'>30</div>
-          </div>
-          <div className='d-flex fw-semibold align-items-center'>
-            <div
-              className='bullet w-8px h-3px rounded-2 me-3'
-              style={{ backgroundColor: '#E4E6EF' }}
-            ></div>
-            <div className='text-gray-500 flex-grow-1 me-4'>Ruang Latihan</div>
-            <div className=' fw-bolder text-gray-700 text-xxl-end'>47</div>
-          </div>
+        <div className="d-flex flex-column content-justify-center flex-row-fluid">
+          {dataReservasi?.map((item: any) => {
+            const color = ["bg-success", "bg-primary", "bg-warning"];
+
+            return (
+              <div
+                key={item.tempat}
+                className="d-flex fw-semibold align-items-center my-3"
+              >
+                <div
+                  className={`bullet w-8px h-3px rounded-2 ${
+                    color[Math.floor(Math.random() * dataReservasi?.length)]
+                  } me-3`}
+                ></div>
+                <div className="text-gray-500 flex-grow-1 me-4">
+                  {item.tempat}
+                </div>
+                <div className="fw-bolder text-gray-700 text-xxl-end">
+                  {item.count}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -95,11 +102,11 @@ const initChart = function (
   chartLine: number = 11,
   chartRotate: number = 124
 ) {
-  const el = document.getElementById('kt_card_widget_17_chart');
+  const el = document.getElementById("kt_card_widget_17_chart");
   if (!el) {
     return;
   }
-  el.innerHTML = '';
+  el.innerHTML = "";
 
   const options = {
     size: chartSize,
@@ -108,16 +115,16 @@ const initChart = function (
     //percent:  el.getAttribute('data-kt-percent') ,
   };
 
-  const canvas = document.createElement('canvas');
-  const span = document.createElement('span');
+  const canvas = document.createElement("canvas");
+  const span = document.createElement("span");
 
   //@ts-ignore
-  if (typeof G_vmlCanvasManager !== 'undefined') {
+  if (typeof G_vmlCanvasManager !== "undefined") {
     //@ts-ignore
     G_vmlCanvasManager.initElement(canvas);
   }
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   canvas.width = canvas.height = options.size;
 
   el.appendChild(span);
@@ -142,7 +149,7 @@ const initChart = function (
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
     ctx.strokeStyle = color;
-    ctx.lineCap = 'round'; // butt, round or square
+    ctx.lineCap = "round"; // butt, round or square
     ctx.lineWidth = lineWidth;
     ctx.stroke();
   };
@@ -151,10 +158,10 @@ const initChart = function (
   // drawCircle('#E4E6EF', options.lineWidth, 100 / 100);
   // drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
   // drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 100 / 250);
-  drawCircle('#E4E6EF', options.lineWidth, 1 );
-  drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 0.23 );
-  drawCircle(getCSSVariableValue('--bs-warning'), options.lineWidth, 0.3 );
-  drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 0.47 );
+  drawCircle("#E4E6EF", options.lineWidth, 1);
+  drawCircle(getCSSVariableValue("--bs-primary"), options.lineWidth, 0.23);
+  drawCircle(getCSSVariableValue("--bs-warning"), options.lineWidth, 0.3);
+  drawCircle(getCSSVariableValue("--bs-success"), options.lineWidth, 0.47);
 };
 
 export { CardJumlahAcara };

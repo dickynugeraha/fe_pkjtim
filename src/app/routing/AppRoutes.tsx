@@ -82,7 +82,6 @@ const AppRoutes: FC = () => {
               path="dashboard/informasi/:list"
               element={<SemuaInformasi />}
             />
-            <Route path="profil-saya" element={<ProfilSaya />} />
             <Route
               path="dashboard/informasi/:list/:id"
               element={<DetailInformasi />}
@@ -125,6 +124,7 @@ const AppRoutes: FC = () => {
                 <Route path="pesanan-masuk" element={<PesananMasuk />} />
                 <Route path="pesanan-planet" element={<PesananPlanetarium />} />
                 <Route path="master-data/pengguna" element={<Pengguna />} />
+                <Route path="profil-saya" element={<ProfilSaya />} />
                 <Route
                   path="master-data/sekilas-info"
                   element={<SekilasInfo />}
@@ -157,6 +157,7 @@ const AppRoutes: FC = () => {
           {currentUser?.role === ROLE.KURATOR ||
           currentUser?.role === ROLE.SUPER_ADMIN ? (
             <Route element={<MasterLayout />}>
+              <Route path="profil-saya" element={<ProfilSaya />} />
               <Route path="kurasi-pentas" element={<KurasiPentas />} />
             </Route>
           ) : (
@@ -170,6 +171,7 @@ const AppRoutes: FC = () => {
           currentUser?.role === ROLE.SUPER_ADMIN ? (
             <>
               <Route element={<MasterLayout />}>
+                <Route path="profil-saya" element={<ProfilSaya />} />
                 <Route path="error/*" element={<ErrorsPage />} />
                 <Route path="pesanan-saya" element={<PesananSaya />} />
                 <Route
