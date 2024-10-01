@@ -18,7 +18,6 @@ import {
 import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 
 import "ckeditor5/ckeditor5.css";
-import "ckeditor5/ckeditor5.css";
 import "ckeditor5-premium-features/ckeditor5-premium-features.css";
 
 type Props = {
