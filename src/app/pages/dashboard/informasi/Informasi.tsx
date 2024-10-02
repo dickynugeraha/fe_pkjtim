@@ -23,9 +23,9 @@ const ContentTempat: FC<PropsTempat> = ({ data }) => {
         <h3 className="m-0">Tempat</h3>
       </Card.Header>
       <Card.Body>
-        <div className="row row-cols-lg-4">
+        <div className="row row-cols-lg-4 row-cols-1">
           {data.map((item: any, index: number) => (
-            <div className="col" key={index.toString()}>
+            <div className="col mb-5" key={index.toString()}>
               <img
                 src={dummyImage}
                 className="rounded mb-3"

@@ -2,18 +2,16 @@ import React, { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import usePengguna from "../../modules/hooks/master-data/pengguna";
+import { useAuth } from "../../modules/auth";
 
 const VerifyChangeEmail = () => {
   const params = useParams();
   const { userid, token, newemail } = params;
-  console.log(userid);
-  console.log(token);
-  console.log(newemail);
 
   const { confirmEmailVerif, loading } = usePengguna();
-
+  const { logout } = useAuth();
   useEffect(() => {
-    confirmEmailVerif(userid, token, newemail);
+    confirmEmailVerif(userid, token, newemail).then(() => logout());
   }, []);
 
   return (
