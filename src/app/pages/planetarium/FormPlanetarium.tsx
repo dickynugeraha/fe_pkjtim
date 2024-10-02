@@ -11,6 +11,7 @@ import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
 import Remining from "../../../_metronic/layout/components/content/Remining";
 import Swal from "sweetalert2";
+import clsx from "clsx";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -32,6 +33,44 @@ const formPesanScheme = Yup.object().shape({
   alamatSekolah: Yup.string().required("alamat sekolah harus diisi"),
   jumlahPeserta: Yup.string().required("Jumlah peserta harus diisi"),
   daerah: Yup.string().required("Daerah harus dipilih"),
+  fileSuratUndangan: Yup.mixed()
+    .required("Surat undangan harus diupload")
+    .test(
+      "fileFormat",
+      "File wajib ber-format PDF",
+      (value: any) => {
+        if (value) {
+          const supportedFormats = ["pdf"];
+          return supportedFormats.includes(value.name.split(".").pop());
+        }
+        return true;
+      }
+    )
+    .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
+      if (value) {
+        return value.size <= 2145728;
+      }
+      return true;
+    }),
+    fileLembarPernyataan: Yup.mixed()
+    .required("Lembar pernyataan harus diupload")
+    .test(
+      "fileFormat",
+      "File wajib ber-format PDF",
+      (value: any) => {
+        if (value) {
+          const supportedFormats = ["pdf"];
+          return supportedFormats.includes(value.name.split(".").pop());
+        }
+        return true;
+      }
+    )
+    .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
+      if (value) {
+        return value.size <= 2145728;
+      }
+      return true;
+    }),
 });
 
 const initialValues = {
@@ -39,8 +78,8 @@ const initialValues = {
   alamatSekolah: "",
   jumlahPeserta: "",
   daerah: "",
-  fileSuratUndangan: null,
-  fileLembarPernyataan: null,
+  fileSuratUndangan: "",
+  fileLembarPernyataan: "",
 };
 
 const now: any = new Date();
@@ -69,6 +108,17 @@ export const FormPlanetarium = () => {
       requestReservationPlanetarium(data);
     },
   });
+
+  const handleChangeSuratUndangan = (e: any) => {
+    formik.setFieldValue("fileSuratUndangan", e.target.files[0]);
+    setFileSuratUndangan(e.target.files[0]);
+  };
+
+  const handleChangeLembarPernyataan = (e: any) => {
+    formik.setFieldValue("fileLembarPernyataan", e.target.files[0]);
+    setFileLembarPernyataan(e.target.files[0]);
+  };
+
   const { state }: any = useLocation();
   const navigate = useNavigate();
 
@@ -244,8 +294,8 @@ export const FormPlanetarium = () => {
                   Unggah berkas
                 </label>
                 <p className="text-danger">
-                  *) Ekstensi yang diperbolehkan pdf/png/jpg/jpeg, dengan ukuran
-                  maks 1MB
+                  *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran
+                  maks 2MB
                 </p>
                 <Gap height={10} />
 
@@ -257,11 +307,18 @@ export const FormPlanetarium = () => {
                       id="fileSuratUndangan"
                       name="fileSuratUndangan"
                       type="file"
-                      onChange={(e: any) =>
-                        setFileSuratUndangan(e.target.files[0])
-                      }
-                      className="form-control"
+                      onChange={handleChangeSuratUndangan}
+                      className={clsx("form-control bg-transparent", {
+                        "is-invalid": formik.errors.fileSuratUndangan,
+                      })}
                     />
+                    {formik.errors.fileSuratUndangan && (
+                    <div className="fv-plugins-message-container">
+                      <div className="fv-help-block">
+                        <span role="alert">{formik.errors.fileSuratUndangan}</span>
+                      </div>
+                    </div>
+                  )}
                     <p className="text-muted m-0">
                       *) Surat Undangan Resmi WAJIB ditandatangani Kepala
                       Sekolah
@@ -273,16 +330,23 @@ export const FormPlanetarium = () => {
                     </label>
                     <Gap height={10} />
                     <input
-                      id="fileLembarPersetujuan"
-                      name="fileLembarPersetujuan"
+                      id="fileLembarPernyataan"
+                      name="fileLembarPernyataan"
                       type="file"
-                      onChange={(e: any) =>
-                        setFileLembarPernyataan(e.target.files[0])
-                      }
-                      className="form-control"
+                      onChange={handleChangeLembarPernyataan}
+                      className={clsx("form-control bg-transparent", {
+                        "is-invalid": formik.errors.fileLembarPernyataan,
+                      })}
                     />
+                    {formik.errors.fileLembarPernyataan && (
+                    <div className="fv-plugins-message-container">
+                      <div className="fv-help-block">
+                        <span role="alert">{formik.errors.fileLembarPernyataan}</span>
+                      </div>
+                    </div>
+                  )}
                     <p className="text-muted m-0">
-                      *) Formulir dapat diunduh di bit.ly/pernyataanPGS
+                      *) Formulir dapat diunduh di <a href="http://bit.ly/pernyataanPGS" target="_blank">bit.ly/pernyataanPGS</a>
                     </p>
                   </div>
                 </div>

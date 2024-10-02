@@ -28,17 +28,57 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 
-const formPesanScheme = Yup.object().shape({
-  namaSanggar: Yup.string().required("Nama sanggar harus diisi"),
-  judulPentas: Yup.string().required("Judul pentas harus diisi"),
-  alamatSanggar: Yup.string().required("Alamat sanggar harus diisi"),
-});
-
 const initialValues = {
   namaSanggar: "",
   judulPentas: "",
   alamatSanggar: "",
+  suratPermohonan: "",
+  proposal: "",
 };
+
+const formPesanScheme = Yup.object().shape({
+  namaSanggar: Yup.string().required("Nama sanggar harus diisi"),
+  judulPentas: Yup.string().required("Judul pentas harus diisi"),
+  alamatSanggar: Yup.string().required("Alamat sanggar harus diisi"),
+  suratPermohonan: Yup.mixed()
+    .required("Surat permohonan harus diupload")
+    .test(
+      "fileFormat",
+      "File wajib ber-format PDF",
+      (value: any) => {
+        if (value) {
+          const supportedFormats = ["pdf"];
+          return supportedFormats.includes(value.name.split(".").pop());
+        }
+        return true;
+      }
+    )
+    .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
+      if (value) {
+        return value.size <= 2145728;
+      }
+      return true;
+    }),
+    proposal: Yup.mixed()
+    .required("Proposal harus diupload")
+    .test(
+      "fileFormat",
+      "File wajib ber-format PDF",
+      (value: any) => {
+        if (value) {
+          const supportedFormats = ["pdf"];
+          return supportedFormats.includes(value.name.split(".").pop());
+        }
+        return true;
+      }
+    )
+    .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
+      if (value) {
+        return value.size <= 2145728;
+      }
+      return true;
+    }),
+});
 
 export const FormPesanTempat: FC = () => {
   const {
@@ -103,6 +143,16 @@ export const FormPesanTempat: FC = () => {
       requestReservationPesanTempat(payload);
     },
   });
+
+  const handleChangeSuratPermohonan = (e: any) => {
+    formik.setFieldValue("suratPermohonan", e.target.files[0]);
+    setFileSuratPermohonan(e.target.files[0]);
+  };
+
+  const handleChangeProposal = (e: any) => {
+    formik.setFieldValue("proposal", e.target.files[0]);
+    setFileProposal(e.target.files[0]);
+  };
 
   const tarifCalculationNoPreEvent = () => {
     const start: any = new Date(startDate);
@@ -578,7 +628,7 @@ export const FormPesanTempat: FC = () => {
               <p className="fw-bold mb-1 fs-3">Unggah berkas</p>
               <span className="text-danger">
                 *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran maks
-                3MB
+                2MB
               </span>
               <Gap height={20} />
               <div className="d-flex flex-wrap">
@@ -586,19 +636,35 @@ export const FormPesanTempat: FC = () => {
                   <p className="fw-bold mb-1">Surat permohonan</p>
                   <input
                     type="file"
-                    className="form-control bg-transparant"
-                    onChange={(e: any) =>
-                      setFileSuratPermohonan(e.target.files[0])
-                    }
+                    className={clsx("form-control bg-transparent", {
+                      "is-invalid": formik.errors.suratPermohonan,
+                    })}
+                    onChange={handleChangeSuratPermohonan}
                   />
+                  {formik.errors.suratPermohonan && (
+                    <div className="fv-plugins-message-container">
+                      <div className="fv-help-block">
+                        <span role="alert">{formik.errors.suratPermohonan}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="mb-5">
                   <p className="fw-bold mb-1">Proposal</p>
                   <input
                     type="file"
-                    className="form-control bg-transparant"
-                    onChange={(e: any) => setFileProposal(e.target.files[0])}
+                    className={clsx("form-control bg-transparent", {
+                      "is-invalid": formik.errors.proposal,
+                    })}
+                    onChange={handleChangeProposal}
                   />
+                  {formik.errors.proposal && (
+                    <div className="fv-plugins-message-container">
+                      <div className="fv-help-block">
+                        <span role="alert">{formik.errors.proposal}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
