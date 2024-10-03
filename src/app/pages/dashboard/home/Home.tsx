@@ -38,8 +38,9 @@ export const Home: FC = () => {
     show: false,
     data: {},
   });
-  const [chooseTempat, setchooseTempat] = useState<string>("");
-  const { allReservationPesanTempat } = usePesanTempat();
+  const [chooseTempat, setChooseTempat] = useState<string>("");
+  const [filterCalendar, setFilterCalendar] = useState<any[]>([]);
+  const { eventCalendar } = usePesanTempat();
   const { tempat } = useTempat();
   const { loading, getDataDashboard, dataStatus, dataReservasi } =
     useDashboard();
@@ -48,45 +49,21 @@ export const Home: FC = () => {
     getDataDashboard();
   }, []);
 
-  const events: any[] = [];
-
-  allReservationPesanTempat.map((itm) => {
-    const date = new Date(itm.endDate);
-    date.setDate(date.getDate() + 2);
-    let backgroundColor = "#3788d8";
-    switch (itm?.tempat?.name) {
-      case "Teater Kecil":
-        backgroundColor = "#ef9a28";
-        break;
-      case "Teater Besar":
-        backgroundColor = "#5bc0de";
-        break;
-      case "Plaza":
-        backgroundColor = "#5cb85c";
-        break;
-
-      default:
-        break;
-    }
-    const data = {
-      title: itm?.judulPentas,
-      start: itm?.startDate,
-      startDate: itm?.startDate,
-      end: date.toISOString().split("T")[0],
-      endDate: itm?.endDate,
-      image: itm?.file,
-      tempat: itm?.tempat?.name,
-      bgColor: backgroundColor,
-    };
-    events.push(data);
-  });
-
   const handleEventClick = (arg: any) => {
     setModalDetailEvent({
       show: true,
       data: arg,
     });
   };
+
+  useEffect(() => {
+    const results =
+      chooseTempat != ""
+        ? eventCalendar.filter((evt) => evt.tempatId == chooseTempat)
+        : eventCalendar;
+
+    setFilterCalendar(results);
+  }, [chooseTempat, eventCalendar]);
 
   return (
     <>
@@ -106,10 +83,10 @@ export const Home: FC = () => {
                       id="switchCalendar"
                       className="form-select"
                       onChange={(e) => {
-                        setchooseTempat(e.target.value);
+                        setChooseTempat(e.target.value);
                       }}
                     >
-                      <option value="all">Acara PKJ TIM</option>
+                      <option value="">Acara PKJ TIM</option>
                       {tempat.map((tmt) => {
                         return (
                           <option key={tmt.id} value={tmt.id}>
@@ -132,13 +109,8 @@ export const Home: FC = () => {
                       center: "",
                       right: "prev,today,next",
                     }}
-                    events={events}
+                    events={filterCalendar}
                     eventContent={(eventInfo) => {
-                      console.log(
-                        "eventInfo.event.extendedProps",
-                        eventInfo.event.extendedProps
-                      );
-
                       return (
                         <div
                           style={{
@@ -153,7 +125,6 @@ export const Home: FC = () => {
                         </div>
                       );
                     }}
-                    // eventContent={renderEventContent}
                     eventClick={handleEventClick}
                   />
                 </div>
@@ -187,11 +158,4 @@ export const Home: FC = () => {
       </Content>
     </>
   );
-  function renderEventContent(eventInfo: any) {
-    return (
-      <>
-        <i role="button">{eventInfo.event.title}</i>
-      </>
-    );
-  }
 };

@@ -80,34 +80,37 @@ export default function usePesanTempat() {
     const events: any[] = [];
 
     reservation.map((itm) => {
-      const date = new Date(itm.endDate);
-      date.setDate(date.getDate() + 2);
-      let backgroundColor = "#3788d8";
-      switch (itm?.tempat?.name) {
-        case "Teater Kecil":
-          backgroundColor = "#ef9a28";
-          break;
-        case "Teater Besar":
-          backgroundColor = "#5bc0de";
-          break;
-        case "Plaza":
-          backgroundColor = "#5cb85c";
-          break;
+      if (itm.status !== "REJECT" || itm.status !== "EXPIRED") {
+        const date = new Date(itm.endDate);
+        date.setDate(date.getDate() + 2);
+        let backgroundColor = "#3788d8";
+        switch (itm?.tempat?.name) {
+          case "Teater Kecil":
+            backgroundColor = "#ef9a28";
+            break;
+          case "Teater Besar":
+            backgroundColor = "#5bc0de";
+            break;
+          case "Plaza":
+            backgroundColor = "#5cb85c";
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
+        const data = {
+          title: itm?.judulPentas,
+          start: itm?.startDate,
+          startDate: itm?.startDate,
+          end: date.toISOString().split("T")[0],
+          endDate: itm?.endDate,
+          image: itm?.file,
+          tempat: itm?.tempat?.name,
+          tempatId: itm?.tempat?.id,
+          bgColor: backgroundColor,
+        };
+        events.push(data);
       }
-      const data = {
-        title: itm?.judulPentas,
-        start: itm?.startDate,
-        startDate: itm?.startDate,
-        end: date.toISOString().split("T")[0],
-        endDate: itm?.endDate,
-        image: itm?.file,
-        tempat: itm?.tempat?.name,
-        bgColor: backgroundColor,
-      };
-      events.push(data);
     });
     setEventCalendar(events);
   };
@@ -127,8 +130,6 @@ export default function usePesanTempat() {
         );
 
         let allReservation: any[] = res.data.data.data;
-
-        console.log("allReservationanana", allReservation);
 
         let allResrvationWithFile: any[] = [];
         allReservation.map((data) => {
@@ -348,6 +349,8 @@ export default function usePesanTempat() {
     loading,
     allReservationPesanTempat,
     allReservationPesanTempatByUserId,
+    eventCalendar,
+    setEventCalendar,
     getSinglePesanTempat,
     nextStepHandler,
     requestReservationPesanTempat,

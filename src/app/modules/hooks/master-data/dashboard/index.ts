@@ -19,8 +19,6 @@ export default function useDashboard() {
       );
       setDataReservasi(resReservation.data.data);
       setDataStatus(resUser.data.data);
-      console.log(resUser.data.data);
-      console.log(resReservation.data.data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
