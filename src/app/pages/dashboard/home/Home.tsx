@@ -89,7 +89,8 @@ export const Home: FC = () => {
                       <option value="">Acara PKJ TIM</option>
                       {tempat.map((tmt) => {
                         return (
-                          <option key={tmt.id} value={tmt.id}>
+                          <option key={tmt.id} value={tmt.id}
+                          style={{ color: eventCalendar.find((b) => b.tempat == tmt.name)?.color }}>
                             {tmt.name}
                           </option>
                         );
@@ -100,8 +101,9 @@ export const Home: FC = () => {
                 <div className="p-8">
                   <FullCalendar
                     locale={idLocale}
-                    now={globalVar.getThreeMonthsFromToday()}
+                    now={new Date()}
                     height={555}
+                    initialDate={globalVar.getThreeMonthsFromToday()}
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
                     headerToolbar={{
@@ -113,12 +115,11 @@ export const Home: FC = () => {
                     eventContent={(eventInfo) => {
                       return (
                         <div
+                          role="button"
                           style={{
                             backgroundColor:
-                              eventInfo.event.extendedProps.bgColor ||
-                              "#3788d8",
-                            padding: "5px",
-                            borderRadius: "0px",
+                              eventInfo.event.extendedProps.bgColor,
+                            padding: "2px",
                           }}
                         >
                           {eventInfo.event.title}

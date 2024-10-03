@@ -13,9 +13,7 @@ import { useAuth } from "../../auth";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
 import { INITIAL_PAGE } from "../../../constants/PAGE";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
-import { ROLE } from "../../../constants/ROLE";
 import globalVar from "../../../helper/globalVar";
-import { event } from "jquery";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -78,25 +76,36 @@ export default function usePesanTempat() {
 
   const getDataCalendar = (reservation: any[]) => {
     const events: any[] = [];
-
-    reservation.map((itm) => {
-      if (itm.status !== "REJECT" || itm.status !== "EXPIRED") {
+    reservation
+    .map((itm,index) => {
         const date = new Date(itm.endDate);
         date.setDate(date.getDate() + 2);
-        let backgroundColor = "#3788d8";
-        switch (itm?.tempat?.name) {
-          case "Teater Kecil":
-            backgroundColor = "#ef9a28";
+        let backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);//random color
+
+        const tempatTemp = reservation.map(b => b?.tempat?.name);
+        const tempat = tempatTemp.filter((item, index) => tempatTemp.indexOf(item) === index);
+        switch (tempat.findIndex(b => itm?.tempat?.name == b)) {
+          case 0:
+            backgroundColor = "#0d6efd";
             break;
-          case "Teater Besar":
-            backgroundColor = "#5bc0de";
+          case 1:
+            backgroundColor = "#6610f2";
             break;
-          case "Plaza":
-            backgroundColor = "#5cb85c";
+          case 2:
+            backgroundColor = "#fd7e14";
+            break;
+          case 3:
+            backgroundColor = "#ffc107";
+            break;
+          case 4:
+            backgroundColor = "#198754";
+            break;
+          case 5:
+            backgroundColor = "#20c997";
             break;
 
-          default:
-            break;
+            default:
+              break;
         }
         const data = {
           title: itm?.judulPentas,
@@ -108,10 +117,38 @@ export default function usePesanTempat() {
           tempat: itm?.tempat?.name,
           tempatId: itm?.tempat?.id,
           bgColor: backgroundColor,
+          color: backgroundColor,
+          status: itm?.status
         };
-        events.push(data);
-      }
+        if(data.status != "REJECT" && data.status != "EXPIRED"){
+          events.push(data);
+        }
     });
+    events.map((item) =>{
+      switch (item.status) {
+        case "PENDING":
+          item.status = "Permintaan";
+          break;
+        case "PROSES":
+          item.status = "Proses";
+          break;
+        case "KURASI":
+          item.status = "Kurasi";
+          break;
+        case "REVISE":
+          item.status = "Selesai Kurasi";
+          break;
+        case "WAITING_ANSWER_LETTER":
+          item.status = "Selesai Kurasi";
+          break;
+        case "DONE":
+          item.status = "Selesai";
+          break;
+          default:
+            break;
+    }
+      }
+    );
     setEventCalendar(events);
   };
 

@@ -29,13 +29,13 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
         <Gap height={24} />
         <div>
           <div className="d-flex align-items-center">
-            <KTIcon iconName="calendar" className="text-primary fs-1 me-3" />
+            <KTIcon iconName="notepad" className="text-primary fs-1 me-3" />
             <p className="m-0 fs-3 fw-bold">{data?.event?.title}</p>
           </div>
           <Gap height={18} />
           <div className="d-flex align-items-center">
             <KTIcon
-              iconName={"toggle-on-circle"}
+              iconName={"to-right"}
               className="fs-1 text-success me-3"
             />
             <p className="fs-4 m-0 fw-bold me-3">Mulai</p>
@@ -46,7 +46,7 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
           <Gap height={8} />
           <div className="d-flex align-items-center">
             <KTIcon
-              iconName={"toggle-off-circle"}
+              iconName={"abstract-5"}
               className="fs-1 text-danger me-3"
             />
             <p className="fs-4 m-0 fw-bold me-3">Selesai</p>
@@ -59,6 +59,13 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
             <KTIcon iconName={"geolocation"} className="fs-1 me-3" />
             <p className="fs-4 m-0 fw-bold">
               {data?.event?.extendedProps?.tempat}
+            </p>
+          </div>
+          <Gap height={18} />
+          <div className="d-flex align-items-center">
+            <KTIcon iconName={"questionnaire-tablet"} className="fs-1 text-info me-3" />
+            <p className="fs-4 m-0 fw-bold">
+              {data?.event?.extendedProps?.status}
             </p>
           </div>
         </div>
