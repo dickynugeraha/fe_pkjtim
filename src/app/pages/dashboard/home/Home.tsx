@@ -116,11 +116,7 @@ export const Home: FC = () => {
                       return (
                         <div
                           role="button"
-                          style={{
-                            backgroundColor:
-                              eventInfo.event.extendedProps.bgColor,
-                            padding: "2px",
-                          }}
+                          className="fw-bold fst-italic p-1"
                         >
                           {eventInfo.event.title}
                         </div>

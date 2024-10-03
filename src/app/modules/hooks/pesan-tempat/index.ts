@@ -116,7 +116,6 @@ export default function usePesanTempat() {
           image: itm?.file,
           tempat: itm?.tempat?.name,
           tempatId: itm?.tempat?.id,
-          bgColor: backgroundColor,
           color: backgroundColor,
           status: itm?.status
         };
