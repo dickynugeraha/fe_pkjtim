@@ -12,9 +12,11 @@ import { Card, Col, Row } from "react-bootstrap";
 import { CardJumlahAcara } from "./components/CardJumlahAcara";
 import idLocale from "@fullcalendar/core/locales/id";
 import { CardJumlahPengguna } from "./components/CardJumlahPengguna";
-import usePentas from "../../../modules/hooks/master-data/pentas";
 import { WEB_LOCAL_URL } from "../../../constants/API";
 import useDashboard from "../../../modules/hooks/master-data/dashboard";
+import usePesanTempat from "../../../modules/hooks/pesan-tempat";
+import globalVar from "../../../helper/globalVar";
+import useTempat from "../../../modules/hooks/master-data/tempat";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -36,7 +38,9 @@ export const Home: FC = () => {
     show: false,
     data: {},
   });
-  const { pementasan } = usePentas();
+  const [chooseTempat, setchooseTempat] = useState<string>("");
+  const { allReservationPesanTempat } = usePesanTempat();
+  const { tempat } = useTempat();
   const { loading, getDataDashboard, dataStatus, dataReservasi } =
     useDashboard();
 
@@ -46,18 +50,33 @@ export const Home: FC = () => {
 
   const events: any[] = [];
 
-  pementasan.map((itm) => {
+  allReservationPesanTempat.map((itm) => {
     const date = new Date(itm.endDate);
-    date.setDate(date.getDate() + 1);
+    date.setDate(date.getDate() + 2);
+    let backgroundColor = "#3788d8";
+    switch (itm?.tempat?.name) {
+      case "Teater Kecil":
+        backgroundColor = "#ef9a28";
+        break;
+      case "Teater Besar":
+        backgroundColor = "#5bc0de";
+        break;
+      case "Plaza":
+        backgroundColor = "#5cb85c";
+        break;
 
+      default:
+        break;
+    }
     const data = {
-      title: itm?.title,
+      title: itm?.judulPentas,
       start: itm?.startDate,
       startDate: itm?.startDate,
       end: date.toISOString().split("T")[0],
       endDate: itm?.endDate,
       image: itm?.file,
       tempat: itm?.tempat?.name,
+      bgColor: backgroundColor,
     };
     events.push(data);
   });
@@ -86,17 +105,25 @@ export const Home: FC = () => {
                       name="switchCalendar"
                       id="switchCalendar"
                       className="form-select"
+                      onChange={(e) => {
+                        setchooseTempat(e.target.value);
+                      }}
                     >
-                      <option value="">Acara PKJ TIM</option>
-                      <option value="">Acara Ruang Latihan TJ</option>
-                      <option value="">Acara Teater Kecil</option>
-                      <option value="">Acara Teater Besar</option>
+                      <option value="all">Acara PKJ TIM</option>
+                      {tempat.map((tmt) => {
+                        return (
+                          <option key={tmt.id} value={tmt.id}>
+                            {tmt.name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 </Card.Header>
                 <div className="p-8">
                   <FullCalendar
                     locale={idLocale}
+                    now={globalVar.getThreeMonthsFromToday()}
                     height={555}
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
@@ -106,7 +133,27 @@ export const Home: FC = () => {
                       right: "prev,today,next",
                     }}
                     events={events}
-                    eventContent={renderEventContent}
+                    eventContent={(eventInfo) => {
+                      console.log(
+                        "eventInfo.event.extendedProps",
+                        eventInfo.event.extendedProps
+                      );
+
+                      return (
+                        <div
+                          style={{
+                            backgroundColor:
+                              eventInfo.event.extendedProps.bgColor ||
+                              "#3788d8",
+                            padding: "5px",
+                            borderRadius: "0px",
+                          }}
+                        >
+                          {eventInfo.event.title}
+                        </div>
+                      );
+                    }}
+                    // eventContent={renderEventContent}
                     eventClick={handleEventClick}
                   />
                 </div>

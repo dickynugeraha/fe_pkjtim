@@ -15,6 +15,7 @@ import { INITIAL_PAGE } from "../../../constants/PAGE";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 import { ROLE } from "../../../constants/ROLE";
 import globalVar from "../../../helper/globalVar";
+import { event } from "jquery";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function usePesanTempat() {
   const [allReservationPesanTempat, SetAllReservationPesanTempat] = useState<
     any[]
   >([]);
+  const [eventCalendar, setEventCalendar] = useState<any[]>([]);
   const [
     allReservationPesanTempatByUserId,
     SetAllReservationPesanTempatByUserId,
@@ -74,6 +76,42 @@ export default function usePesanTempat() {
     }, 1000);
   };
 
+  const getDataCalendar = (reservation: any[]) => {
+    const events: any[] = [];
+
+    reservation.map((itm) => {
+      const date = new Date(itm.endDate);
+      date.setDate(date.getDate() + 2);
+      let backgroundColor = "#3788d8";
+      switch (itm?.tempat?.name) {
+        case "Teater Kecil":
+          backgroundColor = "#ef9a28";
+          break;
+        case "Teater Besar":
+          backgroundColor = "#5bc0de";
+          break;
+        case "Plaza":
+          backgroundColor = "#5cb85c";
+          break;
+
+        default:
+          break;
+      }
+      const data = {
+        title: itm?.judulPentas,
+        start: itm?.startDate,
+        startDate: itm?.startDate,
+        end: date.toISOString().split("T")[0],
+        endDate: itm?.endDate,
+        image: itm?.file,
+        tempat: itm?.tempat?.name,
+        bgColor: backgroundColor,
+      };
+      events.push(data);
+    });
+    setEventCalendar(events);
+  };
+
   const getAllReservationPesanTempat = async (search = "") =>
     // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
     //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
@@ -107,19 +145,9 @@ export default function usePesanTempat() {
 
           allResrvationWithFile.push(singleReserve);
         });
-        //update ariko reservasi status kurasi dapat dilihat oleh pengelola
-        // if (fromPengelola) {
-        //   allResrvationWithFile = allResrvationWithFile.filter(
-        //     (data) => data.status !== "KURASI"
-        //   );
-        // }
-        // if (fromKurasi) {
-        //   allResrvationWithFile = allResrvationWithFile.filter(
-        //     (data) => data.status === "KURASI"
-        //   );
-        // }
 
         SetAllReservationPesanTempat(allResrvationWithFile);
+        getDataCalendar(allResrvationWithFile);
       } catch (error: any) {
         Swal.fire({
           icon: "error",
