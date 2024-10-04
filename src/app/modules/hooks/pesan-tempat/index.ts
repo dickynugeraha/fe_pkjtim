@@ -77,7 +77,7 @@ export default function usePesanTempat() {
   const getDataCalendar = (reservation: any[]) => {
     const events: any[] = [];
     reservation
-    .map((itm,index) => {
+    .map((itm) => {
         const date = new Date(itm.endDate);
         date.setDate(date.getDate() + 2);
         let backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);//random color
@@ -123,29 +123,29 @@ export default function usePesanTempat() {
           events.push(data);
         }
     });
-    events.map((item) =>{
-      switch (item.status) {
-        case "PENDING":
-          item.status = "Permintaan";
-          break;
-        case "PROSES":
-          item.status = "Proses";
-          break;
-        case "KURASI":
-          item.status = "Kurasi";
-          break;
-        case "REVISE":
-          item.status = "Selesai Kurasi";
-          break;
-        case "WAITING_ANSWER_LETTER":
-          item.status = "Selesai Kurasi";
-          break;
-        case "DONE":
-          item.status = "Selesai";
-          break;
-          default:
-            break;
-    }
+        events.map((item) =>{
+          switch (item.status) {
+            case "PENDING":
+              item.status = "Permintaan";
+              break;
+            case "PROSES":
+              item.status = "Proses";
+              break;
+            case "KURASI":
+              item.status = "Kurasi";
+              break;
+            case "REVISE":
+              item.status = "Selesai Kurasi";
+              break;
+            case "WAITING_ANSWER_LETTER":
+              item.status = "Selesai Kurasi";
+              break;
+            case "DONE":
+              item.status = "Selesai";
+              break;
+              default:
+                break;
+        }
       }
     );
     setEventCalendar(events);
