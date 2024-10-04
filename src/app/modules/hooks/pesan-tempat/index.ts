@@ -76,54 +76,57 @@ export default function usePesanTempat() {
 
   const getDataCalendar = (reservation: any[]) => {
     const events: any[] = [];
-    reservation
-    .map((itm,index) => {
-        const date = new Date(itm.endDate);
-        date.setDate(date.getDate() + 2);
-        let backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);//random color
+    reservation.map((itm, index) => {
+      const date = new Date(itm.endDate);
+      date.setDate(date.getDate() + 2);
+      let backgroundColor =
+        "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
 
-        const tempatTemp = reservation.map(b => b?.tempat?.name);
-        const tempat = tempatTemp.filter((item, index) => tempatTemp.indexOf(item) === index);
-        switch (tempat.findIndex(b => itm?.tempat?.name == b)) {
-          case 0:
-            backgroundColor = "#0d6efd";
-            break;
-          case 1:
-            backgroundColor = "#6610f2";
-            break;
-          case 2:
-            backgroundColor = "#fd7e14";
-            break;
-          case 3:
-            backgroundColor = "#ffc107";
-            break;
-          case 4:
-            backgroundColor = "#198754";
-            break;
-          case 5:
-            backgroundColor = "#20c997";
-            break;
+      const tempatTemp = reservation.map((b) => b?.tempat?.name);
+      const tempat = tempatTemp.filter(
+        (item, index) => tempatTemp.indexOf(item) === index
+      );
+      switch (tempat.findIndex((b) => itm?.tempat?.name == b)) {
+        case 0:
+          backgroundColor = "#0d6efd";
+          break;
+        case 1:
+          backgroundColor = "#6610f2";
+          break;
+        case 2:
+          backgroundColor = "#fd7e14";
+          break;
+        case 3:
+          backgroundColor = "#ffc107";
+          break;
+        case 4:
+          backgroundColor = "#198754";
+          break;
+        case 5:
+          backgroundColor = "#20c997";
+          break;
 
-            default:
-              break;
-        }
-        const data = {
-          title: itm?.judulPentas,
-          start: itm?.startDate,
-          startDate: itm?.startDate,
-          end: date.toISOString().split("T")[0],
-          endDate: itm?.endDate,
-          image: itm?.file,
-          tempat: itm?.tempat?.name,
-          tempatId: itm?.tempat?.id,
-          color: backgroundColor,
-          status: itm?.status
-        };
-        if(data.status != "REJECT" && data.status != "EXPIRED"){
-          events.push(data);
-        }
+        default:
+          break;
+      }
+
+      const data = {
+        title: itm?.judulPentas,
+        start: itm?.startDate,
+        startDate: itm?.startDate,
+        end: date.toISOString().split("T")[0],
+        endDate: itm?.endDate,
+        image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${itm?.tempat?.id}/Image?isStream=true`,
+        tempat: itm?.tempat?.name,
+        tempatId: itm?.tempat?.id,
+        color: backgroundColor,
+        status: itm?.status,
+      };
+      if (data.status != "REJECT" && data.status != "EXPIRED") {
+        events.push(data);
+      }
     });
-    events.map((item) =>{
+    events.map((item) => {
       switch (item.status) {
         case "PENDING":
           item.status = "Permintaan";
@@ -143,11 +146,10 @@ export default function usePesanTempat() {
         case "DONE":
           item.status = "Selesai";
           break;
-          default:
-            break;
-    }
+        default:
+          break;
       }
-    );
+    });
     setEventCalendar(events);
   };
 

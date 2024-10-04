@@ -1,13 +1,16 @@
 import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
+import { Col, Form, Row } from "react-bootstrap";
 
 type PropsModalAddEditSekilasInfo = {
   fromAdd: boolean;
   data: any;
+  fileValue: any;
   show: boolean;
   isPreEvent: boolean;
   setIsPreEvent: () => void;
+  onChangeFile: (e: any) => void;
   handleChange: (e: any) => void;
   handleClose: () => void;
   handleSubmit: (data: any) => void;
@@ -17,12 +20,27 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
   fromAdd,
   isPreEvent,
   show,
+  fileValue,
+  onChangeFile,
   handleClose,
   setIsPreEvent,
   handleSubmit,
   handleChange,
   data,
 }) => {
+  const [imagePreview, setImagePreview] = useState();
+
+  const handleImageChange = (file: any) => {
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  handleImageChange(fileValue);
   return (
     <ModalWrapper
       title={fromAdd ? "Tambah Tempat" : "Ubah Tempat"}
@@ -41,6 +59,41 @@ const ModalAddEditTempat: FC<PropsModalAddEditSekilasInfo> = ({
       }
     >
       <form>
+        <Row className="mb-3">
+          <Form.Group>
+            <Form.Label htmlFor="" className="fw-bold mb-2">
+              Gambar <span className="text-danger">*</span>
+            </Form.Label>
+            <Row>
+              <Col md={6}>
+                {!fromAdd && !fileValue && (
+                  <img
+                    className="rounded"
+                    style={{ height: "150px", width: "100%" }}
+                    src={data.photo}
+                  />
+                )}
+                {fileValue && (
+                  <img
+                    className="rounded"
+                    style={{ height: "150px", width: "100%" }}
+                    src={imagePreview}
+                  />
+                )}
+                <Gap height={10} />
+              </Col>
+            </Row>
+            <Row>
+              <Form.Group>
+                <Form.Control
+                  type="file"
+                  onChange={(e: any) => onChangeFile(e.target.files[0])}
+                />
+              </Form.Group>
+            </Row>
+          </Form.Group>
+        </Row>
+
         <div className="form-group mb-3">
           <label htmlFor="name" className="fw-bold">
             Nama Tempat <span className="text-danger">*</span>

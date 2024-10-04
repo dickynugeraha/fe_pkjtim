@@ -9,6 +9,7 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import ModalAddEditTempat from "./components/ModalAddEditTempat";
 import globalVar from "../../../helper/globalVar";
 import useTempat from "../../../modules/hooks/master-data/tempat";
+import { formToJSON } from "axios";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -33,6 +34,8 @@ export const Tempat = () => {
     deleteTempat,
     fetchAllTempat,
     updateTempat,
+    formFile,
+    setFormFile,
     closeModal,
     formData,
     handleChange,
@@ -180,6 +183,8 @@ export const Tempat = () => {
           addData={() => openModal()}
         />
         <ModalAddEditTempat
+          fileValue={formFile}
+          onChangeFile={(e) => setFormFile(e)}
           isPreEvent={isPreEvent}
           setIsPreEvent={() => setIsPreEvent(!isPreEvent)}
           show={isModalOpen}
@@ -188,10 +193,14 @@ export const Tempat = () => {
           fromAdd={!isEdit}
           handleClose={closeModal}
           handleSubmit={() => {
+            const payload = {
+              ...formData,
+              photo: formFile,
+            };
             if (isEdit) {
-              updateTempat(formData);
+              updateTempat(payload);
             } else {
-              addTempat(formData);
+              addTempat(payload);
             }
           }}
         />

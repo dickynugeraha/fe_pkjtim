@@ -2,14 +2,23 @@ import { ENDPOINTS } from "../../../../constants/API";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any, actor: string) => {
-  return axiosConfig.post(ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT, {
-    actor: actor,
-    name: data.name,
-    priceMainEventWeekEnd: data.priceMainEventWeekEnd,
-    priceMainEventWeekDay: data.priceMainEventWeekDay,
-    pricePreEventWeekEnd: data.pricePreEventWeekEnd,
-    pricePreEventWeekDay: data.pricePreEventWeekDay,
-  });
+  const formData = new FormData();
+  formData.append("actor", actor);
+  formData.append("photo", data.photo);
+  formData.append("name", data.name);
+  formData.append("priceMainEventWeekEnd", data.priceMainEventWeekEnd);
+  formData.append("priceMainEventWeekDay", data.priceMainEventWeekDay);
+  formData.append("pricePreEventWeekEnd", data.pricePreEventWeekEnd);
+  formData.append("pricePreEventWeekDay", data.pricePreEventWeekDay);
+  return axiosConfig.post(
+    ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 };
 
 export const getSinglePhoto = (id: number) => {
@@ -31,6 +40,7 @@ export const getAll = (Page: number, Limit: number, Search = "") => {
     Search,
     Sort: "DESC",
     IsIncludeFile: true,
+    IsIncludePhoto: true,
   });
 };
 
@@ -41,15 +51,22 @@ export const remove = (id: number, actor: string) => {
 };
 
 export const update = (data: any, actor: string) => {
+  const formData = new FormData();
+  formData.append("actor", actor);
+  formData.append("photo", data.photo);
+  formData.append("name", data.name);
+  formData.append("priceMainEventWeekEnd", data.priceMainEventWeekEnd);
+  formData.append("priceMainEventWeekDay", data.priceMainEventWeekDay);
+  formData.append("pricePreEventWeekEnd", data.pricePreEventWeekEnd);
+  formData.append("pricePreEventWeekDay", data.pricePreEventWeekDay);
   return axiosConfig.put(
     `${ENDPOINTS.TEMPAT.LIST_UPDATE_ADD_DELETE_TEMPAT}/${data.id}`,
+
+    formData,
     {
-      actor: actor,
-      name: data.name,
-      priceMainEventWeekEnd: data.priceMainEventWeekEnd,
-      priceMainEventWeekDay: data.priceMainEventWeekDay,
-      pricePreEventWeekEnd: data.pricePreEventWeekEnd,
-      pricePreEventWeekDay: data.pricePreEventWeekDay,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
 };

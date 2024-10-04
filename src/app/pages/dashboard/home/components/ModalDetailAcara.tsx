@@ -32,12 +32,9 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
             <KTIcon iconName="notepad" className="text-primary fs-1 me-3" />
             <p className="m-0 fs-3 fw-bold">{data?.event?.title}</p>
           </div>
-          <Gap height={18} />
+          <Gap height={20} />
           <div className="d-flex align-items-center">
-            <KTIcon
-              iconName={"to-right"}
-              className="fs-1 text-success me-3"
-            />
+            <KTIcon iconName={"to-right"} className="fs-1 text-success me-3" />
             <p className="fs-4 m-0 fw-bold me-3">Mulai</p>
             <p className="m-0 fs-4">
               {globalVar.formatDate(data?.event?.extendedProps?.startDate)}
@@ -45,25 +42,27 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
           </div>
           <Gap height={8} />
           <div className="d-flex align-items-center">
-            <KTIcon
-              iconName={"abstract-5"}
-              className="fs-1 text-danger me-3"
-            />
-            <p className="fs-4 m-0 fw-bold me-3">Selesai</p>
+            <KTIcon iconName={"abstract-5"} className="fs-1 text-danger me-3" />
+            <p className="fs-4 m-0 fw-bold me-3">
+              {data?.event?.extendedProps?.status}
+            </p>
             <p className="m-0 fs-4">
               {globalVar.formatDate(data?.event?.extendedProps?.endDate)}
             </p>
           </div>
-          <Gap height={18} />
+          <Gap height={8} />
           <div className="d-flex align-items-center">
             <KTIcon iconName={"geolocation"} className="fs-1 me-3" />
             <p className="fs-4 m-0 fw-bold">
               {data?.event?.extendedProps?.tempat}
             </p>
           </div>
-          <Gap height={18} />
+          <Gap height={8} />
           <div className="d-flex align-items-center">
-            <KTIcon iconName={"questionnaire-tablet"} className="fs-1 text-info me-3" />
+            <KTIcon
+              iconName={"questionnaire-tablet"}
+              className="fs-1 text-info me-3"
+            />
             <p className="fs-4 m-0 fw-bold">
               {data?.event?.extendedProps?.status}
             </p>

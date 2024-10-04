@@ -89,8 +89,15 @@ export const Home: FC = () => {
                       <option value="">Acara PKJ TIM</option>
                       {tempat.map((tmt) => {
                         return (
-                          <option key={tmt.id} value={tmt.id}
-                          style={{ color: eventCalendar.find((b) => b.tempat == tmt.name)?.color }}>
+                          <option
+                            key={tmt.id}
+                            value={tmt.id}
+                            style={{
+                              color: eventCalendar.find(
+                                (b) => b.tempat == tmt.name
+                              )?.color,
+                            }}
+                          >
                             {tmt.name}
                           </option>
                         );
@@ -114,10 +121,7 @@ export const Home: FC = () => {
                     events={filterCalendar}
                     eventContent={(eventInfo) => {
                       return (
-                        <div
-                          role="button"
-                          className="fw-bold fst-italic p-1"
-                        >
+                        <div role="button" className="fw-bold fst-italic p-1">
                           {eventInfo.event.title}
                         </div>
                       );

@@ -15,11 +15,13 @@ export default function useTempat() {
 
   const [tempat, setTempat] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [formFile, setFormFile] = useState(null);
 
   const [formData, setFormData] = useState({
     id: null,
     actor: "",
     name: "",
+    photo: "",
     priceMainEventWeekEnd: 0,
     priceMainEventWeekDay: 0,
     pricePreEventWeekEnd: 0,
@@ -41,6 +43,7 @@ export default function useTempat() {
       setFormData({
         id: null,
         actor: "",
+        photo: "",
         name: "",
         priceMainEventWeekEnd: 0,
         priceMainEventWeekDay: 0,
@@ -53,6 +56,7 @@ export default function useTempat() {
   };
   const closeModal = () => {
     setIsModalOpen(false);
+    setFormFile(null);
   };
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -238,6 +242,8 @@ export default function useTempat() {
     formData,
     isEdit,
     addTempat,
+    setFormFile,
+    formFile,
     updateTempat,
     deleteTempat,
     fetchAllTempat,
