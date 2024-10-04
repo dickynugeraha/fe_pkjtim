@@ -116,12 +116,17 @@ export default function usePesanTempat() {
         startDate: itm?.startDate,
         end: date.toISOString().split("T")[0],
         endDate: itm?.endDate,
-        image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/${itm?.tempat?.id}/Image?isStream=true`,
+        image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/Tempat/${
+          itm?.tempat?.id
+        }/Image?isStream=true&startDate=${globalVar.formatInputDate(
+          itm?.startDate
+        )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
         tempat: itm?.tempat?.name,
         tempatId: itm?.tempat?.id,
         color: backgroundColor,
         status: itm?.status,
       };
+
       if (data.status != "REJECT" && data.status != "EXPIRED") {
         events.push(data);
       }
