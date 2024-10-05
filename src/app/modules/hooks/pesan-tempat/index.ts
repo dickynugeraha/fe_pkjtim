@@ -76,39 +76,9 @@ export default function usePesanTempat() {
 
   const getDataCalendar = (reservation: any[]) => {
     const events: any[] = [];
-    reservation.map((itm, index) => {
+    reservation.map((itm) => {
       const date = new Date(itm.endDate);
       date.setDate(date.getDate() + 2);
-      let backgroundColor =
-        "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
-
-      const tempatTemp = reservation.map((b) => b?.tempat?.name);
-      const tempat = tempatTemp.filter(
-        (item, index) => tempatTemp.indexOf(item) === index
-      );
-      switch (tempat.findIndex((b) => itm?.tempat?.name == b)) {
-        case 0:
-          backgroundColor = "#0d6efd";
-          break;
-        case 1:
-          backgroundColor = "#6610f2";
-          break;
-        case 2:
-          backgroundColor = "#fd7e14";
-          break;
-        case 3:
-          backgroundColor = "#ffc107";
-          break;
-        case 4:
-          backgroundColor = "#198754";
-          break;
-        case 5:
-          backgroundColor = "#20c997";
-          break;
-
-        default:
-          break;
-      }
 
       const data = {
         title: itm?.judulPentas,
@@ -123,7 +93,7 @@ export default function usePesanTempat() {
         )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
         tempat: itm?.tempat?.name,
         tempatId: itm?.tempat?.id,
-        color: backgroundColor,
+        color: "",
         status: itm?.status,
       };
 

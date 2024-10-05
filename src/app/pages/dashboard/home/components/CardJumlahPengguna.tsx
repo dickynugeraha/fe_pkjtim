@@ -24,7 +24,7 @@ const CardJumlahPengguna = ({
       <div className="card-header pt-5 mb-5">
         <div className="card-title d-flex flex-column">
           <div className="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
-            {dataStatus?.total}
+            {dataStatus?.totalActive}
           </div>
 
           <div className="text-white opacity-75 pt-1 fw-semibold fs-6">
@@ -35,7 +35,7 @@ const CardJumlahPengguna = ({
       <div className="card-body d-flex align-items-end pt-0">
         <div className="d-flex align-items-center flex-column mt-7 w-100">
           <div className="d-flex justify-content-between fw-bold fs-6 text-white opacity-75 w-100 mt-auto">
-            <span>{dataStatus?.totalActive} Total Pengguna</span>
+            <span>{dataStatus?.total} Total Pengguna</span>
           </div>
         </div>
       </div>

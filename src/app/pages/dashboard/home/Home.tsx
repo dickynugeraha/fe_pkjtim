@@ -12,7 +12,6 @@ import { Card, Col, Row } from "react-bootstrap";
 import { CardJumlahAcara } from "./components/CardJumlahAcara";
 import idLocale from "@fullcalendar/core/locales/id";
 import { CardJumlahPengguna } from "./components/CardJumlahPengguna";
-import { WEB_LOCAL_URL } from "../../../constants/API";
 import useDashboard from "../../../modules/hooks/master-data/dashboard";
 import usePesanTempat from "../../../modules/hooks/pesan-tempat";
 import globalVar from "../../../helper/globalVar";
@@ -65,6 +64,40 @@ export const Home: FC = () => {
     setFilterCalendar(results);
   }, [chooseTempat, eventCalendar]);
 
+  const tempatColor:any[] = [];
+  tempat.map((b:any,index:any) => {
+    let backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
+        switch (index) {
+          case 0:
+            backgroundColor = "#0d6efd";
+            break;
+          case 1:
+            backgroundColor = "#6610f2";
+            break;
+          case 2:
+            backgroundColor = "#fd7e14";
+            break;
+          case 3:
+            backgroundColor = "#ffc107";
+            break;
+          case 4:
+            backgroundColor = "#198754";
+            break;
+          case 5:
+            backgroundColor = "#20c997";
+            break;
+
+          default:
+            break;
+        }
+    var data = {
+      id: b?.id,
+      tempat : b?.name,
+      color: backgroundColor
+    }
+    tempatColor.push(data);
+  });
+  eventCalendar.map(b => b.color = tempatColor.find(c => c.tempat == b.tempat)?.color)
   return (
     <>
       <PageTitle icon="home" breadcrumbs={Breadcrumbs} description="Home">
@@ -93,7 +126,7 @@ export const Home: FC = () => {
                             key={tmt.id}
                             value={tmt.id}
                             style={{
-                              color: eventCalendar.find(
+                              color: tempatColor.find(
                                 (b) => b.tempat == tmt.name
                               )?.color,
                             }}
@@ -143,6 +176,7 @@ export const Home: FC = () => {
                 <CardJumlahAcara
                   className="mb-2"
                   dataReservasi={dataReservasi}
+                  dataColor={tempatColor}
                 />
               </div>
             </Col>
