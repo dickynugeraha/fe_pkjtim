@@ -27,9 +27,9 @@ const ContentTempat: FC<PropsTempat> = ({ data }) => {
           {data.map((item: any, index: number) => (
             <div className="col mb-5" key={index.toString()}>
               <img
-                src={dummyImage}
+                src={item.photo}
                 className="rounded mb-3"
-                style={{ width: "100%", objectFit: "cover" }}
+                style={{ width: "100%", objectFit: "cover", height: 150 }}
               />
               <div className="fs-2 text-gray-900 fw-bold">{item.name}</div>
             </div>
