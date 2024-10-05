@@ -22,7 +22,7 @@ const ListViewItem: FC<PropsListItem> = ({
   const navigate = useNavigate();
   let content = <></>;
 
-  if (loading) {
+  if (loading || data.length === 0) {
     content = (
       <div className="row row-cols-lg-4">
         <LoadingCard array={[1, 1, 1, 1]} />

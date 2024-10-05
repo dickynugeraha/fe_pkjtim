@@ -8,6 +8,7 @@ import {
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
 import { useAuth } from "../../../auth";
+import { ENDPOINTS } from "../../../../constants/API";
 
 export default function useTempat() {
   const { currentUser } = useAuth();
@@ -80,8 +81,20 @@ export default function useTempat() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
+      console.log("res.data.data.data", res.data.data.data);
+      const data: any[] = [];
+      for (let index = 0; index < res.data.data.data.length; index++) {
+        const ell = res.data.data.data[index];
 
-      setTempat(res.data.data.data);
+        const imageUrl: any = `${ENDPOINTS.TEMPAT.TEMPAT_IMAGE}/${ell.id}/Image?isStream=true`;
+        const dataWithStream = {
+          ...ell,
+          photo: imageUrl,
+        };
+        data.push(dataWithStream);
+      }
+
+      setTempat(data);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
