@@ -11,7 +11,6 @@ type Props = {
 };
 
 const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
-  console.log(data?.event?.extendedProps?.status);
   return (
     <ModalWrapper
       title={data?.event?.extendedProps?.status == "Tempat Tutup" ? "Detail Tempat Tutup" : "Detail Acara"}
