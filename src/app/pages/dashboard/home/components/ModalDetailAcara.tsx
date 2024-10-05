@@ -11,9 +11,10 @@ type Props = {
 };
 
 const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
+  console.log(data?.event?.extendedProps?.status);
   return (
     <ModalWrapper
-      title="Detail Acara"
+      title={data?.event?.extendedProps?.status == "Tempat Tutup" ? "Detail Tempat Tutup" : "Detail Acara"}
       show={show}
       handleClose={handleClose}
       attribute={{ centered: true }}
@@ -21,12 +22,16 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
       footerCustom={<></>}
     >
       <>
-        <img
+      {data?.event?.extendedProps?.image != undefined &&
+        <>
+          <img
           src={data?.event?.extendedProps?.image}
           style={{ width: "100%" }}
-          className="rounded"
-        />
-        <Gap height={24} />
+            className="rounded"
+          />
+          <Gap height={24} />
+        </>
+      }
         <div>
           <div className="d-flex align-items-center">
             <KTIcon iconName="notepad" className="text-primary fs-1 me-3" />
@@ -44,7 +49,7 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
           <div className="d-flex align-items-center">
             <KTIcon iconName={"abstract-5"} className="fs-1 text-danger me-3" />
             <p className="fs-4 m-0 fw-bold me-3">
-              {data?.event?.extendedProps?.status}
+              Selesai
             </p>
             <p className="m-0 fs-4">
               {globalVar.formatDate(data?.event?.extendedProps?.endDate)}
@@ -53,7 +58,10 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
           <Gap height={8} />
           <div className="d-flex align-items-center">
             <KTIcon iconName={"geolocation"} className="fs-1 me-3" />
-            <p className="fs-4 m-0 fw-bold">
+            <p className="fs-4 m-0 fw-bold me-3">
+              Tempat
+            </p>
+            <p className="m-0 fs-4">
               {data?.event?.extendedProps?.tempat}
             </p>
           </div>
@@ -63,7 +71,10 @@ const ModalDetailAcara: FC<Props> = ({ show, data, handleClose }) => {
               iconName={"questionnaire-tablet"}
               className="fs-1 text-info me-3"
             />
-            <p className="fs-4 m-0 fw-bold">
+            <p className="fs-4 m-0 fw-bold me-3">
+              Status
+            </p>
+            <p className="fs-4 m-0">
               {data?.event?.extendedProps?.status}
             </p>
           </div>

@@ -9,6 +9,7 @@ import {
   submitReservation,
   changeStatusReservation,
 } from "../../requests/pesan-tempat";
+import { getAll } from "../../requests/master-data/tempat-tutup";
 import { useAuth } from "../../auth";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
 import { INITIAL_PAGE } from "../../../constants/PAGE";
@@ -74,7 +75,13 @@ export default function usePesanTempat() {
     }, 1000);
   };
 
-  const getDataCalendar = (reservation: any[]) => {
+  const getDataCalendar = async (reservation: any[]) => {
+    const tutupTempat = await getAll(
+      INITIAL_PAGE,
+      DEFAULT_LIMIT
+    );
+    let allTutupTempat: any[] = tutupTempat.data.data.data;
+
     const events: any[] = [];
     reservation.map((itm) => {
       const date = new Date(itm.endDate);
@@ -101,6 +108,25 @@ export default function usePesanTempat() {
         events.push(data);
       }
     });
+
+    allTutupTempat.map((itm) => {
+      const date = new Date(itm.endDate);
+      date.setDate(date.getDate() + 2);
+
+      const data = {
+        title: `${itm?.tempat.name} Tutup`,
+        start: itm?.startDate,
+        startDate: itm?.startDate,
+        end: date.toISOString().split("T")[0],
+        endDate: itm?.endDate,
+        image: undefined,
+        tempat: itm?.tempat?.name,
+        tempatId: itm?.tempat?.id,
+        color: "",
+        status: "CLOSED",
+      };
+      events.push(data);
+    });
     events.map((item) => {
       switch (item.status) {
         case "PENDING":
@@ -121,6 +147,9 @@ export default function usePesanTempat() {
         case "DONE":
           item.status = "Selesai";
           break;
+        case "CLOSED":
+          item.status = "Tempat Tutup";
+          break;
         default:
           break;
       }
@@ -134,17 +163,15 @@ export default function usePesanTempat() {
     {
       setLoading(true);
       try {
-        const res = await getAllReservation(
+        const reservations = await getAllReservation(
           INITIAL_PAGE,
           DEFAULT_LIMIT,
           search,
           "",
           "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         );
-
-        let allReservation: any[] = res.data.data.data;
-
-        let allResrvationWithFile: any[] = [];
+        let allReservation: any[] = reservations.data.data.data;
+        let allReservationWithFile: any[] = [];
         allReservation.map((data) => {
           const singleReserve = {
             ...data,
@@ -157,11 +184,11 @@ export default function usePesanTempat() {
             statusDesc: globalVar.exportStatusPesanTempatToTitle(data.status),
           };
 
-          allResrvationWithFile.push(singleReserve);
+          allReservationWithFile.push(singleReserve);
         });
 
-        SetAllReservationPesanTempat(allResrvationWithFile);
-        getDataCalendar(allResrvationWithFile);
+        SetAllReservationPesanTempat(allReservationWithFile);
+        getDataCalendar(allReservationWithFile);
       } catch (error: any) {
         Swal.fire({
           icon: "error",
