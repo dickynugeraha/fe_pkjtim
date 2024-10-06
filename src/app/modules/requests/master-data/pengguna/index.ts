@@ -42,7 +42,9 @@ export const resendEmailVerif = (id: any) => {
   return axiosConfig.put(
     `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${id}/Email/Resend`,
     {
-      url: `${WEB_LOCAL_URL}/verify/email/{userid}/{token}`,
+      url: `${sessionStorage.getItem(
+        "hostname"
+      )}/verify/email/{userid}/{token}`,
     }
   );
 };
@@ -133,7 +135,9 @@ export const reqUpdateEmail = (
   return axiosConfig.post(
     `${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${userId}/email/change/token`,
     {
-      url: `${WEB_LOCAL_URL}/verify/{userid}/email/{newemail}/{token}`,
+      url: `${sessionStorage.getItem(
+        "hostname"
+      )}/verify/{userid}/email/{newemail}/{token}`,
       email: newEmail,
       password: password,
     }

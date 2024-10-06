@@ -22,7 +22,10 @@ export function register(data: any) {
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("password", data.password);
   formData.append("rePassword", data.rePassword);
-  formData.append("url", `${WEB_LOCAL_URL}/verify/email/{userid}/{token}`);
+  formData.append(
+    "url",
+    `${sessionStorage.getItem("hostname")}/verify/email/{userid}/{token}`
+  );
 
   return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, formData, {
     headers: {

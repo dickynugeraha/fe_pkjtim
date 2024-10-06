@@ -128,6 +128,8 @@ export const Home: FC = () => {
     setEventCalendar(events);
   };
 
+  console.log("tetttats", sessionStorage.getItem("hostname"));
+
   const getDataReservasiByStatus = async () => {
     try {
       const res = await getAllReservationByStatus(
@@ -140,7 +142,6 @@ export const Home: FC = () => {
           "WAITING_ANSWER_LETTER",
           "PROSES",
           "KURASI",
-          "PENDING",
           "REQUEST",
           "REVISE",
         ]

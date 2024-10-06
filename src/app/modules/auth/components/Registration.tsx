@@ -11,12 +11,12 @@ import ModalInformasi from "../../../../_metronic/layout/components/modal/ModalI
 import { KTIcon } from "../../../../_metronic/helpers";
 
 const initialValues = {
-  fullname: "",
+  fullname: "Kale",
   ktp: "",
-  email: "",
-  phoneNumber: "",
-  password: "",
-  rePassword: "",
+  email: "dicky.dian1@gmail.com",
+  phoneNumber: "023056065015",
+  password: "123QwE123",
+  rePassword: "123QwE123",
 };
 
 const registrationSchema = Yup.object().shape({
