@@ -13,12 +13,40 @@ export const initBooking = (data: any) => {
   );
 };
 
+export const getAllReservationByStatus = (
+  Page: number,
+  Limit: number,
+  Search: any,
+  UserId: any,
+  Status?: any[]
+) => {
+  const params = new URLSearchParams();
+  params.append("Page", `${Page}`);
+  params.append("Limit", `${Limit}`);
+  params.append("Search", Search);
+  params.append("UserId", UserId);
+  params.append("IsIncludeTempat", "true");
+  params.append("IsIncludeUser", "true");
+  params.append("IsIncludeExpired", "false");
+
+  Status?.map((sts) => {
+    params.append("Status", sts);
+  });
+
+  return axiosConfig.get(
+    ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT,
+    {
+      params,
+    }
+  );
+};
+
 export const getAllReservation = (
   Page: number,
   Limit: number,
   Search: any,
   UserId: any,
-  Status: any,
+  Status?: any
 ) => {
   return axiosConfig.get(
     ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT,

@@ -1,8 +1,5 @@
 export const API_URL = "http://49.50.9.223:10029/api";
-export const WEB_LOCAL_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5173"
-    : "http://49.50.9.223:10030";
+export const WEB_LOCAL_URL = sessionStorage.getItem("hostname");
 
 export const ENDPOINTS = {
   AUTH: {

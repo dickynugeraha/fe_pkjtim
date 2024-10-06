@@ -12,11 +12,13 @@ import { Card, Col, Row } from "react-bootstrap";
 import { CardJumlahAcara } from "./components/CardJumlahAcara";
 import idLocale from "@fullcalendar/core/locales/id";
 import { CardJumlahPengguna } from "./components/CardJumlahPengguna";
-import { WEB_LOCAL_URL } from "../../../constants/API";
+import { API_URL, ENDPOINTS, WEB_LOCAL_URL } from "../../../constants/API";
 import useDashboard from "../../../modules/hooks/master-data/dashboard";
 import usePesanTempat from "../../../modules/hooks/pesan-tempat";
 import globalVar from "../../../helper/globalVar";
 import useTempat from "../../../modules/hooks/master-data/tempat";
+import { getAllReservationByStatus } from "../../../modules/requests/pesan-tempat";
+import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -40,13 +42,136 @@ export const Home: FC = () => {
   });
   const [chooseTempat, setChooseTempat] = useState<string>("");
   const [filterCalendar, setFilterCalendar] = useState<any[]>([]);
-  const { eventCalendar } = usePesanTempat();
+  const [eventCalendar, setEventCalendar] = useState<any[]>([]);
   const { tempat } = useTempat();
   const { loading, getDataDashboard, dataStatus, dataReservasi } =
     useDashboard();
 
+  const getDataCalendar = (reservation: any[]) => {
+    const events: any[] = [];
+    reservation.map((itm, index) => {
+      const date = new Date(itm.endDate);
+      date.setDate(date.getDate() + 2);
+      let backgroundColor =
+        "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
+
+      const tempatTemp = reservation.map((b) => b?.tempat?.name);
+      const tempat = tempatTemp.filter(
+        (item, index) => tempatTemp.indexOf(item) === index
+      );
+      switch (tempat.findIndex((b) => itm?.tempat?.name == b)) {
+        case 0:
+          backgroundColor = "#0d6efd";
+          break;
+        case 1:
+          backgroundColor = "#6610f2";
+          break;
+        case 2:
+          backgroundColor = "#fd7e14";
+          break;
+        case 3:
+          backgroundColor = "#ffc107";
+          break;
+        case 4:
+          backgroundColor = "#198754";
+          break;
+        case 5:
+          backgroundColor = "#20c997";
+          break;
+
+        default:
+          break;
+      }
+
+      const data = {
+        title: itm?.judulPentas,
+        start: itm?.startDate,
+        startDate: itm?.startDate,
+        end: date.toISOString().split("T")[0],
+        endDate: itm?.endDate,
+        image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/Tempat/${
+          itm?.tempat?.id
+        }/Image?isStream=true&startDate=${globalVar.formatInputDate(
+          itm?.startDate
+        )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
+        tempat: itm?.tempat?.name,
+        tempatId: itm?.tempat?.id,
+        color: backgroundColor,
+        status: itm?.status,
+      };
+      events.push(data);
+    });
+    events.map((item) => {
+      switch (item.status) {
+        case "PENDING":
+          item.status = "Permintaan";
+          break;
+        case "PROSES":
+          item.status = "Proses";
+          break;
+        case "KURASI":
+          item.status = "Kurasi";
+          break;
+        case "REVISE":
+          item.status = "Selesai Kurasi";
+          break;
+        case "WAITING_ANSWER_LETTER":
+          item.status = "Selesai Kurasi";
+          break;
+        case "DONE":
+          item.status = "Selesai";
+          break;
+        default:
+          break;
+      }
+    });
+    setEventCalendar(events);
+  };
+
+  const getDataReservasiByStatus = async () => {
+    try {
+      const res = await getAllReservationByStatus(
+        INITIAL_PAGE,
+        DEFAULT_LIMIT,
+        "",
+        "",
+        [
+          "DONE",
+          "WAITING_ANSWER_LETTER",
+          "PROSES",
+          "KURASI",
+          "PENDING",
+          "REQUEST",
+          "REVISE",
+        ]
+      );
+
+      let allReservation: any[] = res.data.data.data;
+      console.log("allReservation", allReservation);
+
+      let allResrvationWithFile: any[] = [];
+      allReservation.map((data) => {
+        const singleReserve = {
+          ...data,
+          suratPermohonan: data.suratPermohonan
+            ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonan`
+            : null,
+          proposal: data.proposal
+            ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`
+            : null,
+          statusDesc: globalVar.exportStatusPesanTempatToTitle(data.status),
+        };
+
+        allResrvationWithFile.push(singleReserve);
+      });
+
+      getDataCalendar(allResrvationWithFile);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     getDataDashboard();
+    getDataReservasiByStatus();
   }, []);
 
   const handleEventClick = (arg: any) => {

@@ -7,6 +7,7 @@ import {
   getSingleReservation,
   initBooking,
   submitReservation,
+  getAllReservationByStatus,
   changeStatusReservation,
 } from "../../requests/pesan-tempat";
 import { useAuth } from "../../auth";
@@ -14,6 +15,7 @@ import ConfirmationDialog from "../../../../_metronic/layout/components/content/
 import { INITIAL_PAGE } from "../../../constants/PAGE";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 import globalVar from "../../../helper/globalVar";
+import axiosConfig from "../../../utils/services/axiosConfig";
 
 export default function usePesanTempat() {
   const navigate = useNavigate();
@@ -74,90 +76,6 @@ export default function usePesanTempat() {
     }, 1000);
   };
 
-  const getDataCalendar = (reservation: any[]) => {
-    const events: any[] = [];
-    reservation.map((itm, index) => {
-      const date = new Date(itm.endDate);
-      date.setDate(date.getDate() + 2);
-      let backgroundColor =
-        "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
-
-      const tempatTemp = reservation.map((b) => b?.tempat?.name);
-      const tempat = tempatTemp.filter(
-        (item, index) => tempatTemp.indexOf(item) === index
-      );
-      switch (tempat.findIndex((b) => itm?.tempat?.name == b)) {
-        case 0:
-          backgroundColor = "#0d6efd";
-          break;
-        case 1:
-          backgroundColor = "#6610f2";
-          break;
-        case 2:
-          backgroundColor = "#fd7e14";
-          break;
-        case 3:
-          backgroundColor = "#ffc107";
-          break;
-        case 4:
-          backgroundColor = "#198754";
-          break;
-        case 5:
-          backgroundColor = "#20c997";
-          break;
-
-        default:
-          break;
-      }
-
-      const data = {
-        title: itm?.judulPentas,
-        start: itm?.startDate,
-        startDate: itm?.startDate,
-        end: date.toISOString().split("T")[0],
-        endDate: itm?.endDate,
-        image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/Tempat/${
-          itm?.tempat?.id
-        }/Image?isStream=true&startDate=${globalVar.formatInputDate(
-          itm?.startDate
-        )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
-        tempat: itm?.tempat?.name,
-        tempatId: itm?.tempat?.id,
-        color: backgroundColor,
-        status: itm?.status,
-      };
-
-      if (data.status != "REJECT" && data.status != "EXPIRED") {
-        events.push(data);
-      }
-    });
-    events.map((item) => {
-      switch (item.status) {
-        case "PENDING":
-          item.status = "Permintaan";
-          break;
-        case "PROSES":
-          item.status = "Proses";
-          break;
-        case "KURASI":
-          item.status = "Kurasi";
-          break;
-        case "REVISE":
-          item.status = "Selesai Kurasi";
-          break;
-        case "WAITING_ANSWER_LETTER":
-          item.status = "Selesai Kurasi";
-          break;
-        case "DONE":
-          item.status = "Selesai";
-          break;
-        default:
-          break;
-      }
-    });
-    setEventCalendar(events);
-  };
-
   const getAllReservationPesanTempat = async (search = "") =>
     // fromPengelola?: boolean, //update ariko reservasi status kurasi dapat dilihat oleh pengelola
     //fromKurasi?: boolean //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
@@ -191,7 +109,6 @@ export default function usePesanTempat() {
         });
 
         SetAllReservationPesanTempat(allResrvationWithFile);
-        getDataCalendar(allResrvationWithFile);
       } catch (error: any) {
         Swal.fire({
           icon: "error",
