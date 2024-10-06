@@ -10,11 +10,13 @@ type Props = {
   chartLine?: number;
   chartRotate?: number;
   dataReservasi: any;
+  dataColor: any;
 };
 
 const CardJumlahAcara: FC<Props> = ({
   className,
   dataReservasi,
+  dataColor,
   chartSize = 70,
   chartLine = 11,
   chartRotate = 124,
@@ -22,9 +24,10 @@ const CardJumlahAcara: FC<Props> = ({
   const chartRef = useRef<HTMLDivElement | null>(null);
   const { mode } = useThemeMode();
   useEffect(() => {
-    refreshChart();
+    initChart(chartSize, chartLine, chartRotate, dataColor.length, dataColor, dataReservasi);
+    // refreshChart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode]);
+  }, []);
 
   const refreshChart = () => {
     if (!chartRef.current) {
@@ -32,7 +35,6 @@ const CardJumlahAcara: FC<Props> = ({
     }
 
     setTimeout(() => {
-      initChart(chartSize, chartLine, chartRotate);
     }, 10);
   };
 
@@ -41,6 +43,21 @@ const CardJumlahAcara: FC<Props> = ({
   dataReservasi?.map((item: any) => {
     totalReservation += Number(item.count);
   });
+  // const tempatTemp = dataColor.map((b:any) => {
+  //     return {
+  //       tempat : b?.tempat,
+  //       color : b?.color
+  //     }
+  //   }
+  // );
+  // var setObj = new Set();
+  // var tempatColor = tempatTemp.reduce((acc:any,item:any)=>{
+  //   if(!setObj.has(item.tempat)){
+  //     setObj.add(item.tempat)
+  //     acc.push(item)
+  //   }
+  //   return acc;
+  // },[]);
 
   return (
     <div className={`card card-flush ${className}`}>
@@ -58,7 +75,7 @@ const CardJumlahAcara: FC<Props> = ({
       </div>
 
       <div className="card-body pt-2 pb-4 d-flex flex-wrap align-items-center">
-        <div className="d-flex flex-center me-5 pt-2">
+        {/* <div className="d-flex flex-center me-5 pt-2">
           <div
             id="kt_card_widget_17_chart"
             ref={chartRef}
@@ -66,21 +83,19 @@ const CardJumlahAcara: FC<Props> = ({
             data-kt-size={chartSize}
             data-kt-line={chartLine}
           ></div>
-        </div>
+        </div> */}
 
         <div className="d-flex flex-column content-justify-center flex-row-fluid">
           {dataReservasi?.map((item: any) => {
-            const color = ["bg-success", "bg-primary", "bg-warning"];
-
+            let colorTemp = dataColor.find((b:any) => b?.tempat == item?.tempat)
             return (
               <div
                 key={item.tempat}
                 className="d-flex fw-semibold align-items-center my-3"
               >
                 <div
-                  className={`bullet w-8px h-3px rounded-2 ${
-                    color[Math.floor(Math.random() * dataReservasi?.length)]
-                  } me-3`}
+                  className={`bullet w-10px h-8px rounded-2 me-3`}
+                  style={{ backgroundColor:colorTemp ? colorTemp.color : "" }}
                 ></div>
                 <div className="text-gray-500 flex-grow-1 me-4">
                   {item.tempat}
@@ -100,7 +115,10 @@ const CardJumlahAcara: FC<Props> = ({
 const initChart = function (
   chartSize: number = 70,
   chartLine: number = 11,
-  chartRotate: number = 124
+  chartRotate: number = 124,
+  totalReservation: number,
+  tempatColor: any[],
+  dataReservasi: any[],
 ) {
   const el = document.getElementById("kt_card_widget_17_chart");
   if (!el) {
@@ -154,14 +172,19 @@ const initChart = function (
     ctx.stroke();
   };
 
-  // Init 2
-  // drawCircle('#E4E6EF', options.lineWidth, 100 / 100);
-  // drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
+  //Init 2
+  console.log(dataReservasi);
+  dataReservasi?.map((item: any) => {
+    console.log("testtt",dataReservasi.map((b:any) => b?.tempat == item?.tempat).length)
+    let colorTemp = tempatColor.find((b:any) => b?.tempat == item?.tempat);
+    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
+  });
+  drawCircle(getCSSVariableValue('--bs-warning'), options.lineWidth, 100 / 100);
   // drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 100 / 250);
-  drawCircle("#E4E6EF", options.lineWidth, 1);
-  drawCircle(getCSSVariableValue("--bs-primary"), options.lineWidth, 0.23);
-  drawCircle(getCSSVariableValue("--bs-warning"), options.lineWidth, 0.3);
-  drawCircle(getCSSVariableValue("--bs-success"), options.lineWidth, 0.47);
+  // drawCircle("#E4E6EF", options.lineWidth, 1);
+  // drawCircle(getCSSVariableValue("--bs-primary"), options.lineWidth, 0.23);
+  // drawCircle(getCSSVariableValue("--bs-warning"), options.lineWidth, 0.3);
+  // drawCircle(getCSSVariableValue("--bs-success"), options.lineWidth, 0.47);
 };
 
 export { CardJumlahAcara };

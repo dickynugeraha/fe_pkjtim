@@ -81,7 +81,6 @@ export default function useTempat() {
     setLoading(true);
     try {
       const res = await getAll(INITIAL_PAGE, DEFAULT_LIMIT, Search);
-      console.log("res.data.data.data", res.data.data.data);
       const data: any[] = [];
       for (let index = 0; index < res.data.data.data.length; index++) {
         const ell = res.data.data.data[index];
