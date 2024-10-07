@@ -73,10 +73,15 @@ export const Home: FC = () => {
         color: "",
         status: itm?.status,
       };
+      if(data.status == "PENDING"){
+        data.title = "Tanggal dalam permintaan";
+      }
 
       if (data.status != "REJECT" && data.status != "EXPIRED") {
         events.push(data);
       }
+
+
     });
 
     allTutupTempat.map((itm) => {
@@ -124,6 +129,8 @@ export const Home: FC = () => {
           break;
       }
     });
+
+    console.log("event",events);
     setEventCalendar(events);
   };
 
