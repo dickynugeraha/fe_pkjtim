@@ -19,6 +19,7 @@ import globalVar from "../../../helper/globalVar";
 import useTempat from "../../../modules/hooks/master-data/tempat";
 import { getAllReservationByStatus } from "../../../modules/requests/pesan-tempat";
 import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
+import { getAll } from "../../../modules/requests/master-data/tempat-tutup";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -47,41 +48,14 @@ export const Home: FC = () => {
   const { loading, getDataDashboard, dataStatus, dataReservasi } =
     useDashboard();
 
-  const getDataCalendar = (reservation: any[]) => {
+  const getDataCalendar = async (reservation: any[]) => {
+    const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
+    let allTutupTempat: any[] = tutupTempat.data.data.data;
+
     const events: any[] = [];
-    reservation.map((itm, index) => {
+    reservation.map((itm) => {
       const date = new Date(itm.endDate);
       date.setDate(date.getDate() + 2);
-      let backgroundColor =
-        "#" + Math.floor(Math.random() * 16777215).toString(16); //random color
-
-      const tempatTemp = reservation.map((b) => b?.tempat?.name);
-      const tempat = tempatTemp.filter(
-        (item, index) => tempatTemp.indexOf(item) === index
-      );
-      switch (tempat.findIndex((b) => itm?.tempat?.name == b)) {
-        case 0:
-          backgroundColor = "#0d6efd";
-          break;
-        case 1:
-          backgroundColor = "#6610f2";
-          break;
-        case 2:
-          backgroundColor = "#fd7e14";
-          break;
-        case 3:
-          backgroundColor = "#ffc107";
-          break;
-        case 4:
-          backgroundColor = "#198754";
-          break;
-        case 5:
-          backgroundColor = "#20c997";
-          break;
-
-        default:
-          break;
-      }
 
       const data = {
         title: itm?.judulPentas,
@@ -96,8 +70,30 @@ export const Home: FC = () => {
         )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
         tempat: itm?.tempat?.name,
         tempatId: itm?.tempat?.id,
-        color: backgroundColor,
+        color: "",
         status: itm?.status,
+      };
+
+      if (data.status != "REJECT" && data.status != "EXPIRED") {
+        events.push(data);
+      }
+    });
+
+    allTutupTempat.map((itm) => {
+      const date = new Date(itm.endDate);
+      date.setDate(date.getDate() + 2);
+
+      const data = {
+        title: `${itm?.tempat.name} Tutup`,
+        start: itm?.startDate,
+        startDate: itm?.startDate,
+        end: date.toISOString().split("T")[0],
+        endDate: itm?.endDate,
+        image: undefined,
+        tempat: itm?.tempat?.name,
+        tempatId: itm?.tempat?.id,
+        color: "",
+        status: "CLOSED",
       };
       events.push(data);
     });
@@ -121,14 +117,15 @@ export const Home: FC = () => {
         case "DONE":
           item.status = "Selesai";
           break;
+        case "CLOSED":
+          item.status = "Tempat Tutup";
+          break;
         default:
           break;
       }
     });
     setEventCalendar(events);
   };
-
-  console.log("tetttats", sessionStorage.getItem("hostname"));
 
   const getDataReservasiByStatus = async () => {
     try {
