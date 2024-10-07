@@ -146,7 +146,9 @@ export const PesanTempat: FC = () => {
                     <div className="d-flex align-items-center">
                       <DatePicker
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        onChange={(date) =>
+                          setStartDate(globalVar.formatInputDate(date))
+                        }
                         excludeDates={disabledDates}
                         minDate={new Date(globalVar.getThreeMonthsFromToday())}
                         className="form-control form-control-solid" // Bootstrap class for input
@@ -171,7 +173,9 @@ export const PesanTempat: FC = () => {
                       </div>
                       <DatePicker
                         selected={endDate}
-                        onChange={(date) => setEndDate(date)}
+                        onChange={(date) => {
+                          setEndDate(globalVar.formatInputDate(date));
+                        }}
                         excludeDates={disabledDates}
                         minDate={new Date(globalVar.getThreeMonthsFromToday())}
                         className="form-control form-control-solid" // Bootstrap class for input
