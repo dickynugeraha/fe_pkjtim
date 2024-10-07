@@ -12,9 +12,6 @@ const PDFSuratHasilKurasi: React.FC = () => {
     "/" +
     params.id +
     "/Letter/Kurasi"; // PDF file path
-
-  console.log("pdf", pdfUrl);
-
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <iframe

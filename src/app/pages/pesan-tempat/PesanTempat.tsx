@@ -59,8 +59,6 @@ export const PesanTempat: FC = () => {
       notAvailableDates.map((date) => {
         dates.push(new Date(globalVar.formatInputDate(date)));
       });
-      console.log("dates", dates);
-
       setDisabledDates(dates);
     } catch (error) {}
     setLoadingDate(false);

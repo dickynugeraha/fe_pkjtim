@@ -49,9 +49,6 @@ export const Home: FC = () => {
     useDashboard();
 
   const getDataCalendar = async (reservation: any[]) => {
-    const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
-    let allTutupTempat: any[] = tutupTempat.data.data.data;
-
     const events: any[] = [];
     reservation.map((itm) => {
       const date = new Date(itm.endDate);
@@ -76,13 +73,11 @@ export const Home: FC = () => {
       if(data.status == "PENDING"){
         data.title = "Tanggal dalam permintaan";
       }
-
-      if (data.status != "REJECT" && data.status != "EXPIRED") {
         events.push(data);
-      }
-
-
     });
+
+    const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
+    let allTutupTempat: any[] = tutupTempat.data.data.data;
 
     allTutupTempat.map((itm) => {
       const date = new Date(itm.endDate);
@@ -130,7 +125,6 @@ export const Home: FC = () => {
       }
     });
 
-    console.log("event",events);
     setEventCalendar(events);
   };
 
@@ -152,7 +146,6 @@ export const Home: FC = () => {
       );
 
       let allReservation: any[] = res.data.data.data;
-      console.log("allReservation", allReservation);
 
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {

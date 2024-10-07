@@ -68,33 +68,33 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
     >
       <>
         <div className="row row-cols-3">
-          <DetailIten
+          <DetailItem
             iconName={"calendar-2"}
             title={"Tanggal pemesanan"}
             desc={globalVar.formatDate(data.createdAt)}
           />
-          <DetailIten
+          <DetailItem
             iconName={"home-2"}
             title={"Nama Sanggar"}
             desc={data.namaSanggar}
           />
-          <DetailIten
+          <DetailItem
             iconName={"geolocation"}
             title={"Alamat Sanggar"}
             desc={data.alamatSanggar}
           />
-          <DetailIten
+          <DetailItem
             iconName={"book"}
             title={"Pentas"}
             desc={data.judulPentas}
           />
 
-          <DetailIten
+          <DetailItem
             iconName={"toggle-on-circle"}
             title={"Tangal mulai kunjungan"}
             desc={globalVar.formatDate(data.startDate)}
           />
-          <DetailIten
+          <DetailItem
             iconName={"toggle-off-circle"}
             title={"Tanggal akhir kunjungan"}
             desc={globalVar.formatDate(data.endDate)}
@@ -116,7 +116,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
         <ModalWrapper
-          title="Tulis alasan"
+          title="Tulis Isi Surat Rekomendasi"
           show={modalShowRevisi}
           handleClose={() => setModalShowRevisi(false)}
           attribute={{ centered: true }}
@@ -195,7 +195,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           </>
         </ModalWrapper>
         <ModalWrapper
-          title="Tulis alasan"
+          title="Tulis Isi Surat Hasil Kurasi"
           show={modalShowTerima}
           handleClose={() => setModalShowTerima(false)}
           attribute={{ centered: true }}
@@ -288,7 +288,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
     title: string;
     desc: string;
   };
-  function DetailIten({ iconName, title, desc }: DetailItemProps) {
+  function DetailItem({ iconName, title, desc }: DetailItemProps) {
     return (
       <div className="col mb-6">
         <div className="d-flex align-items-center">
@@ -298,7 +298,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           <Gap width={18} />
           <div>
             <h6 className="m-0">{title}</h6>
-            <p className="m-0">{desc}</p>
+            <p className="m-0 text-gray-600">{desc}</p>
           </div>
         </div>
       </div>

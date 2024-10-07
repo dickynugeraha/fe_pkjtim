@@ -112,11 +112,13 @@ export const FormPlanetarium = () => {
   const handleChangeSuratUndangan = (e: any) => {
     formik.setFieldValue("fileSuratUndangan", e.target.files[0]);
     setFileSuratUndangan(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   const handleChangeLembarPernyataan = (e: any) => {
     formik.setFieldValue("fileLembarPernyataan", e.target.files[0]);
     setFileLembarPernyataan(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   const { state }: any = useLocation();

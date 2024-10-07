@@ -11,10 +11,7 @@ const PDFSuratUndangan: React.FC = () => {
     ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM +
     "/" +
     params.id +
-    "/Attachment/PernyataanPersetujuan"; // PDF file path
-
-  console.log("pdf", pdfUrl);
-
+    "/Attachment/SuratUndangan"; // PDF file path
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <iframe
