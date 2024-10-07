@@ -24,7 +24,9 @@ export function register(data: any) {
   formData.append("rePassword", data.rePassword);
   formData.append(
     "url",
-    `${sessionStorage.getItem("hostname")}/verify/email/{userid}/{token}`
+    `${sessionStorage.getItem(
+      "hostname"
+    )}/verify/new?userid={userid}&token={token}`
   );
 
   return axiosConfig.post(ENDPOINTS.AUTH.REGISTER, formData, {

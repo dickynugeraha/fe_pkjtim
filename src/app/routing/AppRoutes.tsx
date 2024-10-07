@@ -66,14 +66,16 @@ const AppRoutes: FC = () => {
       <Routes>
         <Route element={<App />}>
           <Route path="error/*" element={<ErrorsPage />} />
-          <Route
+          <Route path="verify/email" element={<VerifyChangeEmail />} />
+          {/* <Route
             path="verify/:userid/email/:newemail/:token"
             element={<VerifyChangeEmail />}
-          />
-          <Route
-            path="verify/email/:userid/:token"
+          /> */}
+          <Route path="verify/new" element={<VerifyNewAccount />} />
+          {/* <Route
+            path="verify/new/:userid/:token"
             element={<VerifyNewAccount />}
-          />
+          /> */}
           <Route path="logout" element={<Logout />} />
           <Route element={<MasterLayout />}>
             <Route path="dashboard" element={<Home />} />

@@ -44,7 +44,7 @@ export const resendEmailVerif = (id: any) => {
     {
       url: `${sessionStorage.getItem(
         "hostname"
-      )}/verify/email/{userid}/{token}`,
+      )}/verify/new?userid={userid}&token={token}`,
     }
   );
 };
@@ -137,7 +137,7 @@ export const reqUpdateEmail = (
     {
       url: `${sessionStorage.getItem(
         "hostname"
-      )}/verify/{userid}/email/{newemail}/{token}`,
+      )}/verify/email?userid={userid}&newemail={newemail}&token={token}`,
       email: newEmail,
       password: password,
     }

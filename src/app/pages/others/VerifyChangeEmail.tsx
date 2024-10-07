@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import usePengguna from "../../modules/hooks/master-data/pengguna";
 import { useAuth } from "../../modules/auth";
 
 const VerifyChangeEmail = () => {
-  const params = useParams();
-  const { userid, token, newemail } = params;
+  const [searchParams] = useSearchParams();
+  const userid = searchParams.get("userid");
+  const token = searchParams.get("token");
+  const newemail: any = searchParams.get("newemail");
+  // const params = useParams();
+  // const { userid, token, newemail } = params;
 
   const { confirmEmailVerif, loading } = usePengguna();
   const { logout } = useAuth();
