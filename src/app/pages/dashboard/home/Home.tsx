@@ -139,7 +139,7 @@ export const Home: FC = () => {
           "WAITING_ANSWER_LETTER",
           "PROSES",
           "KURASI",
-          "REQUEST",
+          "PENDING",
           "REVISE",
         ]
       );
