@@ -72,7 +72,7 @@ export const Planetarium = () => {
               className="btn btn-light-primary btn-sm"
               onClick={() => setModalTermAndCondition(true)}
             >
-              Syarat & Ketentuan
+              Syarat & Ketentuan Umum
             </div>
           </Card.Header>
           <Card.Body>
@@ -99,7 +99,7 @@ export const Planetarium = () => {
               className="d-flex justify-content-between align-items-center"
               style={{ width: "100%" }}
             >
-              <h4 className="m-0 p-0">{"Syarat dan ketentuan"}</h4>
+              <h4 className="m-0 p-0">{"Syarat dan ketentuan Umum"}</h4>
               <div
                 className="btn btn-icon btn-sm btn-active-light-primary ms-2"
                 onClick={() => setModalTermAndCondition(false)}
