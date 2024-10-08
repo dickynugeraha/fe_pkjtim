@@ -12,9 +12,6 @@ const PDFSuratProposal: React.FC = () => {
     "/" +
     params.id +
     "/Attachment/Proposal"; // PDF file path
-
-  console.log("pdf", pdfUrl);
-
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <iframe

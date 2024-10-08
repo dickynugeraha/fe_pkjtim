@@ -14,6 +14,7 @@ import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 import ConfirmationDialog from "../../../../_metronic/layout/components/content/ConfirmationDialog";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 import { ROLE } from "../../../constants/ROLE";
+import globalVar from "../../../helper/globalVar";
 
 export default function usePlanetarium() {
   const [loading, setLoading] = useState(false);
@@ -25,8 +26,8 @@ export default function usePlanetarium() {
     allReservationPlanetariumByUserId,
     setAllReservationPlanetariumByUserId,
   ] = useState<any[]>([]);
-  const [singleReservationPlanetarium, setSingleReservationPlanetarium] =
-    useState<any>({});
+  const [singleReservationPlanetarium, setSingleReservationPlanetarium] = useState<any>({});
+  const [disabledDates, setDisabledDates] = useState<any[]>([]);
 
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -100,7 +101,6 @@ export default function usePlanetarium() {
             IsPeneropongan: outdoor.peneropongan_matahari ? true : false,
             IsRoketAir: outdoor.percobaan_roket_air ? true : false,
           };
-          console.log(payload);
           const res = await initReservation(payload);
           const dataReservation: any = res.data.data;
 
@@ -238,8 +238,8 @@ export default function usePlanetarium() {
         ""
       );
       let allReservation: any[] = res.data.data.data;
-
       let allResrvationWithFile: any[] = [];
+      let allReservationPlanetariumDates:any[] = [];
 
       allReservation.map((data) => {
         const singlePlanet = {
@@ -254,6 +254,14 @@ export default function usePlanetarium() {
         allResrvationWithFile.push(singlePlanet);
       });
 
+      allReservation.map(b => {
+        if(b?.status != "EXPIRED" && b?.status != "REJECT"){
+          allReservationPlanetariumDates.push(new Date(globalVar.formatInputDate(b?.tanggalKunjungan)));
+        console.log(b?.tanggalKunjungan);
+        }
+      });
+
+      setDisabledDates(allReservationPlanetariumDates);
       setAllReservationPlanetarium(allResrvationWithFile);
     } catch (error: any) {
       Swal.fire({
@@ -347,6 +355,7 @@ export default function usePlanetarium() {
     singleReservationPlanetarium,
     allReservationPlanetarium,
     allReservationPlanetariumByUserId,
+    disabledDates,
     nextStepHandler,
     requestReservationPlanetarium,
     getSingleReservationPlanetarium,

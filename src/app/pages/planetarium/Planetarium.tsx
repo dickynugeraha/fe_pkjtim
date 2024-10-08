@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Content } from "../../../_metronic/layout/components/content";
 import Gap from "../../../_metronic/layout/components/content/Gap";
 import ModalInformationCustom from "../../../_metronic/layout/components/content/ModalInformationCustom";
@@ -7,8 +7,8 @@ import Kegiatan from "./components/Kegiatan";
 import { Button, Col, Row, Card, Modal } from "react-bootstrap";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
-import ModalWrapper from "../../../_metronic/layout/components/content/ModalWrapper";
 import { KTSVG } from "../../../_metronic/helpers";
+import DatePicker from "react-datepicker";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -26,8 +26,13 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Planetarium = () => {
-  const { nextStepHandler } = usePlanetarium();
-  const [bookingDate, setBookingDate] = useState("");
+  const { nextStepHandler, disabledDates } = usePlanetarium();
+  const [bookingDate, setBookingDate] = useState<any>();
+  const isTuesdayOrThursday = (date:any) => {
+    const day = date.getDay();
+    const bool = day === 2 || day === 4;
+    return bool;
+  };
   const [termIsCheck, setTermIsCheck] = useState(false);
   const [modalTermAndCondition, setModalTermAndCondition] =
     useState<boolean>(false);
@@ -218,13 +223,28 @@ export const Planetarium = () => {
                     <div className="form-group">
                       <h6>Pilih Tanggal</h6>
                       <Gap height={12} />
-                      <input
+                      <div role="button">
+                        <DatePicker
+                          selected={bookingDate}
+                          onChange={(date) =>
+                            setBookingDate(globalVar.formatInputDate(date))
+                          }
+                          excludeDates={disabledDates}
+                          filterDate={isTuesdayOrThursday}
+                          minDate={new Date()}
+                          className="form-control form-control-solid" // Bootstrap class for input
+                          wrapperClassName="input-group" // Bootstrap input group
+                          calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
+                          placeholderText="dd/mm/yyyy"
+                        />
+                      </div>
+                      {/* <input
                         type="date"
                         className="form-control form-control-solid"
                         value={bookingDate}
                         onChange={(e) => setBookingDate(e.target.value)}
                         min={globalVar.getThreeMonthsFromToday()}
-                      />
+                      /> */}
                       <Gap height={10} />
                     </div>
                   </Col>

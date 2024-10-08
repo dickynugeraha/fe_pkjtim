@@ -4,6 +4,18 @@ import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
 import globalVar from "../../../helper/globalVar";
 import usePlanetarium from "../../../modules/hooks/planetarium";
+import {
+  ClassicEditor,
+  Undo,
+  Mention,
+  Context,
+  Bold,
+  Essentials,
+  Italic,
+  Paragraph,
+  ContextWatchdog,
+} from "ckeditor5";
+import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 
 type Props = {
   fromAdmin?: boolean;
@@ -49,10 +61,10 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
       statusKey = "Selesai";
       break;
     case "REQUEST":
-      statusKey = "Request";
+      statusKey = "Proses";
       break;
     case "PENDING":
-      statusKey = "Menunggu pesanan selesai";
+      statusKey = "Menunggu pemesan selesai";
       break;
     case "EXPIRED":
       statusKey = "Kadaluarsa";
@@ -163,6 +175,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             <DetailItem
               iconName={"pencil"}
               title={"Alasan"}
+              descTag={data.reason}
               desc={data.reason}
             />
           )}
@@ -196,13 +209,53 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           }
         >
           <>
-            <textarea
+          <CKEditorContext
+          context={Context}
+          contextWatchdog={ContextWatchdog}
+          onChangeInitializedEditors={(editors) => {
+            console.info(editors.editor1?.instance);
+          }}
+        >
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              plugins: [Essentials, Bold, Italic, Paragraph],
+              toolbar: [
+                "undo",
+                "redo",
+                "|",
+                "bold",
+                "italic",
+                "|",
+                "heading",
+                "|",
+                "bulletedList",
+                "numberedList",
+              ],
+            }}
+            data="<p></p>"
+            contextItemMetadata={{
+              name: "editor1",
+              yourAdditionalData: 2,
+            }}
+            onReady={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              console.log("Editor 1 is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+
+              setAlasan(data);
+            }}
+          />
+        </CKEditorContext>
+            {/* <textarea
               name="alasan"
               id="alasan"
               className="form-control"
               rows={8}
               onChange={(e: any) => setAlasan(e.target.value)}
-            ></textarea>
+            ></textarea> */}
           </>
         </ModalWrapper>
       </>
@@ -213,6 +266,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
     iconName: string;
     title: string;
     desc: string;
+    descTag?: string;
     isFile?: boolean;
     isShowButton?: boolean;
     urlFile?: string;
@@ -220,6 +274,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   function DetailItem({
     iconName,
     title,
+    descTag,
     desc,
     isFile = false,
     isShowButton = true,
@@ -235,9 +290,13 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
-            {!isFile && (desc != undefined ? <p className="m-0 text-gray-600">{desc}</p>
-            : <p className="m-0 text-gray-600">-</p>
-            )
+            {!isFile && (
+                desc != undefined ?
+                (
+                  descTag ? (<div dangerouslySetInnerHTML={{ __html: descTag }} />) :
+                  (<div className="m-0 text-gray-600">{desc}</div>)
+                ) : <p className="m-0 text-gray-600">-</p>
+              )
             }
             {isFile && ( isShowButton ?
               <button

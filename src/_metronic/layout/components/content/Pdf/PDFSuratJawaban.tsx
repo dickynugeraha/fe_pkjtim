@@ -12,9 +12,6 @@ const PDFSuratJawaban: React.FC = () => {
     "/" +
     params.id +
     "/Letter/PemakaianGedung"; // PDF file path
-
-  console.log("pdf", pdfUrl);
-
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <iframe
