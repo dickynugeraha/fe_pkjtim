@@ -117,6 +117,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     if (data?.status === "REVISE") {
       OthersContent = (
         <DetailItemFile
+          id=""
           title="Surat hasil kurasi (Revisi)"
           isShowButton={true}
           url={`Pdf/File/SuratHasilKurasi/${data.id}`}
@@ -129,6 +130,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       if (data?.kuratorName == undefined) {
         OthersContent = (
           <DetailItemFile
+            id=""
             title="Surat jawaban"
             isShowButton={true}
             url={`Pdf/File/SuratJawaban/${data.id}`}
@@ -139,12 +141,14 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         OthersContent = (
           <>
             <DetailItemFile
+              id=""
               title="Surat hasil kurasi"
               isShowButton={true}
               url={`Pdf/File/SuratHasilKurasi/${data.id}`}
               withUpload={false}
             />
             <DetailItemFile
+              id=""
               title="Surat jawaban"
               isShowButton={true}
               url={`Pdf/File/SuratJawaban/${data.id}`}
@@ -186,6 +190,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
 
       OthersContent = (
         <DetailItemFile
+          id=""
           title="Surat hasil kurasi (Disetujui)"
           isShowButton={true}
           url={`Pdf/File/SuratHasilKurasi/${data.id}`}
@@ -382,7 +387,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               setModalDetailPesananUser({ show: true, data: data })
             }
           >
-            <DetailItemFile title="Detail pemesan" url="" withUpload={false} />
+            <DetailItemFile
+              id=""
+              title="Detail pemesan"
+              url=""
+              withUpload={false}
+            />
           </div>
           {HandlerShowComponent().OthersContent}
         </div>
@@ -525,16 +535,16 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       </div>
     );
   }
-
   type DetailItemFileProps = {
     isShowButton?: boolean;
-    id?: string;
+    id: string;
     title: string;
     handleChangeFile?: (value: any) => void;
     fields?: any;
     url: string;
     withUpload: boolean;
   };
+
   function DetailItemFile({
     id,
     title,
@@ -554,7 +564,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             </div>
             <Gap height={12} />
             {url ? (
-              url != "" && isShowButton ? (
+              url !== "" && isShowButton ? (
                 <button
                   role="button"
                   className="btn btn-light-primary py-2"
@@ -589,6 +599,13 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                     }
                   }}
                 />
+                {fields[id] ? (
+                  <p className="mt-2">
+                    Selected file: <strong>{fields[id].name}</strong>
+                  </p>
+                ) : (
+                  <p className="mt-2 text-muted">No file chosen</p>
+                )}
               </>
             )}
           </div>
