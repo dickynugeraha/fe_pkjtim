@@ -123,24 +123,6 @@ const Kegiatan: FC<KegiatanProps> = ({
                   </div>
                 </div>
               </Col>
-              <Col className="text-center p-1" lg={2}>
-                <div>
-                  <div
-                    className="btn btn-light-primary btn-sm"
-                    onClick={() => {
-                      setshowModal(true);
-                      setDataModalChoose({
-                        title: dataKegiatan[0].title,
-                        desc: dataKegiatan[0].desc,
-                        syarat: dataKegiatan[0].syarat as [],
-                        fasilitas: dataKegiatan[0].fasilitas as [],
-                      });
-                    }}
-                  >
-                    Syarat & Ketentuan
-                  </div>
-                </div>
-              </Col>
             </Row>
           </Card>
         </div>
@@ -170,24 +152,6 @@ const Kegiatan: FC<KegiatanProps> = ({
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
                     astronomi di dalam kelas menggunakan power point.
                   </p>
-                </div>
-              </div>
-            </Col>
-            <Col className="text-center p-1" lg={2}>
-              <div>
-                <div
-                  className="btn btn-light-primary btn-sm"
-                  onClick={() => {
-                    setshowModal(true);
-                    setDataModalChoose({
-                      title: dataKegiatan[1].title,
-                      desc: dataKegiatan[1].desc,
-                      syarat: dataKegiatan[1].syarat as [],
-                      fasilitas: dataKegiatan[1].fasilitas as [],
-                    });
-                  }}
-                >
-                  Syarat & Ketentuan
                 </div>
               </div>
             </Col>
@@ -234,29 +198,11 @@ const Kegiatan: FC<KegiatanProps> = ({
                   </div>
                 </div>
               </Col>
-              <Col className="text-center p-1" lg={2}>
-                <div>
-                  <div
-                    className="btn btn-light-primary btn-sm"
-                    onClick={() => {
-                      setshowModal(true);
-                      setDataModalChoose({
-                        title: dataKegiatan[2].title,
-                        desc: dataKegiatan[2].desc,
-                        syarat: dataKegiatan[2].syarat as [],
-                        fasilitas: dataKegiatan[2].fasilitas as [],
-                      });
-                    }}
-                  >
-                    Syarat & Ketentuan
-                  </div>
-                </div>
-              </Col>
             </Row>
           </Card>
         </div>
         <Gap height={5} />
-        <Card
+        {/* <Card
           className={`px-4 py-2 ${
             outdoor.percobaan_roket_air ? "bg-light" : ""
           }`}
@@ -307,7 +253,7 @@ const Kegiatan: FC<KegiatanProps> = ({
               </div>
             </Col>
           </Row>
-        </Card>
+        </Card> */}
       </div>
     );
   };

@@ -70,10 +70,10 @@ export const Home: FC = () => {
         color: "",
         status: itm?.status,
       };
-      if(data.status == "PENDING"){
+      if (data.status == "PENDING") {
         data.title = "Tanggal dalam permintaan";
       }
-        events.push(data);
+      events.push(data);
     });
 
     const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);

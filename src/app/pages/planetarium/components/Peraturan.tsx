@@ -48,20 +48,20 @@ const dataPeraturan = [
       "Teleskop Sky Watcher BK 120 EQ 5 dan Solar Filter",
     ],
   },
-  {
-    title: "Detail Percobaan Roket Air",
-    desc: "Kegiatan berupa penjelasan dari narasumber mengenai konsep peluncuran roket serta mendemonstrasikan peluncuran roket menggunakan model Roket Air. Kuota peserta 75 orang.",
-    syarat: [
-      "Memiliki area terbuka sejauh minimal 10-15 meter untuk area peluncuran roket. Pastikan roket tidak akan membentur bangunan atau tersangkut di pohon.",
-      "Menyediakan air minimal 15 liter.",
-      "Guru pendamping untuk membantu mentertibkan peserta.",
-      "Menyediakan Sound System.",
-    ],
-    fasilitas: [
-      "Narasumber (1 orang) dan Teknisi (1 orang). ",
-      "Perangkat Roket Air (2 set).",
-    ],
-  },
+  // {
+  //   title: "Detail Percobaan Roket Air",
+  //   desc: "Kegiatan berupa penjelasan dari narasumber mengenai konsep peluncuran roket serta mendemonstrasikan peluncuran roket menggunakan model Roket Air. Kuota peserta 75 orang.",
+  //   syarat: [
+  //     "Memiliki area terbuka sejauh minimal 10-15 meter untuk area peluncuran roket. Pastikan roket tidak akan membentur bangunan atau tersangkut di pohon.",
+  //     "Menyediakan air minimal 15 liter.",
+  //     "Guru pendamping untuk membantu mentertibkan peserta.",
+  //     "Menyediakan Sound System.",
+  //   ],
+  //   fasilitas: [
+  //     "Narasumber (1 orang) dan Teknisi (1 orang). ",
+  //     "Perangkat Roket Air (2 set).",
+  //   ],
+  // },
 ];
 
 const Peraturan = () => {
@@ -203,7 +203,7 @@ const Peraturan = () => {
             </div>
           </div>
           <Gap height={12} />
-          <div className="card p-5">
+          {/* <div className="card p-5">
             <div className="d-flex align-items-center justify-content-between">
               <div className="form-check d-flex align-items-center me-8">
                 <input
@@ -239,7 +239,7 @@ const Peraturan = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );

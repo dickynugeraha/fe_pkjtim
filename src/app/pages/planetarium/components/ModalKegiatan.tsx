@@ -20,7 +20,7 @@ const ModalKegiatan: FC<Props> = ({
   fasilitas,
 }) => {
   return (
-    <Modal show={show} onHide={hideModal} centered={true}>
+    <Modal show={show} onHide={hideModal} centered={true} size="lg">
       <Modal.Header>
         <div
           className="d-flex justify-content-between align-items-center"

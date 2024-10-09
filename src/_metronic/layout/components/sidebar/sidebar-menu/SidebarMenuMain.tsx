@@ -121,7 +121,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="planetarium"
             icon="moon"
-            title="Planetarium G2S"
+            title="Planetarium Go To School"
             fontIcon="bi-layers"
           />
         </>
