@@ -15,6 +15,7 @@ import ConfirmationDialog from "../../../../_metronic/layout/components/content/
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 import { ROLE } from "../../../constants/ROLE";
 import globalVar from "../../../helper/globalVar";
+import axiosConfig from "../../../utils/services/axiosConfig";
 
 export default function usePlanetarium() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,8 @@ export default function usePlanetarium() {
     allReservationPlanetariumByUserId,
     setAllReservationPlanetariumByUserId,
   ] = useState<any[]>([]);
-  const [singleReservationPlanetarium, setSingleReservationPlanetarium] = useState<any>({});
+  const [singleReservationPlanetarium, setSingleReservationPlanetarium] =
+    useState<any>({});
   const [disabledDates, setDisabledDates] = useState<any[]>([]);
 
   const [query, setQuery] = useState("");
@@ -239,7 +241,7 @@ export default function usePlanetarium() {
       );
       let allReservation: any[] = res.data.data.data;
       let allResrvationWithFile: any[] = [];
-      let allReservationPlanetariumDates:any[] = [];
+      let allReservationPlanetariumDates: any[] = [];
 
       allReservation.map((data) => {
         const singlePlanet = {
@@ -254,10 +256,12 @@ export default function usePlanetarium() {
         allResrvationWithFile.push(singlePlanet);
       });
 
-      allReservation.map(b => {
-        if(b?.status != "EXPIRED" && b?.status != "REJECT"){
-          allReservationPlanetariumDates.push(new Date(globalVar.formatInputDate(b?.tanggalKunjungan)));
-        console.log(b?.tanggalKunjungan);
+      allReservation.map((b) => {
+        if (b?.status != "EXPIRED" && b?.status != "REJECT") {
+          allReservationPlanetariumDates.push(
+            new Date(globalVar.formatInputDate(b?.tanggalKunjungan))
+          );
+          console.log(b?.tanggalKunjungan);
         }
       });
 

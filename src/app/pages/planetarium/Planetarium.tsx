@@ -11,6 +11,10 @@ import { KTSVG } from "../../../_metronic/helpers";
 import DatePicker from "react-datepicker";
 import TermCondition from "./components/TermCondition";
 import CalendarPlanetarium from "./components/CalendarPlanetarium";
+import image_assets from "../../utils/image_assets";
+import axiosConfig from "../../utils/services/axiosConfig";
+import { ENDPOINTS } from "../../constants/API";
+import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../constants/PAGE";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -53,6 +57,11 @@ export const Planetarium = () => {
         Planetarium Goes To School
       </PageTitle>
       <Content>
+        <Gap height={24} />
+        <div className="d-flex justify-content-center">
+          <img src={image_assets.Astronomi} className="rounded w-50" />
+        </div>
+        <Gap height={24} />
         <TermCondition />
         <Gap height={24} />
         <CalendarPlanetarium />
@@ -98,6 +107,30 @@ export const Planetarium = () => {
     );
   }
   function FormPlace() {
+    const getAllReservationDate = async (
+      Status: any,
+      IsIncludePlanetarium?: any
+    ) => {
+      try {
+        const res = await axiosConfig.get(
+          `${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/Dates`,
+          {
+            Status,
+            IsIncludePlanetarium: true,
+            Page: INITIAL_PAGE,
+            Limit: DEFAULT_LIMIT,
+          }
+        );
+        const dataReservationDate = res.data.data.data;
+      } catch (error) {
+        throw error;
+      }
+    };
+
+    useEffect(() => {
+      getAllReservationDate("Done");
+    }, []);
+
     return (
       <Row>
         <Col lg={6}>
