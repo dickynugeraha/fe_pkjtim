@@ -160,7 +160,10 @@ const TermCondition = () => {
             <Gap height={12} />
             <h5>Lembar Pernyataan Persetujuan Peserta</h5>
             <p className="text-muted">
-              *) Formulir dapat diunduh di bit.ly/pernyataanPGS
+              *) Formulir dapat diunduh di{" "}
+                <a href="http://bit.ly/pernyataanPGS" target="_blank">
+                  bit.ly/pernyataanPGS
+                </a>
             </p>
           </Card.Body>
         </Card>
