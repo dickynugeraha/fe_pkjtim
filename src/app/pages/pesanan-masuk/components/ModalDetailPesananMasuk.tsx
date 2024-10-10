@@ -114,11 +114,23 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     ) {
       ButtonShow = <></>;
     }
-    if (data?.status === "REVISE") {
+    if (data?.status === "REVISE" ) {
       OthersContent = (
         <DetailItemFile
           id=""
-          title="Surat hasil kurasi (Revisi)"
+          title="Surat hasil kurasi"
+          isShowButton={true}
+          url={`Pdf/File/SuratHasilKurasi/${data.id}`}
+          withUpload={false}
+        />
+      );
+    }
+
+    if (data?.status === "REJECT" && data?.kuratorName != undefined) {
+      OthersContent = (
+        <DetailItemFile
+          id=""
+          title="Surat hasil kurasi"
           isShowButton={true}
           url={`Pdf/File/SuratHasilKurasi/${data.id}`}
           withUpload={false}
@@ -336,7 +348,50 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
         <h4>Berkas</h4>
         <Gap height={8} />
         <div className="row row-cols-3">
-          <DetailItemFile
+          <div className="col mb-6">
+            <div className="d-flex align-items-center">
+              <div>
+                <div className="d-flex">
+                  <KTIcon iconName={"file"} className="fs-3 me-3" />
+                  <h6 className="m-0">Surat permohonan</h6>
+                </div>
+                <Gap height={12} />
+                  {data.suratPermohonan !== null ? (
+                    <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    onClick={() => window.open(`Pdf/File/SuratPermohonan/${data.id}`, "_blank")}
+                    >
+                      Lihat
+                    </button>
+                  ) : (
+                    <button
+                      role="button"
+                      className="btn btn-light-primary py-2"
+                      disabled
+                    >
+                      Tidak ada file
+                    </button>
+                  )
+                }
+                {
+                  (data?.status === "REVISE" || data?.status === "PROSES") &&
+                  (
+                    <>
+                    <Gap height={12} />
+                    <input
+                      type="file"
+                      className="form-control"
+                      id={"fileSuratPermohonan"}
+                      name={"fileSuratPermohonan"}
+                      onChange={(e: any) => {
+                          handleChange("fileSuratPermohonan",e.target.files[0]);
+                      }}
+                    />
+                  </>
+                  )
+                }
+                {/* <DetailItemFile
             title="Surat permohonan"
             id={"fileSuratPermohonan"}
             isShowButton={data.suratPermohonan !== null}
@@ -355,8 +410,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               handleChange("fileSuratPermohonan", value)
             }
             fields={fields}
-          />
-          <DetailItemFile
+          /> */}
+            </div>
+          </div>
+        </div>
+          {/* <DetailItemFile
             title="Surat proposal"
             id={"fileSuratProposal"}
             url={`Pdf/File/Proposal/${data.id}`}
@@ -375,7 +433,53 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               handleChange("fileSuratProposal", value)
             }
             fields={fields}
-          />
+          /> */}
+          <div className="col mb-6">
+            <div className="d-flex align-items-center">
+              <div>
+                <div className="d-flex">
+                  <KTIcon iconName={"file"} className="fs-3 me-3" />
+                  <h6 className="m-0">Proposal</h6>
+                </div>
+                <Gap height={12} />
+                  {data.proposal !== null ? (
+                    <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    onClick={() => window.open(`Pdf/File/Proposal/${data.id}`, "_blank")}
+                    >
+                      Lihat
+                    </button>
+                  ) : (
+                    <button
+                      role="button"
+                      className="btn btn-light-primary py-2"
+                      disabled
+                    >
+                      Tidak ada file
+                    </button>
+                  )
+                }
+                {
+                  (data?.status === "REVISE" || data?.status === "PROSES") &&
+                  (
+                    <>
+                    <Gap height={12} />
+                    <input
+                      type="file"
+                      className="form-control"
+                      id={"fileSuratProposal"}
+                      name={"fileSuratProposal"}
+                      onChange={(e: any) => {
+                          handleChange("fileSuratProposal",e.target.files[0]);
+                      }}
+                    />
+                  </>
+                  )
+                }
+                </div>
+            </div>
+          </div>
         </div>
         <Gap height={6} />
         <h4>Lainnya</h4>

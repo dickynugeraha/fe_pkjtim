@@ -4,28 +4,34 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import React, { useEffect, useState } from "react";
 import idLocale from "@fullcalendar/core/locales/id";
-import globalVar from "../../../helper/globalVar";
-import usePlanetarium from "../../../modules/hooks/planetarium";
 import { Card } from "react-bootstrap";
 import axiosConfig from "../../../utils/services/axiosConfig";
 import { ENDPOINTS } from "../../../constants/API";
 import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
+import ModalDetailCalendar from "./ModalDetailCalendar";
 
 const CalendarPlanetarium = () => {
-  const { allReservationPlanetarium } = usePlanetarium();
   const [eventCalendar, setEventCalendar] = useState<any>();
+  const [modalDetailCalendar, setModalDetailCalendar] = useState({
+    show: false,
+    data: {},
+  });
+
 
   const getDataCalendar = async (reservation: any[]) => {
     const events: any[] = [];
     reservation.map((itm) => {
-      const date = new Date(itm.tanggalKunjungan);
-      date.setDate(date.getDate() + 2);
+      const baseDate = new Date(itm?.date);
+      const date = new Date(itm?.date);
+      date.setDate(date.getDate() + 1);
 
       const data = {
-        title: itm?.status === "OPEN" ? "Tersedia" : "Terpesan",
-        start: itm?.date,
-        end: itm?.date,
-        backgroundColor: itm?.status === "OPEN" ? "#20c997" : "gray",
+        title: itm?.status === "OPEN" ? "Tersedia" : itm?.planetarium.status === "DONE" ? "Terjadwal" : "Menunggu Konfirmasi",
+        start: date.toISOString().split("T")[0],
+        end: date.toISOString().split("T")[0],
+        eventDate: `${baseDate.toLocaleString("id", { weekday: "long",day:"2-digit",month:"long",year:"numeric" })}`,
+        color: itm?.status === "OPEN" ? "#0d6efd" : itm?.planetarium.status === "DONE" ? "#198754" : "#6f42c1",
+        namaSekolah: itm?.planetarium != null ? itm?.planetarium?.namaSekolah : undefined,
       };
 
       events.push(data);
@@ -35,7 +41,7 @@ const CalendarPlanetarium = () => {
   };
 
   const getAllReservationDate = async (
-    Status: any,
+    Status?: string,
     IsIncludePlanetarium?: any
   ) => {
     try {
@@ -55,17 +61,24 @@ const CalendarPlanetarium = () => {
     }
   };
 
-  useEffect(() => {
-    getAllReservationDate("Done");
-  }, []);
+  const handleEventClick = (arg: any) => {
+    setModalDetailCalendar({
+      show: true,
+      data: arg,
+    });
+  };
 
+  useEffect(() => {
+    getAllReservationDate("");
+  }, []);
   return (
+    <>
     <Card className="p-8">
       <FullCalendar
         locale={idLocale}
         now={new Date()}
         height={555}
-        initialDate={globalVar.getThreeMonthsFromToday()}
+        initialDate={new Date}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         headerToolbar={{
@@ -76,19 +89,22 @@ const CalendarPlanetarium = () => {
         events={eventCalendar}
         eventContent={(eventInfo) => {
           return (
-            <div
-              className="fw-bold fst-italic px-4 py-2 rounded text-light"
-              style={{
-                width: "100%",
-                backgroundColor: eventInfo.event.backgroundColor,
-              }}
-            >
+            <div role="button" className="fw-bold fst-italic p-1">
               {eventInfo.event.title}
             </div>
           );
         }}
+        eventClick={handleEventClick}
       />
     </Card>
+    <ModalDetailCalendar
+    show={modalDetailCalendar.show}
+    data={modalDetailCalendar.data}
+    handleClose={() => {
+      setModalDetailCalendar({ show: false, data: {} });
+    }}
+    />
+    </>
   );
 };
 

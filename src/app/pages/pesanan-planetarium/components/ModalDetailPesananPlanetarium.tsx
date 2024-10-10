@@ -155,7 +155,20 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             desc={globalVar.formatDate(data.tanggalKunjungan)}
           />
           <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
-          <DetailItem
+          <DetailItem iconName={"user"} title={"Kontak"} desc={data.contact} />
+          {data.reason && (
+            <DetailItem
+              iconName={"pencil"}
+              title={"Alasan"}
+              descTag={data.reason}
+              desc={data.reason}
+            />
+          )}
+        </div>
+        <h4>Berkas</h4>
+        <Gap height={8} />
+        <div className="row row-cols-3">
+        <DetailItem
             iconName={"some-files"}
             title={"Surat Undangan"}
             desc={statusKey}
@@ -171,14 +184,6 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
             isShowButton={data.pernyataanPersetujuan !== null}
             urlFile={`Pdf/File/PernyataanPersetujuan/${data.id}`}
           />
-          {data.reason && (
-            <DetailItem
-              iconName={"pencil"}
-              title={"Alasan"}
-              descTag={data.reason}
-              desc={data.reason}
-            />
-          )}
         </div>
         {modalAlasan.show && <div className="overlay" />}
         <ModalWrapper
@@ -213,7 +218,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
               context={Context}
               contextWatchdog={ContextWatchdog}
               onChangeInitializedEditors={(editors) => {
-                console.info(editors.editor1?.instance);
+                // console.info(editors.editor1?.instance);
               }}
             >
               <CKEditor
@@ -240,7 +245,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
                 }}
                 onReady={(editor) => {
                   // You can store the "editor" and use when it is needed.
-                  console.log("Editor 1 is ready to use!", editor);
+                  // console.log("Editor 1 is ready to use!", editor);
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();

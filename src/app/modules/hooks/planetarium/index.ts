@@ -261,7 +261,6 @@ export default function usePlanetarium() {
           allReservationPlanetariumDates.push(
             new Date(globalVar.formatInputDate(b?.tanggalKunjungan))
           );
-          console.log(b?.tanggalKunjungan);
         }
       });
 

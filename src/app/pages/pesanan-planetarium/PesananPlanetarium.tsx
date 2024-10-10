@@ -163,7 +163,6 @@ export const PesananPlanetarium = () => {
     "Daerah",
     "Status",
   ];
-  console.log("dataplanet",allReservationPlanetarium);
   let body: any[] = [];
   allReservationPlanetarium?.map((data) => {
     body.push([

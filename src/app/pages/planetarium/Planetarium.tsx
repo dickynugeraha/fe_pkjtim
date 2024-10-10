@@ -7,7 +7,6 @@ import Kegiatan from "./components/Kegiatan";
 import { Button, Col, Row, Card, Modal } from "react-bootstrap";
 import globalVar from "../../helper/globalVar";
 import usePlanetarium from "../../modules/hooks/planetarium";
-import { KTSVG } from "../../../_metronic/helpers";
 import DatePicker from "react-datepicker";
 import TermCondition from "./components/TermCondition";
 import CalendarPlanetarium from "./components/CalendarPlanetarium";
@@ -32,13 +31,8 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Planetarium = () => {
-  const { nextStepHandler, disabledDates } = usePlanetarium();
+  const { nextStepHandler } = usePlanetarium();
   const [bookingDate, setBookingDate] = useState<any>();
-  const isTuesdayOrThursday = (date: any) => {
-    const day = date.getDay();
-    const bool = day === 2 || day === 4;
-    return bool;
-  };
   const [termIsCheck, setTermIsCheck] = useState(false);
 
   const [indoor, setIndoor] = useState("");
@@ -64,7 +58,12 @@ export const Planetarium = () => {
         <Gap height={24} />
         <TermCondition />
         <Gap height={24} />
-        <CalendarPlanetarium />
+        <Card>
+        <Card.Header className="d-flex align-items-center">
+          <h4 className="m-0">Kalender Astronomy Goes To School</h4>
+        </Card.Header>
+            <CalendarPlanetarium />
+        </Card>
         <Gap height={24} />
         <Persetujuan />
         <Gap height={24} />
@@ -96,8 +95,9 @@ export const Planetarium = () => {
           type="checkbox"
           id="agree-terms-planet"
           className="form-check-input me-4"
-          onClick={() => setTermIsCheck(!termIsCheck)}
+          onChange={() => setTermIsCheck(!termIsCheck)}
           checked={termIsCheck}
+          defaultValue={""}
         />
         <label htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
@@ -124,18 +124,10 @@ export const Planetarium = () => {
           }
         );
         const dataReservationDate: any[] = res.data.data.data;
-        console.log(
-          "dataReservationDatedataReservationDate",
-          dataReservationDate
-        );
-
         const dataReserve: any[] = [];
         dataReservationDate.map((data) => {
-          if (data.status == "OPEN") {
-            dataReserve.push(new Date(globalVar.formatInputDate(data.date)));
-          }
+          dataReserve.push(new Date(globalVar.formatInputDate(data.date)));
         });
-
         setDataDates(dataReserve);
       } catch (error) {
         throw error;
@@ -143,9 +135,8 @@ export const Planetarium = () => {
     };
 
     useEffect(() => {
-      getAllReservationDate("Done");
+      getAllReservationDate("OPEN");
     }, []);
-
     return (
       <Row>
         <Col lg={6}>
