@@ -1,4 +1,4 @@
-import Astronomi from "../../../public/media/images/astronomi.jpg";
+import Astronomy from "../../../public/media/images/astronomi.jpg";
 import GedungPkjtim from "../../../public/media/images/gedung-pkjtim.jpg";
 import LoginPkjtim from "../../../public/media/images/login-pkjtim.png";
 import LoginPkjtim2 from "../../../public/media/images/login-pkjtim-2.png";
@@ -9,7 +9,7 @@ import Pelayanan from "../../../public/media/images/tentang_kami_pelayanan.png";
 import Youtube from "../../../public/media/images/tentang_kami_youtube.png";
 
 export default {
-  Astronomi,
+  Astronomy,
   GedungPkjtim,
   LoginPkjtim,
   LoginPkjtim2,

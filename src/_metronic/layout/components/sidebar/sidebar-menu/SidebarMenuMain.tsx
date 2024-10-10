@@ -73,6 +73,11 @@ const SidebarMenuMain = () => {
           title="Kontak Person"
           hasBullet={true}
         />
+        <SidebarMenuItem
+          to="master-data/planetarium-dates"
+          title="Tanggal Planetarium"
+          hasBullet={true}
+        />
       </SidebarMenuItemWithSub>
     );
   };
@@ -94,7 +99,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="pesanan-planet"
             icon="entrance-left"
-            title="Pesanan Astronomi"
+            title="Pesanan Astronomy"
             fontIcon="bi-layers"
           />
         </>
@@ -121,7 +126,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="planetarium"
             icon="moon"
-            title="Astronomi Go To School"
+            title="Astronomy Go To School"
             fontIcon="bi-layers"
           />
         </>

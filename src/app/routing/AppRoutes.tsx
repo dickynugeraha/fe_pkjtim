@@ -50,6 +50,7 @@ import VerifyNewAccount from "../pages/others/VerifyNewAccount";
 import VerifyChangeEmail from "../pages/others/VerifyChangeEmail";
 import PDFSuratHasilKurasi from "../../_metronic/layout/components/content/Pdf/PDFSuratHasilKurasi";
 import PDFSuratJawaban from "../../_metronic/layout/components/content/Pdf/PDFSuratJawaban";
+import { PlanetariumDates } from "../pages/master-data/planetarium-dates/PlanetariumDates";
 
 /**
  * Base URL of the website.
@@ -145,6 +146,10 @@ const AppRoutes: FC = () => {
                 <Route
                   path="master-data/contact-person"
                   element={<ContactPerson />}
+                />
+                <Route
+                  path="master-data/planetarium-dates"
+                  element={<PlanetariumDates />}
                 />
               </Route>
             </>

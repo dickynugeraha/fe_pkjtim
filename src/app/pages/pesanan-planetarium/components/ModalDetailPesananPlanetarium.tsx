@@ -76,7 +76,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
 
   return (
     <ModalWrapper
-      title="Detail Pesanan Astronomi"
+      title="Detail Pesanan Astronomy"
       show={show}
       handleClose={handleClose}
       attribute={{ centered: true }}
@@ -142,7 +142,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
                 <Gap height={6} />
                 <ul className="text-gray-600">
                   {data.isPertunjukan && <li>Pertunjukan Planetarium Mini</li>}
-                  {data.isDiskusi && <li>Diskusi Astronomi</li>}
+                  {data.isDiskusi && <li>Diskusi Astronomy</li>}
                   {data.isPeneropongan && <li>Peneropongan Matahari</li>}
                   {data.isRoketAir && <li>Percobaan Roket Air</li>}
                 </ul>

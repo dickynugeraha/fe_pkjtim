@@ -18,7 +18,7 @@ import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../constants/PAGE";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Astronomi Goes to School",
+    title: "Astronomy Goes to School",
     path: "/planetarium",
     isSeparator: false,
     isActive: false,
@@ -52,14 +52,14 @@ export const Planetarium = () => {
       <PageTitle
         icon="moon"
         breadcrumbs={Breadcrumbs}
-        description="Astronomi Goes To School"
+        description="Astronomy Goes To School"
       >
-        Astronomi Goes To School
+        Astronomy Goes To School
       </PageTitle>
       <Content>
         <Gap height={24} />
         <div className="d-flex justify-content-center">
-          <img src={image_assets.Astronomi} className="rounded w-50" />
+          <img src={image_assets.Astronomy} className="rounded w-50" />
         </div>
         <Gap height={24} />
         <TermCondition />
@@ -101,7 +101,7 @@ export const Planetarium = () => {
         />
         <label htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
-          Astronomi Goes to School diatas
+          Astronomy Goes to School diatas
         </label>
       </div>
     );

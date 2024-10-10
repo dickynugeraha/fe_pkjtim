@@ -12,7 +12,7 @@ const dataPeraturan = [
       "Guru pendamping sebanyak 1 orang tiap pertunjukan untuk membantu mentertibkan peserta.",
     ],
     fasilitas: [
-      "Penceramah Astronomi (1 orang) dan Teknisi (2 orang)",
+      "Penceramah Astronomy (1 orang) dan Teknisi (2 orang)",
       "Kubah Planetarium Mini berdiameter 5 meter dan tinggi 3 meter.",
       "Kipas blower (750 watt)",
       "Proyektor planetarium (550 watt)",
@@ -22,7 +22,7 @@ const dataPeraturan = [
     ],
   },
   {
-    title: "Detail Diskusi Astronomi",
+    title: "Detail Diskusi Astronomy",
     desc: "Kegiatan berupa pemberian materi astronomi oleh penceramah astronomi di dalam kelas menggunakan power point. Pemaparan materi dilakukan selama 45 menit dan dilanjutkan dengan tanya jawab selama 15 menit. Kuota peserta maksimal 75 orang.",
     syarat: [
       "Memiliki ruang kelas yang dapat menampung sejumlah peserta.",
@@ -31,7 +31,7 @@ const dataPeraturan = [
       "Guru pendamping di dalam kelas untuk membantu mentertibkan peserta.",
     ],
     fasilitas: [
-      "Penceramah Astronomi (1 orang) dan Teknisi (1 orang).",
+      "Penceramah Astronomy (1 orang) dan Teknisi (1 orang).",
       "Laptop.",
     ],
   },
@@ -130,7 +130,7 @@ const Peraturan = () => {
                   className="form-check-input me-8"
                 />
                 <div>
-                  <h6 className="fw-bold m-0">Diskusi Astronomi</h6>
+                  <h6 className="fw-bold m-0">Diskusi Astronomy</h6>
                   <p className="m-0">
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
                     astronomi di dalam kelas menggunakan power point.

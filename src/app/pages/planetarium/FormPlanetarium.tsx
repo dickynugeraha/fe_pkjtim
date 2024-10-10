@@ -15,7 +15,7 @@ import clsx from "clsx";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Astronomi Goes to School",
+    title: "Astronomy Goes to School",
     path: "/planetarium",
     isSeparator: false,
     isActive: false,
@@ -153,9 +153,9 @@ export const FormPlanetarium = () => {
       <PageTitle
         icon="moon"
         breadcrumbs={Breadcrumbs}
-        description="Form Astronomi Goes To School"
+        description="Form Astronomy Goes To School"
       >
-        Form Astronomi Goes To School
+        Form Astronomy Goes To School
       </PageTitle>
       <Content>
         <div className="card">
