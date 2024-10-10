@@ -14,6 +14,7 @@ import ModalWrapper from "../../../../_metronic/layout/components/content/ModalW
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { useAuth } from "../../../modules/auth";
 import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -36,6 +37,8 @@ export const PlanetariumDates = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [dates, setDates] = useState<any[]>([]);
   const [addDates, setAddDates] = useState<any[]>([]);
+  const [availableDate, setAvailableDate] = useState<any[]>([]);
+  const [selectedDate, setSelectedDate] = useState<any>();
 
   const getAllReservationDate = async () => {
     setLoading(true);
@@ -52,6 +55,11 @@ export const PlanetariumDates = () => {
       const dataReservationDate: any[] = res.data.data.data;
 
       setDates(dataReservationDate);
+      const dates: any[] = [];
+      dataReservationDate.map((data) => {
+        dates.push(new Date(globalVar.formatInputDate(data.date)));
+      });
+      setAvailableDate(dates);
     } catch (error) {
       throw error;
     }
@@ -198,6 +206,18 @@ export const PlanetariumDates = () => {
           return <p>{globalVar.formatDate(singleData.date)}</p>;
         },
       },
+      {
+        Header: "Status",
+        sortType: "alphanumeric",
+        accessor: "status",
+        Cell: (props: any) => {
+          let singleData = props.cell.row.original;
+
+          return (
+            <p>{singleData.status === "OPEN" ? "Tersedia" : "Terjadwal"}</p>
+          );
+        },
+      },
 
       {
         Header: "Aksi",
@@ -273,7 +293,24 @@ export const PlanetariumDates = () => {
               <label htmlFor="name" className="fw-bold mb-2">
                 Pilih tanggal <span className="text-danger">*</span>
               </label>
-              <input
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => {
+                  console.log(globalVar.formatInputDate(date));
+                  setSelectedDate(date);
+                  setAddDates((prevDate) => [
+                    ...prevDate,
+                    globalVar.formatInputDate(date),
+                  ]);
+                }}
+                excludeDates={availableDate}
+                minDate={new Date()}
+                className="form-control form-control-solid" // Bootstrap class for input
+                wrapperClassName="input-group" // Bootstrap input group
+                calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
+                placeholderText="dd/mm/yyyy"
+              />
+              {/* <input
                 id="date"
                 name="date"
                 type="date"
@@ -281,7 +318,7 @@ export const PlanetariumDates = () => {
                 onChange={(e: any) => {
                   setAddDates((prevDate) => [...prevDate, e.target.value]);
                 }}
-              />
+              /> */}
             </div>
             <Gap height={24} />
             <div className="row row-cols-3">
