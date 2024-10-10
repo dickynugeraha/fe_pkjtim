@@ -76,7 +76,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
 
   return (
     <ModalWrapper
-      title="Detail Pesanan Planetarium"
+      title="Detail Pesanan Astronomi"
       show={show}
       handleClose={handleClose}
       attribute={{ centered: true }}
@@ -209,46 +209,46 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           }
         >
           <>
-          <CKEditorContext
-          context={Context}
-          contextWatchdog={ContextWatchdog}
-          onChangeInitializedEditors={(editors) => {
-            console.info(editors.editor1?.instance);
-          }}
-        >
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [Essentials, Bold, Italic, Paragraph],
-              toolbar: [
-                "undo",
-                "redo",
-                "|",
-                "bold",
-                "italic",
-                "|",
-                "heading",
-                "|",
-                "bulletedList",
-                "numberedList",
-              ],
-            }}
-            data="<p></p>"
-            contextItemMetadata={{
-              name: "editor1",
-              yourAdditionalData: 2,
-            }}
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor 1 is ready to use!", editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
+            <CKEditorContext
+              context={Context}
+              contextWatchdog={ContextWatchdog}
+              onChangeInitializedEditors={(editors) => {
+                console.info(editors.editor1?.instance);
+              }}
+            >
+              <CKEditor
+                editor={ClassicEditor}
+                config={{
+                  plugins: [Essentials, Bold, Italic, Paragraph],
+                  toolbar: [
+                    "undo",
+                    "redo",
+                    "|",
+                    "bold",
+                    "italic",
+                    "|",
+                    "heading",
+                    "|",
+                    "bulletedList",
+                    "numberedList",
+                  ],
+                }}
+                data="<p></p>"
+                contextItemMetadata={{
+                  name: "editor1",
+                  yourAdditionalData: 2,
+                }}
+                onReady={(editor) => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor 1 is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
 
-              setAlasan(data);
-            }}
-          />
-        </CKEditorContext>
+                  setAlasan(data);
+                }}
+              />
+            </CKEditorContext>
             {/* <textarea
               name="alasan"
               id="alasan"
@@ -290,31 +290,34 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
-            {!isFile && (
-                desc != undefined ?
-                (
-                  descTag ? (<div dangerouslySetInnerHTML={{ __html: descTag }} />) :
-                  (<div className="m-0 text-gray-600">{desc}</div>)
-                ) : <p className="m-0 text-gray-600">-</p>
-              )
-            }
-            {isFile && ( isShowButton ?
-              <button
-                role="button"
-                className="btn btn-light-primary py-2"
-                onClick={() => window.open(urlFile, "_blank")}
-              >
-                Lihat
-              </button>
-              :
-              <button
-                role="button"
-                className="btn btn-light-primary py-2"
-                disabled
-              >
-                File tidak ada
-              </button>
-            )}
+            {!isFile &&
+              (desc != undefined ? (
+                descTag ? (
+                  <div dangerouslySetInnerHTML={{ __html: descTag }} />
+                ) : (
+                  <div className="m-0 text-gray-600">{desc}</div>
+                )
+              ) : (
+                <p className="m-0 text-gray-600">-</p>
+              ))}
+            {isFile &&
+              (isShowButton ? (
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  onClick={() => window.open(urlFile, "_blank")}
+                >
+                  Lihat
+                </button>
+              ) : (
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  disabled
+                >
+                  File tidak ada
+                </button>
+              ))}
           </div>
         </div>
       </div>

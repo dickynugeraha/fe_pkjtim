@@ -18,7 +18,7 @@ import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../constants/PAGE";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Planetarium Goes to School",
+    title: "Astronomi Goes to School",
     path: "/planetarium",
     isSeparator: false,
     isActive: false,
@@ -52,9 +52,9 @@ export const Planetarium = () => {
       <PageTitle
         icon="moon"
         breadcrumbs={Breadcrumbs}
-        description="Planetarium Goes To School"
+        description="Astronomi Goes To School"
       >
-        Planetarium Goes To School
+        Astronomi Goes To School
       </PageTitle>
       <Content>
         <Gap height={24} />
@@ -101,12 +101,14 @@ export const Planetarium = () => {
         />
         <label htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
-          Planetarium Goes to School diatas
+          Astronomi Goes to School diatas
         </label>
       </div>
     );
   }
   function FormPlace() {
+    const [dataDates, setDataDates] = useState<any[]>([]);
+
     const getAllReservationDate = async (
       Status: any,
       IsIncludePlanetarium?: any
@@ -121,7 +123,20 @@ export const Planetarium = () => {
             Limit: DEFAULT_LIMIT,
           }
         );
-        const dataReservationDate = res.data.data.data;
+        const dataReservationDate: any[] = res.data.data.data;
+        console.log(
+          "dataReservationDatedataReservationDate",
+          dataReservationDate
+        );
+
+        const dataReserve: any[] = [];
+        dataReservationDate.map((data) => {
+          if (data.status == "OPEN") {
+            dataReserve.push(new Date(globalVar.formatInputDate(data.date)));
+          }
+        });
+
+        setDataDates(dataReserve);
       } catch (error) {
         throw error;
       }
@@ -148,8 +163,8 @@ export const Planetarium = () => {
                           onChange={(date) =>
                             setBookingDate(globalVar.formatInputDate(date))
                           }
-                          excludeDates={disabledDates}
-                          filterDate={isTuesdayOrThursday}
+                          includeDates={dataDates}
+                          // filterDate={isTuesdayOrThursday}
                           minDate={new Date()}
                           className="form-control form-control-solid" // Bootstrap class for input
                           wrapperClassName="input-group" // Bootstrap input group
@@ -157,13 +172,7 @@ export const Planetarium = () => {
                           placeholderText="dd/mm/yyyy"
                         />
                       </div>
-                      {/* <input
-                        type="date"
-                        className="form-control form-control-solid"
-                        value={bookingDate}
-                        onChange={(e) => setBookingDate(e.target.value)}
-                        min={globalVar.getThreeMonthsFromToday()}
-                      /> */}
+
                       <Gap height={10} />
                     </div>
                   </Col>

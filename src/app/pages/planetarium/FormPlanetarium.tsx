@@ -15,7 +15,7 @@ import clsx from "clsx";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Planetarium Goes to School",
+    title: "Astronomi Goes to School",
     path: "/planetarium",
     isSeparator: false,
     isActive: false,
@@ -35,36 +35,28 @@ const formPesanScheme = Yup.object().shape({
   daerah: Yup.string().required("Daerah harus dipilih"),
   fileSuratUndangan: Yup.mixed()
     .required("Surat undangan harus diupload")
-    .test(
-      "fileFormat",
-      "File wajib ber-format PDF",
-      (value: any) => {
-        if (value) {
-          const supportedFormats = ["pdf"];
-          return supportedFormats.includes(value.name.split(".").pop());
-        }
-        return true;
+    .test("fileFormat", "File wajib ber-format PDF", (value: any) => {
+      if (value) {
+        const supportedFormats = ["pdf"];
+        return supportedFormats.includes(value.name.split(".").pop());
       }
-    )
+      return true;
+    })
     .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
       if (value) {
         return value.size <= 2145728;
       }
       return true;
     }),
-    fileLembarPernyataan: Yup.mixed()
+  fileLembarPernyataan: Yup.mixed()
     .required("Lembar pernyataan harus diupload")
-    .test(
-      "fileFormat",
-      "File wajib ber-format PDF",
-      (value: any) => {
-        if (value) {
-          const supportedFormats = ["pdf"];
-          return supportedFormats.includes(value.name.split(".").pop());
-        }
-        return true;
+    .test("fileFormat", "File wajib ber-format PDF", (value: any) => {
+      if (value) {
+        const supportedFormats = ["pdf"];
+        return supportedFormats.includes(value.name.split(".").pop());
       }
-    )
+      return true;
+    })
     .test("fileSize", "Ukuran file maksimal 2mb", (value: any) => {
       if (value) {
         return value.size <= 2145728;
@@ -161,9 +153,9 @@ export const FormPlanetarium = () => {
       <PageTitle
         icon="moon"
         breadcrumbs={Breadcrumbs}
-        description="Form Planetarium Goes To School"
+        description="Form Astronomi Goes To School"
       >
-        Form Planetarium Goes To School
+        Form Astronomi Goes To School
       </PageTitle>
       <Content>
         <div className="card">
@@ -296,8 +288,8 @@ export const FormPlanetarium = () => {
                   Unggah berkas
                 </label>
                 <p className="text-danger">
-                  *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran
-                  maks 2MB
+                  *) Ekstensi yang diperbolehkan adalah PDF, dengan ukuran maks
+                  2MB
                 </p>
                 <Gap height={10} />
 
@@ -315,12 +307,14 @@ export const FormPlanetarium = () => {
                       })}
                     />
                     {formik.errors.fileSuratUndangan && (
-                    <div className="fv-plugins-message-container">
-                      <div className="fv-help-block">
-                        <span role="alert">{formik.errors.fileSuratUndangan}</span>
+                      <div className="fv-plugins-message-container">
+                        <div className="fv-help-block">
+                          <span role="alert">
+                            {formik.errors.fileSuratUndangan}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                     <p className="text-muted m-0">
                       *) Surat Undangan Resmi WAJIB ditandatangani Kepala
                       Sekolah
@@ -341,14 +335,19 @@ export const FormPlanetarium = () => {
                       })}
                     />
                     {formik.errors.fileLembarPernyataan && (
-                    <div className="fv-plugins-message-container">
-                      <div className="fv-help-block">
-                        <span role="alert">{formik.errors.fileLembarPernyataan}</span>
+                      <div className="fv-plugins-message-container">
+                        <div className="fv-help-block">
+                          <span role="alert">
+                            {formik.errors.fileLembarPernyataan}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                     <p className="text-muted m-0">
-                      *) Formulir dapat diunduh di <a href="http://bit.ly/pernyataanPGS" target="_blank">bit.ly/pernyataanPGS</a>
+                      *) Formulir dapat diunduh di{" "}
+                      <a href="http://bit.ly/pernyataanPGS" target="_blank">
+                        bit.ly/pernyataanPGS
+                      </a>
                     </p>
                   </div>
                 </div>

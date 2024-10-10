@@ -94,7 +94,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="pesanan-planet"
             icon="entrance-left"
-            title="Pesanan Planetarium"
+            title="Pesanan Astronomi"
             fontIcon="bi-layers"
           />
         </>
@@ -121,7 +121,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="planetarium"
             icon="moon"
-            title="Planetarium Go To School"
+            title="Astronomi Go To School"
             fontIcon="bi-layers"
           />
         </>
