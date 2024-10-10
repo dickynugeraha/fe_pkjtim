@@ -165,7 +165,7 @@ const Kegiatan: FC<KegiatanProps> = ({
     return (
       <div>
         <h5 className="m-0">Outdoor</h5>
-        <p>Dapat memilih keduanya</p>
+        <p>Pilih satu</p>
         <div>
           <Card
             className={`px-4 py-5 ${
