@@ -89,8 +89,8 @@ const Kegiatan: FC<KegiatanProps> = ({
   const Indoor = () => {
     return (
       <div>
-        <h5 className="m-0">Indoor</h5>
-        <p>Pilih salah satu</p>
+        <h4 className="m-0">Indoor</h4>
+        <p className="fs-6 fs-6">Pilih salah satu</p>
         <div>
           <Card
             className={`px-4 py-2 ${
@@ -112,8 +112,8 @@ const Kegiatan: FC<KegiatanProps> = ({
                     }}
                   />
                   <div>
-                    <h5>Pertunjukan Planetarium Mini</h5>
-                    <p className="m-0">
+                    <h4>Pertunjukan Planetarium Mini</h4>
+                    <p className="fs-6 m-0">
                       Kegiatan berupa pemutaran simulasi langit di dalam kubah
                       planetarium mini selama 15 s.d. 20 menit. Peserta
                       mendapatkan penjelasan dari penceramah astronomi mengenai
@@ -147,8 +147,8 @@ const Kegiatan: FC<KegiatanProps> = ({
                   }}
                 />
                 <div>
-                  <h5>Diskusi Astronomy</h5>
-                  <p className="m-0">
+                  <h4>Diskusi Astronomy</h4>
+                  <p className="fs-6 m-0">
                     Kegiatan berupa pemberian materi astronomi oleh penceramah
                     astronomi di dalam kelas menggunakan power point.
                   </p>
@@ -164,8 +164,8 @@ const Kegiatan: FC<KegiatanProps> = ({
   const Outdoor = () => {
     return (
       <div>
-        <h5 className="m-0">Outdoor</h5>
-        <p>Pilih satu</p>
+        <h4 className="m-0">Outdoor</h4>
+        <p className="fs-6 fs-6">Pilih satu</p>
         <div>
           <Card
             className={`px-4 py-5 ${
@@ -190,8 +190,8 @@ const Kegiatan: FC<KegiatanProps> = ({
                     }}
                   />
                   <div>
-                    <h5>Peneropongan Matahari</h5>
-                    <p className="m-0">
+                    <h4>Peneropongan Matahari</h4>
+                    <p className="fs-6 m-0">
                       Kegiatan berupa pengamatan Matahari menggunakan teleskop
                       yang telah dilengkapi oleh filter matahari.
                     </p>
@@ -225,8 +225,8 @@ const Kegiatan: FC<KegiatanProps> = ({
                   }}
                 />
                 <div>
-                  <h5>Percobaan Roket Air</h5>
-                  <p className="m-0">
+                  <h4>Percobaan Roket Air</h4>
+                  <p className="fs-6 m-0">
                     Kegiatan berupa penjelasan dari narasumber mengenai konsep
                     peluncuran roket serta mendemonstrasikan peluncuran roket
                     menggunakan model Roket Air

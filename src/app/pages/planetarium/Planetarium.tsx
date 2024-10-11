@@ -51,13 +51,12 @@ export const Planetarium = () => {
         Astronomy Goes To School
       </PageTitle>
       <Content>
-        <Gap height={24} />
         <div className="d-flex justify-content-center">
           <img src={image_assets.Astronomy} className="rounded w-50" />
         </div>
-        <Gap height={24} />
+        <Gap height={15} />
         <TermCondition />
-        <Gap height={24} />
+        <Gap height={15} />
         <Card>
         <Card.Header className="d-flex align-items-center">
           <h4 className="m-0">Kalender Astronomy Goes To School</h4>
@@ -99,7 +98,7 @@ export const Planetarium = () => {
           checked={termIsCheck}
           defaultValue={""}
         />
-        <label htmlFor="agree-terms-planet">
+        <label className="fs-5" htmlFor="agree-terms-planet">
           Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
           Astronomy Goes to School diatas
         </label>
@@ -146,7 +145,7 @@ export const Planetarium = () => {
                 <Row>
                   <Col lg={8}>
                     <div className="form-group">
-                      <h6>Pilih Tanggal</h6>
+                      <h4>Pilih Tanggal</h4>
                       <Gap height={12} />
                       <div role="button">
                         <DatePicker

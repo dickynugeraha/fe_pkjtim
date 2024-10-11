@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import globalVar from "../../../helper/globalVar";
 import { Card, Col, Row } from "react-bootstrap";
+import Gap from "../../../../_metronic/layout/components/content/Gap";
 
 type Props = {
   tempat: any[];
@@ -23,38 +24,46 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
           <h4 className="m-0">Tarif Sewa</h4>
         </Card.Header>
         <Card.Body>
-          <div className="row row-cols-2">
-            <div className="col-6 col-md-4">
-              <ul>
                 {tempat.map((val) => (
-                  <li>{val.name}</li>
+                    <div className="row align-items-center">
+                      <div className="col">
+                      <a
+                        className="btn btn-light-primary btn-sm mb-1"
+                        role="button"
+                        onClick={() =>
+                          setModalDetailTarif({
+                            show: true,
+                            data: val,
+                          })
+                        }
+                        >
+                        Detail tarif {val.name}
+                      </a>
+                      </div>
+                    </div>
                 ))}
-              </ul>
-            </div>
-            <div>
-              <ol className="m-0 p-0">
-                {tempat.map((val) => (
-                  <ul
-                    className="text-primary"
-                    role="button"
-                    onClick={() =>
-                      setModalDetailTarif({
-                        show: true,
-                        data: val,
-                      })
-                    }
-                  >
-                    Detail tarif
-                  </ul>
-                ))}
-              </ol>
-            </div>
-          </div>
           <p className="text-danger">
             *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
           </p>
         </Card.Body>
       </Card>
+      <Gap height={15} />
+      <Card>
+          <Card.Header className="d-flex align-items-center">
+            <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
+          </Card.Header>
+          <Card.Body>
+            <h5 className="">Surat Permohonan</h5>
+            <p className="">
+              Surat Permohonan resmi dari pihak pemesan
+            </p>
+            <Gap height={12} />
+            <h5 className="">Proposal</h5>
+            <p className="">
+              Proposal dari pada acara yang akan di selenggarakan
+            </p>
+          </Card.Body>
+        </Card>
       <ModalWrapper
         footerCustom={<></>}
         title={`Tarif Sewa ${modalDetailTarif?.data?.name}`}
@@ -68,34 +77,28 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
         className="modal-md"
         attribute={{ centered: true }}
       >
-        <div className="row row-cols-2">
-          <ol className="col-7">
-            <ul className="mb-2">Harga Main Event (Hari kerja)</ul>
-            <ul className="mb-2">Harga Main Event (Akhir pekan)</ul>
-            <ul className="mb-2">Harga Pre Event (Hari kerja)</ul>
-            <ul className="mb-2">Harga Pre Event (Akhir pekan)</ul>
-          </ol>
-          <ol className="col-5">
+        <div className="row">
+          <ol className="col">
             <ul className="mb-2">
-              :{" "}
+            Harga Main Event (Hari kerja) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
-              :{" "}
+            Harga Main Event (Akhir pekan) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekEnd
               )}
             </ul>
             <ul className="mb-2">
-              :{" "}
+            Harga Pre Event (Hari kerja) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
-              :{" "}
+            Harga Pre Event (Akhir pekan) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekEnd
               )}

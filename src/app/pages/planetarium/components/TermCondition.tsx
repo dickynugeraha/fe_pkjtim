@@ -79,7 +79,7 @@ const TermCondition = () => {
 
   return (
     <div className="row rows-col-1 rows-col-lg-2">
-      <Col className="me-lg-4 mt-4">
+      <Col className="me-lg-4">
         <ModalKegiatan
           show={showModal}
           hideModal={() => setshowModal(false)}
@@ -147,20 +147,20 @@ const TermCondition = () => {
           </Card.Body>
         </Card>
       </Col>
-      <Col className="ps-lg-4 mt-4">
+      <Col className="ps-lg-4">
         <Card>
           <Card.Header className="d-flex align-items-center">
             <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
           </Card.Header>
           <Card.Body>
-            <h5>Surat Undangan Resmi</h5>
-            <p className="text-muted">
-              *) Surat Undangan Resmi WAJIB ditandatangani Kepala Sekolah
+            <h5 className="fs-3">Surat Undangan Resmi</h5>
+            <p className="fs-6">
+              Surat Undangan Resmi WAJIB ditandatangani Kepala Sekolah
             </p>
             <Gap height={12} />
-            <h5>Lembar Pernyataan Persetujuan Peserta</h5>
-            <p className="text-muted">
-              *) Formulir dapat diunduh di{" "}
+            <h5 className="fs-3">Lembar Pernyataan Persetujuan Peserta</h5>
+            <p className="fs-6">
+              Formulir dapat diunduh di{" "}
                 <a href="http://bit.ly/pernyataanPGS" target="_blank">
                   bit.ly/pernyataanPGS
                 </a>
@@ -179,7 +179,7 @@ const TermCondition = () => {
             className="d-flex justify-content-between align-items-center"
             style={{ width: "100%" }}
           >
-            <h4 className="m-0 p-0">{"Syarat dan ketentuan Umum"}</h4>
+            <h3 className="m-0 p-0">Syarat dan ketentuan Umum</h3>
             <div
               className="btn btn-icon btn-sm btn-active-light-primary ms-2"
               onClick={() => setModalTermAndCondition(false)}
@@ -193,9 +193,10 @@ const TermCondition = () => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <p className="fw-bold text-decoration-underline mb-1">
+          <p className="fs-3 fw-bolder text-decoration-underline mb-1">
             SYARAT DAN KETENTUAN UMUM
           </p>
+          <div className="fs-4">
           <ol>
             <li>
               Sekolah peserta kegiatan merupakan sekolah tingkat SD s.d. SMP
@@ -225,33 +226,33 @@ const TermCondition = () => {
               mematuhi arahan dari pihak Planetarium Jakarta
             </li>
           </ol>
+          </div>
           <Gap height={12} />
-          <p className="fw-bold text-decoration-underline mb-1">
+          <p className="fs-3 fw-bolder text-decoration-underline mb-1">
             WAKTU KEGIATAN
           </p>
-          <div className="d-flex">
-            <p className="m-0" style={{ width: "7rem" }}>
-              Hari Kerja
-            </p>
-            <p className="m-0">: Selasa atau Kamis</p>
-          </div>
-          <div className="d-flex">
-            <p style={{ width: "7rem" }}>Pukul</p>
-            <p>: 10.00 s.d. 13.30 WIB</p>
+          <div className="fs-4">
+            <div className="d-flex">
+              <ul>
+                <li>Hari Kerja : Senin, Selasa, Rabu atau Kamis (Ketersediaan tanggal dapat dilihat pada kalender Astronomy Goes to School dibawah)</li>
+                <li>Pukul : 10.00 s.d. 12.00 WIB</li>
+              </ul>
+            </div>
           </div>
           <Gap height={12} />
-          <p className="fw-bold text-decoration-underline mb-1">
+          <p className="fs-3 fw-bolder text-decoration-underline mb-1">
             BENTUK KEGIATAN
           </p>
-          <p>
-            Bentuk kegiatan terbagi menjadi dua jenis yaitu kegiatan di dalam
-            ruangan (indoor) dan kegiatan di luar ruangan (outdoor). Untuk
-            kegiatan di dalam ruangan, pihak sekolah dapat memilih
-            <strong> salah satu</strong> antara Pertunjukan Planetarium Mini
-            atau Diskusi Astronomy. Sedangkan untuk kegiatan di luar ruangan
-            terdiri dari Peneropongan Matahari dan Percobaan Roket Air di mana
-            pihak sekolah dapat memilih salah satu atau keduanya.
-          </p>
+          <div className="fs-4">
+            <p>
+              Bentuk kegiatan terbagi menjadi dua jenis yaitu kegiatan di dalam
+              ruangan (indoor) dan kegiatan di luar ruangan (outdoor). Untuk
+              kegiatan di dalam ruangan, pihak sekolah dapat memilih
+              <strong> salah satu</strong> antara Pertunjukan Planetarium Mini
+              atau Diskusi Astronomy. Sedangkan untuk kegiatan di luar ruangan
+              terdiri dari Peneropongan Matahari.
+            </p>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <div

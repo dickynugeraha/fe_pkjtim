@@ -26,7 +26,7 @@ const ModalKegiatan: FC<Props> = ({
           className="d-flex justify-content-between align-items-center"
           style={{ width: "100%" }}
         >
-          <h4 className="m-0 p-0">{title}</h4>
+          <h3 className="m-0 p-0">{title}</h3>
           <div
             className="btn btn-icon btn-sm btn-active-light-primary ms-2"
             onClick={hideModal}
@@ -40,21 +40,25 @@ const ModalKegiatan: FC<Props> = ({
         </div>
       </Modal.Header>
       <Modal.Body>
-        <p>{desc}</p>
-        <p className="fw-bold text-underline">Syarat dan Ketentuan Khusus :</p>
-        <ol>
-          {syarat.map((val) => (
-            <li>{val}</li>
-          ))}
-        </ol>
-        <p className="fw-bold text-underline">
+        <p className="fs-4">{desc}</p>
+        <p className="fs-3 fw-bolder text-decoration-underline">Syarat dan Ketentuan Khusus :</p>
+        <div className="fs-4">
+          <ol>
+            {syarat.map((val) => (
+              <li>{val}</li>
+            ))}
+          </ol>
+        </div>
+        <p className="fs-3 fw-bolder text-decoration-underline">
           Fasilitas dari Planetarum Jakarta:
         </p>
-        <ol>
-          {fasilitas.map((val) => (
-            <li>{val}</li>
-          ))}
-        </ol>
+        <div className="fs-4">
+          <ol>
+            {fasilitas.map((val) => (
+              <li>{val}</li>
+            ))}
+          </ol>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <div className="btn btn-sm btn-light" onClick={hideModal}>

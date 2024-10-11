@@ -9,7 +9,7 @@ import { downloadExcel } from "react-export-table-to-excel";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Pesanan Masuk Planetarium",
+    title: "Pesanan Masuk AGS",
     path: "/pesanan-planet",
     isSeparator: false,
     isActive: true,
@@ -178,7 +178,7 @@ export const PesananPlanetarium = () => {
 
   function handleDownloadExcel() {
     downloadExcel({
-      fileName: "Pesanan Masuk Planetarium",
+      fileName: "Pesanan Masuk AGS",
       sheet: "sheet1",
       tablePayload: {
         header,
@@ -193,9 +193,9 @@ export const PesananPlanetarium = () => {
       <PageTitle
         breadcrumbs={Breadcrumbs}
         icon="entrance-left"
-        description="Pesanan Masuk Planetarium"
+        description="Pesanan Masuk AGS"
       >
-        Pesanan Masuk Planetarium
+        Pesanan Masuk AGS
       </PageTitle>
       <Content>
         <Table
