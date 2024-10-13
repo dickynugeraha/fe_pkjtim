@@ -310,15 +310,6 @@ export const PlanetariumDates = () => {
                 calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
                 placeholderText="dd/mm/yyyy"
               />
-              {/* <input
-                id="date"
-                name="date"
-                type="date"
-                className="form-control form-control-solid"
-                onChange={(e: any) => {
-                  setAddDates((prevDate) => [...prevDate, e.target.value]);
-                }}
-              /> */}
             </div>
             <Gap height={24} />
             <div className="row row-cols-3">

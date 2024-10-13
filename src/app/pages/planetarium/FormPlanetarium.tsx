@@ -30,8 +30,10 @@ const Breadcrumbs: Array<PageLink> = [
 
 const formPesanScheme = Yup.object().shape({
   namaSekolah: Yup.string().required("Nama sekolah harus diisi"),
-  alamatSekolah: Yup.string().required("alamat sekolah harus diisi"),
-  jumlahPeserta: Yup.string().required("Jumlah peserta harus diisi"),
+  alamatSekolah: Yup.string().required("Alamat sekolah harus diisi"),
+  jumlahPeserta: Yup.number()
+    .max(60, "Jumlah peserta maksimal 60 orang")
+    .required("Jumlah peserta harus diisi"),
   daerah: Yup.string().required("Daerah harus dipilih"),
   fileSuratUndangan: Yup.mixed()
     .required("Surat undangan harus diupload")
@@ -90,6 +92,8 @@ export const FormPlanetarium = () => {
     initialValues,
     validationSchema: formPesanScheme,
     onSubmit: async (values, { setStatus, setSubmitting }) => {
+      if (Number(values.jumlahPeserta) > 60) return;
+
       const data = {
         ...values,
         id: params.id,
