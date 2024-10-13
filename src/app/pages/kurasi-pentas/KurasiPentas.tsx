@@ -154,6 +154,8 @@ export const KurasiPentas = () => {
     []
   );
 
+  console.log("allReservationPesanTempat", allReservationPesanTempat);
+
   return (
     <>
       <PageTitle

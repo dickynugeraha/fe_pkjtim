@@ -40,6 +40,8 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
   const [modalShowTerima, setModalShowTerima] = useState(false);
   const [reason, setReason] = useState("");
 
+  console.log("dataaaa", data);
+
   return (
     <ModalWrapper
       title="Detail Pesanan"
@@ -110,6 +112,12 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             <DetailItemFile
               title="Proposal"
               url={`Pdf/File/Proposal/${data.id}`}
+            />
+          )}
+          {data.suratPermohonanByPengelola && (
+            <DetailItemFile
+              title="Surat Permohonan Pengelola"
+              url={`Pdf/File/SuratPermohonanPengelola/${data.id}`}
             />
           )}
         </div>

@@ -10,19 +10,21 @@ import Swal from "sweetalert2";
 import { API_URL, ENDPOINTS } from "../../../constants/API";
 
 type Props = {
+  isSuccessChangeStatus: boolean;
   show: boolean;
   data: any;
   handleClose: () => void;
   changeStatus: (status: any, payload: any) => void;
-  onChangeStatus: () => void;
+  setFalseSuccess: () => void;
 };
 
 const ModalDetailPesananMasuk: React.FC<Props> = ({
+  isSuccessChangeStatus,
   show,
   data,
   handleClose,
   changeStatus,
-  onChangeStatus,
+  setFalseSuccess,
 }) => {
   // const { changeStatus } = usePesanTempat();
   const [modalDetailPesananUser, setModalDetailPesananUser] = useState({
@@ -90,11 +92,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               note: "",
             };
             changeStatus("Kurasi", payload);
-            setTimeout(() => {
-              setModalTypeReason({ ...modalTypeReason, show: false });
-              handleClose();
-              onChangeStatus();
-            }, 1000);
+            // if (isSuccessChangeStatus) {
+            //   setModalTypeReason({ ...modalTypeReason, show: false });
+            //   handleClose();
+            //   setFalseSuccess();
+            // }
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -114,7 +116,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
     ) {
       ButtonShow = <></>;
     }
-    if (data?.status === "REVISE" ) {
+    if (data?.status === "REVISE") {
       OthersContent = (
         <DetailItemFile
           id=""
@@ -213,6 +215,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
 
     return { ButtonShow, OthersContent };
   };
+
   return (
     <ModalWrapper
       title="Detail Pesanan"
@@ -356,28 +359,30 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   <h6 className="m-0">Surat permohonan</h6>
                 </div>
                 <Gap height={12} />
-                  {data.suratPermohonan !== null ? (
-                    <button
+                {data.suratPermohonan !== null ? (
+                  <button
                     role="button"
                     className="btn btn-light-primary py-2"
-                    onClick={() => window.open(`Pdf/File/SuratPermohonan/${data.id}`, "_blank")}
-                    >
-                      Lihat
-                    </button>
-                  ) : (
-                    <button
-                      role="button"
-                      className="btn btn-light-primary py-2"
-                      disabled
-                    >
-                      Tidak ada file
-                    </button>
-                  )
-                }
-                {
-                  (data?.status === "REVISE" || data?.status === "PROSES") &&
-                  (
-                    <>
+                    onClick={() =>
+                      window.open(
+                        `Pdf/File/SuratPermohonan/${data.id}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    Lihat
+                  </button>
+                ) : (
+                  <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    disabled
+                  >
+                    Tidak ada file
+                  </button>
+                )}
+                {(data?.status === "REVISE" || data?.status === "PROSES") && (
+                  <>
                     <Gap height={12} />
                     <input
                       type="file"
@@ -385,12 +390,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                       id={"fileSuratPermohonan"}
                       name={"fileSuratPermohonan"}
                       onChange={(e: any) => {
-                          handleChange("fileSuratPermohonan",e.target.files[0]);
+                        handleChange("fileSuratPermohonan", e.target.files[0]);
                       }}
                     />
                   </>
-                  )
-                }
+                )}
                 {/* <DetailItemFile
             title="Surat permohonan"
             id={"fileSuratPermohonan"}
@@ -411,9 +415,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             }
             fields={fields}
           /> */}
+              </div>
             </div>
           </div>
-        </div>
           {/* <DetailItemFile
             title="Surat proposal"
             id={"fileSuratProposal"}
@@ -442,28 +446,27 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                   <h6 className="m-0">Proposal</h6>
                 </div>
                 <Gap height={12} />
-                  {data.proposal !== null ? (
-                    <button
+                {data.proposal !== null ? (
+                  <button
                     role="button"
                     className="btn btn-light-primary py-2"
-                    onClick={() => window.open(`Pdf/File/Proposal/${data.id}`, "_blank")}
-                    >
-                      Lihat
-                    </button>
-                  ) : (
-                    <button
-                      role="button"
-                      className="btn btn-light-primary py-2"
-                      disabled
-                    >
-                      Tidak ada file
-                    </button>
-                  )
-                }
-                {
-                  (data?.status === "REVISE" || data?.status === "PROSES") &&
-                  (
-                    <>
+                    onClick={() =>
+                      window.open(`Pdf/File/Proposal/${data.id}`, "_blank")
+                    }
+                  >
+                    Lihat
+                  </button>
+                ) : (
+                  <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    disabled
+                  >
+                    Tidak ada file
+                  </button>
+                )}
+                {(data?.status === "REVISE" || data?.status === "PROSES") && (
+                  <>
                     <Gap height={12} />
                     <input
                       type="file"
@@ -471,13 +474,62 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                       id={"fileSuratProposal"}
                       name={"fileSuratProposal"}
                       onChange={(e: any) => {
-                          handleChange("fileSuratProposal",e.target.files[0]);
+                        handleChange("fileSuratProposal", e.target.files[0]);
                       }}
                     />
                   </>
-                  )
-                }
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="col mb-6">
+            <div className="d-flex align-items-center">
+              <div>
+                <div className="d-flex">
+                  <KTIcon iconName={"file"} className="fs-3 me-3" />
+                  <h6 className="m-0">Surat Permohonan Pengelola</h6>
                 </div>
+                <Gap height={12} />
+                {data.suratPermohonanByPengelola !== null ? (
+                  <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    onClick={() =>
+                      window.open(
+                        `Pdf/File/SuratPermohonanPengelola/${data.id}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    Lihat
+                  </button>
+                ) : (
+                  <button
+                    role="button"
+                    className="btn btn-light-primary py-2"
+                    disabled
+                  >
+                    Tidak ada file
+                  </button>
+                )}
+                {(data?.status === "REVISE" || data?.status === "PROSES") && (
+                  <>
+                    <Gap height={12} />
+                    <input
+                      type="file"
+                      className="form-control"
+                      id={"fileSuratPermohonanByPengelola"}
+                      name={"fileSuratPermohonanByPengelola"}
+                      onChange={(e: any) => {
+                        handleChange(
+                          "fileSuratPermohonanByPengelola",
+                          e.target.files[0]
+                        );
+                      }}
+                    />
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -535,14 +587,13 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             handleChange("reason", reason);
 
             changeStatus(modalTypeReason?.type, payload);
-            setTimeout(() => {
-              setModalTypeReason({
-                show: false,
-                type: modalTypeReason.type,
-              });
-              handleClose();
-              onChangeStatus();
-            }, 1000);
+            // setTimeout(() => {
+            //   setModalTypeReason({
+            //     show: false,
+            //     type: modalTypeReason.type,
+            //   });
+            //   handleClose();
+            // }, 1000);
           }}
           type={modalTypeReason.type}
         />

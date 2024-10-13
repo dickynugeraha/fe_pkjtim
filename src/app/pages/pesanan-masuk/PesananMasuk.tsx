@@ -30,6 +30,8 @@ export const PesananMasuk = () => {
     setQuery,
     changeStatus,
   } = usePesanTempat();
+  const [isSuccessChangeStatus, setIsSuccessChangeStatus] =
+    useState<boolean>(false);
 
   useEffect(() => {
     getAllReservationPesanTempat();
@@ -193,11 +195,12 @@ export const PesananMasuk = () => {
           show={modalDetail.show}
           data={modalDetail.data}
           changeStatus={(status: any, payload: any) =>
-            changeStatus(status, payload)
+            changeStatus(status, payload).then(() => {
+              setIsSuccessChangeStatus(true);
+            })
           }
-          onChangeStatus={() => {
-            // getAllReservationPesanTempat();
-          }}
+          isSuccessChangeStatus={isSuccessChangeStatus}
+          setFalseSuccess={() => setIsSuccessChangeStatus(false)}
           handleClose={() => setModalDetail({ ...modalDetail, show: false })}
         />
       </Content>

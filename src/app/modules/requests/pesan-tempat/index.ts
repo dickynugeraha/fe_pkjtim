@@ -76,6 +76,10 @@ export const changeStatusReservation = (data: any, status: string) => {
     formData.append("actorId", data.actorId);
     formData.append("note", data.note);
     formData.append("reason", data.reason);
+    formData.append(
+      "fileSuratPermohonanByPengelola",
+      data.fileSuratPermohonanByPengelola
+    );
     formData.append("fileSuratPermohonan", data.fileSuratPermohonan);
     formData.append("fileProposal", data.fileProposal);
     formData.append("judulPentas", data.judulPentas);

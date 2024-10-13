@@ -51,6 +51,7 @@ import VerifyChangeEmail from "../pages/others/VerifyChangeEmail";
 import PDFSuratHasilKurasi from "../../_metronic/layout/components/content/Pdf/PDFSuratHasilKurasi";
 import PDFSuratJawaban from "../../_metronic/layout/components/content/Pdf/PDFSuratJawaban";
 import { PlanetariumDates } from "../pages/master-data/planetarium-dates/PlanetariumDates";
+import PDFSuratPermohonanPengelola from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonan";
 
 /**
  * Base URL of the website.
@@ -109,6 +110,10 @@ const AppRoutes: FC = () => {
           <Route
             path="Pdf/File/SuratPermohonan/:id"
             element={<PDFSuratPermohonan />}
+          />
+          <Route
+            path="Pdf/File/SuratPermohonanPengelola/:id"
+            element={<PDFSuratPermohonanPengelola />}
           />
           <Route
             path="Pdf/File/SuratHasilKurasi/:id"

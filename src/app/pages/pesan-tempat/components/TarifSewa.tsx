@@ -24,24 +24,25 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
           <h4 className="m-0">Tarif Sewa</h4>
         </Card.Header>
         <Card.Body>
-                {tempat.map((val) => (
-                    <div className="row align-items-center">
-                      <div className="col">
-                      <a
-                        className="btn btn-light-primary btn-sm mb-1"
-                        role="button"
-                        onClick={() =>
-                          setModalDetailTarif({
-                            show: true,
-                            data: val,
-                          })
-                        }
-                        >
-                        Detail tarif {val.name}
-                      </a>
-                      </div>
-                    </div>
-                ))}
+          {tempat.map((val) => (
+            <div className="row align-items-center">
+              <div className="col">
+                <a
+                  className="btn btn-light-primary btn-sm mb-2 w-75"
+                  role="button"
+                  onClick={() =>
+                    setModalDetailTarif({
+                      show: true,
+                      data: val,
+                    })
+                  }
+                >
+                  Detail tarif {val.name}
+                </a>
+              </div>
+            </div>
+          ))}
+          <Gap height={12} />
           <p className="text-danger">
             *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
           </p>
@@ -49,21 +50,19 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
       </Card>
       <Gap height={15} />
       <Card>
-          <Card.Header className="d-flex align-items-center">
-            <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
-          </Card.Header>
-          <Card.Body>
-            <h5 className="">Surat Permohonan</h5>
-            <p className="">
-              Surat Permohonan resmi dari pihak pemesan
-            </p>
-            <Gap height={12} />
-            <h5 className="">Proposal</h5>
-            <p className="">
-              Proposal dari pada acara yang akan di selenggarakan
-            </p>
-          </Card.Body>
-        </Card>
+        <Card.Header className="d-flex align-items-center">
+          <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
+        </Card.Header>
+        <Card.Body>
+          <h5 className="">Surat Permohonan</h5>
+          <p className="">Surat Permohonan resmi dari pihak pemesan</p>
+          <Gap height={12} />
+          <h5 className="">Proposal</h5>
+          <p className="">
+            Proposal dari pada acara yang akan di selenggarakan
+          </p>
+        </Card.Body>
+      </Card>
       <ModalWrapper
         footerCustom={<></>}
         title={`Tarif Sewa ${modalDetailTarif?.data?.name}`}
@@ -80,25 +79,25 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
         <div className="row">
           <ol className="col">
             <ul className="mb-2">
-            Harga Main Event (Hari kerja) :{" "}
+              Harga Main Event (Hari kerja) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
-            Harga Main Event (Akhir pekan) :{" "}
+              Harga Main Event (Akhir pekan) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.priceMainEventWeekEnd
               )}
             </ul>
             <ul className="mb-2">
-            Harga Pre Event (Hari kerja) :{" "}
+              Harga Pre Event (Hari kerja) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekDay
               )}
             </ul>
             <ul className="mb-2">
-            Harga Pre Event (Akhir pekan) :{" "}
+              Harga Pre Event (Akhir pekan) :{" "}
               {globalVar.formatRupiah(
                 modalDetailTarif?.data?.pricePreEventWeekEnd
               )}

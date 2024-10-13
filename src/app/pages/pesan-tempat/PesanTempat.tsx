@@ -137,9 +137,9 @@ export const PesanTempat: FC = () => {
                 <>
                   <h6>Pilih tanggal</h6>
                   {loadingDate ? (
-                    <>
+                    <div className="d-flex justify-content-center my-3">
                       <Spinner />
-                    </>
+                    </div>
                   ) : (
                     <div className="d-flex align-items-center">
                       <DatePicker

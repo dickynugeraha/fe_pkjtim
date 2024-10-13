@@ -91,6 +91,8 @@ export default function usePesanTempat() {
           "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         );
         let allReservation: any[] = reservations.data.data.data;
+        console.log("allReservation", allReservation);
+
         let allReservationWithFile: any[] = [];
         allReservation.map((data) => {
           const singleReserve = {
@@ -100,6 +102,9 @@ export default function usePesanTempat() {
               : null,
             proposal: data.proposal
               ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/Proposal`
+              : null,
+            suratPermohonanByPengelola: data.suratPermohonanByPengelola
+              ? `${API_URL}/${ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT}/${data.id}/Attachment/SuratPermohonanPengelola`
               : null,
             statusDesc: globalVar.exportStatusPesanTempatToTitle(data.status),
           };
