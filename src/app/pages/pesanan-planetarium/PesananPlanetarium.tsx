@@ -26,16 +26,16 @@ export const PesananPlanetarium = () => {
   const {
     getAllReservationPlanetarium,
     setQuery,
+    openModal,
+    closeModal,
+    updateVisitDate,
+    setIsValidated,
     allReservationPlanetarium,
     loading,
+    isModalOpen,
+    formData,
+    isValidated
   } = usePlanetarium();
-  const [modalDetail, setModalDetail] = useState<{
-    show: boolean;
-    data: any;
-  }>({
-    show: false,
-    data: {},
-  });
 
   useEffect(() => {
     getAllReservationPlanetarium();
@@ -74,15 +74,21 @@ export const PesananPlanetarium = () => {
           let singleData = props.cell.row.original;
           return (
             <div>
-              <span className="badge badge-light-success fs-6">
-                {globalVar.formatDate(singleData.tanggalKunjungan)}
-              </span>
+              {singleData.tanggalKunjungan != undefined ? (
+                <span className="badge badge-light-success fs-6">
+                  {globalVar.formatDate(singleData.tanggalKunjungan)}
+                </span>
+              ) : (
+                <span className="badge badge-light-info fs-6">
+                  Belum ada tanggal
+                </span>
+              )}
             </div>
           );
         },
       },
       {
-        Header: "Tanggal Sewa",
+        Header: "Tanggal Pemesanan",
         accessor: "createdAt",
         sortType: "alphanumeric",
         Cell: (props: any) => {
@@ -123,9 +129,13 @@ export const PesananPlanetarium = () => {
               break;
             case "EXPIRED":
               statusDesc = "Kadaluarsa";
-
               statusClass = "badge badge-light-danger fs-6";
               break;
+          }
+
+          if (singleData.tanggalKunjungan == undefined) {
+            statusDesc = "Penjadwalan ulang";
+            statusClass = "badge badge-light-info fs-6";
           }
 
           return <span className={statusClass}>{statusDesc}</span>;
@@ -138,12 +148,7 @@ export const PesananPlanetarium = () => {
           return (
             <button
               className={"btn btn-sm btn-primary"}
-              onClick={() => {
-                setModalDetail({
-                  show: true,
-                  data: singleData,
-                });
-              }}
+              onClick={() => openModal(singleData)}
             >
               Detail
             </button>
@@ -187,7 +192,6 @@ export const PesananPlanetarium = () => {
     });
   }
 
-
   return (
     <>
       <PageTitle
@@ -207,14 +211,17 @@ export const PesananPlanetarium = () => {
           }}
           data={data}
           columns={columns}
-          addData={() => {}}
+          addData={() => openModal()}
           showAddButton={false}
         />
         <ModalDetailPesananPlanetarium
-          show={modalDetail.show}
-          data={modalDetail.data}
-          handleClose={() => setModalDetail({ show: false, data: {} })}
+          show={isModalOpen}
+          data={formData}
+          isValidated={isValidated}
+          handleIsValidated={setIsValidated}
+          handleClose={() => closeModal()}
           fromAdmin
+          handleSubmitDate={(date) => updateVisitDate(date)}
         />
       </Content>
     </>

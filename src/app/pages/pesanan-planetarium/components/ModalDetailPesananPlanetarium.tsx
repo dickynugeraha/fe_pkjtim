@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalWrapper from "../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../_metronic/helpers";
@@ -16,25 +16,38 @@ import {
   ContextWatchdog,
 } from "ckeditor5";
 import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
+import DatePicker from "react-datepicker";
+import { Button, Form } from "react-bootstrap";
+import axiosConfig from "../../../utils/services/axiosConfig";
+import { ENDPOINTS } from "../../../constants/API";
+import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 
 type Props = {
   fromAdmin?: boolean;
   show: boolean;
   data: any;
+  isValidated: boolean;
   handleClose: () => void;
+  handleSubmitDate: (data: any) => void;
+  handleIsValidated: (e: any) => void;
 };
 
 const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   fromAdmin = false,
   show,
   data,
+  isValidated,
   handleClose,
+  handleSubmitDate,
+  handleIsValidated,
 }) => {
   const { rejectReservation, approveReservation } = usePlanetarium();
   const [modalAlasan, setModalAlasan] = useState({
     type: "",
     show: false,
   });
+  const [tanggalKunjungan, setTanggalKunjungan] = useState<any>();
+  const [dataDates, setDataDates] = useState<any[]>([]);
   const [alasan, setAlasan] = useState<string>("");
 
   const handleClickAlasan = () => {
@@ -73,6 +86,54 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
       statusKey = "Ditolak";
       break;
   }
+
+  if (data.tanggalKunjungan == undefined) {
+    statusKey = "Penjadwalan ulang";
+  }
+
+  const getAllReservationDate = async (
+    Status: any,
+    IsIncludePlanetarium?: any
+  ) => {
+    try {
+      const res = await axiosConfig.get(
+        `${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/Dates`,
+        {
+          Status,
+          IsIncludePlanetarium: true,
+          Page: INITIAL_PAGE,
+          Limit: DEFAULT_LIMIT,
+        }
+      );
+      const dataReservationDate: any[] = res.data.data.data;
+      const dataReserve: any[] = [];
+      dataReservationDate.map((data) => {
+        dataReserve.push(new Date(globalVar.formatInputDate(data.date)));
+      });
+      setDataDates(dataReserve);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleValidate = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+    handleIsValidated(true);
+
+    if (form.checkValidity() === true) {
+      var date = {
+        id : data.id,
+        tanggalKunjungan : tanggalKunjungan
+      };
+      handleSubmitDate(date);
+    }
+  };
+
+  useEffect(() => {
+    getAllReservationDate("OPEN");
+  }, []);
 
   return (
     <ModalWrapper
@@ -149,11 +210,56 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
               </div>
             </div>
           </div>
-          <DetailItem
-            iconName={"toggle-on-circle"}
-            title={"Tangal kunjungan"}
-            desc={globalVar.formatDate(data.tanggalKunjungan)}
-          />
+          {data.tanggalKunjungan != undefined ? (
+            <DetailItem
+              iconName={"toggle-on-circle"}
+              title={"Tangal kunjungan"}
+              desc={globalVar.formatDate(data.tanggalKunjungan)}
+            />
+          ) : (
+            <div className="col mb-6">
+              <div className="d-flex">
+                <div>
+                  <KTIcon iconName={"toggle-on-circle"} className="fs-3" />
+                </div>
+                <Gap width={18} />
+                <div>
+                  <h6 className="m-0">Tanggal Kunjungan</h6>
+                  <Gap height={6} />
+                  <Form
+                    noValidate
+                    validated={isValidated}
+                    onSubmit={handleValidate}
+                  >
+                    <div className="d-flex">
+                      <Form.Group>
+                        <DatePicker
+                          selected={tanggalKunjungan}
+                          onChange={(date) => {
+                            var tempDate = globalVar.formatInputDate(date)
+                            setTanggalKunjungan(tempDate)
+                          }}
+                          includeDates={dataDates}
+                          minDate={new Date()}
+                          className="form-control form-control-solid" // Bootstrap class for input
+                          wrapperClassName="input-group" // Bootstrap input group
+                          calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
+                          placeholderText="dd/mm/yyyy"
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Nama Lengkap Wajib Diisi!
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Button type="submit" className="btn btn-sm btn-primary mx-2">
+                        Atur
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              </div>
+            </div>
+          )}
           <DetailItem iconName={"filter"} title={"Status"} desc={statusKey} />
           <DetailItem iconName={"user"} title={"Kontak"} desc={data.contact} />
           {data.reason && (
@@ -168,7 +274,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
         <h4>Berkas</h4>
         <Gap height={8} />
         <div className="row row-cols-3">
-        <DetailItem
+          <DetailItem
             iconName={"some-files"}
             title={"Surat Undangan"}
             desc={statusKey}

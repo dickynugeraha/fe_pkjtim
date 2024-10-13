@@ -4,7 +4,7 @@ import Gap from "../../../../../_metronic/layout/components/content/Gap";
 import { Form, Col, InputGroup, Row, Button } from "react-bootstrap";
 import { API_URL, ENDPOINTS } from "../../../../constants/API";
 
-type PropsModalAddEditSekilasInfo = {
+type PropsModalAddEditPengguna = {
   formAdd: boolean;
   isRoleKurator?: boolean;
   data: any;
@@ -21,7 +21,7 @@ type PropsModalAddEditSekilasInfo = {
   handleSubmit: (data: any) => void;
 };
 
-const ModalAddEditPengguna: FC<PropsModalAddEditSekilasInfo> = ({
+const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
   formAdd,
   show,
   isLockedCheck,

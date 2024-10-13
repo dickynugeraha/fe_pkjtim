@@ -81,3 +81,13 @@ export const approveReservation = (data: any) => {
     }
   );
 };
+
+export const changeVisitDate = (data: any, actorEmail:string) => {
+  return axiosConfig.put(
+    `${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/${data.id}/TanggalKunjungan`,
+    {
+      actor: actorEmail,
+      tanggalKunjungan: data.tanggalKunjungan,
+    }
+  );
+};

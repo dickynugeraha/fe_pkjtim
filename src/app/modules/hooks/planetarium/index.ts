@@ -7,6 +7,7 @@ import {
   getAllReservation,
   rejectReservation as reject,
   approveReservation as approve,
+  changeVisitDate,
 } from "../../requests/planetarium";
 import { useAuth } from "../../auth";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,10 @@ import axiosConfig from "../../../utils/services/axiosConfig";
 
 export default function usePlanetarium() {
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
   const { currentUser } = useAuth();
+  const actorEmail = currentUser?.email ?? "Admin";
   const [allReservationPlanetarium, setAllReservationPlanetarium] = useState<
     any[]
   >([]);
@@ -34,6 +38,31 @@ export default function usePlanetarium() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState<{
+    show: boolean;
+    data: any;
+  }>({
+    show: false,
+    data: {},
+  });
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsValidated(false);
+  };
+
+  const openModal = (data = null) => {
+    if (data) {
+      setFormData(data);
+      setIsValidated(false);
+    } else {
+      setFormData({
+        show: false,
+        data: {},
+      });
+    }
+    setIsModalOpen(true);
+  };
 
   const nextStepHandler = async (
     indoor: any,
@@ -339,6 +368,52 @@ export default function usePlanetarium() {
     });
   };
 
+  const updateVisitDate = async (data: any) => {
+    console.log("DATA",data);
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan penjadwalan ulang?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      setLoading(true);
+      if (result.isConfirmed) {
+        try {
+          const res = await changeVisitDate(data, actorEmail);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil menjadwalkan ulang",
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              closeModal();
+              getAllReservationPlanetarium(debouncedQuery);
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menjadwalkan ulang",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+      }
+      setLoading(false);
+    });
+  };
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
@@ -359,6 +434,13 @@ export default function usePlanetarium() {
     allReservationPlanetarium,
     allReservationPlanetariumByUserId,
     disabledDates,
+    isModalOpen,
+    formData,
+    isValidated,
+    setIsValidated,
+    updateVisitDate,
+    openModal,
+    closeModal,
     nextStepHandler,
     requestReservationPlanetarium,
     getSingleReservationPlanetarium,
