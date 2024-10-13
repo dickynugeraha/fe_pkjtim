@@ -203,7 +203,7 @@ export const PlanetariumDates = () => {
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
-          return <p>{globalVar.formatDate(singleData.date)}</p>;
+          return <span>{globalVar.formatDate(singleData.date)}</span>;
         },
       },
       {
@@ -214,7 +214,10 @@ export const PlanetariumDates = () => {
           let singleData = props.cell.row.original;
 
           return (
-            <p>{singleData.status === "OPEN" ? "Tersedia" : "Terjadwal"}</p>
+            singleData.status === "OPEN" ?
+            <span className="fs-6 badge badge-light-primary">Tersedia</span>
+            :
+            <span className="fs-6 badge badge-light-success">Terjadwal</span>
           );
         },
       },
