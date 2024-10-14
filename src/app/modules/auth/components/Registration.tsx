@@ -98,8 +98,7 @@ export function Registration() {
           icon: "success",
           title: "Berhasil melakukan registrasi!",
           text: "Silahkan cek email anda untuk melakukan verifikasi, dan tunggu admin untuk mengecek kecocokan data",
-          showConfirmButton: false,
-          timer: 4000,
+          showConfirmButton: true,
           heightAuto: false,
         }).then(() => {
           navigate("/auth/login");

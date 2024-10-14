@@ -157,7 +157,7 @@ export const Pengguna = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => openModal(singleData)}
                     >
-                      <KTIcon iconName="pencil" className="me-3 fs-3" />
+                      <KTIcon iconName="pencil" className="me-3 fs-3 text-warning" />
                       <p className="m-0">Ubah</p>
                     </button>
                   </li>
@@ -166,7 +166,7 @@ export const Pengguna = () => {
                       className="dropdown-item d-flex align-items-center"
                       onClick={() => deletePengguna(singleData.id)}
                     >
-                      <KTIcon iconName="trash" className="me-3 fs-3" />
+                      <KTIcon iconName="trash" className="me-3 fs-3 text-danger" />
                       <p className="m-0">Hapus</p>
                     </button>
                   </li>
@@ -180,6 +180,7 @@ export const Pengguna = () => {
               <div className="d-flex align-items-center">
                 <div
                   role="button"
+                  className="hover-zoom"
                   onClick={() => approveRequestRegisterFromAdmin(singleData.id)}
                 >
                   <KTIcon
@@ -189,6 +190,7 @@ export const Pengguna = () => {
                 </div>
                 <div
                   role="button"
+                  className="hover-zoom"
                   onClick={() => deletePengguna(singleData.id)}
                 >
                   <KTIcon
@@ -198,6 +200,7 @@ export const Pengguna = () => {
                 </div>
                 <div
                   role="button"
+                  className="hover-zoom"
                   onClick={() => {
                     setModalDetailPengguna({ data: singleData, show: true });
                   }}
