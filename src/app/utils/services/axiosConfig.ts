@@ -2,6 +2,7 @@ import axios from "axios";
 import globalVar from "../../helper/globalVar";
 import { getAuth, removeAuth } from "../../modules/auth";
 import { API_URL } from "../../constants/API";
+import Swal from "sweetalert2";
 
 // default
 axios.defaults.baseURL = API_URL;
@@ -34,7 +35,14 @@ axios.interceptors.response.use(
   },
   async function (error) {
     if (error.toJSON().message === "Network Error") {
-      alert("No Internet Connection");
+      // alert("No Internet Connection");
+      Swal.fire({
+        title: "Internal Server Error!",
+        icon: "error",
+        heightAuto: false,
+        timer: 5000,
+        showConfirmButton: false
+      });
       return;
     }
 

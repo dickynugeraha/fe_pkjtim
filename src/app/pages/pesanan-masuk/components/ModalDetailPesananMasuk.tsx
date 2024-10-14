@@ -205,7 +205,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
       OthersContent = (
         <DetailItemFile
           id=""
-          title="Surat hasil kurasi (Disetujui)"
+          title="Surat hasil kurasi"
           isShowButton={true}
           url={`Pdf/File/SuratHasilKurasi/${data.id}`}
           withUpload={false}
@@ -347,8 +347,28 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               desc={globalVar.htmlToText(data?.answerLetterNote)}
             />
           )}
+          <div className="col mb-6">
+            <div className="d-flex align-items-center">
+              <div>
+                <div className="d-flex">
+                  <KTIcon iconName={"user"} className="fs-3 me-3" />
+                  <h6 className="m-0">Detail Pemesan</h6>
+                </div>
+                <Gap height={12} />
+                <button
+                  role="button"
+                  onClick={() =>
+                    setModalDetailPesananUser({ show: true, data: data })
+                  }
+                  className="btn btn-light-primary py-2"
+                >
+                  Lihat
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <h4>Berkas</h4>
+        <h4 className="text-decoration-underline">Berkas Pemesan</h4>
         <Gap height={8} />
         <div className="row row-cols-3">
           <div className="col mb-6">
@@ -395,49 +415,9 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                     />
                   </>
                 )}
-                {/* <DetailItemFile
-            title="Surat permohonan"
-            id={"fileSuratPermohonan"}
-            isShowButton={data.suratPermohonan !== null}
-            url={`Pdf/File/SuratPermohonan/${data.id}`}
-            withUpload={
-              data?.status === "WAITING_ANSWER_LETTER" ||
-              data?.status === "KURASI" ||
-              data?.status === "REJECT" ||
-              data?.status === "EXPIRED" ||
-              data?.status === "PENDING" ||
-              data?.status === "DONE"
-                ? false
-                : true
-            }
-            handleChangeFile={(value) =>
-              handleChange("fileSuratPermohonan", value)
-            }
-            fields={fields}
-          /> */}
               </div>
             </div>
           </div>
-          {/* <DetailItemFile
-            title="Surat proposal"
-            id={"fileSuratProposal"}
-            url={`Pdf/File/Proposal/${data.id}`}
-            isShowButton={data.proposal !== null}
-            withUpload={
-              data?.status === "WAITING_ANSWER_LETTER" ||
-              data?.status === "KURASI" ||
-              data?.status === "REJECT" ||
-              data?.status === "EXPIRED" ||
-              data?.status === "PENDING" ||
-              data?.status === "DONE"
-                ? false
-                : true
-            }
-            handleChangeFile={(value) =>
-              handleChange("fileSuratProposal", value)
-            }
-            fields={fields}
-          /> */}
           <div className="col mb-6">
             <div className="d-flex align-items-center">
               <div>
@@ -482,12 +462,17 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               </div>
             </div>
           </div>
+        </div>
+        <Gap height={8} />
+        <h4 className="text-decoration-underline">Berkas Pengelola</h4>
+        <Gap height={8} />
+        <div className="row row-cols-3">
           <div className="col mb-6">
             <div className="d-flex align-items-center">
               <div>
                 <div className="d-flex">
                   <KTIcon iconName={"file"} className="fs-3 me-3" />
-                  <h6 className="m-0">Surat Permohonan Pengelola</h6>
+                  <h6 className="m-0">Surat permohonan</h6>
                 </div>
                 <Gap height={12} />
                 {data.suratPermohonanByPengelola !== null ? (
@@ -526,29 +511,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
                           e.target.files[0]
                         );
                       }}
+                      required
                     />
                   </>
                 )}
               </div>
             </div>
-          </div>
-        </div>
-        <Gap height={6} />
-        <h4>Lainnya</h4>
-        <Gap height={6} />
-        <div className="row row-cols-3">
-          <div
-            role="button"
-            onClick={() =>
-              setModalDetailPesananUser({ show: true, data: data })
-            }
-          >
-            <DetailItemFile
-              id=""
-              title="Detail pemesan"
-              url=""
-              withUpload={false}
-            />
           </div>
           {HandlerShowComponent().OthersContent}
         </div>

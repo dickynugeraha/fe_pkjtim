@@ -26,20 +26,14 @@ type Props = {
   fromAdmin?: boolean;
   show: boolean;
   data: any;
-  isValidated: boolean;
   handleClose: () => void;
-  handleSubmitDate: (data: any) => void;
-  handleIsValidated: (e: any) => void;
 };
 
 const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   fromAdmin = false,
   show,
   data,
-  isValidated,
   handleClose,
-  handleSubmitDate,
-  handleIsValidated,
 }) => {
   const { rejectReservation, approveReservation } = usePlanetarium();
   const [modalAlasan, setModalAlasan] = useState({
@@ -88,7 +82,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
   }
 
   if (data.tanggalKunjungan == undefined) {
-    statusKey = "Penjadwalan ulang";
+    statusKey = "Dijadwalkan ulang";
   }
 
   const getAllReservationDate = async (
@@ -113,21 +107,6 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
       setDataDates(dataReserve);
     } catch (error) {
       throw error;
-    }
-  };
-
-  const handleValidate = (event: React.FormEvent<HTMLFormElement>) => {
-    const form = event.currentTarget;
-    event.preventDefault();
-    event.stopPropagation();
-    handleIsValidated(true);
-
-    if (form.checkValidity() === true) {
-      var date = {
-        id : data.id,
-        tanggalKunjungan : tanggalKunjungan
-      };
-      handleSubmitDate(date);
     }
   };
 
@@ -226,36 +205,7 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
                 <div>
                   <h6 className="m-0">Tanggal Kunjungan</h6>
                   <Gap height={6} />
-                  <Form
-                    noValidate
-                    validated={isValidated}
-                    onSubmit={handleValidate}
-                  >
-                    <div className="d-flex">
-                      <Form.Group>
-                        <DatePicker
-                          selected={tanggalKunjungan}
-                          onChange={(date) => {
-                            var tempDate = globalVar.formatInputDate(date)
-                            setTanggalKunjungan(tempDate)
-                          }}
-                          includeDates={dataDates}
-                          minDate={new Date()}
-                          className="form-control form-control-solid" // Bootstrap class for input
-                          wrapperClassName="input-group" // Bootstrap input group
-                          calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
-                          placeholderText="dd/mm/yyyy"
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Nama Lengkap Wajib Diisi!
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Button type="submit" className="btn btn-sm btn-primary mx-2">
-                        Atur
-                      </Button>
-                    </div>
-                  </Form>
+                  <p className="text-gray-600">Belum ada tanggal</p>
                 </div>
               </div>
             </div>
@@ -360,13 +310,6 @@ const ModalDetailPesananPlanetarium: React.FC<Props> = ({
                 }}
               />
             </CKEditorContext>
-            {/* <textarea
-              name="alasan"
-              id="alasan"
-              className="form-control"
-              rows={8}
-              onChange={(e: any) => setAlasan(e.target.value)}
-            ></textarea> */}
           </>
         </ModalWrapper>
       </>

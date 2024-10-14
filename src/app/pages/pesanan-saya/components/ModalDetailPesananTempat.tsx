@@ -184,28 +184,36 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
             />
           )}
         </div>
+        <h4 className="text-decoration-underline">Berkas Saya</h4>
+        <Gap height={8} />
         <div className="row row-cols-3">
-            <DetailItem
-              iconName={"file"}
-              title={"Surat Permohonan"}
-              desc={statusKey}
-              isFile
-              isShowButton={data?.suratPermohonan !== null}
-              urlFile={`Pdf/File/SuratPermohonan/${data.id}`}
-            />
-            <DetailItem
-              iconName={"file"}
-              title={"Proposal"}
-              desc={statusKey}
-              isFile
-              isShowButton={data?.proposal !== null}
-              urlFile={`Pdf/File/Proposal/${data.id}`}
-            />
-          {data?.kuratorName != undefined && (
+          <DetailItem
+            iconName={"file"}
+            title={"Surat Permohonan"}
+            desc={statusKey}
+            isFile
+            isShowButton={data?.suratPermohonan !== null}
+            urlFile={`Pdf/File/SuratPermohonan/${data.id}`}
+          />
+          <DetailItem
+            iconName={"file"}
+            title={"Proposal"}
+            desc={statusKey}
+            isFile
+            isShowButton={data?.proposal !== null}
+            urlFile={`Pdf/File/Proposal/${data.id}`}
+          />
+        </div>
+        {data?.kuratorName != undefined &&
+          <h4 className="text-decoration-underline">Berkas Pengelola</h4>
+        }
+        <Gap height={8} />
+        <div className="row row-cols-3">
+          {data?.kuratorName != undefined &&
             (data?.status == "WAITING_ANSWER_LETTER" ||
-            data?.status == "REJECT" ||
-            data?.status == "REVISE" ||
-            data?.status == "DONE") &&
+              data?.status == "REJECT" ||
+              data?.status == "REVISE" ||
+              data?.status == "DONE") && (
               <DetailItem
                 iconName={"file"}
                 title={"Surat Hasil Kurasi"}
@@ -296,35 +304,34 @@ const ModalDetailPesananTempat: React.FC<Props> = ({
           <div>
             <h6 className="m-0">{title}</h6>
             <Gap height={6} />
-            {!isFile && (desc != undefined ? (
-              descTag ? (
-                <div dangerouslySetInnerHTML={{ __html: descTag }} />
+            {!isFile &&
+              (desc != undefined ? (
+                descTag ? (
+                  <div dangerouslySetInnerHTML={{ __html: descTag }} />
+                ) : (
+                  <div className="m-0 text-gray-600">{desc}</div>
+                )
               ) : (
-                <div className="m-0 text-gray-600">{desc}</div>
-              )
-            )
-            : <p className="m-0 text-gray-600">-</p>
-            )}
-            {isFile && (isShowButton ?
-              <button
-                role="button"
-                className="btn btn-light-primary py-2"
-                onClick={() => window.open(urlFile, "_blank")}
-              >
-                Lihat
-              </button>
-             :
-
-            <button
-                role="button"
-                className="btn btn-light-primary py-2"
-                disabled
-              >
-                Tidak ada file
-              </button>
-
-          )
-          }
+                <p className="m-0 text-gray-600">-</p>
+              ))}
+            {isFile &&
+              (isShowButton ? (
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  onClick={() => window.open(urlFile, "_blank")}
+                >
+                  Lihat
+                </button>
+              ) : (
+                <button
+                  role="button"
+                  className="btn btn-light-primary py-2"
+                  disabled
+                >
+                  Tidak ada file
+                </button>
+              ))}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { API_URL, ENDPOINTS } from "../../../../../app/constants/API";
 
-const PDFSuratPermohonan: React.FC = () => {
+const PDFSuratPermohonanPengelola: React.FC = () => {
   const params = useParams();
   const pdfUrl =
     API_URL +
@@ -25,4 +25,4 @@ const PDFSuratPermohonan: React.FC = () => {
   );
 };
 
-export default PDFSuratPermohonan;
+export default PDFSuratPermohonanPengelola;

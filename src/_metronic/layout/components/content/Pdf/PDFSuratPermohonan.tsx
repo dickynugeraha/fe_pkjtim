@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { API_URL, ENDPOINTS } from "../../../../../app/constants/API";
 
-const PDFSuratPermohonanPengelola: React.FC = () => {
+const PDFSuratPermohonan: React.FC = () => {
   const params = useParams();
   const pdfUrl =
     API_URL +
@@ -11,7 +11,7 @@ const PDFSuratPermohonanPengelola: React.FC = () => {
     ENDPOINTS.PESAN_TEMPAT.LIST_UPDATE_ADD_DELETE_PESAN_TEMPAT +
     "/" +
     params.id +
-    "/Attachment/SuratPermohonanPengelola"; // PDF file path
+    "/Attachment/SuratPermohonan"; // PDF file path
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <iframe
@@ -25,4 +25,4 @@ const PDFSuratPermohonanPengelola: React.FC = () => {
   );
 };
 
-export default PDFSuratPermohonanPengelola;
+export default PDFSuratPermohonan;

@@ -26,7 +26,7 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Tanggal Pesan",
+        Header: "Tanggal Pemesanan",
         accessor: "tanggal_pesan",
         sortType: "alphanumeric",
         Cell: (props: any) => {
@@ -35,15 +35,23 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
         },
       },
       {
-        Header: "Tanggal Sewa",
+        Header: "Tanggal Kunjungan",
         accessor: "tanggal_sewa",
         sortType: "alphanumeric",
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
           return (
-            <span className="badge badge-light-success fs-6">
-              {globalVar.formatDate(singleData.tanggalKunjungan)}
-            </span>
+            <div>
+              {singleData.tanggalKunjungan != undefined ? (
+                <span className="badge badge-light-success fs-6">
+                  {globalVar.formatDate(singleData.tanggalKunjungan)}
+                </span>
+              ) : (
+                <span className="badge badge-light-info fs-6">
+                  Belum ada tanggal
+                </span>
+              )}
+            </div>
           );
         },
       },
@@ -74,9 +82,13 @@ const TablePlanetarium: React.FC<Props> = ({ showModalPlanetarium }) => {
               break;
             case "EXPIRED":
               statusDesc = "Kadaluarsa";
-
               statusClass = "badge badge-light-danger fs-6";
               break;
+          }
+
+          if (singleData.tanggalKunjungan == undefined) {
+            statusDesc = "Dijadwalkan ulang";
+            statusClass = "badge badge-light-info fs-6";
           }
 
           return <span className={statusClass}>{statusDesc}</span>;

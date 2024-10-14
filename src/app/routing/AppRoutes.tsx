@@ -51,7 +51,7 @@ import VerifyChangeEmail from "../pages/others/VerifyChangeEmail";
 import PDFSuratHasilKurasi from "../../_metronic/layout/components/content/Pdf/PDFSuratHasilKurasi";
 import PDFSuratJawaban from "../../_metronic/layout/components/content/Pdf/PDFSuratJawaban";
 import { PlanetariumDates } from "../pages/master-data/planetarium-dates/PlanetariumDates";
-import PDFSuratPermohonanPengelola from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonan";
+import PDFSuratPermohonanPengelola from "../../_metronic/layout/components/content/Pdf/PDFSuratPermohonanPengelola";
 
 /**
  * Base URL of the website.

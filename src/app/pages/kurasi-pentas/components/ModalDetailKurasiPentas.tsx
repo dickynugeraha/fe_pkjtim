@@ -90,7 +90,6 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             title={"Pentas"}
             desc={data.judulPentas}
           />
-
           <DetailItem
             iconName={"toggle-on-circle"}
             title={"Tangal mulai kunjungan"}
@@ -101,7 +100,10 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
             title={"Tanggal akhir kunjungan"}
             desc={globalVar.formatDate(data.endDate)}
           />
-
+        </div>
+        <h4 className="text-decoration-underline">Berkas Pemesan</h4>
+        <Gap height={8} />
+        <div className="row row-cols-3">
           {data.suratPermohonan && (
             <DetailItemFile
               title="Surat Permohonan"
@@ -114,13 +116,19 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
               url={`Pdf/File/Proposal/${data.id}`}
             />
           )}
+        </div>
+        <Gap height={8} />
+        <h4 className="text-decoration-underline">Berkas Unit Pengelola</h4>
+        <Gap height={8} />
+        <div className="row row-cols-3">
           {data.suratPermohonanByPengelola && (
             <DetailItemFile
-              title="Surat Permohonan Pengelola"
+              title="Surat Permohonan"
               url={`Pdf/File/SuratPermohonanPengelola/${data.id}`}
             />
           )}
         </div>
+
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
         <ModalWrapper

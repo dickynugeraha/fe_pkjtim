@@ -2,7 +2,7 @@ import { Content } from "../../../_metronic/layout/components/content";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core/PageData";
 import { FC, useState } from "react";
 import TablePlanetarium from "./components/TablePlanetarium";
-import ModalDetailPesananPlanetarium from "../pesanan-planetarium/components/ModalDetailPesananPlanetarium";
+import ModalDetailPesananPlanetarium from "./components/ModalDetailPesananPlanetarium";
 import TablePesanTempat from "./components/TablePesanTempat";
 import ModalDetailPesananTempat from "./components/ModalDetailPesananTempat";
 
@@ -70,6 +70,7 @@ export const PesananSaya: FC = () => {
           handleClose={() => {
             setModalDetailPlanet({ ...modalDetailPlanet, show: false });
           }}
+          
         />
       </Content>
     </>
