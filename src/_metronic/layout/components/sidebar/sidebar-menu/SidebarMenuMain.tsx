@@ -99,7 +99,7 @@ const SidebarMenuMain = () => {
           <SidebarMenuItem
             to="pesanan-planet"
             icon="entrance-left"
-            title="Pesanan Astronomy"
+            title="Pesanan AGS"
             fontIcon="bi-layers"
           />
         </>
