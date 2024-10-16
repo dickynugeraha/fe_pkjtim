@@ -18,7 +18,7 @@ import DatePicker from "react-datepicker";
 
 const Breadcrumbs: Array<PageLink> = [
   {
-    title: "Tanggal Astronomy",
+    title: "Tanggal Planetarium",
     path: "/master-data/contact-person",
     isSeparator: false,
     isActive: true,
@@ -263,9 +263,9 @@ export const PlanetariumDates = () => {
       <PageTitle
         icon="data"
         breadcrumbs={Breadcrumbs}
-        description="Tanggal Astronomy"
+        description="Tanggal Planetarium"
       >
-        Tanggal Astronomy
+        Tanggal Planetarium
       </PageTitle>
       <Content>
         <Table
