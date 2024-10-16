@@ -106,7 +106,12 @@ export const update = (data: any) => {
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("status", data.status);
   formData.append("isLocked", data.isLocked);
-  formData.append("komite", data.komite);
+
+  if (data.komite != undefined && data.role == "KURATOR") {
+    formData.append("komite", data.komite);
+  }else{
+    formData.append("komite", "");
+  }
 
   if (data.password != undefined) {
     formData.append("password", data.password);

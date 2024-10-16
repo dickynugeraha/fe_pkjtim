@@ -289,6 +289,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
               id="komite"
               className="form-select"
               onChange={(e) => handleChange(e)}
+              required
             >
               <option value="">-- Pilih komite --</option>
               {valueSelectOption.map((item) => (
