@@ -12,6 +12,8 @@ import useTempat from "../../../modules/hooks/master-data/tempat";
 import ListViewItem from "./components/ListViewItem";
 import ContentSekilasInfo from "./components/ContentSekilasInfo";
 import { Card } from "react-bootstrap";
+import axiosConfig from "../../../utils/services/axiosConfig";
+import globalVar from "../../../helper/globalVar";
 
 type PropsTempat = {
   data: any[];
@@ -103,9 +105,24 @@ const DashboardPage: FC = () => {
     });
   });
 
+  // process.env.KEY;
   return (
     <Content>
       <div className="card mb-9">
+        <div
+          className="btn btn-sm btn-primary"
+          onClick={async () => {
+            axiosConfig.getWithKey(
+              "v1/Tes/Auth",
+              {},
+              {
+                "time-stamp": globalVar.getCurrentTimeStampForHeader(),
+              }
+            );
+          }}
+        >
+          Coba API With Signkey
+        </div>
         <ContentSekilasInfo data={newInfo} loading={loadingInfo} />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"

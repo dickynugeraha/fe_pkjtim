@@ -41,7 +41,7 @@ axios.interceptors.response.use(
         icon: "error",
         heightAuto: false,
         timer: 5000,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
       return;
     }
@@ -85,6 +85,21 @@ class APIClient {
     }
 
     return response;
+  };
+
+  getWithKey = (url: string, params?: any, customHeaders?: any) => {
+    const paramKeys = params
+      ? Object.keys(params)
+          .filter((key) => params[key] !== "")
+          .map((key) => `${key}=${params[key]}`)
+      : [];
+
+    const queryString = paramKeys.length ? `?${paramKeys.join("&")}` : "";
+
+    return axios.get(`${API_URL}/${url}${queryString}`, {
+      params,
+      headers: { ...customHeaders },
+    });
   };
   /**
    * post given data to url

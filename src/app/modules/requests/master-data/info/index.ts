@@ -1,4 +1,5 @@
 import { ENDPOINTS } from "../../../../constants/API";
+import globalVar from "../../../../helper/globalVar";
 import axiosConfig from "../../../../utils/services/axiosConfig";
 
 export const add = (data: any, actor: string) => {
@@ -17,6 +18,7 @@ export const add = (data: any, actor: string) => {
     {
       headers: {
         "Content-Type": "multipart/form-data",
+        "time-stamp": globalVar.getCurrentTimeStampForHeader(),
       },
     }
   );

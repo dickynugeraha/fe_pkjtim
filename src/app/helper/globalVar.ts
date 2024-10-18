@@ -1,4 +1,5 @@
 import axiosConfig from "../utils/services/axiosConfig";
+import CryptoJS from "crypto-js";
 
 const BASE_URL = "";
 const today = Date.now();
@@ -201,6 +202,26 @@ function htmlToTextWithTags(htmlString: any) {
   return processNode(tempElement);
 }
 
+const getCurrentTimeStampForHeader = () => {
+  const currentTime = new Date();
+  currentTime.setSeconds(currentTime.getSeconds() + 3600);
+  const currentTimeStamp: string = currentTime.toISOString();
+
+  const textForEncrypt = `${currentTimeStamp}`;
+  const secretKey = "PkjTaman1sma1lMarzuk1@15270622##";
+  const iv = CryptoJS.enc.Hex.parse("0000000000000000");
+  const signatureKey = CryptoJS.AES.encrypt(
+    textForEncrypt,
+    CryptoJS.enc.Utf8.parse(secretKey),
+    {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }
+  ).toString();
+  return signatureKey;
+};
+
 export default {
   BASE_URL,
   today,
@@ -217,4 +238,5 @@ export default {
   checkUrlAccessible,
   htmlToText,
   htmlToTextWithTags,
+  getCurrentTimeStampForHeader,
 };
