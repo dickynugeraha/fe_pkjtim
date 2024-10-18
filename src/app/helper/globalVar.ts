@@ -204,11 +204,13 @@ function htmlToTextWithTags(htmlString: any) {
 
 const getCurrentTimeStampForHeader = () => {
   const currentTime = new Date();
-  currentTime.setSeconds(currentTime.getSeconds() + 3600);
+  currentTime.setSeconds(currentTime.getSeconds() + 3);
   const currentTimeStamp: string = currentTime.toISOString();
 
   const textForEncrypt = `${currentTimeStamp}`;
-  const secretKey = "PkjTaman1sma1lMarzuk1@15270622##";
+  const secretKey = import.meta.env.VITE_KEY;
+  console.log("secretKey", secretKey);
+
   const iv = CryptoJS.enc.Hex.parse("0000000000000000");
   const signatureKey = CryptoJS.AES.encrypt(
     textForEncrypt,
