@@ -109,7 +109,7 @@ const DashboardPage: FC = () => {
   return (
     <Content>
       <div className="card mb-9">
-        <div
+        {/* <div
           className="btn btn-sm btn-primary"
           onClick={async () => {
             axiosConfig.getWithKey(
@@ -122,7 +122,7 @@ const DashboardPage: FC = () => {
           }}
         >
           Coba API With Signkey
-        </div>
+        </div> */}
         <ContentSekilasInfo data={newInfo} loading={loadingInfo} />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"
