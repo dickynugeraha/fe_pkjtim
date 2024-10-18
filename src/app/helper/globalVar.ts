@@ -208,8 +208,7 @@ const getCurrentTimeStampForHeader = () => {
   const currentTimeStamp: string = currentTime.toISOString();
 
   const textForEncrypt = `${currentTimeStamp}`;
-  const secretKey = import.meta.env.VITE_KEY;
-  console.log("secretKey", secretKey);
+  const secretKey: any = process.env.PKJ_KEY;
 
   const iv = CryptoJS.enc.Hex.parse("0000000000000000");
   const signatureKey = CryptoJS.AES.encrypt(
