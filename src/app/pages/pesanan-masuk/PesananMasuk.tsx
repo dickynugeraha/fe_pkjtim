@@ -194,11 +194,19 @@ export const PesananMasuk = () => {
         <ModalDetailPesananMasuk
           show={modalDetail.show}
           data={modalDetail.data}
-          changeStatus={(status: any, payload: any) =>
+          changeStatus={async (status: any, payload: any) => {
             changeStatus(status, payload).then(() => {
               setIsSuccessChangeStatus(true);
-            })
-          }
+            });
+            const res = await changeStatus(status, payload).then(() => {
+              setIsSuccessChangeStatus(true);
+            });
+            console.log("ressss", res);
+
+            // changeStatus(status, payload).then(() => {
+            //   setIsSuccessChangeStatus(true);
+            // })
+          }}
           isSuccessChangeStatus={isSuccessChangeStatus}
           setFalseSuccess={() => setIsSuccessChangeStatus(false)}
           handleClose={() => setModalDetail({ ...modalDetail, show: false })}

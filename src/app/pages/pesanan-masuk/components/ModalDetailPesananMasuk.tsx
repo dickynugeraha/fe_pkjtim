@@ -14,7 +14,7 @@ type Props = {
   show: boolean;
   data: any;
   handleClose: () => void;
-  changeStatus: (status: any, payload: any) => void;
+  changeStatus: (status: any, payload: any) => any;
   setFalseSuccess: () => void;
 };
 
@@ -91,12 +91,23 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               reason: "",
               note: "",
             };
-            changeStatus("Kurasi", payload);
+            const result: any = changeStatus("Kurasi", payload);
+            // if (result) {
+            //   setModalTypeReason({ ...modalTypeReason, show: false });
+            //   handleClose();
+            //   setFalseSuccess();
+            // }
+
             // if (isSuccessChangeStatus) {
             //   setModalTypeReason({ ...modalTypeReason, show: false });
             //   handleClose();
             //   setFalseSuccess();
             // }
+            setTimeout(() => {
+              setModalTypeReason({ ...modalTypeReason, show: false });
+              handleClose();
+              setFalseSuccess();
+            }, 2000);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -554,7 +565,12 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             };
             handleChange("reason", reason);
 
-            changeStatus(modalTypeReason?.type, payload);
+            const result: any = changeStatus(modalTypeReason?.type, payload);
+            // if (result) {
+            //   setModalTypeReason({ ...modalTypeReason, show: false });
+            //   handleClose();
+            //   setFalseSuccess();
+            // }
             // setTimeout(() => {
             //   setModalTypeReason({
             //     show: false,
@@ -562,6 +578,11 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
             //   });
             //   handleClose();
             // }, 1000);
+            setTimeout(() => {
+              setModalTypeReason({ ...modalTypeReason, show: false });
+              handleClose();
+              setFalseSuccess();
+            }, 2000);
           }}
           type={modalTypeReason.type}
         />

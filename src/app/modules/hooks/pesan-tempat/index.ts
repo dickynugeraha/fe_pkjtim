@@ -282,6 +282,7 @@ export default function usePesanTempat() {
           }).then(() => {
             getAllReservationPesanTempat();
           });
+          return true;
         } catch (error: any) {
           Swal.fire({
             icon: "error",
@@ -289,6 +290,7 @@ export default function usePesanTempat() {
             text: error.message,
             showConfirmButton: false,
           });
+          return false;
         }
       },
     });

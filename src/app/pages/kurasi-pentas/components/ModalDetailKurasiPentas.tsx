@@ -24,7 +24,7 @@ type Props = {
   show: boolean;
   data: any;
   handleClose: () => void;
-  changeStatus: (status: any, payload: any) => void;
+  changeStatus: (status: any, payload: any) => any;
   onChangeStatus: () => void;
 };
 
@@ -144,12 +144,18 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                changeStatus("Revise", payload);
+                const result: any = changeStatus("Revise", payload);
+                // if (result) {
+                //   setModalShowRevisi(false);
+                //   handleClose();
+                //   onChangeStatus();
+                // }
+
                 setTimeout(() => {
                   setModalShowRevisi(false);
                   handleClose();
                   onChangeStatus();
-                }, 1000);
+                }, 2000);
               }}
             >
               Rekomendasi
@@ -223,12 +229,18 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   id: data.id,
                   note: reason,
                 };
-                changeStatus("Answer-Letter", payload);
+                const result: any = changeStatus("Answer-Letter", payload);
+                // if (result) {
+                //   setModalShowRevisi(false);
+                //   handleClose();
+                //   onChangeStatus();
+                // }
+
                 setTimeout(() => {
                   setModalShowTerima(false);
                   handleClose();
                   onChangeStatus();
-                }, 1000);
+                }, 2000);
               }}
             >
               Terima

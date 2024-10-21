@@ -80,7 +80,12 @@ export const KurasiPentas = () => {
 
   const data = useMemo(
     () => allReservationPesanTempat,
-    [loading, allReservationPesanTempat, changeStatus]
+    [
+      loading,
+      changeStatus,
+      getAllReservationPesanTempatStatusKurasi,
+      allReservationPesanTempat,
+    ]
   );
   const columns = useMemo(
     () => [
@@ -177,11 +182,14 @@ export const KurasiPentas = () => {
         />
         <ModalDetailKurasiPentas
           show={modalDetail.show}
-          changeStatus={(status: any, payload: any) => {
-            changeStatus(status, payload);
+          changeStatus={async (status: any, payload: any) => {
+            const res = await changeStatus(status, payload);
+
             getAllReservationPesanTempatStatusKurasi();
           }}
-          onChangeStatus={() => {}}
+          onChangeStatus={() => {
+            getAllReservationPesanTempatStatusKurasi();
+          }}
           handleClose={() => setModalDetail({ data: {}, show: false })}
           data={modalDetail.data}
         />
