@@ -155,7 +155,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   setModalShowRevisi(false);
                   handleClose();
                   onChangeStatus();
-                }, 2000);
+                }, 3000);
               }}
             >
               Rekomendasi
@@ -240,7 +240,7 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
                   setModalShowTerima(false);
                   handleClose();
                   onChangeStatus();
-                }, 2000);
+                }, 3000);
               }}
             >
               Terima

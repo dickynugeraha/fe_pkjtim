@@ -107,7 +107,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               setModalTypeReason({ ...modalTypeReason, show: false });
               handleClose();
               setFalseSuccess();
-            }, 2000);
+            }, 3000);
           }}
         >
           {data?.status === "PROSES" || data?.status === "REVISE"
@@ -582,7 +582,7 @@ const ModalDetailPesananMasuk: React.FC<Props> = ({
               setModalTypeReason({ ...modalTypeReason, show: false });
               handleClose();
               setFalseSuccess();
-            }, 2000);
+            }, 3000);
           }}
           type={modalTypeReason.type}
         />
