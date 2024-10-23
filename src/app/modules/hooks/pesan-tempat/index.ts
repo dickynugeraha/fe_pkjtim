@@ -189,8 +189,8 @@ export default function usePesanTempat() {
       if (result.isConfirmed) {
         Swal.fire({
           title:
-            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Submiting</span>',
-          text: "Saving, please wait",
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
           allowOutsideClick: false,
           showConfirmButton: false,
         });
@@ -236,8 +236,8 @@ export default function usePesanTempat() {
       onConfirm: async () => {
         Swal.fire({
           title:
-            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Submiting</span>',
-          text: "Saving, please wait",
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
           allowOutsideClick: false,
           showConfirmButton: false,
         });
