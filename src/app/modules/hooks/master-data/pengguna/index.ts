@@ -294,6 +294,13 @@ export default function usePengguna() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Submiting</span>',
+          text: "Saving, please wait",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await update(data);
           if (res) {

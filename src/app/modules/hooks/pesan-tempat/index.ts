@@ -187,6 +187,13 @@ export default function usePesanTempat() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Submiting</span>',
+          text: "Saving, please wait",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const payload = {
             userCreatorId: currentUser?.id,
@@ -227,6 +234,13 @@ export default function usePesanTempat() {
     ConfirmationDialog({
       text: "Akan memesan reservasi pesan tempat?!",
       onConfirm: async () => {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Submiting</span>',
+          text: "Saving, please wait",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await submitReservation({
             ...payload,

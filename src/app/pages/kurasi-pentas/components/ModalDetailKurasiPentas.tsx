@@ -116,16 +116,18 @@ const ModalDetailKurasiPentas: React.FC<Props> = ({
           )}
         </div>
         <Gap height={8} />
-        <h4 className="text-decoration-underline">Berkas Unit Pengelola</h4>
-        <Gap height={8} />
-        <div className="row row-cols-3">
-          {data.suratPermohonanByPengelola && (
-            <DetailItemFile
-              title="Surat Permohonan"
-              url={`Pdf/File/SuratPermohonanPengelola/${data.id}`}
-            />
-          )}
-        </div>
+        {data.suratPermohonanByPengelola && (
+          <>
+            <h4 className="text-decoration-underline">Berkas Unit Pengelola</h4>
+            <Gap height={8} />
+            <div className="row row-cols-3">
+              <DetailItemFile
+                title="Surat Permohonan"
+                url={`Pdf/File/SuratPermohonanPengelola/${data.id}`}
+              />
+            </div>
+          </>
+        )}
 
         {(modalShowRevisi || modalShowTerima) && <div className="overlay" />}
 
