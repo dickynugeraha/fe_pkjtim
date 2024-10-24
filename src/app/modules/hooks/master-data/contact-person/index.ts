@@ -87,6 +87,13 @@ export default function useContactPerson() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const newData = [...contact, data];
           setContact(newData);
@@ -139,6 +146,13 @@ export default function useContactPerson() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const arrayContactAfterSelecting: any[] = currentContact.filter(
             (ctc) => ctc.id !== data.id
@@ -193,6 +207,13 @@ export default function useContactPerson() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const newArr = currectContact.filter((ctc) => ctc.id !== contactId);
 

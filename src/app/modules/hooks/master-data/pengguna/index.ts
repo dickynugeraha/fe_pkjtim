@@ -122,6 +122,13 @@ export default function usePengguna() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         setLoading(true);
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await changePassword(data);
           Swal.fire({
@@ -162,6 +169,13 @@ export default function usePengguna() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         setLoading(true);
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await resendEmailVerif(id);
           Swal.fire({
@@ -249,6 +263,13 @@ export default function usePengguna() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await add(data);
           Swal.fire({
@@ -346,6 +367,13 @@ export default function usePengguna() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await approve(id);
           if (res) {
@@ -390,6 +418,13 @@ export default function usePengguna() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await remove(id);
 

@@ -285,6 +285,13 @@ export default function usePesanTempat() {
           ? "Apakah anda yakin ingin merekomendasikan revisi?"
           : "",
       onConfirm: async () => {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await changeStatusReservation({ ...newData }, status);
 

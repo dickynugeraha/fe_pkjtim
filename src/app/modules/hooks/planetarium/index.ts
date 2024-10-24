@@ -123,6 +123,13 @@ export default function usePlanetarium() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const payload = {
             UserCreatorId: currentUser?.id,
@@ -175,6 +182,13 @@ export default function usePlanetarium() {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await submitReservation({
             ...data,
@@ -312,6 +326,13 @@ export default function usePlanetarium() {
     ConfirmationDialog({
       text: "Akan menolak reservasi planetarium customer?!",
       onConfirm: async () => {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await reject({
             id: data.id,
@@ -342,6 +363,13 @@ export default function usePlanetarium() {
     ConfirmationDialog({
       text: "Akan menerima reservasi planetarium customer?!",
       onConfirm: async () => {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           await approve({
             id: data.id,
@@ -369,7 +397,7 @@ export default function usePlanetarium() {
   };
 
   const updateVisitDate = async (data: any) => {
-    console.log("DATA",data);
+    console.log("DATA", data);
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penjadwalan ulang?!",
@@ -388,6 +416,13 @@ export default function usePlanetarium() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await changeVisitDate(data, actorEmail);
           if (res) {

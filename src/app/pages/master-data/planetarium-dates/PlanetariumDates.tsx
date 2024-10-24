@@ -87,6 +87,13 @@ export const PlanetariumDates = () => {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
+          Swal.fire({
+            title:
+              '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+            text: "Menyimpan, mohon tunggu",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+          });
           try {
             const res = await axiosConfig.post(
               `${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/Dates/Many`,
@@ -148,6 +155,13 @@ export const PlanetariumDates = () => {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
+          Swal.fire({
+            title:
+              '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+            text: "Menyimpan, mohon tunggu",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+          });
           try {
             const res = await axiosConfig.delete(
               `${ENDPOINTS.PLANETARIUM.LIST_UPDATE_ADD_DELETE_PLANETARIUM}/Dates/${id}?actor=${currentUser?.email}`
@@ -213,10 +227,9 @@ export const PlanetariumDates = () => {
         Cell: (props: any) => {
           let singleData = props.cell.row.original;
 
-          return (
-            singleData.status === "OPEN" ?
+          return singleData.status === "OPEN" ? (
             <span className="fs-6 badge badge-light-primary">Tersedia</span>
-            :
+          ) : (
             <span className="fs-6 badge badge-light-success">Terjadwal</span>
           );
         },

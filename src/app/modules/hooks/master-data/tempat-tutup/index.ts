@@ -111,6 +111,13 @@ export default function useTutupTempat() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         setLoading(true);
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await add(data, actor);
           if (res) {
@@ -156,6 +163,13 @@ export default function useTutupTempat() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await update(data, actor);
 
@@ -202,6 +216,13 @@ export default function useTutupTempat() {
     }).then(async (result) => {
       setLoading(true);
       if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
         try {
           const res = await remove(id, actor);
           if (res) {
