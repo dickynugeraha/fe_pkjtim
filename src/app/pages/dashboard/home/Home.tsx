@@ -20,6 +20,7 @@ import useTempat from "../../../modules/hooks/master-data/tempat";
 import { getAllReservationByStatus } from "../../../modules/requests/pesan-tempat";
 import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 import { getAll } from "../../../modules/requests/master-data/tempat-tutup";
+import { getDashboardReservation } from "../../../modules/requests/dashboard";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -65,7 +66,7 @@ export const Home: FC = () => {
         }/Image?isStream=true&startDate=${globalVar.formatInputDate(
           itm?.startDate
         )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
-        tempat: itm?.tempat?.name,
+        tempat: itm?.tempatName,
         tempatId: itm?.tempat?.id,
         color: "",
         status: itm?.status,
@@ -75,6 +76,8 @@ export const Home: FC = () => {
       }
       events.push(data);
     });
+
+    console.log("events", events);
 
     const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
     let allTutupTempat: any[] = tutupTempat.data.data.data;
@@ -130,7 +133,7 @@ export const Home: FC = () => {
 
   const getDataReservasiByStatus = async () => {
     try {
-      const res = await getAllReservationByStatus(
+      const res = await getDashboardReservation(
         INITIAL_PAGE,
         DEFAULT_LIMIT,
         "",
@@ -145,7 +148,7 @@ export const Home: FC = () => {
         ]
       );
 
-      let allReservation: any[] = res.data.data.data;
+      let allReservation: any[] = res.data.data;
 
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {

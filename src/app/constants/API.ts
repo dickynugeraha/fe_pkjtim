@@ -46,5 +46,7 @@ export const ENDPOINTS = {
   DASHBOARD: {
     GET_STATUS_USER: "v1/Dashboard/Status/User",
     GET_EVERY_RESERVATION: "v1/Dashboard/Tempat/Reservasi",
+    GET_DATA_RESERVATION: "v1/Dashboard/Reservasi",
+    GET_DATA_PLANETARIUM: "v1/Dashboard/Planetarium",
   },
 };
