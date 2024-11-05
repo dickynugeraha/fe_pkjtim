@@ -72,7 +72,7 @@ export function Login() {
           api_token: auth.data.accessToken,
           refreshToken: auth.data.refreshToken,
         };
-        console.log("userDecodeResult", userDecodeResult);
+        // console.log("userDecodeResult", userDecodeResult);
 
         saveAuth(authData);
         const user = {

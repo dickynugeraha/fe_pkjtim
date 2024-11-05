@@ -77,29 +77,6 @@ export const Home: FC = () => {
       events.push(data);
     });
 
-    console.log("events", events);
-
-    const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
-    let allTutupTempat: any[] = tutupTempat.data.data.data;
-
-    allTutupTempat.map((itm) => {
-      const date = new Date(itm.endDate);
-      date.setDate(date.getDate() + 2);
-
-      const data = {
-        title: `${itm?.tempat.name} Tutup`,
-        start: itm?.startDate,
-        startDate: itm?.startDate,
-        end: date.toISOString().split("T")[0],
-        endDate: itm?.endDate,
-        image: undefined,
-        tempat: itm?.tempat?.name,
-        tempatId: itm?.tempat?.id,
-        color: "",
-        status: "CLOSED",
-      };
-      events.push(data);
-    });
     events.map((item) => {
       switch (item.status) {
         case "PENDING":
@@ -149,7 +126,6 @@ export const Home: FC = () => {
       );
 
       let allReservation: any[] = res.data.data;
-
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {
         const singleReserve = {

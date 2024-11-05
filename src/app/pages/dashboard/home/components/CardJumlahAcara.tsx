@@ -173,9 +173,7 @@ const initChart = function (
   };
 
   //Init 2
-  console.log(dataReservasi);
   dataReservasi?.map((item: any) => {
-    console.log("testtt",dataReservasi.map((b:any) => b?.tempat == item?.tempat).length)
     let colorTemp = tempatColor.find((b:any) => b?.tempat == item?.tempat);
     drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
   });

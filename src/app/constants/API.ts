@@ -1,4 +1,4 @@
-export const API_URL = "http://49.50.9.223:10029/api";
+export const API_URL = process.env.PKJTIM_API_URL;
 export const WEB_LOCAL_URL = sessionStorage.getItem("hostname");
 
 export const ENDPOINTS = {

@@ -201,7 +201,6 @@ export const PesananMasuk = () => {
             const res = await changeStatus(status, payload).then(() => {
               setIsSuccessChangeStatus(true);
             });
-            console.log("ressss", res);
 
             // changeStatus(status, payload).then(() => {
             //   setIsSuccessChangeStatus(true);

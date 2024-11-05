@@ -26,7 +26,7 @@ const CalendarPlanetarium = () => {
         title:
           itm?.status === "OPEN"
             ? "Tersedia"
-            : itm?.planetarium.status === "DONE"
+            : itm?.status === "CLOSED"
             ? "Terjadwal"
             : "Menunggu Konfirmasi",
         start: date.toISOString().split("T")[0],
@@ -40,11 +40,11 @@ const CalendarPlanetarium = () => {
         color:
           itm?.status === "OPEN"
             ? "#0d6efd"
-            : itm?.planetarium.status === "DONE"
+            : itm?.status === "CLOSED"
             ? "#198754"
             : "#6f42c1",
         namaSekolah:
-          itm?.planetarium != null ? itm?.planetarium?.namaSekolah : undefined,
+          itm?.namaSekolah != null ? itm?.namaSekolah : undefined,
       };
 
       events.push(data);
@@ -55,7 +55,7 @@ const CalendarPlanetarium = () => {
 
   const getAllReservationDate = async () => {
     try {
-      const res = await getDashboardPlanetarium(1, -1, "", ["OPEN"]);
+      const res = await getDashboardPlanetarium(1, -1, "", []);
 
       const dataReservationDate = res.data.data;
       getDataCalendar(dataReservationDate);
