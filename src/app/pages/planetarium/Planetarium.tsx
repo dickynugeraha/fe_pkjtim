@@ -32,7 +32,6 @@ const Breadcrumbs: Array<PageLink> = [
 ];
 
 export const Planetarium = () => {
-  // const { nextStepHandler } = usePlanetarium();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 

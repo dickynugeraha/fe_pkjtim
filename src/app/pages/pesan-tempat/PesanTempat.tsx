@@ -12,6 +12,9 @@ import usePesanTempat from "../../modules/hooks/pesan-tempat";
 import axiosConfig from "../../utils/services/axiosConfig";
 import { ENDPOINTS } from "../../constants/API";
 import DatePicker from "react-datepicker";
+import { initBooking } from "../../modules/requests/pesan-tempat";
+import Swal from "sweetalert2";
+import { useAuth } from "../../modules/auth";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -28,6 +31,9 @@ const Breadcrumbs: Array<PageLink> = [
   },
 ];
 export const PesanTempat: FC = () => {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
   const [choosenTempat, setChoosenTempat] = useState<any>();
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -38,8 +44,92 @@ export const PesanTempat: FC = () => {
 
   const { tempat, loading } = useTempat();
   const [loadingDate, setLoadingDate] = useState(false);
-  const { nextStepHandler } = usePesanTempat();
+  // const { nextStepHandler } = usePesanTempat();
   const [termIsCheck, setTermIsCheck] = useState(false);
+
+  const nextStepHandler = async (
+    choosenTempat: any,
+    startDate: any,
+    endDate: any
+  ) => {
+    if (!currentUser?.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Silahkan login terlebih dahulu",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    if (!choosenTempat || !startDate) {
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: "Pilih tempat dan tanggal booking",
+        showConfirmButton: false,
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan reservasi?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
+        try {
+          const payload = {
+            userCreatorId: currentUser?.id,
+            tempatId: choosenTempat.id,
+            startDate: startDate,
+            endDate: endDate,
+          };
+
+          const res = await initBooking(payload);
+          const reserveData = res.data.data;
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil melakukan reservasi",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => {
+            navigate(`/form-pesan-tempat/${reserveData.id}`, {
+              state: {
+                namaTempat: choosenTempat.name,
+                startDate: startDate,
+                endDate: endDate,
+              },
+            });
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "ERROR",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+      }
+    });
+  };
 
   const getDateReservationByPlace = async (tempatId: number) => {
     const now = new Date();
