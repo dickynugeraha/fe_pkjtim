@@ -122,7 +122,6 @@ export const PesanTempat: FC = () => {
                   key={val.id.toString()}
                   title={val.name}
                   onClick={() => {
-                    console.log("val", val);
                     setChoosenTempat(val);
 
                     getDateReservationByPlace(val.id);

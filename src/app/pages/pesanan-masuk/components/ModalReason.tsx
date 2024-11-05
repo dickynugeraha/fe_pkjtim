@@ -33,7 +33,6 @@ const ModalReason = ({
   handleClose,
 }: ModalReasonProps) => {
   const [textReason, setTextReason] = useState("");
-  console.log("show", show);
 
   return (
     <ModalWrapper

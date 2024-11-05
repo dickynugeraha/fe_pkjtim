@@ -24,7 +24,14 @@ const CardJumlahAcara: FC<Props> = ({
   const chartRef = useRef<HTMLDivElement | null>(null);
   const { mode } = useThemeMode();
   useEffect(() => {
-    initChart(chartSize, chartLine, chartRotate, dataColor.length, dataColor, dataReservasi);
+    initChart(
+      chartSize,
+      chartLine,
+      chartRotate,
+      dataColor.length,
+      dataColor,
+      dataReservasi
+    );
     // refreshChart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -34,8 +41,7 @@ const CardJumlahAcara: FC<Props> = ({
       return;
     }
 
-    setTimeout(() => {
-    }, 10);
+    setTimeout(() => {}, 10);
   };
 
   let totalReservation = 0;
@@ -87,7 +93,9 @@ const CardJumlahAcara: FC<Props> = ({
 
         <div className="d-flex flex-column content-justify-center flex-row-fluid">
           {dataReservasi?.map((item: any) => {
-            let colorTemp = dataColor.find((b:any) => b?.tempat == item?.tempat)
+            let colorTemp = dataColor.find(
+              (b: any) => b?.tempat == item?.tempat
+            );
             return (
               <div
                 key={item.tempat}
@@ -95,7 +103,7 @@ const CardJumlahAcara: FC<Props> = ({
               >
                 <div
                   className={`bullet w-10px h-8px rounded-2 me-3`}
-                  style={{ backgroundColor:colorTemp ? colorTemp.color : "" }}
+                  style={{ backgroundColor: colorTemp ? colorTemp.color : "" }}
                 ></div>
                 <div className="text-gray-500 flex-grow-1 me-4">
                   {item.tempat}
@@ -118,7 +126,7 @@ const initChart = function (
   chartRotate: number = 124,
   totalReservation: number,
   tempatColor: any[],
-  dataReservasi: any[],
+  dataReservasi: any[]
 ) {
   const el = document.getElementById("kt_card_widget_17_chart");
   if (!el) {
@@ -173,13 +181,15 @@ const initChart = function (
   };
 
   //Init 2
-  console.log(dataReservasi);
   dataReservasi?.map((item: any) => {
-    console.log("testtt",dataReservasi.map((b:any) => b?.tempat == item?.tempat).length)
-    let colorTemp = tempatColor.find((b:any) => b?.tempat == item?.tempat);
-    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 100 / 150);
+    let colorTemp = tempatColor.find((b: any) => b?.tempat == item?.tempat);
+    drawCircle(
+      getCSSVariableValue("--bs-primary"),
+      options.lineWidth,
+      100 / 150
+    );
   });
-  drawCircle(getCSSVariableValue('--bs-warning'), options.lineWidth, 100 / 100);
+  drawCircle(getCSSVariableValue("--bs-warning"), options.lineWidth, 100 / 100);
   // drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 100 / 250);
   // drawCircle("#E4E6EF", options.lineWidth, 1);
   // drawCircle(getCSSVariableValue("--bs-primary"), options.lineWidth, 0.23);

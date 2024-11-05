@@ -397,7 +397,6 @@ export default function usePlanetarium() {
   };
 
   const updateVisitDate = async (data: any) => {
-    console.log("DATA", data);
     Swal.fire({
       title: "Apakah anda yakin",
       text: "Akan melakukan penjadwalan ulang?!",

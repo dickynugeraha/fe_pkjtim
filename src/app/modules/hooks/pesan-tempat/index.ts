@@ -91,7 +91,6 @@ export default function usePesanTempat() {
           "" //update ariko reservasi status kurasi dapat dilihat semua oleh kurator
         );
         let allReservation: any[] = reservations.data.data.data;
-        console.log("allReservation", allReservation);
 
         let allReservationWithFile: any[] = [];
         allReservation.map((data) => {

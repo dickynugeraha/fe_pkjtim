@@ -62,12 +62,12 @@ export const Home: FC = () => {
         end: date.toISOString().split("T")[0],
         endDate: itm?.endDate,
         image: `${ENDPOINTS.PENTAS.PENTAS_IMAGE}/Tempat/${
-          itm?.tempat?.id
+          itm?.tempatId
         }/Image?isStream=true&startDate=${globalVar.formatInputDate(
           itm?.startDate
         )}&endDate=${globalVar.formatInputDate(itm?.endDate)}`,
         tempat: itm?.tempatName,
-        tempatId: itm?.tempat?.id,
+        tempatId: itm?.tempatId,
         color: "",
         status: itm?.status,
       };
@@ -76,8 +76,6 @@ export const Home: FC = () => {
       }
       events.push(data);
     });
-
-    console.log("events", events);
 
     const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
     let allTutupTempat: any[] = tutupTempat.data.data.data;
@@ -94,7 +92,7 @@ export const Home: FC = () => {
         endDate: itm?.endDate,
         image: undefined,
         tempat: itm?.tempat?.name,
-        tempatId: itm?.tempat?.id,
+        tempatId: itm?.tempatId,
         color: "",
         status: "CLOSED",
       };
