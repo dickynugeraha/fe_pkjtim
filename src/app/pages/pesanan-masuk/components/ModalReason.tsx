@@ -33,7 +33,6 @@ const ModalReason = ({
   handleClose,
 }: ModalReasonProps) => {
   const [textReason, setTextReason] = useState("");
-
   return (
     <ModalWrapper
       title={`Tulis Alasan ${type === "Reject" ? "Penolakan" : "Diterima"}`}
@@ -85,7 +84,7 @@ const ModalReason = ({
             }}
             onReady={(editor) => {
               // You can store the "editor" and use when it is needed.
-              console.log("Editor 1 is ready to use!", editor);
+              // console.log("Editor 1 is ready to use!", editor);
             }}
             onChange={(event, editor) => {
               const data = editor.getData();

@@ -312,7 +312,6 @@ export const PlanetariumDates = () => {
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => {
-                  console.log(globalVar.formatInputDate(date));
                   setSelectedDate(date);
                   setAddDates((prevDate) => [
                     ...prevDate,

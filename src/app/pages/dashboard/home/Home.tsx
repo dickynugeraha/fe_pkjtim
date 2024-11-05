@@ -147,7 +147,6 @@ export const Home: FC = () => {
       );
 
       let allReservation: any[] = res.data.data;
-
       let allResrvationWithFile: any[] = [];
       allReservation.map((data) => {
         const singleReserve = {
