@@ -77,27 +77,6 @@ export const Home: FC = () => {
       events.push(data);
     });
 
-    const tutupTempat = await getAll(INITIAL_PAGE, DEFAULT_LIMIT);
-    let allTutupTempat: any[] = tutupTempat.data.data.data;
-
-    allTutupTempat.map((itm) => {
-      const date = new Date(itm.endDate);
-      date.setDate(date.getDate() + 2);
-
-      const data = {
-        title: `${itm?.tempat.name} Tutup`,
-        start: itm?.startDate,
-        startDate: itm?.startDate,
-        end: date.toISOString().split("T")[0],
-        endDate: itm?.endDate,
-        image: undefined,
-        tempat: itm?.tempat?.name,
-        tempatId: itm?.tempatId,
-        color: "",
-        status: "CLOSED",
-      };
-      events.push(data);
-    });
     events.map((item) => {
       switch (item.status) {
         case "PENDING":
@@ -167,27 +146,6 @@ export const Home: FC = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    getDataDashboard();
-    getDataReservasiByStatus();
-  }, []);
-
-  const handleEventClick = (arg: any) => {
-    setModalDetailEvent({
-      show: true,
-      data: arg,
-    });
-  };
-
-  useEffect(() => {
-    const results =
-      chooseTempat != ""
-        ? eventCalendar.filter((evt) => evt.tempatId == chooseTempat)
-        : eventCalendar;
-
-    setFilterCalendar(results);
-  }, [chooseTempat, eventCalendar]);
-
   const tempatColor: any[] = [];
   tempat.map((b: any, index: any) => {
     let backgroundColor =
@@ -211,7 +169,6 @@ export const Home: FC = () => {
       case 5:
         backgroundColor = "#20c997";
         break;
-
       default:
         break;
     }
@@ -225,6 +182,29 @@ export const Home: FC = () => {
   eventCalendar.map(
     (b) => (b.color = tempatColor.find((c) => c.tempat == b.tempat)?.color)
   );
+
+
+  useEffect(() => {
+    getDataDashboard();
+    getDataReservasiByStatus();
+  }, []);
+
+  const handleEventClick = (arg: any) => {
+    setModalDetailEvent({
+      show: true,
+      data: arg,
+    });
+  };
+
+  useEffect(() => {
+    const results =
+      chooseTempat != ""
+        ? eventCalendar.filter((evt) => evt.tempatId == chooseTempat)
+        : eventCalendar;
+
+    setFilterCalendar(results);
+  }, [chooseTempat, eventCalendar]);
+
   return (
     <>
       <PageTitle icon="home" breadcrumbs={Breadcrumbs} description="Home">
