@@ -26,6 +26,7 @@ const SidebarMenuMain = () => {
   };
 
   const MasterDataSidebar = () => {
+    // TODO: Assign to object and based by role
     return (
       <SidebarMenuItemWithSub
         to="master-data"

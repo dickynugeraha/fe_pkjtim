@@ -21,6 +21,7 @@ import { getAllReservationByStatus } from "../../../modules/requests/pesan-tempa
 import { DEFAULT_LIMIT, INITIAL_PAGE } from "../../../constants/PAGE";
 import { getAll } from "../../../modules/requests/master-data/tempat-tutup";
 import { getDashboardReservation } from "../../../modules/requests/dashboard";
+import { motion } from "framer-motion";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -183,7 +184,6 @@ export const Home: FC = () => {
     (b) => (b.color = tempatColor.find((c) => c.tempat == b.tempat)?.color)
   );
 
-
   useEffect(() => {
     getDataDashboard();
     getDataReservasiByStatus();
@@ -214,77 +214,111 @@ export const Home: FC = () => {
         <div className="p-0">
           <Row>
             <Col md={8}>
-              <Card>
-                <Card.Header className="d-flex align-items-center">
-                  <h4 className="m-0">Kalender</h4>
-                  <div className="card-toolbar">
-                    <select
-                      name="switchCalendar"
-                      id="switchCalendar"
-                      className="form-select"
-                      onChange={(e) => {
-                        setChooseTempat(e.target.value);
+              <motion.div
+                initial={{ opacity: 0, y: "200px" }}
+                animate={{ opacity: 1, y: "0px" }}
+                transition={{
+                  type: "spring",
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
+              >
+                <Card>
+                  <Card.Header className="d-flex align-items-center">
+                    <h4 className="m-0">Kalender</h4>
+                    <div className="card-toolbar">
+                      <select
+                        name="switchCalendar"
+                        id="switchCalendar"
+                        className="form-select"
+                        onChange={(e) => {
+                          setChooseTempat(e.target.value);
+                        }}
+                      >
+                        <option value="">Acara PKJ TIM</option>
+                        {tempat.map((tmt) => {
+                          return (
+                            <option
+                              key={tmt.id}
+                              value={tmt.id}
+                              style={{
+                                color: tempatColor.find(
+                                  (b) => b.tempat == tmt.name
+                                )?.color,
+                              }}
+                            >
+                              {tmt.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </Card.Header>
+                  <div className="p-8">
+                    <FullCalendar
+                      locale={idLocale}
+                      now={new Date()}
+                      height={555}
+                      initialDate={globalVar.getThreeMonthsFromToday()}
+                      plugins={[
+                        dayGridPlugin,
+                        timeGridPlugin,
+                        interactionPlugin,
+                      ]}
+                      initialView="dayGridMonth"
+                      headerToolbar={{
+                        left: "title",
+                        center: "",
+                        right: "prev,today,next",
                       }}
-                    >
-                      <option value="">Acara PKJ TIM</option>
-                      {tempat.map((tmt) => {
+                      events={filterCalendar}
+                      eventContent={(eventInfo) => {
                         return (
-                          <option
-                            key={tmt.id}
-                            value={tmt.id}
-                            style={{
-                              color: tempatColor.find(
-                                (b) => b.tempat == tmt.name
-                              )?.color,
-                            }}
-                          >
-                            {tmt.name}
-                          </option>
+                          <div role="button" className="fw-bold fst-italic p-1">
+                            {eventInfo.event.title}
+                          </div>
                         );
-                      })}
-                    </select>
+                      }}
+                      eventClick={handleEventClick}
+                    />
                   </div>
-                </Card.Header>
-                <div className="p-8">
-                  <FullCalendar
-                    locale={idLocale}
-                    now={new Date()}
-                    height={555}
-                    initialDate={globalVar.getThreeMonthsFromToday()}
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth"
-                    headerToolbar={{
-                      left: "title",
-                      center: "",
-                      right: "prev,today,next",
-                    }}
-                    events={filterCalendar}
-                    eventContent={(eventInfo) => {
-                      return (
-                        <div role="button" className="fw-bold fst-italic p-1">
-                          {eventInfo.event.title}
-                        </div>
-                      );
-                    }}
-                    eventClick={handleEventClick}
-                  />
-                </div>
-              </Card>
+                </Card>
+              </motion.div>
             </Col>
             <Col md={4}>
               <div>
-                <CardJumlahPengguna
-                  className="mb-5"
-                  description="Pengguna Aktif"
-                  color="#F1416C"
-                  dataStatus={dataStatus}
-                  img={toAbsoluteUrl("media/patterns/vector-1.png")}
-                />
-                <CardJumlahAcara
-                  className="mb-2"
-                  dataReservasi={dataReservasi}
-                  dataColor={tempatColor}
-                />
+                <motion.div
+                  initial={{ opacity: 0, y: "200px" }}
+                  animate={{ opacity: 1, y: "0px" }}
+                  transition={{
+                    type: "spring",
+                    ease: "easeInOut",
+                    delay: 1.2,
+                  }}
+                >
+                  <CardJumlahPengguna
+                    className="mb-5"
+                    description="Pengguna Aktif"
+                    color="#F1416C"
+                    dataStatus={dataStatus}
+                    img={toAbsoluteUrl("media/patterns/vector-1.png")}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: "200px" }}
+                  animate={{ opacity: 1, y: "0px" }}
+                  transition={{
+                    type: "spring",
+                    ease: "easeInOut",
+                    delay: 1.4,
+                  }}
+                >
+                  <CardJumlahAcara
+                    className="mb-2"
+                    dataReservasi={dataReservasi}
+                    dataColor={tempatColor}
+                  />
+                </motion.div>
               </div>
             </Col>
           </Row>

@@ -15,6 +15,7 @@ import DatePicker from "react-datepicker";
 import { initBooking } from "../../modules/requests/pesan-tempat";
 import Swal from "sweetalert2";
 import { useAuth } from "../../modules/auth";
+import { motion } from "framer-motion";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -161,7 +162,18 @@ export const PesanTempat: FC = () => {
           type="checkbox"
           id="agree-terms"
           className="form-check-input me-4"
-          onClick={() => setTermIsCheck(!termIsCheck)}
+          onClick={() => {
+            setTermIsCheck(!termIsCheck);
+            // TODO: scroll to bottom content
+            setTimeout(() => {
+              window.scrollTo({
+                top: 6000,
+                // left: 100,
+                behavior: "smooth",
+              });
+            }, 250);
+            window.scrollTo(0, 1000000);
+          }}
           checked={termIsCheck}
         />
         <label htmlFor="agree-terms">
@@ -318,7 +330,19 @@ export const PesanTempat: FC = () => {
         <div className="d-flex mb-5">
           <Persetujuan />
         </div>
-        {termIsCheck && <FormPlace />}
+        {termIsCheck && (
+          <motion.div
+            initial={{ opacity: 0, y: "50px" }}
+            animate={{ opacity: 1, y: "0px" }}
+            transition={{
+              type: "spring",
+              ease: "easeInOut",
+              delay: 0.75,
+            }}
+          >
+            <FormPlace />
+          </motion.div>
+        )}
       </Content>
     </>
   );
