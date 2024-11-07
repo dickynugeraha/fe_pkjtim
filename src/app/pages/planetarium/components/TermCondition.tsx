@@ -76,8 +76,7 @@ const TermCondition = () => {
   const [showModal, setshowModal] = useState(false);
   const [modalTermAndCondition, setModalTermAndCondition] =
     useState<boolean>(false);
-  const [modalTataCara, setModalTataCara] =
-    useState<boolean>(false);
+  const [modalTataCara, setModalTataCara] = useState<boolean>(false);
 
   return (
     <div className="row rows-col-1 rows-col-lg-2">
@@ -97,7 +96,9 @@ const TermCondition = () => {
           <Card.Body className="d-flex flex-column">
             <div
               className="btn btn-light-primary"
-              onClick={() => setModalTermAndCondition(true)}
+              onClick={() => {
+                setModalTermAndCondition(true);
+              }}
             >
               Syarat dan Ketentuan Umum
             </div>
@@ -170,9 +171,9 @@ const TermCondition = () => {
             <h5 className="fs-3">Lembar Pernyataan Persetujuan Peserta</h5>
             <p className="fs-6">
               Formulir dapat diunduh di{" "}
-                <a href="http://bit.ly/pernyataanPGS" target="_blank">
-                  bit.ly/pernyataanPGS
-                </a>
+              <a href="http://bit.ly/pernyataanPGS" target="_blank">
+                bit.ly/pernyataanPGS
+              </a>
             </p>
           </Card.Body>
         </Card>
@@ -206,47 +207,53 @@ const TermCondition = () => {
             SYARAT DAN KETENTUAN UMUM
           </p>
           <div className="fs-4">
-          <ol>
-            <li>
-              Sekolah peserta kegiatan merupakan sekolah tingkat SD atau (sederajat) kelas 5
-              (lima) atau 6 (enam) yang berada di wilayah DKI Jakarta.
-            </li>
-            <li>
-              Kuota peserta didik yang dapat mengikuti kegiatan maksimal berjumlah 60 (enam
-              puluh) siswa/i
-            </li>
-            <li>
-              Penentuan tanggal kegiatan sesuai dengan pilihan yang telah disediakan oleh
-              pihak Planetarium Jakarta dan tidak dapat diubah secara sepihak.
-            </li>
-            <li>
-              Satu sekolah hanya dapat memilih satu tanggal kegiatan.
-            </li>
-            <li>
-              Planetarium Jakarta hanya melakukan kegiatan di satu sekolah dalam satu hari.
-            </li>
-            <li>
-              Pihak sekolah mendaftar paling lambat 3 (tiga) hari sebelum kegiatan terlaksana.
-            </li>
+            <ol>
+              <li>
+                Sekolah peserta kegiatan merupakan sekolah tingkat SD atau
+                (sederajat) kelas 5 (lima) atau 6 (enam) yang berada di wilayah
+                DKI Jakarta.
+              </li>
+              <li>
+                Kuota peserta didik yang dapat mengikuti kegiatan maksimal
+                berjumlah 60 (enam puluh) siswa/i
+              </li>
+              <li>
+                Penentuan tanggal kegiatan sesuai dengan pilihan yang telah
+                disediakan oleh pihak Planetarium Jakarta dan tidak dapat diubah
+                secara sepihak.
+              </li>
+              <li>Satu sekolah hanya dapat memilih satu tanggal kegiatan.</li>
+              <li>
+                Planetarium Jakarta hanya melakukan kegiatan di satu sekolah
+                dalam satu hari.
+              </li>
+              <li>
+                Pihak sekolah mendaftar paling lambat 3 (tiga) hari sebelum
+                kegiatan terlaksana.
+              </li>
               Pihak sekolah WAJIB mendaftar sesuai Tata Cara Pendaftaran
-            <li>
-              Jika pihak sekolah <strong>memilih kegiatan Planetarium Mini</strong>, maka pihak sekolah
-              <strong>menyediakan fasilitas transportasi khusus</strong> (minimal mobil jenis van) untuk
-              mobilisasi peralatan. Biaya dan operasional transportasi tersebut ditanggung oleh
-              pihak sekolah;
-            </li>
-            <li>
-              Demi kelancaran dan keamanan kegiatan, seluruh Peserta WAJIB mematuhi
-              arahan dari pihak Planetarium Jakarta
-            </li>
-            <li>
-              Kegiatan ini tidak dipungut biaya (GRATIS), namun biaya operasional transportsi
-              khusus pada poin 7, ditanggung oleh pihak sekolah.
-            </li>
-            <li>
-              Pihak sekolah WAJIB memenuhi seluruh Syarat dan Ketentuan kegiatan.
-            </li>
-          </ol>
+              <li>
+                Jika pihak sekolah{" "}
+                <strong>memilih kegiatan Planetarium Mini</strong>, maka pihak
+                sekolah
+                <strong>menyediakan fasilitas transportasi khusus</strong>{" "}
+                (minimal mobil jenis van) untuk mobilisasi peralatan. Biaya dan
+                operasional transportasi tersebut ditanggung oleh pihak sekolah;
+              </li>
+              <li>
+                Demi kelancaran dan keamanan kegiatan, seluruh Peserta WAJIB
+                mematuhi arahan dari pihak Planetarium Jakarta
+              </li>
+              <li>
+                Kegiatan ini tidak dipungut biaya (GRATIS), namun biaya
+                operasional transportsi khusus pada poin 7, ditanggung oleh
+                pihak sekolah.
+              </li>
+              <li>
+                Pihak sekolah WAJIB memenuhi seluruh Syarat dan Ketentuan
+                kegiatan.
+              </li>
+            </ol>
           </div>
           <Gap height={12} />
           <p className="fs-3 fw-bolder text-decoration-underline mb-1">
@@ -255,7 +262,11 @@ const TermCondition = () => {
           <div className="fs-4">
             <div className="d-flex">
               <ul>
-                <li>Hari Kerja : Senin, Selasa, Rabu atau Kamis (Ketersediaan tanggal dapat dilihat pada kalender Astronomy Goes to School dibawah)</li>
+                <li>
+                  Hari Kerja : Senin, Selasa, Rabu atau Kamis (Ketersediaan
+                  tanggal dapat dilihat pada kalender Astronomy Goes to School
+                  dibawah)
+                </li>
                 <li>Pukul : 10.00 s.d. 12.00 WIB</li>
               </ul>
             </div>
@@ -313,59 +324,74 @@ const TermCondition = () => {
             TATA CARA PENDAFTARAN KEGIATAN
           </p>
           <div className="fs-4">
-          <ol>
-            <li className="mb-5">
-              Pihak sekolah wajib membaca dan memahami seluruh Syarat dan Ketentuan
-              Kegiatan, Bentuk Kegiatan, dan Tata Cara Pendaftaran Kegiatan pada bagian Syarat dan Ketentuan
-            </li>
-            <li className="mb-5">
-              Pihak sekolah melihat ketersediaan tanggal pada bagian “Kalender Astronomy Goes To School”.
-              Tanggal yang dapat dilipih adalah yang statusnya “Tersedia”
-            </li>
-            <li className="mb-5">
-              Penentuan tanggal kegiatan sesuai dengan pilihan yang telah disediakan oleh
-              pihak Planetarium Jakarta dan tidak dapat diubah secara sepihak.
-            </li>
-            <li className="mb-5">
-              Pihak sekolah menyiapkan berkas yang diperlukan, antara lain:
-              <ul>
-                <li>
-                  Surat Permohonan Kegiatan yang ditujukan kepada Kepala Unit Pengelola
-                  Pusat Kesenian Jakarta Taman Ismail Marzuki. Surat wajib ditandatangani
-                  oleh Kepala Sekolah.
-                </li>
-                <li>
-                  Lembar Pernyataan Persetujuan Peserta (formulir dapat diunduh pada link <a href="https://bit.ly/pernyataanPGS" target="_blank">bit.ly/pernyataanPGS</a>)
-                </li>
-              </ul>
-            </li>
-            <li className="mb-5">
-              Pihak sekolah mengklik centang <i>"Saya sudah membaca dan menyetujui syarat dan ketentuan khusus Astronomy Goes to School diatas" </i>
-              dibagian paling bawah untuk melanjutkan ke pemilihan tanggal.
-            </li>
-            <li className="mb-5">
-              Pihak sekolah memilih tanggal yang ada sesuai Kalender Astronomy Goes To School lalu klik selanjutnya dan dilanjutkan
-              mengisi formulir pendaftaran dan mengunggah berkas persyaratan
-            </li>
-            <li className="mb-5">
-              Pihak Planetarium akan menjadwalkan sekolah yang telah mengisi formulir
-              pendaftaran paling awal dengan lengkap dan benar.
-            </li>
-            <li className="mb-5">
-              Pihak sekolah dapat mengecek status pedaftaran pada halaman “Pesanan Saya”
-              secara berkala setelah formulir pendaftaran
-              dikirimkan. Formulir yang dikirimkan pada hari Jumat/Sabtu/Minggu akan
-              dikonfirmasi pada hari Senin.
-            </li>
-            <li className="mb-5">
-              Nama sekolah yang terjadwal akan tertulis pada Kalender Astronomy Goes To School dan
-              mendapatkan pesan konfirmasi dari narahubung planetarium.
-            </li>
-            <li>
-              Apabila terjadi pembatalan keikutsertaan, maka pihak sekolah pendaftar wajib
-              menginformasikan kepada narahubung planetarium paling lambat H-5 di hari kerja.
-            </li>
-          </ol>
+            <ol>
+              <li className="mb-5">
+                Pihak sekolah wajib membaca dan memahami seluruh Syarat dan
+                Ketentuan Kegiatan, Bentuk Kegiatan, dan Tata Cara Pendaftaran
+                Kegiatan pada bagian Syarat dan Ketentuan
+              </li>
+              <li className="mb-5">
+                Pihak sekolah melihat ketersediaan tanggal pada bagian “Kalender
+                Astronomy Goes To School”. Tanggal yang dapat dilipih adalah
+                yang statusnya “Tersedia”
+              </li>
+              <li className="mb-5">
+                Penentuan tanggal kegiatan sesuai dengan pilihan yang telah
+                disediakan oleh pihak Planetarium Jakarta dan tidak dapat diubah
+                secara sepihak.
+              </li>
+              <li className="mb-5">
+                Pihak sekolah menyiapkan berkas yang diperlukan, antara lain:
+                <ul>
+                  <li>
+                    Surat Permohonan Kegiatan yang ditujukan kepada Kepala Unit
+                    Pengelola Pusat Kesenian Jakarta Taman Ismail Marzuki. Surat
+                    wajib ditandatangani oleh Kepala Sekolah.
+                  </li>
+                  <li>
+                    Lembar Pernyataan Persetujuan Peserta (formulir dapat
+                    diunduh pada link{" "}
+                    <a href="https://bit.ly/pernyataanPGS" target="_blank">
+                      bit.ly/pernyataanPGS
+                    </a>
+                    )
+                  </li>
+                </ul>
+              </li>
+              <li className="mb-5">
+                Pihak sekolah mengklik centang{" "}
+                <i>
+                  "Saya sudah membaca dan menyetujui syarat dan ketentuan khusus
+                  Astronomy Goes to School diatas"{" "}
+                </i>
+                dibagian paling bawah untuk melanjutkan ke pemilihan tanggal.
+              </li>
+              <li className="mb-5">
+                Pihak sekolah memilih tanggal yang ada sesuai Kalender Astronomy
+                Goes To School lalu klik selanjutnya dan dilanjutkan mengisi
+                formulir pendaftaran dan mengunggah berkas persyaratan
+              </li>
+              <li className="mb-5">
+                Pihak Planetarium akan menjadwalkan sekolah yang telah mengisi
+                formulir pendaftaran paling awal dengan lengkap dan benar.
+              </li>
+              <li className="mb-5">
+                Pihak sekolah dapat mengecek status pedaftaran pada halaman
+                “Pesanan Saya” secara berkala setelah formulir pendaftaran
+                dikirimkan. Formulir yang dikirimkan pada hari
+                Jumat/Sabtu/Minggu akan dikonfirmasi pada hari Senin.
+              </li>
+              <li className="mb-5">
+                Nama sekolah yang terjadwal akan tertulis pada Kalender
+                Astronomy Goes To School dan mendapatkan pesan konfirmasi dari
+                narahubung planetarium.
+              </li>
+              <li>
+                Apabila terjadi pembatalan keikutsertaan, maka pihak sekolah
+                pendaftar wajib menginformasikan kepada narahubung planetarium
+                paling lambat H-5 di hari kerja.
+              </li>
+            </ol>
           </div>
           <Gap height={12} />
           <p className="fs-3 fw-bolder text-decoration-underline mb-1">
@@ -374,7 +400,11 @@ const TermCondition = () => {
           <div className="fs-4">
             <div className="d-flex">
               <ul>
-                <li>Hari Kerja : Senin, Selasa, Rabu atau Kamis (Ketersediaan tanggal dapat dilihat pada kalender Astronomy Goes to School dibawah)</li>
+                <li>
+                  Hari Kerja : Senin, Selasa, Rabu atau Kamis (Ketersediaan
+                  tanggal dapat dilihat pada kalender Astronomy Goes to School
+                  dibawah)
+                </li>
                 <li>Pukul : 10.00 s.d. 12.00 WIB</li>
               </ul>
             </div>

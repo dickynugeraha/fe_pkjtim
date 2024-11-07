@@ -220,7 +220,7 @@ export const Home: FC = () => {
                 transition={{
                   type: "spring",
                   ease: "easeInOut",
-                  delay: 1,
+                  delay: 0.5,
                 }}
               >
                 <Card>
@@ -293,7 +293,7 @@ export const Home: FC = () => {
                   transition={{
                     type: "spring",
                     ease: "easeInOut",
-                    delay: 1.2,
+                    delay: 0.7,
                   }}
                 >
                   <CardJumlahPengguna
@@ -310,7 +310,7 @@ export const Home: FC = () => {
                   transition={{
                     type: "spring",
                     ease: "easeInOut",
-                    delay: 1.4,
+                    delay: 0.9,
                   }}
                 >
                   <CardJumlahAcara

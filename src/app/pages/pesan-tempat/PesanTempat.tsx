@@ -164,14 +164,12 @@ export const PesanTempat: FC = () => {
           className="form-check-input me-4"
           onClick={() => {
             setTermIsCheck(!termIsCheck);
-            // TODO: scroll to bottom content
             setTimeout(() => {
               window.scrollTo({
                 top: 6000,
-                // left: 100,
                 behavior: "smooth",
               });
-            }, 250);
+            }, 100);
             window.scrollTo(0, 1000000);
           }}
           checked={termIsCheck}
@@ -337,7 +335,7 @@ export const PesanTempat: FC = () => {
             transition={{
               type: "spring",
               ease: "easeInOut",
-              delay: 0.75,
+              delay: 0.5,
             }}
           >
             <FormPlace />

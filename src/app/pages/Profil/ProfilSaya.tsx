@@ -114,6 +114,40 @@ export const ProfilSaya = () => {
     getSinglePengguna(currentUser?.id as string);
   }, [currentUser]);
 
+  const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await fetch(
+          `${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${singlePengguna?.id}/Attachment/TandaPengenal`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.api_token}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const objectUrl: any = URL.createObjectURL(blob);
+          setImageSrc(objectUrl);
+        } else {
+          console.error("Failed to fetch image:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+
+    // Clean up the object URL when the component unmounts
+    return () => {
+      if (imageSrc) URL.revokeObjectURL(imageSrc);
+    };
+  }, [auth?.api_token, singlePengguna]);
+
   return (
     <>
       <PageTitle
@@ -189,7 +223,7 @@ export const ProfilSaya = () => {
                   onClick={() => {
                     setModalPreviewImage(true);
                   }}
-                  src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${singlePengguna?.id}/Attachment/TandaPengenal`}
+                  src={imageSrc ? imageSrc : ""}
                   style={{
                     width: "300px",
                     height: "200px",
@@ -206,7 +240,7 @@ export const ProfilSaya = () => {
                 footerCustom={<></>}
               >
                 <img
-                  src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${singlePengguna?.id}/Attachment/TandaPengenal`}
+                  src={imageSrc ? imageSrc : ""}
                   style={{
                     width: "100%",
                     borderRadius: "10px",

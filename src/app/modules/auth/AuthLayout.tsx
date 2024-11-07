@@ -53,7 +53,7 @@ const AuthLayout = () => {
             transition={{
               type: "spring",
               ease: [0.34, 1.56, 0.64, 1],
-              delay: 0.8,
+              delay: 0.6,
             }}
             className="mx-auto w-200px w-md-50 w-xl-300px mb-10 mb-lg-20"
             src={toAbsoluteUrl("media/logos/login-pkjtim.png")}

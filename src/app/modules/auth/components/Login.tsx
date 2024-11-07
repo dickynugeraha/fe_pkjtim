@@ -109,7 +109,7 @@ export function Login() {
     <motion.div
       initial={{ y: "800px" }}
       animate={{ y: "0px" }}
-      transition={{ type: "spring", ease: [0.34, 1.56, 0.64, 1], delay: 0.8 }}
+      transition={{ type: "spring", ease: [0.34, 1.56, 0.64, 1], delay: 0.6 }}
     >
       <Card>
         <Card.Body>

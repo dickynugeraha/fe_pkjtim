@@ -15,6 +15,7 @@ import { useAuth } from "../../modules/auth";
 import Swal from "sweetalert2";
 import { initReservation } from "../../modules/requests/planetarium";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -171,19 +172,40 @@ export const Planetarium = () => {
         <Gap height={24} />
         {termIsCheck && (
           <>
-            <div>
-              <div className="d-flex align-items-center justify-content-between"></div>
+            <motion.div
+              initial={{ opacity: 0, y: "50px" }}
+              animate={{ opacity: 1, y: "0px" }}
+              transition={{
+                type: "spring",
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+            >
               <div>
-                <Kegiatan
-                  indoor={indoor}
-                  outdoor={outdoor}
-                  setIndoor={(e) => setIndoor(e)}
-                  setOutdoor={(e) => setOutdoor(e)}
-                />
+                <div className="d-flex align-items-center justify-content-between"></div>
+                <div>
+                  <Kegiatan
+                    indoor={indoor}
+                    outdoor={outdoor}
+                    setIndoor={(e) => setIndoor(e)}
+                    setOutdoor={(e) => setOutdoor(e)}
+                  />
+                </div>
               </div>
-            </div>
+            </motion.div>
+
             <Gap height={12} />
-            <FormPlace />
+            <motion.div
+              initial={{ opacity: 0, y: "50px" }}
+              animate={{ opacity: 1, y: "0px" }}
+              transition={{
+                type: "spring",
+                ease: "easeInOut",
+                delay: 0.7,
+              }}
+            >
+              <FormPlace />
+            </motion.div>
           </>
         )}
       </Content>
@@ -197,7 +219,16 @@ export const Planetarium = () => {
           type="checkbox"
           id="agree-terms-planet"
           className="form-check-input me-4"
-          onChange={() => setTermIsCheck(!termIsCheck)}
+          onChange={() => {
+            setTermIsCheck(!termIsCheck);
+            setTimeout(() => {
+              window.scrollTo({
+                top: 6000,
+                behavior: "smooth",
+              });
+            }, 100);
+            window.scrollTo(0, 1000000);
+          }}
           checked={termIsCheck}
           defaultValue={""}
         />
