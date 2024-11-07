@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
 import { KTIcon } from "../../../../../_metronic/helpers";
 import globalVar from "../../../../helper/globalVar";
+import { motion } from "framer-motion";
 
 type PropsSekilasInfo = {
   data: any[];
@@ -21,91 +22,110 @@ const ContentSekilasInfo: FC<PropsSekilasInfo> = ({ data, loading }) => {
     content = (
       <div className="row row-cols-1 row-cols-lg-2 g-2 g-lg-10">
         <div className="col">
-          <div className="d-flex flex-column justify-content-between pe-lg-6 mb-lg-0 mb-10">
-            <img
-              loading="lazy"
-              src={data[0]?.file}
-              style={{ width: "100%" }}
-              height={400}
-              className="rounded mb-6"
-            />
-            <div
-              role="button"
-              onClick={() =>
-                navigate(`/dashboard/informasi/info/${data[0].id}`)
-              }
-              className="fs-2 text-gray-900 fw-bold text-hover-primary"
-            >
-              {data[0]?.title}
-            </div>
-            <div className="text-truncate-4 fw-semibold fs-5 mt-4 text-gray-600 text-gray-900 mb-4">
-              {data[0]?.desc}
-            </div>
-            <div className="d-flex flex-stack flex-wrap">
-              <div className="d-flex align-items-center pe-2">
-                <KTIcon
-                  className="fs-1 text-primary"
-                  iconType="duotone"
-                  iconName="calendar"
-                />
-                <div className="fs-5 fw-bold">
-                  <span className="text-muted">
-                    {"Terbit pada " +
-                      globalVar.formatDate(data[0]?.publishedAt)}
-                  </span>
-                </div>
+          <motion.div
+            initial={{ x: "-800px" }}
+            animate={{ x: "0px" }}
+            transition={{
+              ease: [0.34, 1.56, 0.64, 1],
+              delay: 0.4,
+            }}
+          >
+            <div className="d-flex flex-column justify-content-between pe-lg-6 mb-lg-0 mb-10">
+              <img
+                loading="lazy"
+                src={data[0]?.file}
+                style={{ width: "100%" }}
+                height={400}
+                className="rounded mb-6"
+              />
+              <div
+                role="button"
+                onClick={() =>
+                  navigate(`/dashboard/informasi/info/${data[0].id}`)
+                }
+                className="fs-2 text-gray-900 fw-bold text-hover-primary"
+              >
+                {data[0]?.title}
               </div>
+              <div className="text-truncate-4 fw-semibold fs-5 mt-4 text-gray-600 text-gray-900 mb-4">
+                {data[0]?.desc}
+              </div>
+              <div className="d-flex flex-stack flex-wrap">
+                <div className="d-flex align-items-center pe-2">
+                  <KTIcon
+                    className="fs-1 text-primary"
+                    iconType="duotone"
+                    iconName="calendar"
+                  />
+                  <div className="fs-5 fw-bold">
+                    <span className="text-muted">
+                      {"Terbit pada " +
+                        globalVar.formatDate(data[0]?.publishedAt)}
+                    </span>
+                  </div>
+                </div>
 
-              <span className="badge badge-light-success fw-bold my-2">
-                Sekilas Info
-              </span>
+                <span className="badge badge-light-success fw-bold my-2">
+                  Sekilas Info
+                </span>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
+
         <div className="col justify-content-between d-flex flex-column">
           {anotherData.length === 0 ? (
             <p>Tidak ada info terkini lainnya</p>
           ) : (
             <>
               {anotherData.map((item, index) => (
-                <div
-                  className={
-                    "d-flex flex-column justify-content-between pe-lg-6 mb-lg-0 " +
-                    (index != anotherData.length - 1 ? "mb-10" : "")
-                  }
+                <motion.div
+                  initial={{ opacity: 0, y: "200px" }}
+                  animate={{ opacity: 1, y: "0px" }}
+                  transition={{
+                    ease: "easeInOut",
+                    delay: 0.6 + index * 0.2,
+                  }}
                 >
                   <div
-                    role="button"
-                    onClick={() =>
-                      navigate(`/dashboard/informasi/info/${item.id}`)
+                    className={
+                      "d-flex flex-column justify-content-between pe-lg-6 mb-lg-0 " +
+                      (index != anotherData.length - 1 ? "mb-10" : "")
                     }
-                    className="fs-2 text-gray-900 fw-bold text-hover-primary"
                   >
-                    {item.title}
-                  </div>
-                  <div className="text-truncate-4 fw-semibold fs-5 mt-4 text-gray-600 text-gray-900 mb-4">
-                    {item.desc}
-                  </div>
-                  <div className="d-flex flex-stack flex-wrap">
-                    <div className="d-flex align-items-center pe-2">
-                      <KTIcon
-                        className="fs-1 text-primary"
-                        iconType="duotone"
-                        iconName="calendar"
-                      />
-                      <div className="fs-5 fw-bold">
-                        <span className="text-muted">
-                          {"Terbit pada " +
-                            globalVar.formatDate(data[0]?.publishedAt)}
-                        </span>
-                      </div>
+                    <div
+                      role="button"
+                      onClick={() =>
+                        navigate(`/dashboard/informasi/info/${item.id}`)
+                      }
+                      className="fs-2 text-gray-900 fw-bold text-hover-primary"
+                    >
+                      {item.title}
                     </div>
+                    <div className="text-truncate-4 fw-semibold fs-5 mt-4 text-gray-600 text-gray-900 mb-4">
+                      {item.desc}
+                    </div>
+                    <div className="d-flex flex-stack flex-wrap">
+                      <div className="d-flex align-items-center pe-2">
+                        <KTIcon
+                          className="fs-1 text-primary"
+                          iconType="duotone"
+                          iconName="calendar"
+                        />
+                        <div className="fs-5 fw-bold">
+                          <span className="text-muted">
+                            {"Terbit pada " +
+                              globalVar.formatDate(data[0]?.publishedAt)}
+                          </span>
+                        </div>
+                      </div>
 
-                    <span className="badge badge-light-success fw-bold my-2">
-                      Sekilas Info
-                    </span>
+                      <span className="badge badge-light-success fw-bold my-2">
+                        Sekilas Info
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </>
           )}

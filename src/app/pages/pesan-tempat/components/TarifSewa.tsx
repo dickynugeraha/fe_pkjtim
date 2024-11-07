@@ -3,6 +3,7 @@ import ModalWrapper from "../../../../_metronic/layout/components/content/ModalW
 import globalVar from "../../../helper/globalVar";
 import { Card, Col, Row } from "react-bootstrap";
 import Gap from "../../../../_metronic/layout/components/content/Gap";
+import { motion } from "framer-motion";
 
 type Props = {
   tempat: any[];
@@ -19,50 +20,70 @@ const TarifSewa: FC<Props> = ({ tempat, loading }) => {
   });
   return (
     <div className="col-12 col-lg-6">
-      <Card>
-        <Card.Header className="d-flex align-items-center">
-          <h4 className="m-0">Tarif Sewa</h4>
-        </Card.Header>
-        <Card.Body>
-          {tempat.map((val) => (
-            <div className="row align-items-center">
-              <div className="col">
-                <a
-                  className="btn btn-light-primary btn-sm mb-2 w-75"
-                  role="button"
-                  onClick={() =>
-                    setModalDetailTarif({
-                      show: true,
-                      data: val,
-                    })
-                  }
-                >
-                  Detail tarif {val.name}
-                </a>
+      <motion.div
+        initial={{ opacity: 0, y: "200px" }}
+        animate={{ opacity: 1, y: "0px" }}
+        transition={{
+          ease: "easeInOut",
+          delay: 0.8,
+        }}
+      >
+        <Card>
+          <Card.Header className="d-flex align-items-center">
+            <h4 className="m-0">Tarif Sewa</h4>
+          </Card.Header>
+          <Card.Body>
+            {tempat.map((val) => (
+              <div className="row align-items-center">
+                <div className="col">
+                  <a
+                    className="btn btn-light-primary btn-sm mb-2 w-75"
+                    role="button"
+                    onClick={() =>
+                      setModalDetailTarif({
+                        show: true,
+                        data: val,
+                      })
+                    }
+                  >
+                    Detail tarif {val.name}
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
-          <Gap height={12} />
-          <p className="text-danger">
-            *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
-          </p>
-        </Card.Body>
-      </Card>
+            ))}
+            <Gap height={12} />
+            <p className="text-danger">
+              *) Berdasarkan Retribusi Sesuai Perda No. 1 Tahun 2024
+            </p>
+          </Card.Body>
+        </Card>
+      </motion.div>
+
       <Gap height={15} />
-      <Card>
-        <Card.Header className="d-flex align-items-center">
-          <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
-        </Card.Header>
-        <Card.Body>
-          <h5 className="">Surat Permohonan</h5>
-          <p className="">Surat Permohonan resmi dari pihak pemesan</p>
-          <Gap height={12} />
-          <h5 className="">Proposal</h5>
-          <p className="">
-            Proposal dari pada acara yang akan di selenggarakan
-          </p>
-        </Card.Body>
-      </Card>
+      <motion.div
+        initial={{ opacity: 0, y: "200px" }}
+        animate={{ opacity: 1, y: "0px" }}
+        transition={{
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      >
+        <Card>
+          <Card.Header className="d-flex align-items-center">
+            <h4 className="m-0 p-0">Berkas Yang Perlu Disiapkan</h4>
+          </Card.Header>
+          <Card.Body>
+            <h5 className="">Surat Permohonan</h5>
+            <p className="">Surat Permohonan resmi dari pihak pemesan</p>
+            <Gap height={12} />
+            <h5 className="">Proposal</h5>
+            <p className="">
+              Proposal dari pada acara yang akan di selenggarakan
+            </p>
+          </Card.Body>
+        </Card>
+      </motion.div>
+
       <ModalWrapper
         footerCustom={<></>}
         title={`Tarif Sewa ${modalDetailTarif?.data?.name}`}

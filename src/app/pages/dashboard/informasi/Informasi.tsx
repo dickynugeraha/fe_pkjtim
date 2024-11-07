@@ -109,20 +109,6 @@ const DashboardPage: FC = () => {
   return (
     <Content>
       <div className="card mb-9">
-        {/* <div
-          className="btn btn-sm btn-primary"
-          onClick={async () => {
-            axiosConfig.getWithKey(
-              "v1/Tes/Auth",
-              {},
-              {
-                "time-stamp": globalVar.getCurrentTimeStampForHeader(),
-              }
-            );
-          }}
-        >
-          Coba API With Signkey
-        </div> */}
         <ContentSekilasInfo data={newInfo} loading={loadingInfo} />
         <ListViewItem
           title="Koleksi Seni UP PKJ TIM"

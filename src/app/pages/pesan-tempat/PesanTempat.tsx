@@ -253,18 +253,6 @@ export const PesanTempat: FC = () => {
                         calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
                         placeholderText="dd/mm/yyyy"
                       />
-                      {/* <input
-                ref={startDateRef}
-                id="startPesantempat"
-                name="startPesantempat"
-                type="date"
-                className="form-control form-control-solid"
-                value={startDate}
-                // onChange={(e) => setStartDate(e.target.value)}
-                min={globalVar.getThreeMonthsFromToday()}
-                onKeyDown={(e) => e.preventDefault()}
-              /> */}
-
                       <div>
                         <p className="m-0 mx-3">s/d</p>
                       </div>
@@ -280,17 +268,6 @@ export const PesanTempat: FC = () => {
                         calendarClassName="shadow border" // Optional: Add Bootstrap shadow and border to the calendar
                         placeholderText="dd/mm/yyyy"
                       />
-                      {/* <input
-                ref={endDateRef}
-                id="endPesantempat"
-                name="endPesantempat"
-                type="date"
-                className="form-control form-control-solid"
-                value={endDate}
-                // onChange={(e) => setEndDate(e.target.value)}
-                min={globalVar.getThreeMonthsFromToday()}
-                onKeyDown={(e) => e.preventDefault()}
-              /> */}
                     </div>
                   )}
                 </>
@@ -321,7 +298,7 @@ export const PesanTempat: FC = () => {
         Pesan Tempat
       </PageTitle>
       <Content>
-        <div className="row g-8 mb-5">
+        <div className="row g-8 row-cols-2 mb-5">
           <Peraturan />
           <TarifSewa tempat={tempat} loading={loading} />
         </div>

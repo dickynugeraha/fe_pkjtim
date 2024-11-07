@@ -9,9 +9,9 @@ import { KTIcon } from "../../../_metronic/helpers";
 import ImageAssets from "../../utils/image_assets";
 import { PageLink, PageTitle } from "../../../_metronic/layout/core";
 import { Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import useContactPerson from "../../modules/hooks/master-data/contact-person";
+import { motion } from "framer-motion";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -51,13 +51,23 @@ export const TentangKami = () => {
         Tentang Kami
       </PageTitle>
       <Content>
-        <div className="card">
-          <div className="card-header d-flex align-items-center">
-            <h4 className="m-0">Profil PKJ TIM</h4>
+        <motion.div
+          initial={{ opacity: 0, y: "200px" }}
+          animate={{ opacity: 1, y: "0px" }}
+          transition={{
+            type: "spring",
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
+        >
+          <div className="card">
+            <div className="card-header d-flex align-items-center">
+              <h4 className="m-0">Profil PKJ TIM</h4>
+            </div>
+            <Gap height={16} />
+            <SejarahPkjtim />
           </div>
-          <Gap height={16} />
-          <SejarahPkjtim />
-        </div>
+        </motion.div>
         <Gap height={24} />
         <div className="card">
           <div className="card-header d-flex align-items-center">
