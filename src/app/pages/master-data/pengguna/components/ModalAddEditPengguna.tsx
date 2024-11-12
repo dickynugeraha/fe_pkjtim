@@ -1,8 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import ModalWrapper from "../../../../../_metronic/layout/components/content/ModalWrapper";
 import Gap from "../../../../../_metronic/layout/components/content/Gap";
-import { Form, Col, InputGroup, Row, Button } from "react-bootstrap";
+import { Form, Col, Row, Button } from "react-bootstrap";
 import { API_URL, ENDPOINTS } from "../../../../constants/API";
+import { useAuth } from "../../../../modules/auth";
 
 type PropsModalAddEditPengguna = {
   formAdd: boolean;
@@ -32,11 +33,16 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
   handleChange,
   handleClose,
   handleSubmit,
-  handleChangeKTP,
   fileValue,
   onChangeFile,
   data,
 }) => {
+  const { auth } = useAuth();
+  const [imagePreview, setImagePreview] = useState<string | undefined>(
+    undefined
+  );
+  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
+
   const valueSelectOption = [
     { value: "KOMITE_SENI_RUPA", text: "Komite Seni Rupa" },
     { value: "KOMITE_TARI", text: "Komite Tari" },
@@ -49,32 +55,43 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
       value: "KOMISI_FILANTROPI_DAN_SIMPUL_SENI",
       text: "Komisi Filantropi dan Simpul Seni",
     },
-    { value: "KOMISI_ARSIP_DAN_RISET", text: "Komisi Arsip dan Riset" },
+    { value: "KOMISI_ARSIP_DAN_RISET", text: "Komisi Arsip dan Riset" },
   ];
 
-  const [imagePreview, setImagePreview] = useState();
-
-  const handleImageChange = (file: any) => {
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+  useEffect(() => {
+    if (fileValue) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result as string);
+      reader.readAsDataURL(fileValue);
     }
-  };
+  }, [fileValue]);
+
+  useEffect(() => {
+    // Fetch image with bearer token if `data.id` exists and no new file selected
+    if (!fileValue && data?.id) {
+      const fetchImage = async () => {
+        const response = await fetch(
+          `${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}/Attachment/TandaPengenal`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.api_token}`, // Replace with actual token
+            },
+          }
+        );
+        const blob = await response.blob();
+        setImageSrc(URL.createObjectURL(blob));
+      };
+      fetchImage();
+    }
+  }, [data, fileValue]);
 
   const handleValidate = (event: React.FormEvent<HTMLFormElement>) => {
-    const form = event.currentTarget;
     event.preventDefault();
-    event.stopPropagation();
     handleIsValidated(true);
-
-    if (form.checkValidity() === true) {
+    if ((event.currentTarget as HTMLFormElement).checkValidity()) {
       handleSubmit({});
     }
   };
-  handleImageChange(fileValue);
 
   return (
     <ModalWrapper
@@ -82,9 +99,7 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
       className="modal-md"
       attribute={{ centered: true }}
       show={show}
-      handleClose={() => {
-        handleClose();
-      }}
+      handleClose={handleClose}
       footerCustom={
         <Button
           type="submit"
@@ -108,14 +123,14 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
             </Form.Label>
             <Row>
               <Col md={6}>
-                {!formAdd && !fileValue && (
+                {!formAdd && !fileValue && imageSrc && (
                   <img
                     className="rounded"
                     style={{ height: "150px", width: "100%" }}
-                    src={`${API_URL}/${ENDPOINTS.PENGGUNA.MANAGEMENT_PENGGUNA}/${data.id}/Attachment/TandaPengenal`}
+                    src={imageSrc}
                   />
                 )}
-                {fileValue && (
+                {fileValue && imagePreview && (
                   <img
                     className="rounded"
                     style={{ height: "150px", width: "100%" }}
@@ -293,7 +308,10 @@ const ModalAddEditPengguna: FC<PropsModalAddEditPengguna> = ({
             >
               <option value="">-- Pilih komite --</option>
               {valueSelectOption.map((item) => (
-                <option selected={data.komite === item.value} value={item.value}>
+                <option
+                  selected={data.komite === item.value}
+                  value={item.value}
+                >
                   {item.text}
                 </option>
               ))}
