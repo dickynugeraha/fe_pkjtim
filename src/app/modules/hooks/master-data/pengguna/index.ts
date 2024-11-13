@@ -2,24 +2,18 @@ import { useEffect, useState } from "react";
 import {
   add,
   approve,
-  changePassword,
-  resendEmailVerif,
   confirmEmailVerif as confirmEmail,
   reqUpdateEmail,
   getAll,
-  getSingle,
   remove,
   update,
 } from "../../../requests/master-data/pengguna";
 import Swal from "sweetalert2";
 import { INITIAL_PAGE, DEFAULT_LIMIT } from "../../../../constants/PAGE";
-import { API_URL, ENDPOINTS } from "../../../../constants/API";
-import axiosConfig from "../../../../utils/services/axiosConfig";
 import { useNavigate } from "react-router-dom";
 
 export default function usePengguna() {
   const [pengguna, setPengguna] = useState<any[]>([]);
-  const [singlePengguna, setSinglePengguna] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [formFile, setFormFile] = useState(null);
   const navigate = useNavigate();
@@ -85,117 +79,6 @@ export default function usePengguna() {
   useEffect(() => {
     fetchAllPengguna(debouncedQuery);
   }, [debouncedQuery]);
-
-  const getSinglePengguna = async (id: any) => {
-    setLoading(true);
-    try {
-      const res = await getSingle(id);
-
-      setSinglePengguna(res.data.data);
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal get data pengguna",
-        text: error.message,
-        showConfirmButton: false,
-      });
-    }
-    setLoading(false);
-  };
-
-  const profileChangePassword = async (data: any) => {
-    Swal.fire({
-      title: "Apakah anda yakin",
-      text: "Akan melakukan perubahan password?!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Ya",
-      cancelButtonText: "Tidak",
-      showLoaderOnConfirm: true,
-      preConfirm: () => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve("Confirmed");
-          }, 1000);
-        });
-      },
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        setLoading(true);
-        Swal.fire({
-          title:
-            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
-          text: "Menyimpan, mohon tunggu",
-          allowOutsideClick: false,
-          showConfirmButton: false,
-        });
-        try {
-          await changePassword(data);
-          Swal.fire({
-            icon: "success",
-            title: "Berhasil mengubah password",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } catch (error: any) {
-          Swal.fire({
-            icon: "error",
-            title: "Gagal mengubah password",
-            text: error.message,
-            showConfirmButton: false,
-          });
-        }
-        setLoading(false);
-      }
-    });
-  };
-
-  const sendEmailVerif = async (id: any) => {
-    Swal.fire({
-      title: "Apakah anda yakin",
-      text: "Akan melakukan verifikasi email?!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Ya",
-      cancelButtonText: "Tidak",
-      showLoaderOnConfirm: true,
-      preConfirm: () => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve("Confirmed");
-          }, 1000);
-        });
-      },
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        setLoading(true);
-        Swal.fire({
-          title:
-            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
-          text: "Menyimpan, mohon tunggu",
-          allowOutsideClick: false,
-          showConfirmButton: false,
-        });
-        try {
-          await resendEmailVerif(id);
-          Swal.fire({
-            icon: "success",
-            title: "Verifikasi berhasil terkirim",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } catch (error: any) {
-          Swal.fire({
-            icon: "error",
-            title: "Verifikasi gagal terkirim",
-            text: error.message,
-            showConfirmButton: false,
-          });
-        }
-        setLoading(false);
-      }
-    });
-  };
 
   const fetchAllPengguna = async (Search = "") => {
     setLoading(true);
@@ -489,15 +372,11 @@ export default function usePengguna() {
     closeModal,
     handleChange,
     setIsLockedCheck,
-    getSinglePengguna,
-    profileChangePassword,
-    sendEmailVerif,
     setIsValidated,
     setFormFile,
     confirmEmailVerif,
     reqChangeEmail,
     pengguna,
-    singlePengguna,
     loading,
     isModalOpen,
     isEdit,

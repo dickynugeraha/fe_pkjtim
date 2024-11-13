@@ -12,11 +12,17 @@ import {
   updatePassword,
 } from "../../modules/accounts/components/settings/SettingsModel";
 import { useFormik } from "formik";
-import usePengguna from "../../modules/hooks/master-data/pengguna";
 import { useAuth } from "../../modules/auth";
-import { Spinner } from "react-bootstrap";
 import { API_URL, ENDPOINTS } from "../../constants/API";
 import ModalWrapper from "../../../_metronic/layout/components/content/ModalWrapper";
+import {
+  changePassword,
+  resendEmailVerif,
+  confirmEmailVerif as confirmEmail,
+  reqUpdateEmail,
+  getSingle,
+} from "../../modules/requests/master-data/pengguna";
+import Swal from "sweetalert2";
 
 const Breadcrumbs: Array<PageLink> = [
   {
@@ -62,14 +68,146 @@ const passwordFormValidationSchema = Yup.object().shape({
 });
 
 export const ProfilSaya = () => {
-  const {
-    getSinglePengguna,
-    singlePengguna,
-    loading,
-    profileChangePassword,
-    sendEmailVerif,
-    reqChangeEmail,
-  } = usePengguna();
+  const [singlePengguna, setSinglePengguna] = useState<any>();
+  const [loading, setLoading] = useState(false);
+
+  const getSinglePengguna = async (id: any) => {
+    setLoading(true);
+    try {
+      const res = await getSingle(id);
+
+      setSinglePengguna(res.data.data);
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal get data pengguna",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setLoading(false);
+  };
+
+  const profileChangePassword = async (data: any) => {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan password?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
+        try {
+          await changePassword(data);
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil mengubah password",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah password",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+        setLoading(false);
+      }
+    });
+  };
+
+  const sendEmailVerif = async (id: any) => {
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan verifikasi email?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
+        try {
+          await resendEmailVerif(id);
+          Swal.fire({
+            icon: "success",
+            title: "Verifikasi berhasil terkirim",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Verifikasi gagal terkirim",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+        setLoading(false);
+      }
+    });
+  };
+
+  const reqChangeEmail = async (
+    userId: string,
+    email: string,
+    password: string
+  ) => {
+    setLoading(true);
+    try {
+      await reqUpdateEmail(userId, email, password);
+      Swal.fire({
+        icon: "success",
+        title: "Email terkirim",
+        text: "Silahkan periksa email saat ini.",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Email gagal terkirim",
+        text: error.message,
+        showConfirmButton: false,
+      });
+    }
+    setLoading(false);
+  };
+
   const { currentUser, auth } = useAuth();
   const [showModal, setShowModal] = useState<boolean>(false);
   const updateEmailVal = {

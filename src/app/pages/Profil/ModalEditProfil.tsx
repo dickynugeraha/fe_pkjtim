@@ -9,6 +9,8 @@ import {
 } from "../../modules/accounts/components/settings/SettingsModel";
 import { useAuth, UserModel } from "../../modules/auth";
 import usePengguna from "../../modules/hooks/master-data/pengguna";
+import Swal from "sweetalert2";
+import { update } from "../../modules/requests/master-data/pengguna";
 
 type Props = {
   show: boolean;
@@ -47,7 +49,55 @@ const ModalEditProfil: FC<Props> = ({
     },
     allowMarketing: false,
   };
-  const { updatePengguna, loading } = usePengguna();
+  const [loading, setLoading] = useState(false);
+  const updatePengguna = async (data: any) => {
+    setLoading(true);
+    Swal.fire({
+      title: "Apakah anda yakin",
+      text: "Akan melakukan perubahan data?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("Confirmed");
+          }, 1000);
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            '<i class="ki-solid ki-gear fs-5x icon-spin"></i><span class="sr-only"> Menyimpan</span>',
+          text: "Menyimpan, mohon tunggu",
+          allowOutsideClick: false,
+          showConfirmButton: false,
+        });
+        try {
+          const res = await update(data);
+          if (res) {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil mengubah data pengguna",
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {});
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal mengubah data pengguna",
+            text: error.message,
+            showConfirmButton: false,
+          });
+        }
+      }
+    });
+    setLoading(false);
+  };
 
   const [data, setData] = useState<IProfileDetails>(initialValues);
   const updateData = (fieldsToUpdate: Partial<IProfileDetails>): void => {
