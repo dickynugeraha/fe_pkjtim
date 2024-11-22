@@ -12,6 +12,7 @@ import { jwtDecode } from "jwt-decode";
 import { KTIcon } from "../../../../_metronic/helpers";
 import useContactPerson from "../../hooks/master-data/contact-person";
 import { motion } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,10 +43,19 @@ export function Login() {
   const [showModalLupaPassword, setShowModalLupaPassword] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
   const { contact, fetchAllContact } = useContactPerson();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  const RECAPTCHA_SITE_KEY = "6LfYQ4cqAAAAAKZHFk4NfpinJ3sWP9MXraLDC6Hw"; // v2
+
   const navigate = useNavigate();
   useEffect(() => {
     fetchAllContact();
   }, []);
+
+  // Function to handle reCAPTCHA change
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
 
   const forgotPassword = () => {
     const specificContact = contact.find(
@@ -65,6 +75,11 @@ export function Login() {
     validationSchema: loginSchema,
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
+      if (!captchaToken) {
+        alert("Please complete the CAPTCHA");
+        return;
+      }
+
       try {
         const { data: auth } = await login(values.email, values.password);
 
@@ -87,6 +102,9 @@ export function Login() {
         setCurrentUser(user);
         navigate("/dashboard/home");
         setLoading(false);
+
+        // Clear the CAPTCHA token after submission
+        setCaptchaToken(null);
       } catch (error: any) {
         saveAuth(undefined);
         setStatus("The login details are incorrect");
@@ -212,6 +230,11 @@ export function Login() {
 
             {/* begin::Action */}
             <div className="d-grid my-8">
+              <ReCAPTCHA
+                sitekey={RECAPTCHA_SITE_KEY}
+                onChange={handleCaptchaChange}
+                onExpired={() => setCaptchaToken(null)} // Reset on expiration
+              />
               <button
                 type="submit"
                 id="kt_sign_in_submit"
