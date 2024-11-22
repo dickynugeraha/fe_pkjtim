@@ -234,6 +234,7 @@ export function Login() {
                 sitekey={RECAPTCHA_SITE_KEY}
                 onChange={handleCaptchaChange}
                 onExpired={() => setCaptchaToken(null)} // Reset on expiration
+                type="image"
               />
               <button
                 type="submit"
