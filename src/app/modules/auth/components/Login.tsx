@@ -13,6 +13,7 @@ import { KTIcon } from "../../../../_metronic/helpers";
 import useContactPerson from "../../hooks/master-data/contact-person";
 import { motion } from "framer-motion";
 import ReCAPTCHA from "react-google-recaptcha";
+import Gap from "../../../../_metronic/layout/components/content/Gap";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -77,6 +78,7 @@ export function Login() {
       setLoading(true);
       if (!captchaToken) {
         alert("Please complete the CAPTCHA");
+        setLoading(false);
         return;
       }
 
@@ -229,13 +231,14 @@ export function Login() {
             </a>
 
             {/* begin::Action */}
-            <div className="d-grid my-8">
+            <div className="d-grid my-3">
               <ReCAPTCHA
                 sitekey={RECAPTCHA_SITE_KEY}
                 onChange={handleCaptchaChange}
                 onExpired={() => setCaptchaToken(null)} // Reset on expiration
                 type="image"
               />
+              <Gap height={20} />
               <button
                 type="submit"
                 id="kt_sign_in_submit"
